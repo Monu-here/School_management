@@ -7,8 +7,14 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Login Page | Pedro Reves</title>
+    @php
+        $setting = getSetting();
+    @endphp
+    @if ($setting)
+        <title> {{ $setting->titletext ?? "School" }} | Monu @yield('title') </title>
+    @endif
 </head>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
@@ -237,6 +243,7 @@
         cursor: pointer;
     }
 </style>
+
 <body>
     <div class="container" id="container">
         <div class="form-container sign-in">
@@ -273,7 +280,12 @@
             </div>
         </div>
     </div>
+    @include('Admin.tostar.index')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script>
+        showToastr();
+
         function togglePasswordVisibilitydd() {
             var passwordInput = document.getElementById('password-input');
             var passwordToggle = document.getElementById('password-toggle');

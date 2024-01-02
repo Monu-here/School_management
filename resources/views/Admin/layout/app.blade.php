@@ -8,7 +8,7 @@
         $setting = getSetting();
     @endphp
     @if ($setting)
-        <title> {{ $setting->titletext }} | Monu @yield('title') </title>
+        <title> {{ $setting->titletext ?? "School"}} | Monu @yield('title') </title>
     @endif
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>

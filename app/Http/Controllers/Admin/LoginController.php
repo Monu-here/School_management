@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,20 +18,21 @@ class LoginController extends Controller
             $credentials = $request->only('email', 'password');
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
-
                 switch ($user->role_name) {
                     case 'Admin':
-                        return redirect()->route('admin.index');
+                        return redirect()->route('admin.index')->with('message', 'Sucessfully Login to Admin Dashboard');
                     case 'Teacher':
-                        return redirect()->route('teacher.index');
-                    case 'Student':
-                        //     return redirect()->route('student.index');
+                        return redirect()->route('teacher.index')->with('message', 'Sucessfully Login to Teacher Dashboard');
+                    default:
+                        Auth::logout();
+                        return redirect()->route('adminLogin.login')->with('message','Wrong Email & Password');
                 }
-                return redirect()->route('user.index');
+            } else {
+                return redirect()->back()->with('message', 'Wrong email or password. Please try again.');
             }
-        } else {
-            return view('Admin.Login.login');
         }
+
+        return view('Admin.Login.login');
     }
     public function logout()
     {
