@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Mail\MyEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+
+
 
 Route::prefix('admin')->name('adminLogin.')->group(function () {
     Route::match(['GET', 'POST'], '', [LoginController::class, 'login'])->name('login');
@@ -43,6 +50,10 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::get('teacher', [StudentController::class, 'teacherIndex'])->name('teacherIndex');
         Route::match(['GET', 'POST'], 'teacheradd', [StudentController::class, 'teacheradd'])->name('teacheradd');
         Route::get('teacher/show/{teacher}', [StudentController::class, 'teacherShow'])->name('teacherShow');
+    });
+    Route::prefix('department')->name('department.')->group(function () {
+        Route::get('', [DepartmentController::class, 'index'])->name('index');
+        Route::match(['GET', 'POST'], 'add', [DepartmentController::class, 'add'])->name('add');
     });
 });
 

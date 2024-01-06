@@ -13,19 +13,17 @@
                 </div>
             </div>
         </div>
-        {{-- <form action="{{ route('admin.student.index') }}" method="GET">
+        <!-- Add this inside your form -->
+        <form action="{{ route('admin.student.teacherIndex') }}" method="GET">
             <div class="form-group filter mb-4"
                 style="display: flex; justify-content: space-around; width: 250px; margin-top: 10px">
-                <select name="section" id="section" class="form-control">
-                    <option value="" {{ empty($selectedSection) ? 'selected' : '' }}>All Sections</option>
-                    <option value="A" {{ $selectedSection == 'A' ? 'selected' : '' }}>A</option>
-                    <option value="B" {{ $selectedSection == 'B' ? 'selected' : '' }}>B</option>
-                    <option value="C" {{ $selectedSection == 'C' ? 'selected' : '' }}>C</option>
-                </select>
-                <button type="submit" class="btn btn-success " style="margin-left: 10px"><i
+                <input type="text" name="name" class="form-control" placeholder="Enter Teacher Name"
+                    value="{{ $selectedName }}">
+ 
+                <button type="submit" class="btn btn-success" style="margin-left: 10px"><i
                         class="fa-solid fa-filter"></i></button>
             </div>
-        </form> --}}
+        </form>
     @endsection
     @section('content')
         <div class="card-body">
@@ -60,7 +58,7 @@
 
                                 <td>
                                     <a href="{{ route('admin.student.teacherShow', ['teacher' => $teacher->id]) }}"
-                                        class="btn btn-sm btn-success" ><i class="fa-solid fa-eye"></i></a>
+                                        class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
                                     <a href="" class="btn btn-sm btn-primary"><i
                                             class="fa-solid fa-pen-to-square"></i></a>
                                     <a href="" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>

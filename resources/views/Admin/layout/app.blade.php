@@ -83,6 +83,12 @@
                     <span class="links_name">Teacher</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.department.index') }}">
+                    <i class='bx bx-building-house'></i>
+                    <span class="links_name">Department</span>
+                </a>
+            </li>
 
 
             <li class="log_out">
@@ -160,6 +166,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
     @include('Admin.tostar.index')
     @include('Admin.Teacher.add')
+    @include('Admin.Dep.add')
     @yield('js')
     <script>
         showToastr();
@@ -176,6 +183,10 @@
         function showModal() {
             $('#openmodel').modal('show');
             $('#showteacher').modal('show');
+        }
+        function showDep() {
+            $('#opendep').modal('show');
+            $('#showDepartment').modal('show');
         }
     </script>
 

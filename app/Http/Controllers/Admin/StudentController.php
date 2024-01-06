@@ -49,11 +49,16 @@ class StudentController extends Controller
             return view('Admin.Student.add');
         }
     }
-    public function teacherIndex()
+    public function teacherIndex(Request $request)
     {
-        $teachers = DB::table('teachers')->get();
-        return view('Admin.Teacher.index', compact("teachers"));
+        $name = $request->input('name');
+        $teachers = Teacher::when($name, function ($query) use ($name) {
+            return $query->where('name', 'like', '%' . $name . '%');
+        })->get();
+
+        return view('Admin.Teacher.index', ['teachers' => $teachers, 'selectedName' => $name]);
     }
+
     public function teacheradd(Request $request)
     {
         if ($request->getMethod() == "POST") {

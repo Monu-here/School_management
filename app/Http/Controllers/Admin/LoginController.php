@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MyEmail;
 use App\Models\User;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
@@ -18,14 +20,18 @@ class LoginController extends Controller
             $credentials = $request->only('email', 'password');
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
+
+                // Send email here, after successful authentication
+                Mail::to('testmehere000@gmail.com')->send(new MyEmail());
+
                 switch ($user->role_name) {
                     case 'Admin':
-                        return redirect()->route('admin.index')->with('message', 'Sucessfully Login to Admin Dashboard');
+                        return redirect()->route('admin.index')->with('message', 'Successfully logged in to Admin Dashboard');
                     case 'Teacher':
-                        return redirect()->route('teacher.index')->with('message', 'Sucessfully Login to Teacher Dashboard');
+                        return redirect()->route('teacher.index')->with('message', 'Successfully logged in to Teacher Dashboard');
                     default:
                         Auth::logout();
-                        return redirect()->route('adminLogin.login')->with('message','Wrong Email & Password');
+                        return redirect()->route('adminLogin.login')->with('message', 'Wrong Email & Password');
                 }
             } else {
                 return redirect()->back()->with('message', 'Wrong email or password. Please try again.');
@@ -34,6 +40,7 @@ class LoginController extends Controller
 
         return view('Admin.Login.login');
     }
+
     public function logout()
     {
         Auth::logout();

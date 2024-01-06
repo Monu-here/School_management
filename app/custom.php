@@ -8,10 +8,13 @@ function getSetting()
 {
     return DB::table('settings')->first();
 }
+function getUserSetting()
+{
+    return Auth::user();
+}
 function getAgo($timestamp)
 {
     $carbonDate = Carbon::parse($timestamp);
     return $carbonDate->diffForHumans();
 }
 // @php
-
