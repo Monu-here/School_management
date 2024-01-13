@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(BloodGroup::class);
+        $this->call(classSeeder::class);
     }
 }

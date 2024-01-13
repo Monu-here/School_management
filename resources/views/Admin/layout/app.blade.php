@@ -8,7 +8,7 @@
         $setting = getSetting();
     @endphp
     @if ($setting)
-        <title> {{ $setting->titletext ?? "School"}} | Monu @yield('title') </title>
+        <title> {{ $setting->titletext ?? 'School' }} | Monu @yield('title') </title>
     @endif
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -89,6 +89,26 @@
                     <span class="links_name">Department</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.payment.add') }}">
+                    <i class='bx bx-cash'></i>
+                    <span class="links_name">Payment</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.payment.studentPayment') }}">
+                    <i class='bx bx-cash'></i>
+                    <span class="links_name">Student Payment</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.promotion.index') }}">
+                    <i class='bx bx-cash'></i>
+                    <span class="links_name">sssssssss</span>
+                </a>
+            </li>
+
+
 
 
             <li class="log_out">
@@ -184,6 +204,7 @@
             $('#openmodel').modal('show');
             $('#showteacher').modal('show');
         }
+
         function showDep() {
             $('#opendep').modal('show');
             $('#showDepartment').modal('show');

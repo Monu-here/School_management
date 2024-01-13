@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classs;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -38,18 +39,25 @@ class StudentController extends Controller
             $student->gender = $request->gender;
             $student->dob = $request->dob;
             $student->roll = $request->roll;
-            $student->class = $request->class;
+            $student->class_id = $request->class_id;
             $student->email = $request->email;
             $student->number = $request->number;
             $student->section = $request->section;
+            $student->address = $request->address;
+            $student->blood_id = $request->blood_id;
+            $student->reli = $request->reli;
+            $student->session_year = $request->session_year;
+
             $student->image = $request->image->store('uploads/student');
             $student->save();
             return redirect()->back()->with('message', 'Data Add Sucessfully');
         } else {
-            return view('Admin.Student.add');
+            $classes = DB::table('classses')->get();
+            $bloods = DB::table('bloods')->get();
+            return view('Admin.Student.add', compact('classes', 'bloods'));
         }
     }
-    public function teacherIndex(Request $request)
+    public function studentIndex(Request $request)
     {
         $name = $request->input('name');
         $teachers = Teacher::when($name, function ($query) use ($name) {
@@ -87,5 +95,26 @@ class StudentController extends Controller
     {
         $teacherData = DB::table('teachers')->find($teacher);
         return view('Admin.Teacher.show', compact('teacherData'));
+    }
+    public function studentShow($student)
+    {
+        // Find the student by ID with the 'class' relationship loaded
+        $student = Student::with(['classes', 'blood'])->find($student);
+        // dd($student);
+
+        // Check if the student is not found
+
+
+        // Access the 'class' relationship and its 'name' property, providing a fallback value if null
+        // $className = $student->classes ? $student->classes->name : 'N/A';
+
+        // Get all classes (you may want to replace this with your actual logic to get classes)
+        $classes = DB::table('classses')->get();
+
+        // Get all blood groups
+        $bloods = DB::table('bloods')->get();
+
+        // Return the view with the student, className, classes, and bloods data
+        return view('Admin.Student.show', compact('student', 'classes', 'bloods'));
     }
 }

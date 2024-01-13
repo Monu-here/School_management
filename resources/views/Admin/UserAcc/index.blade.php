@@ -45,6 +45,7 @@
                                         class="btn btn-sm btn-primary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a> --}}
+                                    
                                      <a href="{{ route('admin.user.del', ['user' => $user->id]) }}"
                                         class="btn btn-sm btn-danger">
                                         <i class="fa fa-trash"></i>

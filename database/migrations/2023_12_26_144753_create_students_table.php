@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('gender');
             $table->date('dob');
             $table->integer('roll');
-            $table->integer('class');
             $table->text('email')->nullable();
             $table->text('number')->nullable();
             $table->text('image')->nullable();

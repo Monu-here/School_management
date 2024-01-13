@@ -34,12 +34,8 @@
                             <th>Image</th>
                             <th>Section</th>
                             <th>Name</th>
-                            <th>Gender</th>
-                            <th>Date Of Birth</th>
-                            <th>Roll No</th>
-                            <th>Class</th>
-                            <th>Email</th>
-                            <th>Number</th>
+
+                            <th>Action</th>
                             <th class="d-none">Created day</th>
                         </tr>
                     </thead>
@@ -52,12 +48,10 @@
                                 <td><img src="{{ asset($student->image) }}" alt="" width="60"></td>
                                 <td>{{ $student->section }}</td>
                                 <td>{{ $student->name }}</td>
-                                <td>{{ $student->gender }}</td>
-                                <td>{{ $student->dob }}</td>
-                                <td>{{ $student->roll }}</td>
-                                <td>{{ $student->class }}</td>
-                                <td>{{ $student->email }}</td>
-                                <td>{{ $student->number }}</td>
+
+                                <td>
+                                    <a href="{{route('admin.student.studentShow',['student'=>$student->id])}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i></a>
+                                </td>
                                 <td>
                                     {{ getAgo($student->created_at) }}
                                 </td>

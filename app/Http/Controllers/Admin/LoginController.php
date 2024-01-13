@@ -22,7 +22,7 @@ class LoginController extends Controller
                 $user = Auth::user();
 
                 // Send email here, after successful authentication
-                Mail::to('testmehere000@gmail.com')->send(new MyEmail());
+                // Mail::to('testmehere000@gmail.com')->send(new MyEmail());
 
                 switch ($user->role_name) {
                     case 'Admin':

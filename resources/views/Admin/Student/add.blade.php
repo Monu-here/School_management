@@ -10,16 +10,16 @@
         }
 
         /* .password-container {
-                            position: relative;
-                        }
+                                                position: relative;
+                                            }
 
-                        .password-toggle {
-                            position: absolute;
-                            right: 10px;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            cursor: pointer;
-                        } */
+                                            .password-toggle {
+                                                position: absolute;
+                                                right: 10px;
+                                                top: 50%;
+                                                transform: translateY(-50%);
+                                                cursor: pointer;
+                                            } */
     </style>
 @endsection
 @section('linkbar')
@@ -99,21 +99,23 @@
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Class <span class="login-danger">*</span></label>
-                                                    <input type="number" class="form-control" name="class"
-                                                        placeholder="Enter Class">
+                                                    <select class="form-control" name="class_id">
+                                                        <option selected disabled>Select Class</option>
+                                                        @foreach ($classes as $c)
+                                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
 
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Religion <span class="login-danger">*</span></label>
-                                                    <select class="form-control" name="gender">
+                                                    <select class="form-control" name="reli">
                                                         <option selected disabled>Select Gender</option>
                                                         <option value="hindu">Hindu</option>
-                                                        <option value="Christian">Christian
-                                                        </option>
-                                                        <option value="other">
-                                                            Other</option>
+                                                        <option value="Christian">Christian</option>
+                                                        <option value="other">Other</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -132,6 +134,17 @@
                                             </div>
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
+                                                    <label>Blood Group <span class="login-danger">*</span></label>
+                                                    <select class="form-control" name="blood_id">
+                                                        <option selected disabled>Select Blood Group</option>
+                                                        @foreach ($bloods as $blood)
+                                                            <option value="{{ $blood->id }}">{{ $blood->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
                                                     <label>Email <span class="login-danger"></span></label>
                                                     <input type="email" class="form-control" name="email"
                                                         placeholder="Enter Email">
@@ -142,6 +155,20 @@
                                                     <label>Phone Number <span class="login-danger"></span></label>
                                                     <input type="number" class="form-control" name="number"
                                                         placeholder="Enter Number">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Address <span class="login-danger"></span></label>
+                                                    <input type="text" class="form-control" name="address"
+                                                        placeholder="Enter Address">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Admit Year <span class="login-danger"></span></label>
+                                                    <select id="yearDropdown" name="session_year" class="form-control"></select>
+
                                                 </div>
                                             </div>
 
@@ -197,4 +224,36 @@
         //     }
         // }
     </script>
+    <script>
+        // Function to populate the year dropdown from 2000 to the current year
+        function populateYearDropdown() {
+          var currentYear = new Date().getFullYear();
+          var dropdown = document.getElementById("yearDropdown");
+
+          for (var year = 2000; year <= currentYear; year++) {
+            var option = document.createElement("option");
+            option.value = year;
+            option.text = year;
+            dropdown.add(option);
+          }
+        }
+
+        // Call the function to populate the dropdown on page load
+        populateYearDropdown();
+
+        // Optionally, you can update the dropdown dynamically if the current year changes
+        setInterval(function() {
+          var currentYear = new Date().getFullYear();
+          var dropdown = document.getElementById("yearDropdown");
+
+          // Check if the last year in the dropdown is less than the current year
+          if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
+            // Clear the current dropdown options
+            dropdown.options.length = 0;
+
+            // Repopulate the dropdown with updated years
+            populateYearDropdown();
+          }
+        }, 5000); // Update every 1000 milliseconds (1 second)
+      </script>
 @endsection
