@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-         
+
     @endsection
     @section('content')
         <div class="card-body">
@@ -18,9 +18,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Image</th>
-                            <th>Section</th>
                             <th>Name</th>
+                            <th>Term</th>
+                            <th>Year</th>
                             <th>Action</th>
                          </tr>
                     </thead>
@@ -32,7 +32,6 @@
                                 <td>{{ $exam->name }}</td>
                                  <td>{{ $exam->term }}</td>
                                 <td>{{ $exam->year }}</td>
-
                                 <td>
                                     xxx
                                  </td>

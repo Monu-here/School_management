@@ -82,6 +82,7 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
 
     Route::prefix('exam')->name('exam.')->group(function () {
         Route::get('', [ExamController::class, 'index']);
+        Route::match(['GET', 'POST'], 'add', [ExamController::class, 'add'])->name('add');
     });
     Route::prefix('grade')->name('grade.')->group(function () {
         Route::get('', [GradeController::class, 'index'])->name('index');
