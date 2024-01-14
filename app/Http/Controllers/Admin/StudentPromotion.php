@@ -7,9 +7,18 @@ use App\Models\Classs;
 use App\Models\Student;
 use App\Models\StudentPromotion as ModelsStudentPromotion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentPromotion extends Controller
 {
+    public function list()
+    {
+        $sts = Student::all();
+        $cls = Classs::all();
+        $pros = ModelsStudentPromotion::all(); // Update this line
+        return view('Admin.pro.index', compact('sts', 'cls', 'pros'));
+    }
+
     public function index(Request $request)
     {
         $cc = Classs::all();
@@ -27,12 +36,11 @@ class StudentPromotion extends Controller
             } else {
                 // If the form is not submitted, retrieve all students
                 $students = Student::all();
-                dd($students);
             }
         }
         return view('Admin.pro.lll', compact('cc', 'ss', 'students'));
     }
-    
+
     public function p(Request $request)
     {
         // Validate the form data
@@ -54,20 +62,40 @@ class StudentPromotion extends Controller
         $fromClass = $student->class_id; // Adjust this based on your actual relationship
         $fromSession = '1'; // Set a default value
         $toSession = '2';
+        //checking if data is already lsave
+        $existingStudentPro = ModelsStudentPromotion::where('student_id', $studentId)->first();
+        if ($existingStudentPro) {
+            $existingStudentPro->update([
+                'student_id' => $studentId,
+                'from_class' => $fromClass,
+                'from_section' => $student->section,
+                'to_class' => $toClass,
+                'to_section' => $toSection,
+                'from_session' => $fromSession,
+                'to_session' => $toSession,
+                'status' => $status,
+            ]);
+        } else {
+
+            ModelsStudentPromotion::create([
+                'student_id' => $studentId,
+                'from_class' => $fromClass,
+                'from_section' => $student->section,
+                'to_class' => $toClass,
+                'to_section' => $toSection,
+                'from_session' => $fromSession,
+                'to_session' => $toSession,
+                'status' => $status,
+            ]);
+        }
+
 
         // Save the promotion data to the StudentPromotion model/table
-        ModelsStudentPromotion::create([
-            'student_id' => $studentId,
-            'from_class' => $fromClass,
-            'from_section' => $student->section,
-            'to_class' => $toClass,
-            'to_section' => $toSection,
-            'from_session' => $fromSession,
-            'to_session' => $toSession,
-            'status' => $status,
-        ]);
-
-        // Delete the student data from the students table
+        if ($status === 'not_promote') {
+            // If the status is "Not Promote", don't update the student's data
+            return redirect()->route('admin.promotion.index');
+        }
+        // Update the student data from the students table
         $student->update([
             'class_id' => $toClass,
             'section' => $toSection,

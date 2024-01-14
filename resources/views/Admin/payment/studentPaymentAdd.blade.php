@@ -328,7 +328,7 @@
                             <th>Balance</th>
                             <th>Paid</th>
                             <th>Year</th>
-                            <th>Stt</th>
+                            <th>Status</th>
                             <th>Print Bill</th>
                         </tr>
                     </thead>

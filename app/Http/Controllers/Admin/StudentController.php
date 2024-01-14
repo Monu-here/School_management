@@ -57,7 +57,7 @@ class StudentController extends Controller
             return view('Admin.Student.add', compact('classes', 'bloods'));
         }
     }
-    public function studentIndex(Request $request)
+    public function teacherIndex(Request $request)
     {
         $name = $request->input('name');
         $teachers = Teacher::when($name, function ($query) use ($name) {

@@ -18,9 +18,14 @@ class StudentPromotion extends Model
         'to_session',
         'status',
     ];
-    public function classes()
+    public function fromClass()
     {
-        return $this->belongsTo(Classs::class, 'class_id');
+        return $this->belongsTo(Classs::class, 'from_class');
+    }
+
+    public function toClass()
+    {
+        return $this->belongsTo(Classs::class, 'to_class');
     }
 
     public function student()

@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(BloodGroup::class);
         $this->call(classSeeder::class);
+        $this->call(GradeSeeder::class);
     }
 }

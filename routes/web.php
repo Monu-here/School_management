@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\ExamController;
+use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PaymentController;
@@ -72,9 +74,18 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
 
 
     Route::prefix('promotion')->name('promotion.')->group(function () {
+        Route::get('list', [StudentPromotion::class, 'list'])->name('list');
         Route::match(['GET', 'POST'], '', [StudentPromotion::class, 'index'])->name('index');
         Route::match(['GET', 'POST'], '/pp', [StudentPromotion::class, 'p'])->name('p');
-      });
+    });
+
+
+    Route::prefix('exam')->name('exam.')->group(function () {
+        Route::get('', [ExamController::class, 'index']);
+    });
+    Route::prefix('grade')->name('grade.')->group(function () {
+        Route::get('', [GradeController::class, 'index'])->name('index');
+    });
 });
 
 

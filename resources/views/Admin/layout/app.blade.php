@@ -102,9 +102,9 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.promotion.index') }}">
+                <a href="{{ route('admin.promotion.list') }}">
                     <i class='bx bx-cash'></i>
-                    <span class="links_name">sssssssss</span>
+                    <span class="links_name">Student Promotion</span>
                 </a>
             </li>
 
