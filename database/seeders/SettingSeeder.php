@@ -17,11 +17,11 @@ class SettingSeeder extends Seeder
         DB::table('settings')->delete();
 
         $datas = [
-            ['type' => 'current_session', 'description' => '2024-2025'],
-            ['type' => 'term_ends', 'description' => '7/10/2018'],
-            ['type' => 'term_begins', 'description' => '7/10/2018'],
-            ['type' => 'phone', 'description' => '0123456789'],
-            ['type' => 'address', 'description' => '18B North Central Park, Behind Central Square Tourist Center'],
+            ['type' => 'current_session', 'despc' => '2024-2025'],
+            ['type' => 'term_ends', 'despc' => '7/10/2018'],
+            ['type' => 'term_begins', 'despc' => '7/10/2018'],
+            ['type' => 'phone', 'despc' => '0123456789'],
+            ['type' => 'address', 'despc' => '18B North Central Park, Behind Central Square Tourist Center'],
         ];
 
         foreach ($datas as $data) {

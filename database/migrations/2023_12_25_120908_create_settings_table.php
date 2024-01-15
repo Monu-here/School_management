@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('webistename')->nullable();
             $table->text('websiteimage')->nullable();
-            $table->text('favicon')->nullable();
+             $table->text('favicon')->nullable();
             $table->timestamps();
         });
     }

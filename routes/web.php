@@ -79,19 +79,12 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::match(['GET', 'POST'], '', [StudentPromotion::class, 'index'])->name('index');
         Route::match(['GET', 'POST'], '/pp', [StudentPromotion::class, 'p'])->name('p');
     });
-
-
     Route::prefix('exam')->name('exam.')->group(function () {
         Route::get('', [ExamController::class, 'index']);
         Route::match(['GET', 'POST'], 'add', [ExamController::class, 'add'])->name('add');
     });
     Route::prefix('grade')->name('grade.')->group(function () {
         Route::get('', [GradeController::class, 'index'])->name('index');
-    });
-
-    Route::prefix('mark')->name('mark.')->group(function () {
-        Route::get('/create', [MarksController::class, 'create'])->name('create');
-        Route::post('/store', [MarksController::class, 'store'])->name('store');
     });
 });
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('settings', function (Blueprint $table) {
             $table->string('type')->nullable();
-            $table->string('description')->nullable();
+            $table->string('despc')->nullable();
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('settings', function (Blueprint $table) {
             $table->dropColumn('type');
-            $table->dropColumn('description');
+            $table->dropColumn('despc');
         });
     }
 };
