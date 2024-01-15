@@ -22,7 +22,9 @@ class ExamController extends Controller
             $exam->term = $request->term;
             $exam->year = $request->year;
             $exam->save();
-
+            return redirect()->back();
+        } else {
+            return view('Admin.Exam.add');
         }
     }
 }

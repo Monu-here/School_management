@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\MarksController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentController;
@@ -86,6 +87,11 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
     });
     Route::prefix('grade')->name('grade.')->group(function () {
         Route::get('', [GradeController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('mark')->name('mark.')->group(function () {
+        Route::get('/create', [MarksController::class, 'create'])->name('create');
+        Route::post('/store', [MarksController::class, 'store'])->name('store');
     });
 });
 
