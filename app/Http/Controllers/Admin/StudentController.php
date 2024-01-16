@@ -21,13 +21,13 @@ class StudentController extends Controller
     // }
     public function index(Request $request)
     {
-        $section = $request->input('section');
+        $section_id = $request->input('section_id');
 
-        $students = Student::when($section, function ($query) use ($section) {
-            return $query->where('section', $section);
+        $students = Student::when($section_id, function ($query) use ($section_id) {
+            return $query->where('section_id', $section_id);
         })->get();
-
-        return view('Admin.Student.index', ['students' => $students, 'selectedSection' => $section]);
+        $sections = DB::table('sections')->get();
+        return view('Admin.Student.index', compact('sections'),['students' => $students, 'selectedSection' => $section_id ]);
     }
 
     public function add(Request $request)
@@ -42,10 +42,11 @@ class StudentController extends Controller
             $student->class_id = $request->class_id;
             $student->email = $request->email;
             $student->number = $request->number;
-            $student->section = $request->section;
+            $student->section = 0;
             $student->address = $request->address;
             $student->blood_id = $request->blood_id;
             $student->reli = $request->reli;
+            $student->section_id = $request->section_id;
             $student->session_year = $request->session_year;
 
             $student->image = $request->image->store('uploads/student');
@@ -54,7 +55,8 @@ class StudentController extends Controller
         } else {
             $classes = DB::table('classses')->get();
             $bloods = DB::table('bloods')->get();
-            return view('Admin.Student.add', compact('classes', 'bloods'));
+            $sections = DB::table('sections')->get();
+            return view('Admin.Student.add', compact('classes', 'bloods', 'sections'));
         }
     }
     public function teacherIndex(Request $request)

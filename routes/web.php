@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\MarkController;
 use App\Http\Controllers\Admin\MarksController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\SettingController;
@@ -80,11 +81,21 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::match(['GET', 'POST'], '/pp', [StudentPromotion::class, 'p'])->name('p');
     });
     Route::prefix('exam')->name('exam.')->group(function () {
-        Route::get('', [ExamController::class, 'index']);
+        Route::get('', [ExamController::class, 'index'])->name('index');
         Route::match(['GET', 'POST'], 'add', [ExamController::class, 'add'])->name('add');
     });
     Route::prefix('grade')->name('grade.')->group(function () {
         Route::get('', [GradeController::class, 'index'])->name('index');
+    });
+
+
+
+
+    Route::prefix('mark')->name('mark.')->group(function () {
+        Route::get('', [MarkController::class, 'index'])->name('index');
+        Route::match(['GET', 'POST'], 'add', [MarkController::class, 'add'])->name('add');
+        Route::post('/admin/marks/students', [MarkController::class, 'getStudents'])->name('marks.students');
+        Route::post('/admin/marks/store', [MarkController::class, 'storeMarks'])->name('store');
     });
 });
 

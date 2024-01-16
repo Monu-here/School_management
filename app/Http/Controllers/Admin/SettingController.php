@@ -25,6 +25,7 @@ class SettingController extends Controller
             }
             $setting->webistename = $request->webistename;
             $setting->titletext = $request->titletext;
+            $setting ->despc = $request->despc;
             $setting->save();
             return redirect()->back()->with('message','Data Add Successfully');
         } else {

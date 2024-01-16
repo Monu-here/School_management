@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,10 @@ function getAgo($timestamp)
 function getPaymentRecord()
 {
     return DB::table('payment_records')->first();
+}
+function getSettingss($type)
+{
+    return Setting::where('type', $type)->first()->despc;
 }
 // function getStatus()
 // {

@@ -122,13 +122,12 @@
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Section <span class="login-danger">*</span></label>
-                                                    <select class="form-control" name="section">
+                                                    <select class="form-control" name="section_id">
                                                         <option selected disabled>Select Section</option>
-                                                        <option value="A">A</option>
-                                                        <option value="B">B
-                                                        </option>
-                                                        <option value="C">
-                                                            C</option>
+
+                                                        @foreach ($sections as $section)
+                                                        <option value="{{$section->id}}">{{$section->name}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>

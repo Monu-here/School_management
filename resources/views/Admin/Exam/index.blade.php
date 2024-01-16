@@ -4,8 +4,8 @@
         <div class="page-header">
             <div class="row">
                 <div class="col">
-                    <h3 class="page-title " style="display: flex; justify-content: space-between"> Student <a
-                            href="{{ route('admin.student.add') }}" class="btn btn-primary">Add Student </a></h3>
+                    <h3 class="page-title " style="display: flex; justify-content: space-between"> Exam <a
+                            href="{{ route('admin.exam.add') }}" class="btn btn-primary">Add Exam </a></h3>
                 </div>
             </div>
         </div>

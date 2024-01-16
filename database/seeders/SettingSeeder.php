@@ -18,10 +18,6 @@ class SettingSeeder extends Seeder
 
         $datas = [
             ['type' => 'current_session', 'despc' => '2024-2025'],
-            ['type' => 'term_ends', 'despc' => '7/10/2018'],
-            ['type' => 'term_begins', 'despc' => '7/10/2018'],
-            ['type' => 'phone', 'despc' => '0123456789'],
-            ['type' => 'address', 'despc' => '18B North Central Park, Behind Central Square Tourist Center'],
         ];
 
         foreach ($datas as $data) {

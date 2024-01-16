@@ -16,4 +16,8 @@ class Classs extends Model
     {
         return $this->belongsTo(StudentPromotion::class);
     }
+    public  function mark()
+    {
+        return $this->belongsTo(Mark::class);
+    }
 }

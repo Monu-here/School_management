@@ -8,6 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class Mark extends Model
 {
     use HasFactory;
-    protected $fillable = ['t1', 't2', 't3', 't4', 'tca', 'exm', 'tex1', 'tex2', 'tex3', 'sub_pos', 'cum', 'cum_ave', 'grade_id', 'year', 'exam_id', 'subject_id', 'class_id', 'student_id', 'section_id'];
-   
+    // Mark.php
+    protected $fillable = [
+        'exam_id', 'student_id', 'subject_id', 'obtained_marks', 'practical_marks', 'total_marks', 'grade',
+    ];
+
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+    public function classes()
+    {
+        return $this->belongsTo(Classs::class, 'class_id');
+    }
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
+    }
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }

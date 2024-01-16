@@ -42,6 +42,11 @@
                                         name="webistename" id="webistename" value="{{ $setting->webistename ??"admin"}}">
                                 </div>
                                 <div class="form-group">
+                                    <label>Session <span class="star-red">*</span></label>
+                                    <input type="text" class="form-control" placeholder="Enter Website Name"
+                                        name="despc" id="despc" value="{{ $setting->despc ??"admin"}}">
+                                </div>
+                                <div class="form-group">
                                     <label>Website Title <span class="star-red">*</span></label>
                                     <input type="text" class="form-control" placeholder="Enter Website Title"
                                         name="titletext" id="titletext" value="{{ $setting->titletext ?? "admin" }}">
@@ -83,6 +88,15 @@
                                         </a>
                                     </div>
                                 </div>
+                                <select data-placeholder="Choose..." required name="despc" id="despc" class="select-search form-control">
+                                    <option value=""></option>
+                                    @php
+                                        $currentSession = $setting->current_session ?? '';
+                                    @endphp
+                                    @for ($y = date('Y', strtotime('- 5 years')); $y <= date('Y', strtotime('+ 2 years')); $y++)
+                                        <option {{ ($currentSession == (($y -= 1) . '-' . ($y += 1))) ? 'selected' : '' }}>{{ ($y -= 1) . '-' . ($y += 1) }}</option>
+                                    @endfor
+                                </select>
 
                                 <div class="form-group mb-0">
                                     <div class="settings-btns">

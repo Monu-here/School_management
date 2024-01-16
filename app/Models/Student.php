@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
- 
+
     protected $fillable = [
         'class_id',
         'section'
@@ -34,5 +34,18 @@ class Student extends Model
     public function StudentPromotion()
     {
         return $this->belongsTo(StudentPromotion::class);
+    }
+    // Student.php
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
+    public function marks()
+    {
+        return $this->hasMany(Mark::class, 'student_id', 'id');
+    }
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
     }
 }

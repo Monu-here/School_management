@@ -12,11 +12,12 @@
         <form action="{{ route('admin.student.index') }}" method="GET">
             <div class="form-group filter mb-4"
                 style="display: flex; justify-content: space-around; width: 250px; margin-top: 10px">
-                <select name="section" id="section" class="form-control">
-                    <option value="" {{ empty($selectedSection) ? 'selected' : '' }}>All Sections</option>
-                    <option value="A" {{ $selectedSection == 'A' ? 'selected' : '' }}>A</option>
-                    <option value="B" {{ $selectedSection == 'B' ? 'selected' : '' }}>B</option>
-                    <option value="C" {{ $selectedSection == 'C' ? 'selected' : '' }}>C</option>
+                <select name="section_id" id="section_id" class="form-control">
+ 
+                    @foreach ($sections as $section)
+                        <option value="{{ $section->id }}">{{ $section->name }}</option>
+                    @endforeach
+
                 </select>
                 <button type="submit" class="btn btn-success " style="margin-left: 10px"><i
                         class="fa-solid fa-filter"></i></button>
@@ -50,7 +51,8 @@
                                 <td>{{ $student->name }}</td>
 
                                 <td>
-                                    <a href="{{route('admin.student.studentShow',['student'=>$student->id])}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('admin.student.studentShow', ['student' => $student->id]) }}"
+                                        class="btn btn-sm btn-success"><i class="fa fa-eye"></i></a>
                                 </td>
                                 <td>
                                     {{ getAgo($student->created_at) }}
