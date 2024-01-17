@@ -16,7 +16,8 @@ class MarkController extends Controller
 {
     public function index()
     {
-        return view('Admin.mark.index');
+        $marks = DB::table('marks')->get();
+        return view('Admin.mark.index',compact('marks'));
     }
 
     public function add(Request $request)
@@ -55,7 +56,7 @@ class MarkController extends Controller
         $sections = DB::table('sections')->get();
         $subjects = DB::table('subjects')->get();
         $grades = Grade::all();
-        return view('Admin.mark.create', compact('students', 'selectedClass', 'selectedSection', 'classes', 'sections', 'subjects', 'exams', 'selectedExam', 'selectedSubject', 'sec','grades'));
+        return view('Admin.mark.create', compact('students', 'selectedClass', 'selectedSection', 'classes', 'sections', 'subjects', 'exams', 'selectedExam', 'selectedSubject', 'sec', 'grades'));
     }
 
     public function storeMarks(Request $request)
@@ -69,9 +70,15 @@ class MarkController extends Controller
             $practicalMarks = $request->input("practical_marks.{$studentId}") ?? 0;
             $totalMarks = $obtainedMarks + $practicalMarks;
 
-            $grade = $grades->first(function ($g) use ($totalMarks) {
-                return $totalMarks >= $g->min_marks && $totalMarks <= $g->max_marks;
-            });
+            // $grade = $grades->first(function ($g) use ($totalMarks) {
+            //     return $totalMarks >= $g->min_marks && $totalMarks <= $g->max_marks;
+            // });
+
+            $totalObtained = $obtainedMarks + $practicalMarks;
+
+            $grade = Grade::where("mark_from", "<=", $totalObtained)->where("mark_to", ">=", $totalObtained)->first();
+
+            // dd($grade, $totalObtained);
 
             $student = Student::find($studentId);
 
@@ -83,7 +90,7 @@ class MarkController extends Controller
             $mark->obtained_marks = $obtainedMarks;
             $mark->practical_marks = $practicalMarks;
             $mark->total_marks = $totalMarks;
-            $mark->grade = $grade ? $grade->grade : 'N/A';
+            $mark->grade = $grade ? $grade->name : 'N/A';
             $mark->save();
         }
 

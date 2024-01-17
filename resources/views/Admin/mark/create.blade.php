@@ -113,14 +113,14 @@
                                     <td>
                                         <input type="text" name="practical_marks[{{ $student->id }}]"
                                             class="form-control" oninput="calculateTotalMarks({{ $student->id }})">
- 
+
                                     </td>
                                     <td>
                                         <!-- Display the total marks -->
                                         <span id="total_marks_{{ $student->id }}"></span>
                                     </td>
                                     <td>
-                                        <!-- Display the grade -->
+                                       {{$grade->name}}
                                      </td>
 
                                     <td>
@@ -130,10 +130,10 @@
                                         <input type="hidden" name="subject_id" value="{{ $selectedSubject->id }}">
                                     </td>
                                     <td>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
                                     </td>
                                 </tr>
                             @endforeach
-                            <button class="btn btn-primary">Submit</button>
                         </form>
                     </tbody>
                 </table>
