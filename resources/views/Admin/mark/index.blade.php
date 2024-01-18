@@ -21,13 +21,15 @@
         <tbody>
             @foreach ($marks as $mark)
                 <tr>
-                    <td>{{$mark->exam_id}}</td>
-                    <td>{{$mark->student_id}}</td>
-                    <td>{{$mark->subject_id}}</td>
+                    <td>{{$mark->exam->name}}</td>
+                    <td>{{$mark->student->name}}</td>
+                    <td>{{$mark->subject->name}}</td>
                     <td>{{$mark->obtained_marks}}</td>
                     <td>{{$mark->practical_marks}}</td>
                     <td>{{$mark->total_marks}}</td>
                     <td>{{$mark->grade}}</td>
+                    {{-- <td>{{$mark->grade->remark}}</td> --}}
+
                     {{-- <td>{{$mark->grade}}</td> --}}
                 </tr>
             @endforeach

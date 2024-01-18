@@ -86,6 +86,7 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
     });
     Route::prefix('grade')->name('grade.')->group(function () {
         Route::get('', [GradeController::class, 'index'])->name('index');
+        Route::match(['GET', 'POST'], 'add', [GradeController::class, 'add'])->name('add');
     });
 
 
@@ -96,6 +97,7 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::match(['GET', 'POST'], 'add', [MarkController::class, 'add'])->name('add');
         Route::post('/admin/marks/students', [MarkController::class, 'getStudents'])->name('marks.students');
         Route::post('/admin/marks/store', [MarkController::class, 'storeMarks'])->name('store');
+        Route::get('/admin/marksheet/{studentId}', [MarkController::class, 'marksheet'])->name('admin.marksheet');
     });
 });
 

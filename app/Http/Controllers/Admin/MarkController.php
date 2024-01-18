@@ -9,6 +9,7 @@ use App\Models\Mark;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,8 +17,9 @@ class MarkController extends Controller
 {
     public function index()
     {
-        $marks = DB::table('marks')->get();
-        return view('Admin.mark.index',compact('marks'));
+        $marks = Mark::with('Student', 'subject', 'Exam', 'Grade')->get();
+        // dd($marks);
+        return view('Admin.mark.index', compact('marks'));
     }
 
     public function add(Request $request)
@@ -70,15 +72,12 @@ class MarkController extends Controller
             $practicalMarks = $request->input("practical_marks.{$studentId}") ?? 0;
             $totalMarks = $obtainedMarks + $practicalMarks;
 
-            // $grade = $grades->first(function ($g) use ($totalMarks) {
-            //     return $totalMarks >= $g->min_marks && $totalMarks <= $g->max_marks;
-            // });
+
 
             $totalObtained = $obtainedMarks + $practicalMarks;
 
             $grade = Grade::where("mark_from", "<=", $totalObtained)->where("mark_to", ">=", $totalObtained)->first();
 
-            // dd($grade, $totalObtained);
 
             $student = Student::find($studentId);
 
@@ -91,9 +90,45 @@ class MarkController extends Controller
             $mark->practical_marks = $practicalMarks;
             $mark->total_marks = $totalMarks;
             $mark->grade = $grade ? $grade->name : 'N/A';
+            $mark->remark = $grade ? $grade->remark : 'N/A';
             $mark->save();
         }
-
         return redirect()->route('admin.mark.index')->with('success', 'Marks saved successfully!');
+    }
+    ///        work of or list marksheet show function           ////////
+    public function marksheet($studentId)
+    {
+        $student = Student::find($studentId);
+
+        if (!$student) {
+            return redirect()->route('admin.mark.index')->with('error', 'Student not found!');
+        }
+
+        $marks = Mark::where('student_id', $studentId)
+            ->with('Exam', 'Subject', 'Grade')
+            ->get();
+
+        $totalMarks = $marks->sum('total_marks');
+        $percentage = round($totalMarks / 500 * 100, 2);
+        $grade = Grade::where("mark_from", "<=", $percentage)->where("mark_to", ">=", $percentage)->first();
+
+        // Save the grade in the students table
+
+        // Save the grade and remark in the students table
+        $student->finalMrak = $totalMarks;
+        $student->grade = $grade ? $grade->name : 'N/A';
+        $student->remark = $grade ? $grade->remark : 'N/A'; // Corrected line
+        $student->save();
+
+
+
+
+
+        $grades = DB::table('grades')->get();
+
+        $date = Carbon::now()
+            ->format('l, jS \of F Y');
+
+        return view('Admin.mark.mark_sheet', compact('grades', 'date', 'student', 'marks', 'percentage', 'totalMarks'));
     }
 }

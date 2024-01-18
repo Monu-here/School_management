@@ -120,8 +120,8 @@
                                         <span id="total_marks_{{ $student->id }}"></span>
                                     </td>
                                     <td>
-                                       {{$grade->name}}
-                                     </td>
+                                        {{-- {{$grade->name}} --}}
+                                    </td>
 
                                     <td>
                                         <!-- Hidden inputs for student-related information -->
@@ -142,18 +142,18 @@
             <p>No students found for the selected class and section.</p>
         @endif
     </div>
+
 @endsection
 @section('js')
-<script>
-    // Calculate and display the total marks for a given student
-    function calculateTotalMarks(studentId) {
-        var obtainedMarks = parseFloat(document.getElementsByName("obtained_marks[" + studentId + "]")[0].value) || 0;
-        var practicalMarks = parseFloat(document.getElementsByName("practical_marks[" + studentId + "]")[0].value) || 0;
-        var totalMarks = obtainedMarks + practicalMarks;
+    <script>
+        // Calculate and display the total marks for a given student
+        function calculateTotalMarks(studentId) {
+            var obtainedMarks = parseFloat(document.getElementsByName("obtained_marks[" + studentId + "]")[0].value) || 0;
+            var practicalMarks = parseFloat(document.getElementsByName("practical_marks[" + studentId + "]")[0].value) || 0;
+            var totalMarks = obtainedMarks + practicalMarks;
 
-        // Display total marks
-        document.getElementById("total_marks_" + studentId).textContent = totalMarks;
-    }
-</script>
-
+            // Display total marks
+            document.getElementById("total_marks_" + studentId).textContent = totalMarks;
+        }
+    </script>
 @endsection

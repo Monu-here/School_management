@@ -13,7 +13,7 @@
             <div class="form-group filter mb-4"
                 style="display: flex; justify-content: space-around; width: 250px; margin-top: 10px">
                 <select name="section_id" id="section_id" class="form-control">
- 
+
                     @foreach ($sections as $section)
                         <option value="{{ $section->id }}">{{ $section->name }}</option>
                     @endforeach
@@ -37,6 +37,7 @@
                             <th>Name</th>
 
                             <th>Action</th>
+                            <th>jhgh</th>
                             <th class="d-none">Created day</th>
                         </tr>
                     </thead>
@@ -54,6 +55,7 @@
                                     <a href="{{ route('admin.student.studentShow', ['student' => $student->id]) }}"
                                         class="btn btn-sm btn-success"><i class="fa fa-eye"></i></a>
                                 </td>
+                                <td><a href="{{ route('admin.mark.admin.marksheet', $student->id) }}" class="btn btn-primary">Show Marksheet</a></td>
                                 <td>
                                     {{ getAgo($student->created_at) }}
                                 </td>

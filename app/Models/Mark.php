@@ -20,18 +20,24 @@ class Mark extends Model
     }
     public function classes()
     {
-        return $this->belongsTo(Classs::class, 'class_id');
+        return $this->belongsTo(Classs::class,);
     }
     public function section()
     {
-        return $this->belongsTo(Section::class, 'section_id');
+        return $this->belongsTo(Section::class,);
     }
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
     public function exam()
     {
         return $this->belongsTo(Exam::class);
     }
     public function grade()
-    {
-        return $this->belongsTo(Grade::class);
-    }
+{
+    return $this->belongsTo(Grade::class);
+}
+
 }

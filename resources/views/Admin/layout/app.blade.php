@@ -83,7 +83,7 @@
                     <span class="links_name">Teacher</span>
                 </a>
             </li>
-            {{-- <li>
+            <li>
                 <a href="{{ route('admin.department.index') }}">
                     <i class='bx bx-building-house'></i>
                     <span class="links_name">Department</span>
@@ -106,8 +106,8 @@
                     <i class='bx bx-cash'></i>
                     <span class="links_name">Student Promotion</span>
                 </a>
-            </li> --}}
-            <li>
+            </li>
+            {{-- <li>
                 <a href="{{ route('admin.exam.index') }}">
                     <i class='bx bx-cash'></i>
                     <span class="links_name">Exam List</span>
@@ -124,7 +124,7 @@
                     <i class='bx bx-cash'></i>
                     <span class="links_name">Mark</span>
                 </a>
-            </li>
+            </li> --}}
 
 
 

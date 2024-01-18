@@ -4,8 +4,8 @@
         <div class="page-header">
             <div class="row">
                 <div class="col">
-                    <h3 class="page-title " style="display: flex; justify-content: space-between"> Student <a
-                            href="{{ route('admin.student.add') }}" class="btn btn-primary">Add Student </a></h3>
+                    <h3 class="page-title " style="display: flex; justify-content: space-between"> Grade <a
+                            href="{{ route('admin.grade.add') }}" class="btn btn-primary">Add Grade </a></h3>
                 </div>
             </div>
         </div>
@@ -13,7 +13,7 @@
     @section('content')
         <div class="card-body">
             <div class="table-responsive">
-                <table id="clienttable" class="table table-striped table-bordered">
+                <table id="clienttable" class="table">
                     <thead>
                         <tr>
                             <th>#</th>

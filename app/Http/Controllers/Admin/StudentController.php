@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classs;
+use App\Models\Mark;
 use App\Models\Student;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +29,7 @@ class StudentController extends Controller
             return $query->where('section_id', $section_id);
         })->get();
         $sections = DB::table('sections')->get();
-        return view('Admin.Student.index', compact('sections'),['students' => $students, 'selectedSection' => $section_id ]);
+        return view('Admin.Student.index', compact('sections'), ['students' => $students, 'selectedSection' => $section_id]);
     }
 
     public function add(Request $request)
@@ -119,4 +121,24 @@ class StudentController extends Controller
         // Return the view with the student, className, classes, and bloods data
         return view('Admin.Student.show', compact('student', 'classes', 'bloods'));
     }
+
+
+    // public function marksheet($studentId)
+    // {
+    //     $student = Student::find($studentId);
+
+    //     if (!$student) {
+    //         return redirect()->route('admin.mark.index')->with('error', 'Student not found!');
+    //     }
+
+    //     $marks = Mark::where('student_id', $studentId)
+    //         ->with('Exam', 'Subject', 'Grade')
+    //         ->get();
+
+    //     $grades = DB::table('grades')->get();
+    //     $date = Carbon::now()
+    //         ->format('l, jS \of F Y');
+
+    //     return view('Admin.mark.mark_sheet', compact('grades', 'date', 'student', 'marks'));
+    // }
 }
