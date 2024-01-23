@@ -8,10 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Section extends Model
 {
     use HasFactory;
-    public function mark() {
+    public function mark()
+    {
         return $this->belongsTo(Mark::class);
     }
-    public function student() {
+    public function student()
+    {
         return $this->belongsTo(Student::class);
+    }
+    public function promotion()
+    {
+        return $this->belongsTo(StudentPromotion::class);
     }
 }

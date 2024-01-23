@@ -9,17 +9,9 @@
             color: red;
         }
 
-        /* .password-container {
-                                                position: relative;
-                                            }
-
-                                            .password-toggle {
-                                                position: absolute;
-                                                right: 10px;
-                                                top: 50%;
-                                                transform: translateY(-50%);
-                                                cursor: pointer;
-                                            } */
+        p {
+            font-size: 10px;
+        }
     </style>
 @endsection
 @section('linkbar')
@@ -41,6 +33,7 @@
                                     <div class="col-12">
                                         <h5 class="form-title"><span>Student Information</span></h5>
                                     </div>
+                                    <hr>
                                     <div class="col-md-3">
                                         <div class="form-group local-forms">
                                             <label>Image <span class="login-danger">*</span></label>
@@ -126,7 +119,8 @@
                                                         <option selected disabled>Select Section</option>
 
                                                         @foreach ($sections as $section)
-                                                        <option value="{{$section->id}}">{{$section->name}}</option>
+                                                            <option value="{{ $section->id }}">{{ $section->name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -166,11 +160,94 @@
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Admit Year <span class="login-danger"></span></label>
-                                                    <select id="yearDropdown" name="session_year" class="form-control"></select>
+                                                    <select id="yearDropdown" name="session_year"
+                                                        class="form-control"></select>
 
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="form-title"><span>Parent Information</span></h5>
+                                            </div>
+                                            <hr>
+                                            <div class="col-md-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Father Image <span class="login-danger">*</span></label>
+                                                    <input type="file" name="f_image" id="image"
+                                                        class="form-control photo" accept="image/*">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Father Name<span class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="f_name" placeholder="Enter Father Name" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Father Occuptaion<span
+                                                                    class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="f_occ" placeholder="Enter Father Occuption" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Father Phone Number<span
+                                                                    class="login-danger">*</span></label>
+                                                            <input type="number" id="formControlLg" class="form-control"
+                                                                name="f_no" placeholder="Enter Father Phone Number" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Father Email<span class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="parent_email" placeholder="Enter Father Email" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Mother Name<span class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="m_name" placeholder="Enter Father Name" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Mother Occuptaion<span
+                                                                    class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="m_occ" placeholder="Enter Father Occuption" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Mother Phone Number<span
+                                                                    class="login-danger">*</span></label>
+                                                            <input type="number" id="formControlLg" class="form-control"
+                                                                name="m_no" placeholder="Enter Father Phone Number" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
+
+                                            <div class="col-md-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Mother Image <span class="login-danger">*</span></label>
+                                                    <input type="file" name="m_image" id="image"
+                                                        class="form-control photo" accept="image/*">
+                                                </div>
+                                            </div>
                                             <div class="col-12">
                                                 <div class="student-submit">
                                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -179,7 +256,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
@@ -226,15 +302,15 @@
     <script>
         // Function to populate the year dropdown from 2000 to the current year
         function populateYearDropdown() {
-          var currentYear = new Date().getFullYear();
-          var dropdown = document.getElementById("yearDropdown");
+            var currentYear = new Date().getFullYear();
+            var dropdown = document.getElementById("yearDropdown");
 
-          for (var year = 2000; year <= currentYear; year++) {
-            var option = document.createElement("option");
-            option.value = year;
-            option.text = year;
-            dropdown.add(option);
-          }
+            for (var year = 2000; year <= currentYear; year++) {
+                var option = document.createElement("option");
+                option.value = year;
+                option.text = year;
+                dropdown.add(option);
+            }
         }
 
         // Call the function to populate the dropdown on page load
@@ -242,17 +318,17 @@
 
         // Optionally, you can update the dropdown dynamically if the current year changes
         setInterval(function() {
-          var currentYear = new Date().getFullYear();
-          var dropdown = document.getElementById("yearDropdown");
+            var currentYear = new Date().getFullYear();
+            var dropdown = document.getElementById("yearDropdown");
 
-          // Check if the last year in the dropdown is less than the current year
-          if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
-            // Clear the current dropdown options
-            dropdown.options.length = 0;
+            // Check if the last year in the dropdown is less than the current year
+            if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
+                // Clear the current dropdown options
+                dropdown.options.length = 0;
 
-            // Repopulate the dropdown with updated years
-            populateYearDropdown();
-          }
+                // Repopulate the dropdown with updated years
+                populateYearDropdown();
+            }
         }, 5000); // Update every 1000 milliseconds (1 second)
-      </script>
+    </script>
 @endsection

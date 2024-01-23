@@ -35,9 +35,10 @@ class Mark extends Model
     {
         return $this->belongsTo(Exam::class);
     }
-    public function grade()
-{
-    return $this->belongsTo(Grade::class);
-}
+    // Mark.php
 
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }

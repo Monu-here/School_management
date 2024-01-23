@@ -22,11 +22,7 @@
         </style>
     @endsection
     @section('content')
-        <div class="text-capitalize">
-            total no. of student:
-            {{ $students->count() }}
-
-        </div>
+         
         <div class="row">
             <div class="col-sm-6 col-xl-3">
                 <div class="card card-body  has-bg-image" style="background-color: #29B6F6">
@@ -46,8 +42,7 @@
                 <div class="card card-body  has-bg-image" style="background-color: #EF5350">
                     <div class="media" style="display: flex; align-items: flex-start;">
                         <div class="media-body" style="flex: 1;">
-                            <h3 class="mb-0 text-white" style="font-size: 1.3125rem;">{{ $users->where('role_name','Admin')->count() }} Admin</h3>
-                            <h3 class="mb-0 text-white" style="font-size: 1.3125rem;">{{ $users->where('role_name','Teacher')->count() }}</h3>
+                             <h3 class="mb-0 text-white" style="font-size: 1.3125rem;">{{ $users->where('role_name','Teacher')->count() }}</h3>
 
                             <span class="text-uppercase font-size-xs font-weight-bold text-white"
                                 style="font-size: .6875rem">Total Teacher</span>
@@ -85,6 +80,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     @endsection

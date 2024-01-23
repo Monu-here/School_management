@@ -37,9 +37,9 @@
                                             <label for="from_section" style="font-weight: 700; font-size: 12px">From
                                                 Section:</label>
                                             <select name="from_section" id="from_section" class="form-control">
-                                                <option value="A">A</option>
-                                                <option value="B">B</option>
-                                                <option value="C">C</option>
+                                                @foreach ($se as $sec)
+                                                    <option value="{{ $sec->id }}">{{ $sec->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -94,8 +94,15 @@
                                         </td>
                                         <td>{{ $student->name }}</td>
                                         <td>
-                                            {{ $student->classes->name }}
-                                            ({{ $student->section }})
+
+                                            @php
+                                            $sectionName = $sections
+                                            ->where('id', $student->section_id)
+                                            ->pluck('name')
+                                            ->first();
+                                            @endphp
+                                        {{ $student->classes->name }}
+                                       ( {{$sectionName}})
                                         </td>
                                         <td>
                                             <button type="button" onclick="openPromoteForm({{ $student->id }})"
@@ -166,9 +173,9 @@
                                             <div class="form-group">
                                                 <label for="to_section">To Section:</label>
                                                 <select name="to_section" id="to_section" class="form-control">
-                                                    <option value="A">A</option>
-                                                    <option value="B">B</option>
-                                                    <option value="C">C</option>
+                                                    @foreach ($se as $sec)
+                                                        <option value="{{ $sec->id }}" >{{ $sec->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

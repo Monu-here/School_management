@@ -27,6 +27,10 @@ class StudentPromotion extends Model
     {
         return $this->belongsTo(Classs::class, 'to_class');
     }
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
 
     public function student()
     {

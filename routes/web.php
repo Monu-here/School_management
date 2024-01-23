@@ -49,11 +49,13 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         // Route::match(['GET', 'POST'], 'edit/{user}', [LoginController::class, 'edit'])->name('edit');
         Route::get('show/{userId}', [LoginController::class, 'show'])->name('show');
         Route::get('del/{user}', [LoginController::class, 'del'])->name('del');
+        Route::get('role/teacher', [LoginController::class, 'roleTeacher'])->name('roleTeacher');
     });
     Route::prefix('student')->name('student.')->group(function () {
         Route::get('', [StudentController::class, 'index'])->name('index');
         Route::match(['GET', 'POST'], 'add', [StudentController::class, 'add'])->name('add');
         Route::get('student/show/{student}', [StudentController::class, 'studentShow'])->name('studentShow');
+        Route::get('del/{student}', [StudentController::class, 'del'])->name('del');
         Route::get('teacher', [StudentController::class, 'teacherIndex'])->name('teacherIndex');
         Route::match(['GET', 'POST'], 'teacheradd', [StudentController::class, 'teacheradd'])->name('teacheradd');
         Route::get('teacher/show/{teacher}', [StudentController::class, 'teacherShow'])->name('teacherShow');
@@ -98,6 +100,17 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::post('/admin/marks/students', [MarkController::class, 'getStudents'])->name('marks.students');
         Route::post('/admin/marks/store', [MarkController::class, 'storeMarks'])->name('store');
         Route::get('/admin/marksheet/{studentId}', [MarkController::class, 'marksheet'])->name('admin.marksheet');
+
+
+
+        Route::post('/send-marksheet-email/{sendMail}', [MarkController::class, 'sendMarksheetEmail'])
+            ->name('admin.mark.email');
+
+
+
+
+        Route::get('/download-marksheet/{studentId}', [MarkController::class, 'downloadMarksheet'])
+            ->name('admin.mark.download');
     });
 });
 

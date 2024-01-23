@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Coding by CodingNepal | www.codingnepalweb.com -->
 <html lang="en" dir="ltr">
 
 <head>
@@ -30,158 +29,36 @@
 <body>
 
 
-    <div class="sidebar">
-        <div class="logo-details">
-            @php
-                $setting = getSetting();
-            @endphp
-            @if ($setting)
-                <img src="{{ asset($setting->websiteimage) }}" alt="" srcset="">
-            @endif
-            @php
-                $setting = getSetting();
-            @endphp
-            @if ($setting)
-                <span class="logo_name">{{ $setting->webistename ?? 'admin' }}</span>
-            @endif
-        </div>
 
 
 
+    @php
+        $user = Auth::user();
+    @endphp
 
+    @include('Admin.layout.sidebar')
 
-
-        <ul class="nav-links p-0">
-            <li>
-                <a href="{{ route('admin.setting.add') }}" class="active">
-                    <i class='bx bx-cog'></i>
-                    <span class="links_name">Setting</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.index') }}" class="">
-                    <i class='bx bx-grid-alt'></i>
-                    <span class="links_name">Dashboard</span>
-                </a>
-
-            </li>
-            <li>
-                <a href="{{ route('admin.user.index') }}">
-                    <i class='bx bx-user'></i>
-                    <span class="links_name">User Account</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.student.index') }}">
-                    <i class='bx bx-list-ul'></i>
-                    <span class="links_name">Student</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.student.teacherIndex') }}">
-                    <i class='bx bx-list-ul'></i>
-                    <span class="links_name">Teacher</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.department.index') }}">
-                    <i class='bx bx-building-house'></i>
-                    <span class="links_name">Department</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.payment.add') }}">
-                    <i class='bx bx-cash'></i>
-                    <span class="links_name">Payment</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.payment.studentPayment') }}">
-                    <i class='bx bx-cash'></i>
-                    <span class="links_name">Student Payment</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.promotion.list') }}">
-                    <i class='bx bx-cash'></i>
-                    <span class="links_name">Student Promotion</span>
-                </a>
-            </li>
-            {{-- <li>
-                <a href="{{ route('admin.exam.index') }}">
-                    <i class='bx bx-cash'></i>
-                    <span class="links_name">Exam List</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.grade.index') }}">
-                    <i class='bx bx-cash'></i>
-                    <span class="links_name">Grade</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.mark.index') }}">
-                    <i class='bx bx-cash'></i>
-                    <span class="links_name">Mark</span>
-                </a>
-            </li> --}}
-
-
-
-
-
-            <li class="log_out">
-                <a href="{{ route('adminLogin.logout') }}">
-                    <i class='bx bx-log-out'></i>
-                    <span class="links_name">Log out</span>
-                </a>
-            </li>
-        </ul>
+    <div class="page-wrapper chiller-theme toggled">
+        <main class="page-content">
+            <div class="container-fluid">
+                <div class="home-content">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <span class="text">Dashbaord</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content">
+                    <div class="">
+                        @yield('linkbar')
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-    <section class="home-section">
-        <nav>
-            <div class="sidebar-button">
-                <i class='bx bx-menu sidebarBtn'></i>
-                <span class="dashboard">Dashboard</span>
-            </div>
-            <div class="search-box">
-                <input type="text" placeholder="Search...">
-                <i class='bx bx-search'></i>
-            </div>
 
-
-            <div class="profile-details">
-                <img src="{{ asset('uploads/setting/6jr43UIkw6N22q7iQy2Qw7gUZcXlimWOa5Lp06Bh.png') }}" alt="">
-                @php
-                    $user = Auth::user();
-                    // dd($user);
-                @endphp
-
-                @if ($user && $user->role_name == 'Admin')
-                    <span class="admin_name">
-                        {{ $user->name }}
-                        <span style="font-size: 10px">{{ $user->role_name }}</span>
-                    </span>
-                @endif
-
-                <i class="bx bx-chevron-down"></i>
-            </div>
-        </nav>
-
-        <div class="home-content">
-
-
-            <div class="overview-boxes">
-                @yield('linkbar')
-                @yield('content')
-
-            </div>
-
-
-        </div>
-
-
-    </section>
+     
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -209,15 +86,15 @@
     @yield('js')
     <script>
         showToastr();
-        let sidebar = document.querySelector(".sidebar");
-        let sidebarBtn = document.querySelector(".sidebarBtn");
-        sidebarBtn.onclick = function() {
-            sidebar.classList.toggle("active");
-            if (sidebar.classList.contains("active")) {
-                sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-            } else
-                sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-        }
+        // let sidebar = document.querySelector(".sidebar");
+        // let sidebarBtn = document.querySelector(".sidebarBtn");
+        // sidebarBtn.onclick = function() {
+        //     sidebar.classList.toggle("active");
+        //     if (sidebar.classList.contains("active")) {
+        //         sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        //     } else
+        //         sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        // }
 
         function showModal() {
             $('#openmodel').modal('show');
@@ -228,7 +105,51 @@
             $('#opendep').modal('show');
             $('#showDepartment').modal('show');
         }
+
+        $(".sidebar-dropdown > a").click(function() {
+            $(".sidebar-submenu").slideUp(200);
+            if (
+                $(this)
+                .parent()
+                .hasClass("active")
+            ) {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this)
+                    .parent()
+                    .removeClass("active");
+            } else {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this)
+                    .next(".sidebar-submenu")
+                    .slideDown(200);
+                $(this)
+                    .parent()
+                    .addClass("active");
+            }
+        });
+
+        $("#close-sidebar").click(function() {
+            $(".page-wrapper").removeClass("toggled");
+        });
+        $("#show-sidebar").click(function() {
+            $(".page-wrapper").addClass("toggled");
+        });
+
+        // let arrow = document.querySelectorAll(".arrow");
+        // for (var i = 0; i < arrow.length; i++) {
+        //     arrow[i].addEventListener("click", (e) => {
+        //         let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+        //         arrowParent.classList.toggle("showMenu");
+        //     });
+        // }
+        // let sidebar = document.querySelector(".s-sidebar");
+        // let sidebarBtn = document.querySelector(".bx-menu");
+        // console.log(sidebarBtn);
+        // sidebarBtn.addEventListener("click", () => {
+        //     sidebar.classList.toggle("close");
+        // });
     </script>
+
 
 </body>
 

@@ -25,11 +25,11 @@
         }
 
         /* .grade-list {
-                                                        margin: 20px auto;
+                                                                margin: 20px auto;
 
-                                                        padding: 15px;
-                                                        color: #ffffff;
-                                                    } */
+                                                                padding: 15px;
+                                                                color: #ffffff;
+                                                            } */
     </style>
 @endsection
 @section('content')
@@ -156,8 +156,8 @@
                     <td>{{ $mark->obtained_marks }}</td>
                     <td>{{ $mark->practical_marks }}</td>
                     <td>{{ $mark->total_marks }}</td>
-                    {{-- <td>{{ $mark->grade->name }}</td> --}}
-                    {{-- <td>{{ $mark->Grade->remark }}</td> --}}
+                    <td>{{ $mark->grade }}</td>
+                    <td> {{ $mark->remark }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -167,8 +167,11 @@
                 <td colspan="5">{{ $totalMarks }}
                     <p>Grade: {{ $student->grade }}</p>
                     <p>Remark: {{ $student->remark }}</p>
+                    Percentage : {{ number_format($percentage, 2) }}
+                    <br>
+                    Gpa :{{ $percentage / 25 }}
                 </td>
-                {{ number_format($percentage, 2) }}
+
 
             </tr>
         </tfoot>

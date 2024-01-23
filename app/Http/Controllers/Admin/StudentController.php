@@ -24,13 +24,31 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $section_id = $request->input('section_id');
+        $name = $request->input('name');
 
-        $students = Student::when($section_id, function ($query) use ($section_id) {
-            return $query->where('section_id', $section_id);
-        })->get();
+        $studentsQuery = Student::query();
+
+        if ($section_id) {
+            $studentsQuery->where('section_id', $section_id);
+            $selectedSection = $section_id;
+        } else {
+            $selectedSection = null;
+        }
+
+        if ($name) {
+            $studentsQuery->where('name', 'like', '%' . $name . '%');
+            $selectedName = $name;
+        } else {
+            $selectedName = null;
+        }
+
+        $students = $studentsQuery->get();
         $sections = DB::table('sections')->get();
-        return view('Admin.Student.index', compact('sections'), ['students' => $students, 'selectedSection' => $section_id]);
+
+        return view('Admin.Student.index', compact('sections', 'students', 'selectedSection', 'selectedName'));
     }
+
+
 
     public function add(Request $request)
     {
@@ -50,7 +68,15 @@ class StudentController extends Controller
             $student->reli = $request->reli;
             $student->section_id = $request->section_id;
             $student->session_year = $request->session_year;
-
+            $student->parent_email = $request->parent_email;
+            $student->f_name = $request->f_name;
+            $student->f_occ = $request->f_occ;
+            $student->f_no = $request->f_no;
+            $student->m_name = $request->m_name;
+            $student->m_occ = $request->m_occ;
+            $student->m_no = $request->m_no;
+            $student->f_image = $request->f_image->store('uploads/student/father');
+            $student->m_image = $request->m_image->store('uploads/student/mother');
             $student->image = $request->image->store('uploads/student');
             $student->save();
             return redirect()->back()->with('message', 'Data Add Sucessfully');
@@ -61,6 +87,13 @@ class StudentController extends Controller
             return view('Admin.Student.add', compact('classes', 'bloods', 'sections'));
         }
     }
+
+    public function del($student)
+    {
+        DB::table('students')->where('id', $student)->delete();
+        return redirect()->back()->with('message', 'Student Delete Successfully');
+    }
+
     public function teacherIndex(Request $request)
     {
         $name = $request->input('name');
@@ -102,43 +135,13 @@ class StudentController extends Controller
     }
     public function studentShow($student)
     {
-        // Find the student by ID with the 'class' relationship loaded
         $student = Student::with(['classes', 'blood'])->find($student);
-        // dd($student);
 
-        // Check if the student is not found
-
-
-        // Access the 'class' relationship and its 'name' property, providing a fallback value if null
-        // $className = $student->classes ? $student->classes->name : 'N/A';
-
-        // Get all classes (you may want to replace this with your actual logic to get classes)
         $classes = DB::table('classses')->get();
 
-        // Get all blood groups
         $bloods = DB::table('bloods')->get();
+        $sections = DB::table('sections')->get();
 
-        // Return the view with the student, className, classes, and bloods data
-        return view('Admin.Student.show', compact('student', 'classes', 'bloods'));
+        return view('Admin.Student.show', compact('student', 'classes', 'bloods', 'sections'));
     }
-
-
-    // public function marksheet($studentId)
-    // {
-    //     $student = Student::find($studentId);
-
-    //     if (!$student) {
-    //         return redirect()->route('admin.mark.index')->with('error', 'Student not found!');
-    //     }
-
-    //     $marks = Mark::where('student_id', $studentId)
-    //         ->with('Exam', 'Subject', 'Grade')
-    //         ->get();
-
-    //     $grades = DB::table('grades')->get();
-    //     $date = Carbon::now()
-    //         ->format('l, jS \of F Y');
-
-    //     return view('Admin.mark.mark_sheet', compact('grades', 'date', 'student', 'marks'));
-    // }
 }

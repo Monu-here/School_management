@@ -169,6 +169,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class, // This line should only be included if you are using the dompdf package
+
+
     ])->toArray(),
 
     /*
@@ -184,6 +187,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class, // This line should only be included if you are using the dompdf package
+
+
     ])->toArray(),
 
 ];

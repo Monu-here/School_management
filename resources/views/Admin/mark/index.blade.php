@@ -22,7 +22,7 @@
             @foreach ($marks as $mark)
                 <tr>
                     <td>{{$mark->exam->name}}</td>
-                    <td>{{$mark->student->name}}</td>
+                    <td>{{$mark->student->name ?? ""}}</td>
                     <td>{{$mark->subject->name}}</td>
                     <td>{{$mark->obtained_marks}}</td>
                     <td>{{$mark->practical_marks}}</td>

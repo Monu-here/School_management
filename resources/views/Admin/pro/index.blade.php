@@ -54,7 +54,14 @@
                                 </td>
                                 <td>
                                     @if ($pro->fromClass)
-                                        {{ $pro->fromClass->name }} ({{ $pro->from_section }})
+                                        {{ $pro->fromClass->name }}
+                                        @php
+                                            $sectionName = $sections
+                                                ->where('id', $pro->section_id)
+                                                ->pluck('name')
+                                                ->first();
+                                        @endphp
+                                        ({{ $sectionName }})
                                     @else
                                         No class
                                     @endif

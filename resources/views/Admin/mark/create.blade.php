@@ -17,7 +17,7 @@
                 <form action="{{ route('admin.mark.marks.students') }}" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-10">
                             <div class="row">
                                 <div class="col-md-3">
                                     <strong>Exam:</strong>
@@ -61,14 +61,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1 mt-3">
-                            <button type="submit" class="btn btn-primary">Manage Mark</button>
+                        <div class="col-md-2 mt-3">
+                            <div class="mt-2">
+                                <button type="submit" class="btn btn-primary">Add Mark</button>
+
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         @if (isset($students) && $students->count() > 0)
+        {{-- {{$students->count()}} --}}
             <div class="mt-4">
                 <h3>Students:</h3>
                 <strong> Exam: </strong>{{ $selectedExam ? $selectedExam->name : 'All Exams' }}
@@ -93,7 +97,8 @@
                             <th>Obtained Mark</th>
                             <th>Practical Marks</th>
                             <th>Total Marks</th>
-                            <th>Grade</th>
+                            <th>Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -119,19 +124,15 @@
                                         <!-- Display the total marks -->
                                         <span id="total_marks_{{ $student->id }}"></span>
                                     </td>
-                                    <td>
-                                        {{-- {{$grade->name}} --}}
-                                    </td>
+
 
                                     <td>
-                                        <!-- Hidden inputs for student-related information -->
-                                        <input type="hidden" name="student_id" value="{{ $student->id }}">
+                                         <input type="hidden" name="student_id" value="{{ $student->id }}">
                                         <input type="hidden" name="exam_id" value="{{ $selectedExam->id }}">
                                         <input type="hidden" name="subject_id" value="{{ $selectedSubject->id }}">
-                                    </td>
-                                    <td>
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </td>
+
                                 </tr>
                             @endforeach
                         </form>

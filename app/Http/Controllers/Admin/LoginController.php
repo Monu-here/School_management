@@ -121,4 +121,9 @@ class LoginController extends Controller
         DB::table('users')->where('id', $user)->delete();
         return redirect()->back()->with('message', 'Data Delete Successfully');
     }
+    public function roleTeacher() {
+        $user = DB::table('users')->get();
+        return view('Admin.UserAcc.userList', compact('user'));
+    }
+
 }

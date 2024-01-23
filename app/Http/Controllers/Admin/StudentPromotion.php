@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classs;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\StudentPromotion as ModelsStudentPromotion;
 use Illuminate\Http\Request;
@@ -15,14 +16,19 @@ class StudentPromotion extends Controller
     {
         $sts = Student::all();
         $cls = Classs::all();
+        $sections = DB::table('sections')->get();
+        $student = Student::all();
         $pros = ModelsStudentPromotion::all(); // Update this line
-        return view('Admin.pro.index', compact('sts', 'cls', 'pros'));
+        return view('Admin.pro.index', compact('sts', 'cls', 'pros', 'sections','student'));
     }
 
     public function index(Request $request)
     {
         $cc = Classs::all();
         $ss = Student::all();
+        $se = Section::all();
+        $sections = DB::table('sections')->get();
+
         $students = null;
         if ($request->getMethod() == "POST") {
             if ($request->filled('from_class') && $request->filled('from_section')) {
@@ -31,14 +37,14 @@ class StudentPromotion extends Controller
 
                 // Query students based on the selected class and section
                 $students = Student::whereHas('classes', function ($query) use ($fromClass, $fromSection) {
-                    $query->where('class_id', $fromClass)->where('section', $fromSection);
+                    $query->where('class_id', $fromClass)->where('section_id', $fromSection);
                 })->get();
             } else {
                 // If the form is not submitted, retrieve all students
                 $students = Student::all();
             }
         }
-        return view('Admin.pro.lll', compact('cc', 'ss', 'students'));
+        return view('Admin.pro.lll', compact('cc', 'ss', 'students', 'se', 'sections'));
     }
 
     public function p(Request $request)
@@ -68,7 +74,7 @@ class StudentPromotion extends Controller
             $existingStudentPro->update([
                 'student_id' => $studentId,
                 'from_class' => $fromClass,
-                'from_section' => $student->section,
+                'from_section' => $student->section_id,
                 'to_class' => $toClass,
                 'to_section' => $toSection,
                 'from_session' => $fromSession,
@@ -80,7 +86,7 @@ class StudentPromotion extends Controller
             ModelsStudentPromotion::create([
                 'student_id' => $studentId,
                 'from_class' => $fromClass,
-                'from_section' => $student->section,
+                'from_section' => $student->section_id,
                 'to_class' => $toClass,
                 'to_section' => $toSection,
                 'from_session' => $fromSession,
@@ -98,7 +104,7 @@ class StudentPromotion extends Controller
         // Update the student data from the students table
         $student->update([
             'class_id' => $toClass,
-            'section' => $toSection,
+            'section_id' => $toSection,
         ]);
 
         // Redirect back to the promotion index page

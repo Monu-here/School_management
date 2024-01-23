@@ -10,16 +10,16 @@
         }
 
         /* .password-container {
-                                                                            position: relative;
-                                                                        }
+                                                                                            position: relative;
+                                                                                        }
 
-                                                                        .password-toggle {
-                                                                            position: absolute;
-                                                                            right: 10px;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);
-                                                                            cursor: pointer;
-                                                                        } */
+                                                                                        .password-toggle {
+                                                                                            position: absolute;
+                                                                                            right: 10px;
+                                                                                            top: 50%;
+                                                                                            transform: translateY(-50%);
+                                                                                            cursor: pointer;
+                                                                                        } */
     </style>
 @endsection
 @section('linkbar')
@@ -46,7 +46,7 @@
                                         <div class="form-group local-forms">
                                             <label>Image <span class="login-danger">*</span></label>
                                             <input type="file" name="image" id="image" class="form-control photo"
-                                                accept="image/*"  data-default-file={{ asset($student->image) }} >
+                                                accept="image/*" data-default-file={{ asset($student->image) }}>
 
                                             {{-- <input type="file" class="form-control photo" name="image"
                                                 placeholder="Enter Image" accept="image/*"> --}}
@@ -113,7 +113,8 @@
                                                     <label>Class <span class="login-danger">*</span></label>
 
                                                     <input type="text" name="class_id" id=""
-                                                        value="{{ $student->classes->name }}" class="form-control" disabled>
+                                                        value="{{ $student->classes->name }}" class="form-control"
+                                                        disabled>
 
                                                 </div>
                                             </div>
@@ -121,7 +122,8 @@
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Religion <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="reli" value="{{$student->reli}}" disabled>
+                                                    <input type="text" class="form-control" name="reli"
+                                                        value="{{ $student->reli }}" disabled>
                                                 </div>
                                             </div>
 
@@ -129,14 +131,21 @@
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Section <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="section" value="{{$student->section}}" disabled>
-
+                                                    @php
+                                                        $sectionName = $sections
+                                                            ->where('id', $student->section_id)
+                                                            ->pluck('name')
+                                                            ->first();
+                                                    @endphp
+                                                    <input type="text" class="form-control" name="section"
+                                                        value=" {{ $sectionName ?? 'N/A' }}" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Blood Group <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="blood_id" value="{{$student->blood->name}}" disabled>
+                                                    <input type="text" class="form-control" name="blood_id"
+                                                        value="{{ $student->blood->name }}" disabled>
 
                                                 </div>
                                             </div>
@@ -164,15 +173,99 @@
                                                 </div>
                                             </div>
 
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="form-title"><span>Parent Information</span></h5>
+                                            </div>
+                                            <hr>
+                                            <div class="col-md-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Father Image <span class="login-danger">*</span></label>
+                                                    <input type="file" name="f_image" id="image"
+                                                        class="form-control photo" accept="image/*"  data-default-file={{ asset($student->f_image) }} >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Father Name<span class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="f_name" placeholder="Enter Father Name" value="{{$student->f_name}}" disabled/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Father Occuptaion<span
+                                                                    class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="f_occ" placeholder="Enter Father Occuption"  value="{{$student->f_occ}}" disabled />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Father Phone Number<span
+                                                                    class="login-danger">*</span></label>
+                                                            <input type="number" id="formControlLg" class="form-control"
+                                                                name="f_no" placeholder="Enter Father Phone Number"  value="{{$student->f_no}}" disabled/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Father Email<span class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="parent_email" placeholder="Enter Father Email" value="{{$student->parent_email}}"  disabled/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Mother Name<span class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="m_name" placeholder="Enter Father Name"  value="{{$student->m_name}}"disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Mother Occuptaion<span
+                                                                    class="login-danger">*</span></label>
+                                                            <input type="text" id="formControlLg" class="form-control"
+                                                                name="m_occ" placeholder="Enter Father Occuption"  value="{{$student->m_occ}}" disabled/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <div class="form-group local-forms">
+                                                            <label>Mother Phone Number<span
+                                                                    class="login-danger">*</span></label>
+                                                            <input type="number" id="formControlLg" class="form-control"
+                                                                name="m_no" placeholder="Enter Father Phone Number"  value="{{$student->m_no}}" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Mother Image <span class="login-danger">*</span></label>
+                                                    <input type="file" name="m_image" id="image"
+                                                        class="form-control photo" accept="image/*" data-default-file={{ asset($student->m_image) }}>
+                                                </div>
+                                            </div>
                                             <div class="col-12">
                                                 <div class="student-submit">
-                                                    <a href="{{route('admin.student.index')}}" class="btn btn-danger">Cancle</a>
+                                                    <a href="{{ route('admin.student.index') }}"
+                                                        class="btn btn-danger">Cancle</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
