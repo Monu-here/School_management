@@ -1,4 +1,18 @@
 @extends('Admin.layout.app')
+@section('linkbar')
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col ms-4">
+                    <h3 class="page-title">Promote</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{route('admin.promotion.list')}}">Promote</a></li>
+                        <li class="breadcrumb-item active">Add Promote</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    @endsection
 @section('css')
     <style>
         .content {

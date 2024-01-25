@@ -5,9 +5,8 @@
             <div class="form-group filter mb-4"
                 style="display: flex; justify-content: space-around; width: 250px; margin-top: 10px">
                 <select name="class_id" id="class_id" class="form-control">
-                    <option value="sssss">Select Class</option>
+                     <option value="" {{ empty($selectedClassId) ? 'selected' : '' }} disabled>All Sections</option>
                     @foreach ($classes as $class)
-                        <option value="" {{ empty($selectedClassId) ? 'selected' : '' }}>All Sections</option>
 
                         <option value="{{ $class->id }}" {{ $class->id == $selectedClassId ? 'selected' : '' }}>
                             {{ $class->name }}

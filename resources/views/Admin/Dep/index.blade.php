@@ -4,8 +4,6 @@
         <div class="page-header">
             <div class="row">
                 <div class="col">
-
-
                     <h3 class="page-title " style="display: flex; justify-content: space-between"> Department <button
                             type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#opendep">
                             Add Department

@@ -23,11 +23,19 @@
     </style>
 @endsection
 @section('linkbar')
-    <ul class="breadcrumb ms-3">
-        <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}" style="text-decoration: none">User</a></li>
-        <li class="breadcrumb-item active">Add User</li>
-    </ul>
-@endsection
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col ms-4">
+                    <h3 class="page-title">User</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{route('admin.user.index')}}">User</a></li>
+                        <li class="breadcrumb-item active">Add User</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    @endsection
 @section('content')
     <div class="page-wrapper">
         <div class="content container-fluid">

@@ -91,6 +91,7 @@ class PaymentController extends Controller
             // Calculate the new balance
             $totalOwed = $payments->sum('amount');
             $balance = $totalOwed - $totalAmountPaid - (int)$request->input('amt_paid');
+            // dd($balance);
 
             // Check if a payment record already exists for the student
             $existingPaymentRecord = Payment_record::where('student_id', $student_id)->first();
@@ -149,6 +150,7 @@ class PaymentController extends Controller
             //   $payment_recordsww = Payment_record::with('student')->get();
             //   dd($payment_recordsww);
 
+
             return view('Admin.payment.studentPaymentAdd', compact('students', 'student', 'payment_records', 'payments', 'class_id', 'totalAmountPaid', 'totalOwed', 'classes'))
                 ->with('success', 'Payment recorded successfully.');
         }
@@ -167,7 +169,7 @@ class PaymentController extends Controller
 
 
 
- 
+
 
     public function printBill($student_id)
     {

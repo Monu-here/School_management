@@ -145,6 +145,7 @@
                                                 @if ($payment_record->student_id == $student->id ?? 'kh')
                                                 {{ $payment_record->updated_at ?? $payment_record->created_at }}
                                                 @endif
+
                                                 @endforeach
                                             </p>
                                         </div>
@@ -161,7 +162,7 @@
                                     method="POST">
                                     @csrf
                                     <div class="py-2">
-                                        <h5 class="font-size-15">Order Summary</h5>
+                                        <h5 class="font-size-15">Bill Summary</h5>
 
                                         <div class="table-responsive">
                                             <table class="table align-middle table-nowrap table-centered mb-0">
@@ -208,7 +209,7 @@
                                                         </td>
 
                                                         <td class="text-end">
-                                                            Rs. {{ $totalOwed - $payment_records->sum('amt_paid') }}
+                                                            Rs. {{ $payment_records->last()->balance ?? '0' }}
                                                             @if ($payment_records->sum('amt_paid') > $totalOwed)
                                                                 (Return Money)
                                                             @endif
@@ -236,12 +237,14 @@
                                                         <th scope="row" colspan="5" class="border-0 text-end">
                                                             Amount left</th>
                                                         <td class="border-0 text-end">
-                                                            {{-- Rs. {{ $payment_records->last()->balance ?? '0' }} --}}
                                                             {{-- @endforeach --}}
-                                                            Rs. {{ $totalOwed - $payment_records->sum('amt_paid') }}
+
+                                                            {{-- {{$payment_records->balance}} --}}
+                                                             Rs. {{ $payment_records->last()->balance ?? '0' }}
                                                             @if ($payment_records->sum('amt_paid') > $totalOwed)
                                                                 (Return Money)
                                                             @endif
+
                                                         </td>
                                                     </tr>
                                                     <tr>

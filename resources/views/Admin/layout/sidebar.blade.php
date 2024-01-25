@@ -563,7 +563,7 @@
                     </div>
                 @endif
                 <!-- sidebar-header  -->
-                 
+
                 <!-- sidebar-search  -->
                 <div class="sidebar-menu">
                     <ul>
@@ -579,7 +579,7 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="{{ route('admin.index') }}">Dashboarb {{-- <span class="badge badge-pill badge-success">Pro</span> --}}
+                                        <a href="{{ route('admin.index') }}">Dashboard {{-- <span class="badge badge-pill badge-success">Pro</span> --}}
                                         </a>
                                     </li>
                                     <li>
@@ -676,12 +676,7 @@
                                     <li>
                                         <a href="{{ route('admin.payment.studentPayment') }}">Student Payment</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Bar chart</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Histogram</a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </li>
@@ -714,18 +709,7 @@
                                 {{-- <span class="badge badge-pill badge-primary">Beta</span> --}}
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-calendar"></i>
-                                <span>Calendar</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-folder"></i>
-                                <span>Examples</span>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->

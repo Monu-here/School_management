@@ -218,7 +218,7 @@
                                                         <div class="form-group local-forms">
                                                             <label>Mother Name<span class="login-danger">*</span></label>
                                                             <input type="text" id="formControlLg" class="form-control"
-                                                                name="m_name" placeholder="Enter Father Name" />
+                                                                name="m_name" placeholder="Enter Mother Name" />
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-sm-4">
@@ -226,7 +226,7 @@
                                                             <label>Mother Occuptaion<span
                                                                     class="login-danger">*</span></label>
                                                             <input type="text" id="formControlLg" class="form-control"
-                                                                name="m_occ" placeholder="Enter Father Occuption" />
+                                                                name="m_occ" placeholder="Enter Mother Occuption" />
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-sm-4">
@@ -234,7 +234,7 @@
                                                             <label>Mother Phone Number<span
                                                                     class="login-danger">*</span></label>
                                                             <input type="number" id="formControlLg" class="form-control"
-                                                                name="m_no" placeholder="Enter Father Phone Number" />
+                                                                name="m_no" placeholder="Enter Mother Phone Number" />
                                                         </div>
                                                     </div>
                                                 </div>

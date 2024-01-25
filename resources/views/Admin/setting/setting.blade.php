@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                                 <select data-placeholder="Choose..." required name="despc" id="despc" class="select-search form-control">
-                                    <option value=""></option>
+                                    <option value="">Choose Your Session</option>
                                     @php
                                         $currentSession = $setting->current_session ?? '';
                                     @endphp
@@ -97,6 +97,7 @@
                                         <option {{ ($currentSession == (($y -= 1) . '-' . ($y += 1))) ? 'selected' : '' }}>{{ ($y -= 1) . '-' . ($y += 1) }}</option>
                                     @endfor
                                 </select>
+                                <br>
 
                                 <div class="form-group mb-0">
                                     <div class="settings-btns">

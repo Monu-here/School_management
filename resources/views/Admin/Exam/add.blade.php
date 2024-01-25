@@ -1,4 +1,18 @@
 @extends('Admin.layout.app')
+@section('linkbar')
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col">
+                    <h3 class="page-title">Exam</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{route('admin.exam.index')}}">Exam</a></li>
+                        <li class="breadcrumb-item active">Edit Exam</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    @endsection
 @section('content')
 <div class="card">
     <div class="card-header header-elements-inline">
@@ -27,13 +41,19 @@
                             </select>
                         </div>
                     </div>
+
+
                     <div class="form-group row">
-                        <label for="">Year</label>
-                        <input type="text" name="year">
+                        <label class="col-lg-3 col-form-label font-weight-semibold">Year <span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <input name="year"   required type="text" class="form-control" placeholder="Year">
+                        </div>
                     </div>
 
+
+
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+                        <button type="submit" class="btn btn-primary">Submit  <i class="icon-paperplane ml-2"></i></button>
                     </div>
                 </form>
             </div>

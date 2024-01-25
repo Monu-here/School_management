@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col">
                     <h3 class="page-title " style="display: flex; justify-content: space-between">User Account <a
-                            href="{{ route('admin.user.add') }}" class="btn btn-primary">Add User </a></h3>
+                            href="{{ route('admin.user.add') }}" class="btn btn-primary">Add User</a></h3>
                 </div>
             </div>
         </div>
@@ -31,25 +31,23 @@
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td><img src="{{ asset($user->image) }}" alt="" width="60"></td>
-
-                                {{-- <td><img src="{{ asset($user->image) }}" alt=""></td> --}}
                                 <td>{{ $user->name }}</td>
-                                <td> {{ $user->email }}</td>
-                                <td> {{ $user->role_name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->role_name }}</td>
                                 <td>
-                                     <a href="{{ route('admin.user.show', ['userId' => $user->id]) }}"
-                                        class="btn btn-sm btn-success">
+                                    <a href="{{ route('admin.user.show', ['userId' => $user->id]) }}"
+                                       class="btn btn-sm btn-success">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                     {{-- <a href="{{ route('admin.user.edit', ['user' => $user->id]) }}"
-                                        class="btn btn-sm btn-primary">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a> --}}
-                                    
-                                     <a href="{{ route('admin.user.del', ['user' => $user->id]) }}"
-                                        class="btn btn-sm btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+
+                                    {{-- Check if the user's role is not 'Admin' before showing the delete button --}}
+                                    @if($user->role_name != 'Admin')
+                                        <a href="{{ route('admin.user.del', ['user' => $user->id]) }}"
+                                           class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    @endif
+                                </td>
                                 <td>
                                     {{ getAgo($user->created_at) }}
                                 </td>
@@ -59,8 +57,6 @@
                 </table>
             </div>
         </div>
-
-
     @endsection
 
     @section('js')
@@ -73,9 +69,5 @@
                     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
             });
-
-            // function showModal() {
-            //     $('#openmodel').modal('show');
-            // }
         </script>
     @endsection
