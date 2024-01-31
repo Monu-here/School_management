@@ -14,6 +14,9 @@
         </div>
     @endsection
     @section('css')
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
         <style>
             .icon-3x {
                 font-size: 48px;
@@ -22,7 +25,6 @@
         </style>
     @endsection
     @section('content')
-         
         <div class="row">
             <div class="col-sm-6 col-xl-3">
                 <div class="card card-body  has-bg-image" style="background-color: #29B6F6">
@@ -42,7 +44,8 @@
                 <div class="card card-body  has-bg-image" style="background-color: #EF5350">
                     <div class="media" style="display: flex; align-items: flex-start;">
                         <div class="media-body" style="flex: 1;">
-                             <h3 class="mb-0 text-white" style="font-size: 1.3125rem;">{{ $users->where('role_name','Teacher')->count() }}</h3>
+                            <h3 class="mb-0 text-white" style="font-size: 1.3125rem;">
+                                {{ $users->where('role_name', 'Teacher')->count() }}</h3>
 
                             <span class="text-uppercase font-size-xs font-weight-bold text-white"
                                 style="font-size: .6875rem">Total Teacher</span>
@@ -80,7 +83,17 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
+        <div class="" style="display: flex; justify-content: end; margin: 10px; margin-right: 32px">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createEventModal">
+                Add Event
+            </button>
+          
+
+        </div>
+        @include('Admin.Calander.calander')
+    @endsection
+
+    @section('js')
     @endsection

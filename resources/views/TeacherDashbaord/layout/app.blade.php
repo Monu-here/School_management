@@ -42,7 +42,7 @@
         $user = Auth::user();
     @endphp
 
-    @include('Admin.layout.sidebar')
+    @include('TeacherDashbaord.layout.sidebar')
 
     <div class="page-wrapper chiller-theme toggled">
         <main class="page-content">

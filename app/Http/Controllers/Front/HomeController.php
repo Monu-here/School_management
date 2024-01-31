@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function index() {
-        $name = 'this is new website designed ';
-        return view('Front.home',compact('name'));
+    public function home() {
+         $sliders = DB::table('sliders')->get();
+         $services = DB::table('services')->get();
+        return view('Front.home',compact('sliders','services'));
     }
     public function about() {
         return view('Front.about');

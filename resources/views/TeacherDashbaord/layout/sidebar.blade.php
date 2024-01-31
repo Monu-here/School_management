@@ -537,12 +537,12 @@
                     </div>
                 </div> @php
                     $user = Auth::user();
-                    // dd($user);
-                @endphp
-                @if ($user && $user->role_name == 'Admin')
+                    dd($user);
+                    @endphp
+                @if ($user && $user->role_name == 'Teacher')
                     <div class="sidebar-header">
                         <div class="user-pic">
-                            <img class="img-responsive img-rounded" src="{{ $user->images }}" alt="User picture">
+                            <img class="img-responsive img-rounded" src="{{ $user->image }}" alt="User picture">
                         </div>
                         <div class="user-info">
 
@@ -579,12 +579,10 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="{{ route('admin.index') }}">Dashboard {{-- <span class="badge badge-pill badge-success">Pro</span> --}}
+                                        <a href="">Dashboard {{-- <span class="badge badge-pill badge-success">Pro</span> --}}
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="{{ route('admin.setting.add') }}">Setting</a>
-                                    </li>
+
                                     {{-- <li>
                                         <a href="#">Dashboard 3</a>
                                     </li> --}}
@@ -599,11 +597,7 @@
                             </a>
                             <div class="sidebar-submenu ">
                                 <ul class="">
-                                    <li>
-                                        <a href="{{ route('admin.user.index') }}">Admin
-                                            <span class="badge badge-pill badge-success">{{ $user->count() }}</span>
-                                        </a>
-                                    </li>
+
                                     <li>
                                         <a href="{{route('admin.user.roleTeacher')}}">Teacher
                                             <span
@@ -625,44 +619,20 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="{{ route('admin.student.index') }}">Student List
+                                        <a href="#">Student List
 
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.promotion.list') }}">Student Promotion</a>
+                                        <a href="#">Student Promotion</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.payment.studentPayment') }}">Student Payment</a>
+                                        <a href="#">Student Payment</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
-                            <a href="#">
-                                <i class="far fa-gem"></i>
-                                <span>Staff</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="{{ route('admin.student.teacherIndex') }}">Teacher</a>
-                                    </li>
-                                    {{-- <li>
-                                        <a href="#">Panels</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Tables</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Icons</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Forms</a>
-                                    </li> --}}
-                                </ul>
-                            </div>
-                        </li>
+
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-chart-line"></i>
@@ -671,10 +641,10 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="{{ route('admin.payment.add') }}">Add Payment</a>
+                                        <a href="#">Add Payment</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.payment.studentPayment') }}">Student Payment</a>
+                                        <a href="#">Student Payment</a>
                                     </li>
 
                                 </ul>
@@ -688,40 +658,23 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="{{ route('admin.exam.index') }}"> Exam List</a>
+                                        <a href="#"> Exam List</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.grade.index') }}">Grade</a>
+                                        <a href="#">Grade</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.mark.index') }}">Mark</a>
+                                        <a href="#">Mark</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
-                            <a href="#">
-                                <i class="fa fa-chart-line"></i>
-                                <span>Front</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
 
-                                        <a href="{{route('admin.frontdetail.index')}}">Home (index)</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">About Us</a>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </li>
                         <li class="header-menu">
                             <span>Extra</span>
                         </li>
                         <li>
-                            <a href="{{ route('admin.department.index') }}">
+                            <a href="#">
                                 <i class="fa fa-book"></i>
                                 <span>Department</span>
                                 {{-- <span class="badge badge-pill badge-primary">Beta</span> --}}

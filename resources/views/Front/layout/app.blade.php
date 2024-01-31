@@ -3,7 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{{ config('app.name') }}</title>
+    @php
+        $setting = getSetting();
+    @endphp
+    @if ($setting)
+        <title> {{ $setting->titletext ?? 'School' }} |{{Route::getCurrentRoute()->getname()
+        }}
+            @yield('title') </title>
+    @endif
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">

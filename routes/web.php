@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ExamController;
+use App\Http\Controllers\Admin\FrontDetailController;
 use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
@@ -13,14 +14,16 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentPromotion;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Front\HomeController as FrontHomeController;
+use App\Http\Controllers\Front\ServiceController;
+use App\Http\Controllers\Teacher\TeacherDashbaordController;
 use App\Mail\MyEmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
+|-----------------------------------------------------------------------------------------------------------
 | Web Routes
-|--------------------------------------------------------------------------
+|------------------------------------------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
@@ -29,15 +32,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('', [FrontHomeController::class, 'home'])->name('home');
+Route::get('about', [FrontHomeController::class, 'about'])->name('about');
+Route::get('course', [FrontHomeController::class, 'course'])->name('course');
+Route::get('team', [FrontHomeController::class, 'team'])->name('team');
+Route::get('testo', [FrontHomeController::class, 'testo'])->name('testo');
+Route::get('contact', [FrontHomeController::class, 'contact'])->name('contact');
 
-Route::name('front.')->group(function () {
-    Route::get('', [FrontHomeController::class, 'index'])->name('index');
-    Route::get('about', [FrontHomeController::class, 'about'])->name('about');
-    Route::get('course', [FrontHomeController::class, 'course'])->name('course');
-    Route::get('team', [FrontHomeController::class, 'team'])->name('team');
-    Route::get('testo', [FrontHomeController::class, 'testo'])->name('testo');
-    Route::get('contact', [FrontHomeController::class, 'contact'])->name('contact');
-});
 
 // This route is for Admin & Tecaher  login START
 Route::prefix('admin')->name('adminLogin.')->group(function () {
@@ -51,11 +52,20 @@ Route::prefix('admin')->name('adminLogin.')->group(function () {
 // Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('', [HomeController::class, 'index'])->name('index');
+    Route::post('create-event', [HomeController::class, 'createEvent'])->name('event');
+    Route::get('del-event/{event}', [HomeController::class, 'eventDel'])->name('eventDel');
+
+
+
     Route::prefix('setting')->name('setting.')->group(function () {
         Route::match(['GET', 'POST'], '', [SettingController::class, 'add'])->name('add');
     });
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('', [LoginController::class, 'index'])->name('index');
+
+
+
+
         Route::match(['GET', 'POST'], 'add', [LoginController::class, 'add'])->name('add');
         // Route::match(['GET', 'POST'], 'edit/{user}', [LoginController::class, 'edit'])->name('edit');
         Route::get('show/{userId}', [LoginController::class, 'show'])->name('show');
@@ -104,12 +114,22 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::post('/send-marksheet-email/{sendMail}', [MarkController::class, 'sendMarksheetEmail'])->name('admin.mark.email');
         Route::get('/download-marksheet/{studentId}', [MarkController::class, 'downloadMarksheet'])->name('admin.mark.download');
     });
+
+    Route::prefix('frontdetail')->name('frontdetail.')->group(function () {
+        Route::get('', [FrontDetailController::class, 'index'])->name('index');
+        Route::match(['GET', 'POST'], 'slider', [FrontDetailController::class, 'slider'])->name('slider');
+        Route::match(['GET', 'POST'], 'slider/edit{slider}', [FrontDetailController::class, 'sliderEdit'])->name('sliderEdit');
+        Route::get('slider/del/{slider}', [FrontDetailController::class, 'sliderDel'])->name('sliderDel');
+        Route::get('service', [FrontDetailController::class, 'service'])->name('service');
+        Route::match(['GET', 'POST'], 'serviceAdd', [FrontDetailController::class, 'serviceAdd'])->name('serviceAdd');
+        Route::get('service/del/{service}', [FrontDetailController::class, 'serviceDel'])->name('serviceDel');
+    });
 });
 // Here admin route will be END
 
 // This route is for teacher Dashboard START
 Route::prefix('TeacherDashboard')->name('teacher.')->middleware(['auth', 'teacher'])->group(function () {
-    Route::get('', [TeacherController::class, 'index'])->name('index');
+    Route::get('', [TeacherDashbaordController::class, 'index'])->name('index');
     // Add other teacher-specific routes here
 });
 // Here route of teacher END
