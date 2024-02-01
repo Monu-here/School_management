@@ -73,6 +73,7 @@
                                 @else
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 @endif
+
                                 <a href="{{ route('admin.frontdetail.sliderDel', ['slider' => $slider->id]) }}"
                                     class="btn btn-danger" onclick="return confirm('Would You like to Delete ')}">Del</a>
                             </div>
@@ -84,7 +85,7 @@
     </div>
     {{-- this is slider section END --}}
 
-    {{-- this is about section START --}}
+    {{-- this is Service section START --}}
     <div class="here">
         <p>add new Service</p>
         <p>
@@ -121,6 +122,49 @@
                 @endforeach
                 <div class="col-md-6">
                 </div>
+            </div>
+        </div>
+    </div>
+    {{-- this is Service section END  --}}
+    {{-- this is about section START --}}
+    <div class="here">
+        <p>add new About</p>
+        <p>
+            <a href="{{ route('admin.frontdetail.aboutUsAdd') }}" class="btn btn-primary">Add About Us</a>
+        </p>
+    </div>
+    <div class="card shadow  mb-3">
+        <div class="card-body" id="">
+            <div class="row">
+                @foreach ($abouts as $about)
+                    <div class="col-md-6    ">
+                        <strong> Av Image</strong> <br>
+                        <div>
+                            <img src="{{ asset($about->image) }}" style="width:40% " alt="">
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <strong>Name</strong> <br>
+                            <div>
+                                <p>{{ $about->name }}</p>
+                            </div>
+                            <hr>
+                            <div>
+                                <strong>Short Description</strong> <br>
+                                <div>
+                                    <p>{{ $about->short_desc }} </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <a href="#" class="btn btn-primary">Edit</a>
+                            {{-- <a href="{{ route('admin.frontdetail.serviceDel', ['service' => $service->id]) }}"
+                            class="btn btn-danger" onclick="return confirm('Would You like to Delete ')}">Del</a> --}}
+                        </div>
+                    </div>
+                @endforeach
+
             </div>
         </div>
     </div>

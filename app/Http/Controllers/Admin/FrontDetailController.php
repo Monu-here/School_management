@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AboutUs;
 use App\Models\Service;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -14,7 +15,9 @@ class FrontDetailController extends Controller
     {
         $services = DB::table('services')->get();
         $sliders = DB::table('sliders')->get();
-        return view('Admin.FrontDetail.index', compact('sliders', 'services'));
+        $abouts = DB::table('about_us')->get();
+
+        return view('Admin.FrontDetail.index', compact('sliders', 'services','abouts'));
     }
     public function sliderEdit(Request $request,  Slider $slider)
     {
@@ -29,7 +32,8 @@ class FrontDetailController extends Controller
         } else {
             $services = DB::table('services')->get();
             $sliders = DB::table('sliders')->get();
-            return view('Admin.FrontDetail.index', compact('sliders', 'services'));
+            $abouts = DB::table('about_us')->get();
+            return view('Admin.FrontDetail.index', compact('sliders', 'services','abouts'));
         }
     }
     public function slider(Request $request)
@@ -54,7 +58,9 @@ class FrontDetailController extends Controller
     {
         $services = DB::table('services')->get();
         $sliders = DB::table('sliders')->get();
-        return view('Admin.FrontDetail.index', compact('services', 'sliders'));
+        $abouts = DB::table('about_us')->get();
+
+        return view('Admin.FrontDetail.index', compact('services', 'sliders','abouts'));
     }
     public function serviceAdd(Request $request)
     {
@@ -64,7 +70,7 @@ class FrontDetailController extends Controller
             $service->short_desc = $request->short_desc;
             $service->image = $request->image->store('uploads/Front/service');
             $service->save();
-            return redirect()->route('admin.frontdetail.service');
+            return redirect()->route('admin.frontdetail.index');
         } else {
             return view('Admin.FrontDetail.Slider.add');
         }
@@ -73,5 +79,25 @@ class FrontDetailController extends Controller
     {
         DB::table('services')->where('id', $service)->delete();
         return redirect()->back();
+    }
+    public function aboutUs()
+    {
+        $services = DB::table('services')->get();
+        $sliders = DB::table('sliders')->get();
+        $abouts = DB::table('about_us')->get();
+        return view('Admin.FrontDetail.index', compact('services', 'sliders','abouts'));
+    }
+    public function aboutUsAdd(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
+            $about = new AboutUs();
+            $about->name = $request->name;
+            $about->short_desc = $request->short_desc;
+            $about->image = $request->image->store('uploads/Front/about');
+            $about->save();
+            return redirect()->route('admin.frontdetail.index');
+        } else {
+            return view('Admin.FrontDetail.Slider.add');
+        }
     }
 }

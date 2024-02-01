@@ -11,7 +11,8 @@ class HomeController extends Controller
     public function home() {
          $sliders = DB::table('sliders')->get();
          $services = DB::table('services')->get();
-        return view('Front.home',compact('sliders','services'));
+         $abouts = DB::table('about_us')->get();
+        return view('Front.home',compact('sliders','services','abouts'));
     }
     public function about() {
         return view('Front.about');

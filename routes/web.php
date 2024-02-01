@@ -123,6 +123,8 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::get('service', [FrontDetailController::class, 'service'])->name('service');
         Route::match(['GET', 'POST'], 'serviceAdd', [FrontDetailController::class, 'serviceAdd'])->name('serviceAdd');
         Route::get('service/del/{service}', [FrontDetailController::class, 'serviceDel'])->name('serviceDel');
+        Route::get('about-us', [FrontDetailController::class, 'aboutUs'])->name('aboutUs');
+        Route::match(['GET', 'POST'], 'aboutUsAdd', [FrontDetailController::class, 'aboutUsAdd'])->name('aboutUsAdd');
     });
 });
 // Here admin route will be END
