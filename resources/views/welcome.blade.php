@@ -85,15 +85,74 @@
                 </div>
             </div>
         </div>
+
+        <div class="card shadow">
+            <div class="container card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($notices as $notice)
+                            <tr>
+                                <td>{{ $notice->publish_on }}</td>
+                                <td>{{ $notice->notice_title }}</td>
+                                <td>
+                                    <a href="{{route('admin.showme',['id'=>$notice->id])}}" class="btn btn-primary btn-sm text-white view-notice"
+                                        data-notice-id="{{ $notice->id }}" data-notice-title="{{ $notice->notice_title }}"
+                                        data-notice-message="{{ $notice->notice_message }}"
+                                        data-publish-on="{{ $notice->publish_on }}" data-bs-toggle="modal"
+                                        data-bs-target="#opennotice">View</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @include('Admin.Notice.show')
+
+
+
+
+
+
+
+
+
+
         <div class="" style="display: flex; justify-content: end; margin: 10px; margin-right: 32px">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createEventModal">
                 Add Event
             </button>
-          
+
 
         </div>
         @include('Admin.Calander.calander')
     @endsection
 
     @section('js')
+        <script>
+            //notice showing Start
+            $(document).ready(function() {
+                $('.view-notice').click(function() {
+                    var noticeId = $(this).data('notice-id');
+                    var noticeTitle = $(this).data('notice-title');
+                    var noticeMessage = $(this).data('notice-message');
+                    var publishOn = $(this).data('publish-on');
+
+                    // Set modal content
+                    $('#modal-notice-title').text(noticeTitle);
+                    $('#modal-notice-message').text(noticeMessage);
+                    $('#modal-publish-on').text(publishOn);
+
+                    $('#opennotice').modal('show');
+                });
+            });
+            // notice showing End
+        </script>
     @endsection

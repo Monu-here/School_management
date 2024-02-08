@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CommunicationController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\FrontDetailController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Admin\StudentPromotion;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Front\HomeController as FrontHomeController;
 use App\Http\Controllers\Front\ServiceController;
+use App\Http\Controllers\Teacher\DepartmentController as TeacherDepartmentController;
 use App\Http\Controllers\Teacher\TeacherDashbaordController;
 use App\Mail\MyEmail;
 use Illuminate\Support\Facades\Mail;
@@ -54,6 +56,9 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
     Route::get('', [HomeController::class, 'index'])->name('index');
     Route::post('create-event', [HomeController::class, 'createEvent'])->name('event');
     Route::get('del-event/{event}', [HomeController::class, 'eventDel'])->name('eventDel');
+    Route::get('view/notice/{id}', [HomeController::class,'viewNotice'])->name('showme');
+
+
 
 
 
@@ -126,12 +131,27 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::get('about-us', [FrontDetailController::class, 'aboutUs'])->name('aboutUs');
         Route::match(['GET', 'POST'], 'aboutUsAdd', [FrontDetailController::class, 'aboutUsAdd'])->name('aboutUsAdd');
     });
+
+    Route::prefix('notice')->name('notice.')->group(function () {
+        Route::get('', [CommunicationController::class, 'index'])->name('index');
+        Route::match(['GET', 'POST'], 'add', [CommunicationController::class, 'add'])->name('add');
+        Route::match(['GET', 'POST'], 'edit/{notice}', [CommunicationController::class, 'edit'])->name('edit');
+        Route::get('del/{notice}', [CommunicationController::class, 'del'])->name('del');
+        // Route::get('show/{notice}', [CommunicationController::class, 'show'])->name('show');
+    });
 });
 // Here admin route will be END
 
 // This route is for teacher Dashboard START
 Route::prefix('TeacherDashboard')->name('teacher.')->middleware(['auth', 'teacher'])->group(function () {
     Route::get('', [TeacherDashbaordController::class, 'index'])->name('index');
+    Route::post('create-event', [TeacherDashbaordController::class, 'createEvent'])->name('event');
+    Route::prefix('departments')->name('departments.')->group(function () {
+        Route::get('', [TeacherDepartmentController::class, 'index'])->name('index');
+        Route::match(['GET', 'POST'], 'add', [TeacherDepartmentController::class, 'add'])->name('add');
+    });
+
+
     // Add other teacher-specific routes here
 });
 // Here route of teacher END

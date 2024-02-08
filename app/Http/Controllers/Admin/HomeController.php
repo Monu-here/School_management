@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Notice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,8 +18,23 @@ class HomeController extends Controller
         $cls = DB::table('classses')->get();
         $events = DB::table('events')->get();
         $event = Event::all();
-        return view('welcome', compact('students', 'users', 'deps', 'cls', 'events','event'));
+        $notices = Notice::all();
+
+        return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices'));
     }
+
+    public function viewNotice($id)
+    {
+        // Fetch notice details for the given ID
+        $notice = Notice::findOrFail($id);
+
+        // Return the view containing the notice details
+        return view('Admin.Notice.show', compact('notice'));
+    }
+
+
+
+
     public function createEvent(Request $request)
     {
 

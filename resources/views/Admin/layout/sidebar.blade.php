@@ -717,6 +717,25 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-globe"></i>
+                                <span>Communication</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{{ route('admin.notice.index') }}"> Notice List</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.grade.index') }}">Grade</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.mark.index') }}">Mark</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         <li class="header-menu">
                             <span>Extra</span>
                         </li>
@@ -724,7 +743,7 @@
                             <a href="{{ route('admin.department.index') }}">
                                 <i class="fa fa-book"></i>
                                 <span>Department</span>
-                                {{-- <span class="badge badge-pill badge-primary">Beta</span> --}}
+                                {{-- <span class="badge badge-pill badge-primary">{{$deps->count()}}</span> --}}
                             </a>
                         </li>
 

@@ -537,7 +537,7 @@
                     </div>
                 </div> @php
                     $user = Auth::user();
-                    dd($user);
+                    // dd($user);
                     @endphp
                 @if ($user && $user->role_name == 'Teacher')
                     <div class="sidebar-header">
@@ -579,7 +579,7 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="">Dashboard {{-- <span class="badge badge-pill badge-success">Pro</span> --}}
+                                        <a href="{{route('teacher.index')}}">Dashboard {{-- <span class="badge badge-pill badge-success">Pro</span> --}}
                                         </a>
                                     </li>
 
@@ -593,13 +593,13 @@
                             <a href="#">
                                 <i class="fa fa-tachometer-alt"></i>
                                 <span>User</span>
-                                <span class="badge badge-pill badge-warning">{{ $user->count() }}</span>
+                                {{-- <span class="badge badge-pill badge-warning"> </span> --}}
                             </a>
                             <div class="sidebar-submenu ">
                                 <ul class="">
 
                                     <li>
-                                        <a href="{{route('admin.user.roleTeacher')}}">Teacher
+                                        <a href="">Teacher
                                             <span
                                                 class="badge badge-pill badge-success">{{ $user->where('role_name', 'Teacher')->count() }}</span>
                                        </a>
@@ -674,10 +674,10 @@
                             <span>Extra</span>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{route('teacher.departments.index')}}">
                                 <i class="fa fa-book"></i>
                                 <span>Department</span>
-                                {{-- <span class="badge badge-pill badge-primary">Beta</span> --}}
+                                <span class="badge badge-pill badge-primary">{{$deps->count()}}</span>
                             </a>
                         </li>
 

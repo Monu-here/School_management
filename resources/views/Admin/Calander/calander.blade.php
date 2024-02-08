@@ -3,7 +3,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                @php
+                    $user = Auth::user();
+                @endphp
+
+                {{-- @if ($user->role_name == 'Admin') --}}
                 <h5 class="modal-title" id="createEventModalLabel">Create Event</h5>
+                {{-- @endif --}}
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -26,7 +32,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Event</button>
+                    @if ($user->role_name == 'Admin')
+                        <button type="submit" class="btn btn-primary">Save Event</button>
+                    @endif
                 </div>
             </form>
         </div>
@@ -54,6 +62,7 @@
         var eventsData = {!! json_encode($events) !!}; // Convert PHP array to JavaScript variable
         const url = 'http://127.0.0.1:8000/AdminDashboard'; // Replace with your actual base URL
 
+
         var calendar = new FullCalendar.Calendar(calendarEl, {
 
             showNonCurrentDates: false,
@@ -62,7 +71,7 @@
                     {
                         title: '{{ $event->title }}',
                         start: '{{ $event->start }}',
-                        end: '{{ date("Y-m-d", strtotime($event->end . ' +1 day')) }}',
+                        end: '{{ date('Y-m-d', strtotime($event->end . ' +1 day')) }}',
                         eventId: '{{ $event->id }}'
 
                     },
@@ -78,12 +87,12 @@
                 const eventId = arg.event.extendedProps.eventId;
                 return {
                     html: `<div class="" style="display:flex; justify-content:center;">
-                    <span>${arg.event.title} </span>
-                    </div>
-                    <div style="display:flex; justify-content:center;">
-                        <a href="${url}/del-event/${eventId}" class="btn btn-danger">Del</a>
+                        <span>${arg.event.title} </span>
                         </div>
-                        `
+                        <div style="display:flex; justify-content:center;">
+                            <a href="${url}/del-event/${eventId}" class="btn btn-danger">Del</a>
+                        </div>
+                            `
                 };
             }
         });

@@ -26,7 +26,7 @@
     <link rel="icon" href="{{ asset($setting->favicon ?? asset('default-favicon.ico')) }}" type="image/x-icon">
     @yield('css')
     <style>
-        p{
+        p {
             font-size: 16px;
         }
     </style>
@@ -58,7 +58,16 @@
                     <div class="">
                         @yield('linkbar')
                         @yield('content')
+
                     </div>
+                    <br>
+                    <footer style="color: red;" class="">
+                        <div class="shadow breadcrumb">
+                            <div class="">
+                                <div class="text-center">Copyright © 2019 All rights reserved | This is made with by Monu kumar</div>
+                            </div>
+                        </div>
+                    </footer>
                 </div>
             </div>
         </main>
@@ -89,6 +98,7 @@
     @include('Admin.tostar.index')
     @include('Admin.Teacher.add')
     @include('Admin.Dep.add')
+    {{-- @include('Admin.Notice.show') --}}
     @yield('js')
     <script>
         showToastr();
@@ -106,6 +116,7 @@
             $('#openmodel').modal('show');
             $('#showteacher').modal('show');
         }
+
 
         function showDep() {
             $('#opendep').modal('show');
