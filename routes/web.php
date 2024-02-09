@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AttendenceController;
 use App\Http\Controllers\Admin\CommunicationController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ExamController;
@@ -56,7 +57,7 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
     Route::get('', [HomeController::class, 'index'])->name('index');
     Route::post('create-event', [HomeController::class, 'createEvent'])->name('event');
     Route::get('del-event/{event}', [HomeController::class, 'eventDel'])->name('eventDel');
-    Route::get('view/notice/{id}', [HomeController::class,'viewNotice'])->name('showme');
+    Route::get('view/notice/{id}', [HomeController::class, 'viewNotice'])->name('showme');
 
 
 
@@ -138,6 +139,14 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
         Route::match(['GET', 'POST'], 'edit/{notice}', [CommunicationController::class, 'edit'])->name('edit');
         Route::get('del/{notice}', [CommunicationController::class, 'del'])->name('del');
         // Route::get('show/{notice}', [CommunicationController::class, 'show'])->name('show');
+    });
+    Route::prefix('atten')->name('atten.')->group(function () {
+        Route::match(['GET', 'POST'], '', [AttendenceController::class, 'index'])->name('index');
+        Route::match(['GET', 'POST'], 'mark/{studentId}', [AttendenceController::class, 'mark'])->name('mark');
+        Route::match(['GET', 'POST'], 'mark/{studentId}', [AttendenceController::class, 'mark'])->name('mark');
+        Route::match(['GET', 'POST'], 'my-report', [AttendenceController::class, 'report'])->name('report');
+        // Route::match(['GET', 'POST'], 'my-report', [AttendenceController::class, 'getAttendance'])->name('report');
+        // dd(1);
     });
 });
 // Here admin route will be END

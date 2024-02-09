@@ -605,10 +605,10 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('admin.user.roleTeacher')}}">Teacher
+                                        <a href="{{ route('admin.user.roleTeacher') }}">Teacher
                                             <span
                                                 class="badge badge-pill badge-success">{{ $user->where('role_name', 'Teacher')->count() }}</span>
-                                       </a>
+                                        </a>
                                     </li>
                                     {{-- <li>
                                         <a href="#">Dashboard 3</a>
@@ -630,10 +630,15 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.promotion.list') }}">Student Promotion</a>
+                                        <a href="{{ route('admin.atten.index') }}">Student Attendence</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.payment.studentPayment') }}">Student Payment</a>
+                                        <a href="{{ route('admin.atten.report') }}">Student Attendence <span> <li>
+                                        <a href="{{ route('admin.atten.report') }}">Report</a>
+                                    </li></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.promotion.list') }}">Student Promotion</a>
                                     </li>
                                 </ul>
                             </div>
@@ -708,7 +713,7 @@
                                 <ul>
                                     <li>
 
-                                        <a href="{{route('admin.frontdetail.index')}}">Home (index)</a>
+                                        <a href="{{ route('admin.frontdetail.index') }}">Home (index)</a>
                                     </li>
                                     <li>
                                         <a href="#">About Us</a>
@@ -727,9 +732,7 @@
                                     <li>
                                         <a href="{{ route('admin.notice.index') }}"> Notice List</a>
                                     </li>
-                                    <li>
-                                        <a href="{{ route('admin.grade.index') }}">Grade</a>
-                                    </li>
+
                                     <li>
                                         <a href="{{ route('admin.mark.index') }}">Mark</a>
                                     </li>
