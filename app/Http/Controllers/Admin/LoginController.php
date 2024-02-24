@@ -25,6 +25,7 @@ class LoginController extends Controller
                 // Mail::to('testmehere000@gmail.com')->send(new MyEmail());
 
                 switch ($user->role_name) {
+                  
                     case 'Admin':
                         return redirect()->route('admin.index')->with('message', 'Successfully logged in to Admin Dashboard');
                     case 'Teacher':

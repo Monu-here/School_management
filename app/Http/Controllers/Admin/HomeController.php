@@ -22,6 +22,18 @@ class HomeController extends Controller
 
         return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices'));
     }
+    // public function index()
+    // {
+    //     $students = DB::table('students')->get();
+    //     $users = DB::table('users')->get();
+    //     $deps = DB::table('departments')->get();
+    //     $cls = DB::table('classses')->get();
+    //     $events = DB::table('events')->get();
+    //     $event = Event::all();
+    //     $notices = Notice::all();
+
+    //     return view('AdminNew.dashboard', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices'));
+    // }
 
     public function viewNotice($id)
     {
@@ -50,5 +62,10 @@ class HomeController extends Controller
     {
         DB::table('events')->where('id', $event)->delete();
         return redirect()->back();
+    }
+
+
+    public function monu() {
+       return view('AdminNew.dashboard');
     }
 }

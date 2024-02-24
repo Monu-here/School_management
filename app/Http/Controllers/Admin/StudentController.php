@@ -9,6 +9,8 @@ use App\Models\Student;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
@@ -25,8 +27,10 @@ class StudentController extends Controller
     {
         $section_id = $request->input('section_id');
         $name = $request->input('name');
+        $idno = $request->input('idno');
 
         $studentsQuery = Student::query();
+
 
         if ($section_id) {
             $studentsQuery->where('section_id', $section_id);
@@ -42,20 +46,31 @@ class StudentController extends Controller
             $selectedName = null;
         }
 
+
+        if ($idno) {
+            $studentsQuery->where('idno', 'like', '%' . $idno . '%');
+            $selectedIdno = $idno;
+        } else {
+            $selectedIdno = null;
+        }
+
         $students = $studentsQuery->get();
         $sections = DB::table('sections')->get();
+        $cls = DB::table('classses')->get();
 
-        return view('Admin.Student.index', compact('sections', 'students', 'selectedSection', 'selectedName'));
+        return view('Admin.Student.index', compact('cls', 'sections', 'students', 'selectedSection', 'selectedName', 'selectedIdno'));
     }
 
 
 
     public function add(Request $request)
     {
+
         if ($request->getMethod() == "POST") {
             $student = new Student();
+
+            $student->idno = random_int(1000, 9999);
             $student->name = $request->name;
-            $student->idno = $request->idno;
             $student->gender = $request->gender;
             $student->dob = $request->dob;
             $student->roll = $request->roll;
@@ -78,13 +93,17 @@ class StudentController extends Controller
             $student->f_image = $request->f_image->store('uploads/student/father');
             $student->m_image = $request->m_image->store('uploads/student/mother');
             $student->image = $request->image->store('uploads/student');
+            // dd($student);
             $student->save();
+            $request->session()->forget('idno');
+
             return redirect()->back()->with('message', 'Data Add Sucessfully');
         } else {
+            $idno = random_int(1000, 9999);
             $classes = DB::table('classses')->get();
             $bloods = DB::table('bloods')->get();
             $sections = DB::table('sections')->get();
-            return view('Admin.Student.add', compact('classes', 'bloods', 'sections'));
+            return view('Admin.Student.add', compact('classes', 'bloods', 'sections', 'idno'));
         }
     }
 

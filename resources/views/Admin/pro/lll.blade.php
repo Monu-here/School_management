@@ -257,13 +257,13 @@
         }
     </script>
     <script>
-        $(function() {
-            $('#clienttable').DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
-        });
+        // $(function() {
+        //     $('#clienttable').DataTable({
+        //         "responsive": true,
+        //         "lengthChange": false,
+        //         "autoWidth": false,
+        //         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        //     }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
+        // });
     </script>
 @endsection

@@ -1,3 +1,4 @@
 *.sqlite*
 ./uploads
-
+./img
+./public

@@ -40,36 +40,57 @@ class AttendenceController extends Controller
         return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate'));
     }
 
-    public function mark(Request $request, $studentId)
+    public function mark(Request $request)
     {
         if ($request->getMethod() == 'POST') {
-            $attendance = new Attendence();
-            $attendanceType = $request->input('attendance_type');
-            $notes = $request->input('notes');
-            $attendanceDate = now(); // You can modify this based on your requirement
-            $existingAttendance = Attendence::where('student_id', $studentId)
-                ->whereDate('attendance_date', $attendanceDate)
-                ->first();
+                // dd($request->all());
+            $attendanceDate = now()->toDateString(); // Get the current date
 
-            if ($existingAttendance) {
-                return redirect()->back()->with('error', 'Attendance for this student on this date has already been marked.');
+            // Iterate over submitted form data for each student
+            foreach ($request->input('student_ids') as $studentId) {
+                // Retrieve attendance data for the current student
+                $attendanceType = $request->input('attendance_types')[$studentId];
+                $notes = $request->input('notes')[$studentId];
+
+                // Check if attendance already exists for the student on the current date
+                $existingAttendance = Attendence::where('student_id', $studentId)
+                    ->whereDate('attendance_date', $attendanceDate)
+                    ->first();
+
+                if ($existingAttendance) {
+                    return redirect()->back()->with('error', 'Attendance for this student on this date has already been marked.');
+                }
+
+                // Check if attendance exists for the student on the previous day
+                $previousDate = now()->subDay()->toDateString(); // Get the previous day's date
+                $previousAttendance = Attendence::where('student_id', $studentId)
+                    ->whereDate('attendance_date', $previousDate)
+                    ->first();
+                // dd($previousDate);
+                // If attendance exists for the previous day, delete it
+                // if ($previousAttendance) {
+                //     $previousAttendance->delete();
+                // }
+
+                // Save attendance for the current student
+                $attendance = new Attendence();
+                $attendance->student_id = $studentId;
+                $attendance->attendance_type = $attendanceType;
+                $attendance->notes = $notes;
+                $attendance->attendance_date = $attendanceDate;
+                $attendance->save();
             }
-            $attendance = new Attendence();
-            $attendance->student_id = $studentId;
-            $attendance->class_id = $request->class_id;
-            $attendance->section_id = $request->section_id;
 
-            $attendance->attendance_type = $attendanceType;
-            $attendance->notes = $notes;
-            $attendance->attendance_date = $attendanceDate;
-            // dd($attendance);
-            $attendance->save();
             return redirect()->back()->with('success', 'Attendance marked successfully');
         } else {
-            $student = student::all();
-            view('Admin.Attendence.add', compact('student'));
+            // If it's not a POST request, retrieve student data and load the view
+            $students = Student::all();
+            return view('Admin.Attendence.add', compact('students'));
         }
     }
+
+
+
 
 
 
@@ -138,13 +159,15 @@ class AttendenceController extends Controller
             ->whereYear('attendance_date', $selectedYear)
             ->whereMonth('attendance_date', $selectedMonth)
             ->get();
+            // if ($attendanceReport->isEmpty()) {
+            //     return redirect()->back()->with('error', 'No Data found for selected Month or Year! Please try again.');
+            // }
 
-         
-        // Create an array to store attendance data for each student for each day of the month
-        $attendanceData = [];
+            // stroing attendenc of each student in array
+            $attendanceData = [];
 
-        // Initialize attendance data for each student for days from 1 to 30
-        foreach ($attendanceReport as $record) {
+            // Initialize attendance data for each student for days from 1 to 30
+            foreach ($attendanceReport as $record) {
             $studentId = $record->student->id;
 
             // Ensure $attendanceData[$studentId] is initialized

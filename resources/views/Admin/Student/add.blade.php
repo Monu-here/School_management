@@ -21,247 +21,224 @@
     </ul>
 @endsection
 @section('content')
-    <div class="page-wrapper">
-        <div class="content container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form action="{{ route('admin.student.add') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('admin.student.add') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <marquee>Id no will be auto generate</marquee>
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Student Information</span></h5>
+                            </div>
+                            <hr>
+                            <div class="col-md-3">
+                                <div class="form-group local-forms">
+                                    <label>Student Image <span class="login-danger">*</span></label>
+                                    <input required type="file" name="image" id="image" class="form-control photo"
+                                        accept="image/*">
+                                    <br>
+
+                                    <label>Father Image <span class="login-danger">*</span></label>
+                                    <input required type="file" class="form-control photo" name="f_image"
+                                        placeholder="Enter Image" accept="image/*">
+                                    <br>
+                                    <label>Student Image <span class="login-danger">*</span></label>
+
+                                    <input required type="file" class="form-control photo" name="m_image"
+                                        placeholder="Enter Image" accept="image/*">
+                                </div>
+
+                            </div>
+                            <div class="col-md-9">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <h5 class="form-title"><span>Student Information</span></h5>
-                                    </div>
-                                    <hr>
-                                    <div class="col-md-3">
+                                    <br>
+                                    <div class="col-12 col-sm-4" hidden>
                                         <div class="form-group local-forms">
-                                            <label>Image <span class="login-danger">*</span></label>
-                                            <input type="file" name="image" id="image" class="form-control photo"
-                                                accept="image/*">
-
-                                            {{-- <input type="file" class="form-control photo" name="image"
-                                                placeholder="Enter Image" accept="image/*"> --}}
+                                            <label>ID No<span class="login-danger">*</span></label>
+                                            <input required type="number" id="formControlLg" class="form-control" readonly
+                                                name="idno" value="{{ isset($idno) ? $idno : '' }}"
+                                                placeholder="Autogenerate ID No" outline="hidden" hidden />
                                         </div>
 
                                     </div>
-                                    <div class="col-md-9">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>ID No<span class="login-danger">*</span></label>
-                                                    <input type="number" id="formControlLg" class="form-control"
-                                                        name="idno" placeholder="Enter ID No" />
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Name <span class="login-danger">*</span></label>
-                                                    <input type="text" id="formControlLg" class="form-control"
-                                                        name="name" placeholder="Enter Name" />
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Gender <span class="login-danger">*</span></label>
-                                                    <select class="form-control" name="gender">
-                                                        <option selected disabled>Select Gender</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female
-                                                        </option>
-                                                        <option value="other">
-                                                            Other</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Date Of Birth <span class="login-danger">*</span></label>
-                                                    <input type="date" class="form-control" name="dob"
-                                                        placeholder="Enter Date of Birth">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Roll No <span class="login-danger">*</span></label>
-                                                    <input type="number" class="form-control" name="roll"
-                                                        placeholder="Enter Roll No">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Class <span class="login-danger">*</span></label>
-                                                    <select class="form-control" name="class_id">
-                                                        <option selected disabled>Select Class</option>
-                                                        @foreach ($classes as $c)
-                                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Religion <span class="login-danger">*</span></label>
-                                                    <select class="form-control" name="reli">
-                                                        <option selected disabled>Select Gender</option>
-                                                        <option value="hindu">Hindu</option>
-                                                        <option value="Christian">Christian</option>
-                                                        <option value="other">Other</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Section <span class="login-danger">*</span></label>
-                                                    <select class="form-control" name="section_id">
-                                                        <option selected disabled>Select Section</option>
-
-                                                        @foreach ($sections as $section)
-                                                            <option value="{{ $section->id }}">{{ $section->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Blood Group <span class="login-danger">*</span></label>
-                                                    <select class="form-control" name="blood_id">
-                                                        <option selected disabled>Select Blood Group</option>
-                                                        @foreach ($bloods as $blood)
-                                                            <option value="{{ $blood->id }}">{{ $blood->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Email <span class="login-danger"></span></label>
-                                                    <input type="email" class="form-control" name="email"
-                                                        placeholder="Enter Email">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Phone Number <span class="login-danger"></span></label>
-                                                    <input type="number" class="form-control" name="number"
-                                                        placeholder="Enter Number">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Address <span class="login-danger"></span></label>
-                                                    <input type="text" class="form-control" name="address"
-                                                        placeholder="Enter Address">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Admit Year <span class="login-danger"></span></label>
-                                                    <select id="yearDropdown" name="session_year"
-                                                        class="form-control"></select>
-
-                                                </div>
-                                            </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Name <span class="login-danger">*</span></label>
+                                            <input required type="text" id="formControlLg" class="form-control"
+                                                name="name" placeholder="Enter Name" />
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h5 class="form-title"><span>Parent Information</span></h5>
-                                            </div>
-                                            <hr>
-                                            <div class="col-md-3">
-                                                <div class="form-group local-forms">
-                                                    <label>Father Image <span class="login-danger">*</span></label>
-                                                    <input type="file" name="f_image" id="image"
-                                                        class="form-control photo" accept="image/*">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-4">
-                                                        <div class="form-group local-forms">
-                                                            <label>Father Name<span class="login-danger">*</span></label>
-                                                            <input type="text" id="formControlLg" class="form-control"
-                                                                name="f_name" placeholder="Enter Father Name" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4">
-                                                        <div class="form-group local-forms">
-                                                            <label>Father Occuptaion<span
-                                                                    class="login-danger">*</span></label>
-                                                            <input type="text" id="formControlLg" class="form-control"
-                                                                name="f_occ" placeholder="Enter Father Occuption" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4">
-                                                        <div class="form-group local-forms">
-                                                            <label>Father Phone Number<span
-                                                                    class="login-danger">*</span></label>
-                                                            <input type="number" id="formControlLg" class="form-control"
-                                                                name="f_no" placeholder="Enter Father Phone Number" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4">
-                                                        <div class="form-group local-forms">
-                                                            <label>Father Email<span class="login-danger">*</span></label>
-                                                            <input type="text" id="formControlLg" class="form-control"
-                                                                name="parent_email" placeholder="Enter Father Email" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4">
-                                                        <div class="form-group local-forms">
-                                                            <label>Mother Name<span class="login-danger">*</span></label>
-                                                            <input type="text" id="formControlLg" class="form-control"
-                                                                name="m_name" placeholder="Enter Mother Name" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4">
-                                                        <div class="form-group local-forms">
-                                                            <label>Mother Occuptaion<span
-                                                                    class="login-danger">*</span></label>
-                                                            <input type="text" id="formControlLg" class="form-control"
-                                                                name="m_occ" placeholder="Enter Mother Occuption" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4">
-                                                        <div class="form-group local-forms">
-                                                            <label>Mother Phone Number<span
-                                                                    class="login-danger">*</span></label>
-                                                            <input type="number" id="formControlLg" class="form-control"
-                                                                name="m_no" placeholder="Enter Mother Phone Number" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Gender <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="gender">
+                                                <option selected disabled>Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female
+                                                </option>
+                                                <option value="other">
+                                                    Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Date Of Birth <span class="login-danger">*</span></label>
+                                            <input required type="date" class="form-control" name="dob"
+                                                placeholder="Enter Date of Birth">
+                                        </div>
+                                    </div>
 
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Roll No <span class="login-danger">*</span></label>
+                                            <input required type="number" class="form-control" name="roll"
+                                                placeholder="Enter Roll No">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Class <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="class_id">
+                                                <option selected disabled>Select Class</option>
+                                                @foreach ($classes as $c)
+                                                    <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
-                                            <div class="col-md-3">
-                                                <div class="form-group local-forms">
-                                                    <label>Mother Image <span class="login-danger">*</span></label>
-                                                    <input type="file" name="m_image" id="image"
-                                                        class="form-control photo" accept="image/*">
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="student-submit">
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                                </div>
-                                            </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Religion <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="reli">
+                                                <option selected disabled>Select Gender</option>
+                                                <option value="hindu">Hindu</option>
+                                                <option value="Christian">Christian</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Section <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="section_id">
+                                                <option selected disabled>Select Section</option>
+
+                                                @foreach ($sections as $section)
+                                                    <option value="{{ $section->id }}">{{ $section->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Blood Group <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="blood_id">
+                                                <option selected disabled>Select Blood Group</option>
+                                                @foreach ($bloods as $blood)
+                                                    <option value="{{ $blood->id }}">{{ $blood->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Email <span class="login-danger"></span></label>
+                                            <input required type="email" class="form-control" name="email"
+                                                placeholder="Enter Email">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Phone Number <span class="login-danger"></span></label>
+                                            <input required type="number" class="form-control" name="number"
+                                                placeholder="Enter Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Address <span class="login-danger"></span></label>
+                                            <input required type="text" class="form-control" name="address"
+                                                placeholder="Enter Address">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Admit Year <span class="login-danger"></span></label>
+                                            <select id="yearDropdown" name="session_year" class="form-control"></select>
+
+                                        </div>
+                                    </div>
+                                    <hr style="border-top: 1px dashed #8c8b8b">
+                                    <p class="form-title text-start"><span><u>Parent Information</u> </span></p>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Father Name<span class="login-danger">*</span></label>
+                                            <input required type="text" id="formControlLg" class="form-control"
+                                                name="f_name" placeholder="Enter Father Name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Father Occuptaion<span class="login-danger">*</span></label>
+                                            <input required type="text" id="formControlLg" class="form-control"
+                                                name="f_occ" placeholder="Enter Father Occuption" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Father Phone Number<span class="login-danger">*</span></label>
+                                            <input required type="number" id="formControlLg" class="form-control"
+                                                name="f_no" placeholder="Enter Father Phone Number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Father Email<span class="login-danger">*</span></label>
+                                            <input required type="text" id="formControlLg" class="form-control"
+                                                name="parent_email" placeholder="Enter Father Email" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Mother Name<span class="login-danger">*</span></label>
+                                            <input required type="text" id="formControlLg" class="form-control"
+                                                name="m_name" placeholder="Enter Mother Name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Mother Occuptaion<span class="login-danger">*</span></label>
+                                            <input required type="text" id="formControlLg" class="form-control"
+                                                name="m_occ" placeholder="Enter Mother Occuption" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Mother Phone Number<span class="login-danger">*</span></label>
+                                            <input required type="number" id="formControlLg" class="form-control"
+                                                name="m_no" placeholder="Enter Mother Phone Number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <button class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+
     </div>
 @endsection
 @section('js')

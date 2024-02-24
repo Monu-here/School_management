@@ -9,17 +9,17 @@
             color: red;
         }
 
-        /* .password-container {
-                                                                                            position: relative;
-                                                                                        }
+/* .password-container {
+        position: relative;
+    }
 
-                                                                                        .password-toggle {
-                                                                                            position: absolute;
-                                                                                            right: 10px;
-                                                                                            top: 50%;
-                                                                                            transform: translateY(-50%);
-                                                                                            cursor: pointer;
-                                                                                        } */
+    .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    } */
     </style>
 @endsection
 @section('linkbar')
@@ -29,8 +29,7 @@
     </ul>
 @endsection
 @section('content')
-    <div class="page-wrapper">
-        <div class="content container-fluid">
+
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
@@ -271,8 +270,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

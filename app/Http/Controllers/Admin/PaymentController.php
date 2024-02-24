@@ -3,14 +3,52 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classs;
 use App\Models\Payment;
 use App\Models\Payment_record;
+use App\Models\Section;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
+    public function index(Request $request)
+    {
+        $student_id = $request->input('se$student_id');
+        $class_id = $request->input('class_id');
+        $section_id = $request->input('section_id');
+
+        $payment_records = Payment_record::query();
+
+        if ($student_id) {
+            $payment_records->where('student_id', 'like', '%' . $student_id . '%');
+            $selectedName = $student_id;
+        } else {
+            $selectedName = null;
+        }
+
+        if ($class_id) {
+            $payment_records->where('class_id', $class_id);
+            $selectedClass = $class_id;
+        } else {
+            $selectedClass = null;
+        }
+        if ($section_id) {
+            $payment_records->where('section_id', $section_id);
+            $selectedSection = $section_id;
+        } else {
+            $selectedSection = null;
+        }
+
+        $payment_records = $payment_records->get();
+        $students = Student::all();
+        $classes = Classs::all(); // Assuming you have a Class model
+        $sections = Section::all();
+
+        return view('Admin.payment.paid_payment_list', compact('payment_records', 'students', 'classes', 'sections', 'selectedSection', 'selectedClass', 'selectedName'));
+    }
+
     public function add(Request $request)
     {
         if ($request->getMethod() == "POST") {
@@ -28,7 +66,9 @@ class PaymentController extends Controller
             return redirect()->back();
         } else {
             $classes = DB::table('classses')->get();
-            return view('Admin.payment.addPayment', compact('classes'));
+            $payments = DB::table('payments')->get();
+            // $payments = Payment::all()->toArray();
+            return view('Admin.payment.addPayment', compact('classes', 'payments'));
         }
     }
 
@@ -54,31 +94,59 @@ class PaymentController extends Controller
 
     public function studentPaymentList(Request $request)
     {
-        $selectedClassId = $request->input('class_id');
+        $class_id = $request->input('class_$class_id');
+        $section_id = $request->input('section_id');
+        $name = $request->input('name');
+        $idno = $request->input('idno');
 
-        $students = Student::when($selectedClassId, function ($query) use ($selectedClassId) {
-            return $query->where('class_id', $selectedClassId);
-        })->get();
+        $studentsQuery = Student::query();
 
+
+        if ($class_id) {
+            $studentsQuery->where('class_id', $class_id);
+            $selectedClass = $class_id;
+        } else {
+            $selectedClass = null;
+        }
+        if ($section_id) {
+            $studentsQuery->where('section_id', $section_id);
+            $selectedSection = $section_id;
+        } else {
+            $selectedSection = null;
+        }
+
+        if ($name) {
+            $studentsQuery->where('name', 'like', '%' . $name . '%');
+            $selectedName = $name;
+        } else {
+            $selectedName = null;
+        }
+
+
+        if ($idno) {
+            $studentsQuery->where('idno', 'like', '%' . $idno . '%');
+            $selectedIdno = $idno;
+        } else {
+            $selectedIdno = null;
+        }
+        $students = $studentsQuery->get();
         $classes = DB::table('classses')->get();
         $payment_records = Payment_record::all();
-        return view('Admin.payment.studentpayment', compact('classes', 'students', 'selectedClassId','payment_records'));
+        $sections = Section::all();
+        return view('Admin.payment.studentpayment', compact('classes', 'selectedIdno', 'selectedName', 'students', 'selectedClass', 'payment_records', 'sections', 'selectedSection'));
     }
+
 
 
 
     public function studentPaymentAdd(Request $request, $student_id)
     {
+        $student = Student::find($student_id);
         if ($request->getMethod() == 'POST') {
-            $request->validate([
-                'student_id' => 'required|exists:students,id',
-                'year' => 'required|string|max:4',
-                'amt_paid' => 'required|numeric|min:0',
-                'title' => 'required',
-            ]);
 
-            // Get the class_id from the student
-            $class_id = Student::find($student_id)->class_id;
+            $class_id = $student->class_id; // Fetch class_id from the student model
+            $section_id = $student->section_id; // Fetch section_id from the student model
+
 
             // Retrieve the total amount already paid by the student
             $totalAmountPaid = Payment_record::where('student_id', $student_id)->sum('amt_paid');
@@ -93,38 +161,29 @@ class PaymentController extends Controller
             $balance = $totalOwed - $totalAmountPaid - (int)$request->input('amt_paid');
             // dd($balance);
 
-            // Check if a payment record already exists for the student
-            $existingPaymentRecord = Payment_record::where('student_id', $student_id)->first();
 
-            if ($existingPaymentRecord) {
-                // Update the existing payment record
-                $existingPaymentRecord->update([
-                    'amt_paid' => (int)$request->input('amt_paid'),
-                    'year' => $request->input('year'),
-                    'status' => $request->status,
-                    'title' => $request->input('title'),
-                    'balance' => $balance,
-                    // You might want to update other fields as needed
-                ]);
-            } else {
-                // Use the existing reference number or generate a new one
-                $refNo = $this->generateUniqueRefNo();
+            // Use the existing reference number or generate a new one
+            $refNo = $this->generateUniqueRefNo();
 
-                // Create a new payment record
-                Payment_record::create([
-                    'student_id' => $student_id,
-                    'ref_no' => $refNo,
-                    'amt_paid' => (int)$request->input('amt_paid'),
-                    'year' => $request->input('year'),
-                    'status' => $request->status,
-                    'title' => $request->input('title'),
-                    'balance' => $balance,
-                    'payment_id' => 1,
-                    'paid' => 1,
-                ]);
-            }
+            // Create a new payment record
+            Payment_record::create([
+                'student_id' => $student_id,
+                'class_id' =>$class_id,
+                'section_id' => $section_id,
+                'ref_no' => $refNo,
+                'amt_paid' => (int)$request->input('amt_paid'),
+                'year' => $request->input('year'),
+                'status' => $request->status,
+                'title' => 'monu',
+                'balance' => $balance,
+                'payment_id' => 1,
+                'paid' => 1,
+            ]);
+            // }
 
-            return redirect()->back();
+
+
+            return redirect()->back()->with('message', 'Payment Recorded Successfully');
         } else {
             $payment_records = Payment_record::with('student')
                 ->where('student_id', $student_id)
@@ -135,7 +194,7 @@ class PaymentController extends Controller
 
             // Get the class_id from the student
             $class_id = $student->class_id;
-
+            $section_id = $student->section_id; // Fetch section_id from the student model
             // Retrieve class-specific payments
             $payments = DB::table('payments')
                 ->where('class_id', $class_id)
@@ -146,12 +205,12 @@ class PaymentController extends Controller
 
             // Retrieve total amount paid by the student
             $totalAmountPaid = Payment_record::where('student_id', $student_id)->sum('amt_paid');
-            $classes = DB::table('classses')->get();
+            // $classses = DB::table('classses')->get();
+            // $section = DB::table('sections')->get();
             //   $payment_recordsww = Payment_record::with('student')->get();
             //   dd($payment_recordsww);
 
-
-            return view('Admin.payment.studentPaymentAdd', compact('students', 'student', 'payment_records', 'payments', 'class_id', 'totalAmountPaid', 'totalOwed', 'classes'))
+            return view('Admin.payment.studentPaymentAdd', compact('students','section_id', 'student', 'payment_records', 'payments', 'class_id', 'totalAmountPaid', 'totalOwed'))
                 ->with('success', 'Payment recorded successfully.');
         }
     }

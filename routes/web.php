@@ -59,7 +59,7 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
     Route::get('del-event/{event}', [HomeController::class, 'eventDel'])->name('eventDel');
     Route::get('view/notice/{id}', [HomeController::class, 'viewNotice'])->name('showme');
 
-
+    Route::get('/monu', [HomeController::class, 'monu'])->name('monu');
 
 
 
@@ -142,8 +142,8 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
     });
     Route::prefix('atten')->name('atten.')->group(function () {
         Route::match(['GET', 'POST'], '', [AttendenceController::class, 'index'])->name('index');
-        Route::match(['GET', 'POST'], 'mark/{studentId}', [AttendenceController::class, 'mark'])->name('mark');
-        Route::match(['GET', 'POST'], 'mark/{studentId}', [AttendenceController::class, 'mark'])->name('mark');
+        Route::match(['GET', 'POST'], 'mark', [AttendenceController::class, 'mark'])->name('mark');
+        // Route::match(['GET', 'POST'], 'mark/{studentId}', [AttendenceController::class, 'mark'])->name('mark');
         Route::match(['GET', 'POST'], 'my-report', [AttendenceController::class, 'report'])->name('report');
         // Route::match(['GET', 'POST'], 'my-report', [AttendenceController::class, 'getAttendance'])->name('report');
         // dd(1);
