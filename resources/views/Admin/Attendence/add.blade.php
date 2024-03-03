@@ -14,21 +14,46 @@
         </div>
     </div>
 @endsection
+@section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" />
+@endsection
 @section('content')
+
     <div class="container">
-        <table class="table">
+        <table class="table table-responsive ">
             <tr>
                 <thead>
                     <th>Student Roll No</th>
-                    <th>Student Class</th>
+                    {{-- <th>Student Class</th> --}}
                     <th>Student Name</th>
-                    <th colspan="2">Attendence
+                    <th>
+                        Attendence
                         <br>
-                        <input type="checkbox" id="selectAll" class="p">
-                        <label for="selectAll">Select</label>
-                        <input type="checkbox" id="selectAlls" class="">
-                        <label for="selectAlls">Unselect</label>
+                        <div class="form-group">
+                            <div>
+
+                                <div class="checkbox-button">
+                                    <div class="checkbox-style">
+                                        {{-- <p class="" style="font-size: 12px">Absent</p> --}}
+                                        <input type="checkbox" id="selectAll" class="p">
+                                        <label for="selectAll" class="checkbox-label-class">
+                                        </label>
+                                        {{-- <span>Present</span> --}}
+                                    </div>
+
+                                    <div class="radio-style">
+                                        <input type="checkbox" id="allAbsent" class="a">
+                                        <label for="allAbsent" class="checkbox-label-class"></label>
+                                    </div>
+                                    <div class="radio-style">
+                                        <input type="checkbox" id="allLeave" class="l">
+                                        <label for="allLeave" class="checkbox-label-class"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </th>
+                    <th>Note</th>
                 </thead>
             </tr>
             <tr>
@@ -42,27 +67,48 @@
                                 <td>
                                     {{ $student->roll }}
                                 </td>
-                                <td>
+                                {{-- <td>
                                     {{ $student->classes->name }} /
                                     {{ $sections->where('id', $student->section_id)->pluck('name')->first() }}
-                                </td>
+                                </td> --}}
                                 <td>
                                     <img src="{{ asset($student->image) }}" class="card-img-top" alt="StudentImage"
                                         style="width: 25px"> {{ $student->name }}
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                         <input type="radio" class="p" id="present_{{ $student->id }}"
-                                            name="attendance_types[{{ $student->id }}]" value="P"> Present
-                                        <input type="radio" id="absent_{{ $student->id }}"
-                                            name="attendance_types[{{ $student->id }}]" value="A"> Absent
-                                        <input type="radio" id="leave_{{ $student->id }}"
-                                            name="attendance_types[{{ $student->id }}]" value="L"> Leave
+                                        <div class="radio-button">
+                                            <div class="radio-style">
+                                                <input type="radio" class="p" id="present_{{ $student->id }}"
+                                                    name="attendance_types[{{ $student->id }}]" value="P">
+                                                <label for="present_{{ $student->id }}" class="label-class">
+
+                                                </label>
+                                            </div>
+                                            <div class="radio-style">
+                                                <input type="radio" id="absent_{{ $student->id }}"
+                                                    name="attendance_types[{{ $student->id }}]" class="a"
+                                                    value="A">
+                                                <label for="absent_{{ $student->id }}" class="label-class">
+
+                                                </label>
+
+                                            </div>
+                                            <div class="radio-style">
+                                                <input type="radio" id="leave_{{ $student->id }}"
+                                                    name="attendance_types[{{ $student->id }}]" class="l"
+                                                    value="L">
+                                                <label for="leave_{{ $student->id }}" class="label-class">
+                                                </label>
+
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group" class="p">
-                                         <input type="text" class="form-control" id="notes_{{ $student->id }}"
+                                        <input type="text" class="form-control" id="notes_{{ $student->id }}"
                                             name="notes[{{ $student->id }}]" placeholder="Enter notes" value="">
                                     </div>
                                 </td>
@@ -78,113 +124,6 @@
     </div>
     <br><br>
 
-    {{-- <div class="row">
-        <div class="col-sm-12">
-            <div class="card card-table comman-shadow">
-                <div class="card-body">
-                    <div class="page-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="page-title">Users</h3>
-                            </div>
-                            <div class="col-auto text-end float-end ms-auto download-grp">
-                                <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                        class="feather-list"></i></a>
-                                <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                        class="feather-grid"></i></a>
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
-                                    Download</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped"
-                            id="clienttable">
-                            <thead class="student-thread">
-                                <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" id="" value="something" />
-                                        </div>
-                                    </th>
-                                    <th>Student Roll No</th>
-                                    <th>Student Class</th>
-                                    <th>Student Name</th>
-                                    <th>Attendence
-                                        <br>
-                                        <input type="checkbox" id="selectAll" class="p form-check-input">
-                                        <label for="selectAll">Select</label>
-                                      </th>
-                                    <th>Note</th>
-                                </tr>
-                            </thead>
-                            <tr>
-                                <form action="{{ route('admin.atten.mark') }}" method="POST">
-                                    @csrf
-                                    @if ($students)
-                                        @foreach ($students as $student)
-                                            <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
-                                            <tbody>
-                                                <td>
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" type="checkbox" value="something" />
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    {{ $student->roll }}
-                                                </td>
-                                                <td>
-                                                    {{ $student->classes->name }} /
-                                                    {{ $sections->where('id', $student->section_id)->pluck('name')->first() }}
-                                                </td>
-                                                <td>
-                                                    <h2 class="table-avatar">
-
-                                                        <a href="student-details.html" class="avatar avatar-sm me-2"><img
-                                                                class="avatar-img rounded-circle"
-                                                                src="{{ asset($student->image) }}" alt="" /></a>
-                                                        <a href="student-details.html">{{ $student->name }}</a>
-                                                    </h2>
-                                                </td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <input type="radio" class="p form-check-input"
-                                                            id="present_{{ $student->id }}"
-                                                            name="attendance_types[{{ $student->id }}]" value="P">
-                                                        Present
-                                                        <input type="radio" id="absent_{{ $student->id }}"
-                                                            name="attendance_types[{{ $student->id }}]" value="A" class="form-check-input">
-                                                        Absent
-                                                        <input type="radio" id="leave_{{ $student->id }}"
-                                                            name="attendance_types[{{ $student->id }}]" value="L" class="form-check-input">
-                                                        Leave
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="form-group" class="p">
-                                                        <input type="text" class="form-control"
-                                                            id="notes_{{ $student->id }}"
-                                                            name="notes[{{ $student->id }}]" placeholder="Enter notes"
-                                                            value="">
-                                                    </div>
-                                                </td>
-                                            </tbody>
-                                        @endforeach
-                                    @endif
-                                    <div class="form-group" style="display: flex; justify-content: end">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
-                            </tr>
-                        </table>
-                        </tr>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection
 @section('js')
     <script>
@@ -195,12 +134,26 @@
 
             });
         });
-        document.getElementById('selectAlls').addEventListener('change', function() {
-            var radioes = document.querySelectorAll('[class^="p"]');
-            radioes.forEach(function(p) {
-                p.checked = document.getElementById('selectAlls').checked = false;
+        document.getElementById('allAbsent').addEventListener('change', function() {
+            var radioes = document.querySelectorAll('[class^="a"]');
+            radioes.forEach(function(a) {
+                a.checked = document.getElementById('allAbsent').checked;
+
             });
         });
+        document.getElementById('allLeave').addEventListener('change', function() {
+            var radioes = document.querySelectorAll('[class^="l"]');
+            radioes.forEach(function(l) {
+                l.checked = document.getElementById('allLeave').checked;
+
+            });
+        });
+        // document.getElementById('selectAlls').addEventListener('change', function() {
+        //     var radioes = document.querySelectorAll('[class^="a"]');
+        //     radioes.forEach(function(a) {
+        //         a.checked = document.getElementById('selectAlls').checked = false;
+        //     });
+        // });
         $(function() {
             $('#clienttable').DataTable({
                 "responsive": true,
@@ -211,4 +164,5 @@
         });
         var st = {!! json_encode($student) !!}
     </script>
+    <script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
 @endsection

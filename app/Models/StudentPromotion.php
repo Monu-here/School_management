@@ -27,6 +27,14 @@ class StudentPromotion extends Model
     {
         return $this->belongsTo(Classs::class, 'to_class');
     }
+    public function toSection()
+    {
+        return $this->belongsTo(Section::class, 'to_section', 'id');
+    }
+    public function fromSection()
+    {
+        return $this->belongsTo(Section::class, 'from_section', 'id');
+    }
     public function section()
     {
         return $this->belongsTo(Section::class);

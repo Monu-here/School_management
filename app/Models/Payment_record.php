@@ -17,7 +17,9 @@ class Payment_record extends Model
         'payment_id',
         'paid',
         'amount',
-        'status'
+        'status',
+        'class_id',
+        'section_id',
     ];
     public function student()
     {

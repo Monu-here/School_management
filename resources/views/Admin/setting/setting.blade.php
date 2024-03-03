@@ -1,7 +1,9 @@
 @extends('Admin.layout.app')
 @section('css')
-    <link rel="stylesheet" href="{{asset('assets/css/form.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
+
 @endsection
+
 @section('linkbar')
     <div class="content container-fluid">
         <div class="page-header">
@@ -25,7 +27,7 @@
 
             </ul>
         </div>
-
+ 
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -39,17 +41,17 @@
                                 <div class="form-group">
                                     <label>Website Name <span class="star-red">*</span></label>
                                     <input type="text" class="form-control" placeholder="Enter Website Name"
-                                        name="webistename" id="webistename" value="{{ $setting->webistename ??"admin"}}">
+                                        name="webistename" id="webistename" value="{{ $setting->webistename ?? 'admin' }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Session <span class="star-red">*</span></label>
                                     <input type="text" class="form-control" placeholder="Enter Website Name"
-                                        name="despc" id="despc" value="{{ $setting->despc ??"admin"}}">
+                                        name="despc" id="despc" value="{{ $setting->despc ?? 'admin' }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Website Title <span class="star-red">*</span></label>
                                     <input type="text" class="form-control" placeholder="Enter Website Title"
-                                        name="titletext" id="titletext" value="{{ $setting->titletext ?? "admin" }}">
+                                        name="titletext" id="titletext" value="{{ $setting->titletext ?? 'admin' }}">
                                 </div>
                                 <div class="form-group">
                                     <p class="settings-label">Logo <span class="star-red">*</span></p>
@@ -63,7 +65,8 @@
                                     <h6 class="settings-size">Recommended image size is <span>150px x
                                             150px</span></h6>
                                     <div class="upload-images">
-                                        <img src="{{ asset($setting->websiteimage ?? 'uploads/setting/6jr43UIkw6N22q7iQy2Qw7gUZcXlimWOa5Lp06Bh.png') }}" alt="Image">
+                                        <img src="{{ asset($setting->websiteimage ?? 'uploads/setting/6jr43UIkw6N22q7iQy2Qw7gUZcXlimWOa5Lp06Bh.png') }}"
+                                            alt="Image">
                                         <a href="javascript:void(0);" class="btn-icon logo-hide-btn">
                                             <i class="feather-x-circle"></i>
                                         </a>
@@ -82,19 +85,22 @@
                                     </h6>
                                     <h6 class="settings-size mt-1">Accepted formats: only png and ico</h6>
                                     <div class="upload-images upload-size">
-                                        <img src="{{asset($setting->favicon ?? 'uploads/setting/6jr43UIkw6N22q7iQy2Qw7gUZcXlimWOa5Lp06Bh.png')}}" alt="Image">
+                                        <img src="{{ asset($setting->favicon ?? 'uploads/setting/6jr43UIkw6N22q7iQy2Qw7gUZcXlimWOa5Lp06Bh.png') }}"
+                                            alt="Image">
                                         <a href="javascript:void(0);" class="btn-icon logo-hide-btn">
                                             <i class="feather-x-circle"></i>
                                         </a>
                                     </div>
                                 </div>
-                                <select data-placeholder="Choose..." required name="despc" id="despc" class="select-search form-control">
+                                <select data-placeholder="Choose..." required name="despc" id="despc"
+                                    class="select-search form-control">
                                     <option value="">Choose Your Session</option>
                                     @php
                                         $currentSession = $setting->current_session ?? '';
                                     @endphp
                                     @for ($y = date('Y', strtotime('- 5 years')); $y <= date('Y', strtotime('+ 2 years')); $y++)
-                                        <option {{ ($currentSession == (($y -= 1) . '-' . ($y += 1))) ? 'selected' : '' }}>{{ ($y -= 1) . '-' . ($y += 1) }}</option>
+                                        <option {{ $currentSession == ($y -= 1) . '-' . ($y += 1) ? 'selected' : '' }}>
+                                            {{ ($y -= 1) . '-' . ($y += 1) }}</option>
                                     @endfor
                                 </select>
                                 <br>
@@ -182,3 +188,4 @@
     </div>
     </div>
 @endsection
+

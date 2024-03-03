@@ -146,6 +146,7 @@ class StudentController extends Controller
             return redirect()->back();
             // return response()->json(['teacher' => $teacher]);
         }
+        
     }
     public function teacherShow($teacher)
     {

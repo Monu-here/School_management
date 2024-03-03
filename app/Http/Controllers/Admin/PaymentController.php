@@ -15,7 +15,7 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-        $student_id = $request->input('se$student_id');
+        $student_id = $request->input('student_id');
         $class_id = $request->input('class_id');
         $section_id = $request->input('section_id');
 
@@ -43,7 +43,7 @@ class PaymentController extends Controller
 
         $payment_records = $payment_records->get();
         $students = Student::all();
-        $classes = Classs::all(); // Assuming you have a Class model
+        $classes = Classs::all();
         $sections = Section::all();
 
         return view('Admin.payment.paid_payment_list', compact('payment_records', 'students', 'classes', 'sections', 'selectedSection', 'selectedClass', 'selectedName'));
@@ -146,7 +146,7 @@ class PaymentController extends Controller
 
             $class_id = $student->class_id; // Fetch class_id from the student model
             $section_id = $student->section_id; // Fetch section_id from the student model
-
+            // dd($class_id);
 
             // Retrieve the total amount already paid by the student
             $totalAmountPaid = Payment_record::where('student_id', $student_id)->sum('amt_paid');
@@ -168,7 +168,7 @@ class PaymentController extends Controller
             // Create a new payment record
             Payment_record::create([
                 'student_id' => $student_id,
-                'class_id' =>$class_id,
+                'class_id' => $class_id,
                 'section_id' => $section_id,
                 'ref_no' => $refNo,
                 'amt_paid' => (int)$request->input('amt_paid'),
@@ -210,7 +210,7 @@ class PaymentController extends Controller
             //   $payment_recordsww = Payment_record::with('student')->get();
             //   dd($payment_recordsww);
 
-            return view('Admin.payment.studentPaymentAdd', compact('students','section_id', 'student', 'payment_records', 'payments', 'class_id', 'totalAmountPaid', 'totalOwed'))
+            return view('Admin.payment.studentPaymentAdd', compact('students', 'section_id', 'student', 'payment_records', 'payments', 'class_id', 'totalAmountPaid', 'totalOwed'))
                 ->with('success', 'Payment recorded successfully.');
         }
     }

@@ -19,6 +19,7 @@ class StudentPromotion extends Controller
         $sections = DB::table('sections')->get();
         $student = Student::all();
         $pros = ModelsStudentPromotion::all(); // Update this line
+ 
         return view('Admin.pro.index', compact('sts', 'cls', 'pros', 'sections','student'));
     }
 

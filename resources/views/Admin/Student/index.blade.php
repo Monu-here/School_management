@@ -147,7 +147,7 @@
                                             <a href="{{ route('admin.student.studentShow', ['student' => $student->id]) }}"
                                                 class="btn btn-sm btn-success"><i class="fa fa-eye text-white"></i></a>
                                             <a href="{{ route('admin.student.del', ['student' => $student->id]) }}"
-                                                class="btn btn-sm btn-danger"><i class="fa fa-trash text-white"></i></a>
+                                                class="btn btn-sm btn-danger" onclick="return yes()"><i class="fa fa-trash text-white"></i></a>
                                         </td>
                                         <td>
                                             <a href="{{ route('admin.mark.admin.marksheet', $student->id) }}"
