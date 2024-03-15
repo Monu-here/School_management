@@ -25,11 +25,15 @@ class LoginController extends Controller
                 // Mail::to('testmehere000@gmail.com')->send(new MyEmail());
 
                 switch ($user->role_name) {
-                  
+
+                    case 'SuperAdmin':
+                        return redirect()->route('admin.index')->with('message', 'Successfully logged in to Super Admin Dashboard');
                     case 'Admin':
                         return redirect()->route('admin.index')->with('message', 'Successfully logged in to Admin Dashboard');
                     case 'Teacher':
-                        return redirect()->route('teacher.index')->with('message', 'Successfully logged in to Teacher Dashboard');
+                        return redirect()->route('admin.index')->with('message', 'Successfully logged in to Teacher Dashboard');
+                    case 'Student':
+                        return redirect()->route('admin.index')->with('message', 'Successfully logged in to Teacher Dashboard');
                     default:
                         Auth::logout();
                         return redirect()->route('adminLogin.login')->with('message', 'Wrong Email & Password');

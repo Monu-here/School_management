@@ -11,4 +11,7 @@ class Teacher extends Model
     protected $casts = [
         'sub' => 'array',
     ];
+    public function teacherdailylog() {
+        return $this->hasMany(TeacherDailyLog::class);
+    }
 }

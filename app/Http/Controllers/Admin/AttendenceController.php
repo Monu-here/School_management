@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 
 class AttendenceController extends Controller
 {
+    public function monu() {
+        return response()->json(Attendence::all());
+    }
     public function index(Request $request)
     {
         $cc = Classs::all();

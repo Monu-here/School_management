@@ -52,7 +52,7 @@
                                 <div class="form-group local-forms">
                                     <label>Image <span class="login-danger">*</span></label>
                                     <input type="file" class="form-control photo" name="image"
-                                        placeholder="Enter Image">
+                                        placeholder="Enter Image" accept="image/*">
                                 </div>
 
                             </div>
@@ -85,7 +85,9 @@
                                             <label>Role <span class="login-danger">*</span></label>
                                             <select class="form-control" name="role_name">
                                                 <option selected disabled>Select Role</option>
+                                                @role('SuperAdmin')
                                                 <option value="Admin">Admin</option>
+                                                @endrole()
                                                 <option value="Teacher">Teacher
                                                 </option>
                                                 <option value="Student">

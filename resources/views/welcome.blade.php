@@ -1,10 +1,16 @@
 @extends('Admin.layout.app')
 @section('title')
+@php
+    $user = Auth::user();
+    $setting = getSetting();
+
+@endphp
+{{-- @if (Auth::user()->role_name) --}}
     <div class="page-header">
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-sub-header">
-                    <h3 class="page-title">Welcome Admin!</h3>
+                    <h3 class="page-title">Welcome {{$user->name}}!</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb-item active">Admin</li>
@@ -90,10 +96,14 @@
                         </div>
                         <div class="col-6">
                             <ul class="chart-list-out">
-                                <li> <button type="button" class="btn btn-primary" data-toggle="modal"
+                                <li>
+                                    @role('Admin')
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#createEventModal">
                                         Add Event
-                                    </button></li>
+                                    </button>
+                                    @endrole()
+                                </li>
 
                             </ul>
                         </div>

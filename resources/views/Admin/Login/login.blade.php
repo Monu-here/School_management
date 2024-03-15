@@ -258,8 +258,8 @@
                 </div>
                 <span>or use your email/password</span>
 
-                <input type="email" placeholder="Email" name="email" value="admin@gmail.com">
-                <input type="password" placeholder="Password" name="password" id="password-input" value="admin">
+                <input type="email" placeholder="Email" name="email">
+                <input type="password" placeholder="Password" name="password" id="password-input">
                 <i class="fas fa-eye password-toggle" id="password-toggle" onclick="togglePasswordVisibilitydd()"></i>
                 <a href="#">Forget your Password?</a>
                 <button type="submit">Login</button>

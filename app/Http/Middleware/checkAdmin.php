@@ -18,7 +18,7 @@ class checkAdmin
     {
         return $next($request);
         $user = Auth::user();
-        if ($user && $user->role_name == 'Admin') {
+        if ($user && $user->role_name == 'SuperAdmin') {
             return $next($request);
         } else {
             return redirect()->route('admin.index');

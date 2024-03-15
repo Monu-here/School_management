@@ -1,8 +1,11 @@
 @php
     $setting = getSetting();
+    $role = getRole();
+    // dd($role);
 @endphp
 @php
     $user = Auth::user();
+    $role = DB::table('roles')->first();
 @endphp
 
 </div>
@@ -22,30 +25,55 @@
                     <ul>
                         <li class=""><a href="{{ route('admin.index') }}"
                                 class="{{ Route::currentRouteNamed('admin.index') ? 'active' : '' }}">Dashboard</a></li>
-                        <li><a href="{{ route('admin.setting.add') }}"
-                                class="{{ Route::currentRouteNamed('admin.setting.add') ? 'active' : '' }}">Setting</a>
-                        </li>
+                        @role('SuperAdmin', 'Admin')
+                            <li><a href="{{ route('admin.setting.add') }}"
+                                    class="{{ Route::currentRouteNamed('admin.setting.add') ? 'active' : '' }}">Setting</a>
+                            </li>
+                        @endrole()
                     </ul>
                 </li>
-                <li class="submenu">
-                    <a href="#"><i class="fas fa-graduation-cap"></i> <span> Admin Section</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li>
-                            <a href="{{ route('admin.user.index') }}"
-                                class="{{ Route::currentRouteNamed('admin.user.index') ? 'active' : '' }}">Admin
-                                <span class="badge badge-pill badge-success">{{ $user->count() }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.user.roleTeacher') }}"
-                                class="{{ Route::currentRouteNamed('admin.user.roleTeacher') ? 'active' : '' }}">Teacher
-                                <span
-                                    class="badge badge-pill badge-success">{{ $user->where('role_name', 'Teacher')->count() }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @role('SuperAdmin')
+                    <li class="submenu">
+                        <a href="#"><i class="feather-grid"></i> <span> Role Manage</span> <span
+                                class="menu-arrow"></span></a>
+                        <ul>
+                            <li class=""><a href="{{ route('admin.role.add') }}"
+                                    class="{{ Route::currentRouteNamed('admin.role.add') ? 'active' : '' }}">Role &
+                                    Permission Mange</a>
+                            </li>
+
+                            <li><a href="{{ route('admin.give.role') }}"
+                                    class="{{ Route::currentRouteNamed('admin.give.role') ? 'active' : '' }}">User Wise
+                                    Role and Permission Manage</a>
+                            </li>
+                            <li><a href="{{ route('admin.assign.permission.to.role') }}"
+                                    class="{{ Route::currentRouteNamed('admin.assign.permission.to.role') ? 'active' : '' }}">Permission
+                                    To Role</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endrole()
+               @role('SuperAdmin','Admin')
+               <li class="submenu">
+                <a href="#"><i class="fas fa-graduation-cap"></i> <span> Admin Section</span> <span
+                        class="menu-arrow"></span></a>
+                <ul>
+                    <li>
+                        <a href="{{ route('admin.user.index') }}"
+                            class="{{ Route::currentRouteNamed('admin.user.index') ? 'active' : '' }}">Admin
+                            <span class="badge badge-pill badge-success">{{ $user->count() }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.user.roleTeacher') }}"
+                            class="{{ Route::currentRouteNamed('admin.user.roleTeacher') ? 'active' : '' }}">Teacher
+                            <span
+                                class="badge badge-pill badge-success">{{ $user->where('role_name', 'Teacher')->count() }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+               @endrole()
                 <li class="submenu">
                     <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
                             class="menu-arrow"></span></a>
@@ -64,6 +92,7 @@
                                 Promote</a></li>
                     </ul>
                 </li>
+                @role('SuperAdmin','Admin')
                 <li class="submenu">
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Staff</span> <span
                             class="menu-arrow"></span></a>
@@ -74,6 +103,9 @@
 
                     </ul>
                 </li>
+                @endrole()
+                @role('SuperAdmin','Admin')
+
                 <li class="submenu">
                     <a href="#"><i class="fas fa-building"></i> <span> Fee Collection</span> <span
                             class="menu-arrow"></span></a>
@@ -89,6 +121,7 @@
                                 Wise Payment List</a></li>
                     </ul>
                 </li>
+                @endrole()
                 <li class="submenu">
                     <a href="#"><i class="fas fa-book-reader"></i> <span> Examination</span> <span
                             class="menu-arrow"></span></a>
@@ -110,32 +143,13 @@
                     </ul>
                 </li>
                 <li class="submenu">
-                    <a href="#"><i class="fas fa-clipboard"></i> <span> Front</span> <span
+                    <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Teacher</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
                         <li>
-
-                            <a href="{{ route('admin.frontdetail.index') }}"
-                                class="{{ Route::currentRouteNamed('admin.frontdetail.list') ? 'active' : '' }}">Home
-                                (index)</a>
-                        </li>
-                        <li>
-                            <a href="#">About Us</a>
-                        </li>
-
-                    </ul>
-                </li>
-                <li class="menu-title">
-                    <span>Management</span>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Commnunication</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li>
-                            <a href="{{ route('admin.notice.index') }}"
-                                class="{{ Route::currentRouteNamed('admin.notice.list') ? 'active' : '' }}"> Notice
-                                List</a>
+                            <a href="{{ route('admin.teacher.index') }}"
+                                class="{{ Route::currentRouteNamed('admin.teacher.index') ? 'active' : '' }}"> Teacher
+                                DailyLog</a>
                         </li>
 
                         <li>
@@ -148,6 +162,51 @@
                         </li>
                     </ul>
                 </li>
+                @role('Admin')
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-clipboard"></i> <span> Front</span> <span
+                                class="menu-arrow"></span></a>
+                        <ul>
+                            <li>
+
+                                <a href="{{ route('admin.frontdetail.index') }}"
+                                    class="{{ Route::currentRouteNamed('admin.frontdetail.list') ? 'active' : '' }}">Home
+                                    (index)</a>
+                            </li>
+                            <li>
+                                <a href="#">About Us</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                @endrole()
+                <li class="menu-title">
+                    <span>Management</span>
+                </li>
+                <li class="submenu">
+                    <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Commnunication</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul>
+                       @role('SuperAdmin','Admin')
+                       <li>
+                        <a href="{{ route('admin.notice.index') }}"
+                            class="{{ Route::currentRouteNamed('admin.notice.list') ? 'active' : '' }}"> Notice
+                            List</a>
+                    </li>
+                       @endrole()
+
+                        <li>
+                            <a href="{{ route('admin.mark.index') }}"
+                                class="{{ Route::currentRouteNamed('admin.mark.list') ? 'active' : '' }}">Mark</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.department.index') }}"
+                                class="{{ Route::currentRouteNamed('admin.department.index') ? 'active' : '' }}">Department
+                        </li>
+                    </ul>
+                </li>
+
+
 
                 <li class="submenu d-none">
                     <a href="javascript:void(0);"><i class="fas fa-code"></i> <span>Multi Level</span> <span

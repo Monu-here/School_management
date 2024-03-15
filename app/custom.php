@@ -9,6 +9,10 @@ function getSetting()
 {
     return DB::table('settings')->first();
 }
+function getRole()
+{
+    return DB::table('roles')->get();
+}
 function getUserSetting()
 {
     return Auth::user();

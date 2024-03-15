@@ -81,7 +81,7 @@
                                             class="feather-grid"></i></a>
                                     <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
                                         Download</a>
-                                      
+
 
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#openmodel"><i class="fas fa-plus"></i></button>
                                 </div>
@@ -94,9 +94,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Image</th>
-
                                         <th>Name</th>
-
                                         <th>
                                             Action
                                         </th>

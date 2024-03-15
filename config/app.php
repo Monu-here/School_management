@@ -169,6 +169,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\PermissionsServiceProvider::class,
+
+
         Barryvdh\DomPDF\ServiceProvider::class, // This line should only be included if you are using the dompdf package
 
 

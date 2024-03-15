@@ -30,7 +30,7 @@ class admin extends Command
             'name' => $this->argument('name'),
             'email' => $this->argument('email'),
             'password' => bcrypt($this->argument('password')),
-            'role_name' => "Admin"
+            'role_name' => "SuperAdmin"
 
         ]);
     }

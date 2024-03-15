@@ -11,12 +11,12 @@
             <a href="index.html" class="logo">
                 @if ($setting)
                     {{ $setting->webistename }}
-                    <img src="{{ asset($setting->websiteimage) }}" alt="Logo">
+                    <img src="{{ asset($setting->websiteimage ?? 'null') }}" alt="Logo">
                 @endif
             </a>
             <a href="index.html" class="logo logo-small">
 
-                <img src="{{ asset($setting->websiteimage) }}" alt="Logo" width="30" height="30">
+                <img src="{{ asset($setting->websiteimage ?? 'null') }}" alt="Logo" width="30" height="30">
             </a>
         </div>
         <div class="menu-toggle">
