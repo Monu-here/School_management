@@ -49,6 +49,7 @@
             </div>
         </div>
     </div>
+
     @endrole()
     <div class="row" id="">
         <div class="col-sm-12">
@@ -124,6 +125,15 @@
             </div>
         </div>
     </div>
+
+
+
+    <form action="{{route('admin.time-tabletime')}}" method="POST">
+        @csrf
+        <label for="">Sub</label>
+        <input type="text" name="sub[]">
+        <button class="btn btn-primary">Submit</button>
+    </form>
 @endsection
 @section('js')
     <script>

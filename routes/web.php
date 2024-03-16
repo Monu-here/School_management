@@ -163,6 +163,9 @@ Route::prefix('AdminDashboard')->name('admin.')->group(function () {
         Route::prefix('teacher')->name('teacher.')->group(function () {
             Route::match(['GET', 'POST'], '', [TeacherController::class, 'index'])->name('index');
         });
+        Route::prefix('time-table')->name('time-table')->group(function () {
+            Route::match(['GET', 'POST'], '', [TeacherController::class, 'addtimetable'])->name('time');
+        });
     });
 });
 // Here admin route will be END
