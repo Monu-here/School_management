@@ -66,11 +66,13 @@ Route::prefix('AdminDashboard')->name('admin.')->group(function () {
         Route::get('view/notice/{id}', [HomeController::class, 'viewNotice'])->name('showme');
 
         Route::get('/monu', [HomeController::class, 'monu'])->name('monu');
-        Route::match(['GET', 'POST'], 'role-add', [RolePermissionController::class, 'addRole'])->name('role.add');
-        Route::match(['GET', 'POST'], 'role-permission', [RolePermissionController::class, 'addPermission'])->name('permission.add');
-        Route::match(['GET', 'POST'], 'give-role', [RolePermissionController::class, 'giveRole'])->name('give.role');
-        Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assign.permission.to.role');
-
+        Route::prefix('role-permission')->name('role-permission.')->group(function () {
+            Route::match(['GET', 'POST'], 'role-add', [RolePermissionController::class, 'addRole'])->name('addRole');
+            Route::match(['GET', 'POST'], 'role-edit/{role}', [RolePermissionController::class, 'editRole'])->name('editRole');
+            Route::match(['GET', 'POST'], 'role-permission', [RolePermissionController::class, 'addPermission'])->name('addPermission');
+            Route::match(['GET', 'POST'], 'give-role', [RolePermissionController::class, 'giveRole'])->name('giveRole');
+            Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assignPerRole');
+        });
 
 
         Route::prefix('setting')->name('setting.')->group(function () {

@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('assets/newDesign/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/newDesign/plugins/datatables/datatables.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
     @yield('css')
     <style>
@@ -41,7 +43,7 @@ input[type=number] {
 <body>
     @include('Admin.layout.sidebar')
     @include('Admin.layout.header')
-    <div class="main-wrapper">
+    <div class="main-wrapper" style="">
         <div class="page-wrapper">
             <div class="content container-fluid">
                 @yield('title')
@@ -60,6 +62,7 @@ input[type=number] {
     <script src="{{ asset('assets/newDesign/plugins/datatables/datatables.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -67,6 +70,7 @@ input[type=number] {
     @include('Admin.tostar.index')
     @include('Admin.layout.jshelper')
     @include('Admin.Teacher.add')
+    {{-- @include('Admin.Role_Permission_Manage.editRole') --}}
     @yield('js')
     <script>
         window.onload = () => {

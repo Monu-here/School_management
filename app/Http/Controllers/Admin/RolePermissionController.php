@@ -27,6 +27,17 @@ class RolePermissionController extends Controller
             return view('Admin.Role_Permission_Manage.addRole', compact('roles', 'permissions'));
         }
     }
+    public function editRole(Request $request, Role $role)
+    {
+        if ($request->getMethod() == "POST") {
+            $role->name = $request->name;
+            $role->save();
+            return redirect()->route('admin.role-permission.addRole');
+        } else {
+            return view('Admin.Role_Permission_Manage.editRole', compact('role'));
+        }
+    }
+
     // Add Permission
     public function addPermission(Request $request)
     {
@@ -35,18 +46,43 @@ class RolePermissionController extends Controller
             $permission = new Permission();
             $permission->name = $request->name;
             $permission->save();
-            return redirect()->back()->with('message' , 'Permission Add Successfully');
-
+            return redirect()->back()->with('message', 'Permission Add Successfully');
         } else {
             $roles = DB::table('roles')->get();
             $permissions = DB::table('permissions')->get();
+
             return view('Admin.Role_Permission_Manage.addRole', compact('roles', 'permissions'));
         }
     }
+    // public function giveRole(Request $request)
+    // {
+    //     if ($request->getMethod() == 'POST') {
+
+    //         $user = User::find($request->user_id);
+    //         if (!$user) {
+    //             return back()->with('error', 'User not found');
+    //         }
+    //         $role = Role::find($request->role_id);
+    //         $permission = Permission::find($request->permission_id);
+
+    //         if (!$role) {
+    //             return back()->with('error', 'Role not found');
+    //         }
+    //         $user->roles()->syncWithoutDetaching($role);
+    //         $user->permissions()->syncWithoutDetaching($permission);
+    //         return redirect()->back();
+    //     } else {
+    //         $roles = Role::all();
+    //         $permissions = Permission::all();
+    //         $users = DB::table('users')->get();
+    //         $users_permissions = DB::table('users_permissions')->get();
+
+    //         return view('Admin.Role_Permission_Manage.userwiseroleandpermission', compact('users', 'roles', 'permissions', 'users_permissions'));
+    //     }
+    // }
     public function giveRole(Request $request)
     {
         if ($request->getMethod() == 'POST') {
-
             $user = User::find($request->user_id);
             if (!$user) {
                 return back()->with('error', 'User not found');
@@ -65,11 +101,11 @@ class RolePermissionController extends Controller
             $permissions = Permission::all();
             $users = DB::table('users')->get();
             $users_permissions = DB::table('users_permissions')->get();
-            // dd($users_permissions);
 
             return view('Admin.Role_Permission_Manage.userwiseroleandpermission', compact('users', 'roles', 'permissions', 'users_permissions'));
         }
     }
+
     public function assignPerRole(Request $request)
     {
 
@@ -90,7 +126,9 @@ class RolePermissionController extends Controller
         } else {
             $roles = Role::all();
             $permissions = Permission::all();
-            return view('Admin.Role_Permission_Manage.assignPermissionToRole', compact('roles', 'permissions'));
+            $roles_permissions = DB::table('roles_permissions')->get();
+
+            return view('Admin.Role_Permission_Manage.assignPermissionToRole', compact('roles', 'permissions', 'roles_permissions'));
         }
     }
 }

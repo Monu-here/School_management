@@ -97,12 +97,12 @@
                         <div class="col-6">
                             <ul class="chart-list-out">
                                 <li>
-                                    @role('Admin')
+                                    {{-- @role('SuperAdmin') --}}
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#createEventModal">
                                         Add Event
                                     </button>
-                                    @endrole()
+                                    {{-- @endrole() --}}
                                 </li>
 
                             </ul>

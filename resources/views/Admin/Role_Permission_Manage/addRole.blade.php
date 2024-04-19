@@ -42,11 +42,12 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.role.add') }}" method="POST">
+                    <form action="{{ route('admin.role-permission.addRole') }}" method="POST">
                         @csrf
                         <label for="name">Role Name</label>
-                        <input type="text" name="name" id="name" class="form-control" required>
+                        <input type="text" name="name" id="name" class="form-control" value="" required>
                         <button class="btn btn-primary mt-3 ">Submit</button>
+
                     </form>
                 </div>
             </div>
@@ -54,7 +55,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.permission.add') }}" method="POST">
+                    <form action="{{ route('admin.role-permission.addPermission') }}" method="POST">
                         @csrf
                         <label for="name">Permission Name</label>
                         <input type="text" name="name" id="name" class="form-control" required>
@@ -123,6 +124,13 @@
                                         <td>
                                             <a href="" class="btn btn-sm btn-success">
                                                 <i class="fa fa-eye text-white "></i>
+                                            </a>
+                                            <a
+                                                href="{{ route('admin.role-permission.editRole', ['role' => $role->id]) }}"class="btn btn-sm btn-primary "><i
+                                                    class="fa fa-pen"></i></a>
+
+                                            </a>
+
                                             </a>
 
 
@@ -200,6 +208,8 @@
                                             <a href="" class="btn btn-sm btn-success">
                                                 <i class="fa fa-eye text-white "></i>
                                             </a>
+                                            <a href="" class="btn btn-sm btn-primary"><i
+                                                    class="fa fa-pen text-white"></i></a>
 
 
                                         </td>
@@ -217,3 +227,4 @@
         </div>
     </div>
 @endsection
+

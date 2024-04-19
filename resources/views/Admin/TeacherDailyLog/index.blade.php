@@ -20,36 +20,36 @@
         $setting = getSetting();
     @endphp
     @role('Teacher')
-    <div class="row" id="add">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{route('admin.teacher.index')}}" method="POST" enctype="multipart/form-data" id="">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" id="name" class="form-control"
-                                    value="{{ $user->name }}" readonly>
+        <div class="row" id="add">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ route('admin.teacher.index') }}" method="POST" enctype="multipart/form-data"
+                            id="">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control"
+                                        value="{{ $user->name }}" readonly>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="date">Date</label>
+                                    <input type="date" name="date" id="date" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="desc">Description</label>
+                                    <textarea name="desc" id="desc" cols="5" rows="5" class="form-control"></textarea>
+                                </div>
+                                <div class="col-md-2 mt-5">
+                                    <button class="btn btn-primary">Submit</button>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <label for="date">Date</label>
-                                <input type="date" name="date" id="date" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="desc">Description</label>
-                                <textarea name="desc" id="desc" cols="5" rows="5" class="form-control"></textarea>
-                            </div>
-                            <div class="col-md-2 mt-5">
-                                <button class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
     @endrole()
     <div class="row" id="">
         <div class="col-sm-12">
@@ -83,13 +83,13 @@
                                         </div>
                                     </th>
 
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Date</th>
-                                            <th>
-                                                Description
-                                            </th>
-                                            <th class="d-none">Created day</th>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>
+                                        Description
+                                    </th>
+                                    <th class="d-none">Created day</th>
 
 
                                 </tr>
@@ -105,11 +105,11 @@
                                         </td>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $daily->name }}</td>
-                                        <td>{{$daily->date}}</td>
+                                        <td>{{ $daily->date }}</td>
 
 
                                         <td>
-                                           {{$daily->desc}}
+                                            {{ $daily->desc }}
                                         </td>
                                         <td>
                                             {{ getAgo($daily->created_at) }}
@@ -127,13 +127,8 @@
     </div>
 
 
+ 
 
-    <form action="{{route('admin.time-tabletime')}}" method="POST">
-        @csrf
-        <label for="">Sub</label>
-        <input type="text" name="sub[]">
-        <button class="btn btn-primary">Submit</button>
-    </form>
 @endsection
 @section('js')
     <script>

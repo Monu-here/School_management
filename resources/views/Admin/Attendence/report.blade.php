@@ -102,8 +102,12 @@
                                         <label for="class_id">Select Class:</label>
                                         <select name="class_id" id="class_id" class="form-control">
                                             @foreach ($classes as $class)
-                                                <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                                <option value="{{ $class->id }}"
+                                                    {{ old('class_id') == $class->id ? 'selected' : '' }}>
+                                                    {{ $class->name }}
+                                                </option>
                                             @endforeach
+
                                         </select>
                                     </div>
                                 </div>
@@ -134,7 +138,8 @@
                                         <label for="year">Select Year:</label>
                                         <select name="year" id="year" class="form-control">
                                             @for ($i = date('Y'); $i >= 2010; $i--)
-                                                <option value="{{ $i }}" {{ $i == date('Y') ? 'selected' : '' }}>
+                                                <option value="{{ $i }}"
+                                                    {{ $i == date('Y') ? 'selected' : '' }}>
                                                     {{ $i }}</option>
                                             @endfor
                                         </select>
@@ -178,11 +183,11 @@
                                 <th>Student Name</th>
                                 <th>Student Roll</th>
                                 @for ($day = 1; $day <= Carbon\Carbon::createFromDate($selectedYear, $selectedMonth)->daysInMonth; $day++)
-                                    <th >
+                                    <th>
                                         {{ Carbon\Carbon::createFromDate($selectedYear, $selectedMonth, $day)->format('l') }}
                                         <br>
-                                             {{$day}}
-                                     </th>
+                                        {{ $day }}
+                                    </th>
                                 @endfor
 
 
@@ -219,8 +224,50 @@
                 </div>
             </div>
         </div>
+        <p>---------------------</p>
+        @foreach ($mm as $key => $value)
+            <p>Student ID: {{ $key }}</p>
+            <ul>
+                @foreach ($value as $attendance)
+                    <li>Attendance Type: {{ $attendance->attendance_type }}</li>
+                @endforeach
+            </ul>
+        @endforeach
+        <p>---------------------</p>
+        @foreach ($mm as $studentId => $attendances)
+            <p>Student ID: {{ $studentId }}</p>
+            <ul>
+                @php
+                    $attendanceCounts = $attendances->groupBy('attendance_type')->map->count();
+                @endphp
+                @foreach ($attendanceCounts as $attendanceType => $count)
+                    <li>{{ $attendanceType }}: {{ $count }}</li>
+                @endforeach
+            </ul>
+        @endforeach
+        <p>---------------------</p>
+        @foreach ($mm as $attendanceDate => $attendances)
+            <p>Attendance Date: {{ $attendanceDate }}</p>
+            <ul>
+                @foreach ($attendances as $attendance)
+                    <li>{{ $attendance->attendance_type }}</li>
+                @endforeach
+            </ul>
+        @endforeach
+        <p>---------------------</p>
+        @foreach ($mm as $attendanceDate => $attendances)
+            <p>Attendance Date: {{ $attendanceDate }}</p>
+            <ul>
+                @foreach ($attendances as $attendance)
+                    <li>{{ $attendance->attendance_type }}</li>
+                @endforeach
+            </ul>
+        @endforeach
+
+
     </div>
 @endsection
+
 @section('js')
     <script>
         $(document).ready(function() {
@@ -232,6 +279,10 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
         });
+
         // var productGroups = {!! json_encode($attendanceReport, JSON_NUMERIC_CHECK) ?? '[]' !!};
+    </script>
+    <script>
+        // toastr.error('No students found for the selected class and section.');
     </script>
 @endsection

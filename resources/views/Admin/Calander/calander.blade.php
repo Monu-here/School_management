@@ -64,8 +64,11 @@
 
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
+            // eventColor: '#FF0000',
+            // eventTextColor:'#fff',
+            // eventBackgroundColor: '#FF0000', // Set background color for all events to red
 
-            showNonCurrentDates: false,
+             showNonCurrentDates: false,
             events: [
                 @foreach ($events as $event)
                     {
@@ -99,3 +102,5 @@
         calendar.render();
     });
 </script>
+<style>
+ 

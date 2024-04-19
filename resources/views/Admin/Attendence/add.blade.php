@@ -67,10 +67,7 @@
                                 <td>
                                     {{ $student->roll }}
                                 </td>
-                                {{-- <td>
-                                    {{ $student->classes->name }} /
-                                    {{ $sections->where('id', $student->section_id)->pluck('name')->first() }}
-                                </td> --}}
+
                                 <td>
                                     <img src="{{ asset($student->image) }}" class="card-img-top" alt="StudentImage"
                                         style="width: 25px"> {{ $student->name }}

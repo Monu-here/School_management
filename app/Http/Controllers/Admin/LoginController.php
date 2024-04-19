@@ -51,9 +51,14 @@ class LoginController extends Controller
         Auth::logout();
         return redirect()->route('adminLogin.login');
     }
-    public function index()
+    public function index( Request $request)
+
     {
-        $users = DB::table('users')->get();
+        $name = $request->input('name');
+        $users = User::where('name','like',"%$name%")->get();
+        // dd($user);
+ 
+        // $users = DB::table('users')->get();
         return view('Admin.UserAcc.index', compact('users'));
     }
     public function add(Request $request)

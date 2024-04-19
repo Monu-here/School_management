@@ -73,7 +73,10 @@
         </div> --}}
 
 
-
+    <form action="{{ route('admin.user.index') }}" method="GET">
+        <input type="text" name="name" id="name">
+        <button class="btn btn-primary">mib</button>
+    </form>
 
     <div class="row">
         <div class="col-sm-12">

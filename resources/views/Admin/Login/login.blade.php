@@ -238,7 +238,7 @@
     .password-toggle {
         position: absolute;
         right: 50px;
-        top: 60%;
+        top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
     }
@@ -250,13 +250,13 @@
             <form action="{{ route('adminLogin.login') }}" method="POST">
                 @csrf
                 <h1>Log In</h1>
-                <div class="social-icons">
+                {{-- <div class="social-icons">
                     <a href="#" class="icons"><i class="fa-brands fa-google-plus-g"></i></a>
                     <a href="#" class="icons"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" class="icons"><i class="fa-brands fa-github"></i></a>
                     <a href="#" class="icons"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email/password</span>
+                </div> --}}
+                {{-- <span>or use your email/password</span> --}}
 
                 <input type="email" placeholder="Email" name="email">
                 <input type="password" placeholder="Password" name="password" id="password-input">

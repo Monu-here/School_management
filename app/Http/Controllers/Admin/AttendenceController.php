@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 class AttendenceController extends Controller
 {
-    public function monu() {
+    public function monu()
+    {
         return response()->json(Attendence::all());
     }
     public function index(Request $request)
@@ -27,6 +28,7 @@ class AttendenceController extends Controller
         $attendanceDate = now();
         $students = null;
         if ($request->getMethod() == "POST") {
+            // dd($request->all());
             if ($request->filled('class_id') && $request->filled('section_id')) {
                 $fromClass = $request->input('class_id');
                 $fromSection = $request->input('section_id');
@@ -46,7 +48,7 @@ class AttendenceController extends Controller
     public function mark(Request $request)
     {
         if ($request->getMethod() == 'POST') {
-                // dd($request->all());
+            // dd($request->all());
             $attendanceDate = now()->toDateString(); // Get the current date
 
             // Iterate over submitted form data for each student
@@ -147,13 +149,10 @@ class AttendenceController extends Controller
 
     public function report(Request $request)
     {
-        // Get the selected class, section, month, and year from the form submission
         $classId = $request->input('class_id');
         $sectionId = $request->input('section_id');
         $selectedMonth = $request->input('month');
         $selectedYear = $request->input('year');
-
-        // Fetch attendance records for students belonging to the selected class and section
         $attendanceReport = Attendence::with('student')
             ->whereHas('student', function ($query) use ($classId, $sectionId) {
                 $query->where('class_id', $classId)
@@ -162,37 +161,41 @@ class AttendenceController extends Controller
             ->whereYear('attendance_date', $selectedYear)
             ->whereMonth('attendance_date', $selectedMonth)
             ->get();
-            // if ($attendanceReport->isEmpty()) {
-            //     return redirect()->back()->with('error', 'No Data found for selected Month or Year! Please try again.');
-            // }
 
-            // stroing attendenc of each student in array
-            $attendanceData = [];
 
-            // Initialize attendance data for each student for days from 1 to 30
-            foreach ($attendanceReport as $record) {
+        $attendanceData = [];
+
+        foreach ($attendanceReport as $record) {
             $studentId = $record->student->id;
 
-            // Ensure $attendanceData[$studentId] is initialized
             if (!isset($attendanceData[$studentId])) {
-                $attendanceData[$studentId] = array_fill(1, 30, null); // Initialize for 30 days
+                $attendanceData[$studentId] = array_fill(1, 30, null);
             }
 
-            // Get the day of the month for the current record
             $dayOfMonth = (int) Carbon::parse($record->attendance_date)->format('d');
 
-            // Get the attendance type for the current record
             $attendanceType = $record->attendance_type;
 
-            // Store the attendance type in the array
             $attendanceData[$studentId][$dayOfMonth] = $attendanceType;
         }
 
-        // Fetch classes and sections for the form
         $classes = Classs::all();
         $sections = Section::all();
+        $mm = Attendence::with('student')
+            ->select('student_id', 'attendance_type')
+            ->whereYear('attendance_date', $selectedYear)
+            ->whereMonth('attendance_date', $selectedMonth)
+            ->get()
+            ->groupBy('student_id');
 
-        // Pass attendance data, classes, sections, and attendance report to the view
-        return view('Admin.Attendence.report', compact('attendanceData', 'classes', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear'));
+        foreach ($mm as $key => $value) {
+            echo "Student ID: $key\n";
+            foreach ($value as $attendance) {
+                echo "Attendance Type: $attendance->attendance_type\n";
+            }
+        }
+
+        // dd($mm);
+        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear'));
     }
 }

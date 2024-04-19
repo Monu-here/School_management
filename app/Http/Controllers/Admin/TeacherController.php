@@ -28,15 +28,19 @@ class TeacherController extends Controller
     public function addtimetable(Request $request)
     {
         if ($request->getMethod() == "POST") {
-            $time = new TimeTable();
-            $time->sub = $request->sub;
-            $time->date = $request->date;
-            $time->time = $request->time;
-            $time->day = $request->day;
-            $time->save();
+            $timeTable = new TimeTable();
+            $timeTable->sub = $request->sub;
+            $timeTable->date = $request->date;
+            $timeTable->time = $request->time;
+            $timeTable->day = $request->day;
+            $timeTable->save();
+            return redirect()->back()->with('message', 'Data add successfully');
         } else {
-            $dailys = TeacherDailyLog::all();
-            return view('Admin.TeacherDailyLog.index', compact('dailys'));
+            $timeTables = TimeTable::all();
+
+
+
+            return view('Admin.TimeTable.add', compact('timeTables'));
         }
     }
 }
