@@ -20,39 +20,41 @@
     </div>
 @endsection
 @section('content')
-    <div class="row" id="add">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('admin.time-tabletime') }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" class="form-control" id="subject" name="sub" required>
-                        </div>
+    @role('HR')
+        <div class="row" id="add">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ route('admin.time-tabletime') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" class="form-control" id="subject" name="sub" required>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="date">Date</label>
-                            <input type="date" class="form-control" id="date" name="date" required>
-                        </div>
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="time">Time</label>
-                            <input type="time" class="form-control" id="time" name="time" required>
-                        </div>
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input type="time" class="form-control" id="time" name="time" required>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="day">Day</label>
-                            <input type="text" class="form-control" id="day" name="day" required>
-                        </div>
+                            <div class="form-group">
+                                <label for="day">Day</label>
+                                <input type="text" class="form-control" id="day" name="day" required>
+                            </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endrole()
     <div id="monu"></div>
 @endsection
 @section('js')

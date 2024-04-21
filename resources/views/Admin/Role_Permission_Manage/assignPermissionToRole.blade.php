@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="content">
-            <form action="{{ route('admin.assign.permission.to.role') }}" method="POST">
+            <form action="{{ route('admin.role-permission.assignPerRole') }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-5">

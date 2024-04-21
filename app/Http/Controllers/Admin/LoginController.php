@@ -32,6 +32,8 @@ class LoginController extends Controller
                         return redirect()->route('admin.index')->with('message', 'Successfully logged in to Admin Dashboard');
                     case 'Teacher':
                         return redirect()->route('admin.index')->with('message', 'Successfully logged in to Teacher Dashboard');
+                    case 'HR':
+                        return redirect()->route('admin.index')->with('message', 'Successfully logged in to Teacher Dashboard');
                     case 'Student':
                         return redirect()->route('admin.index')->with('message', 'Successfully logged in to Teacher Dashboard');
                     default:

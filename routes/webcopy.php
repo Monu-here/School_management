@@ -60,8 +60,7 @@ Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->
     Route::get('del-event/{event}', [HomeController::class, 'eventDel'])->name('eventDel');
     Route::get('view/notice/{id}', [HomeController::class, 'viewNotice'])->name('showme');
 
-    Route::get('/monu', [HomeController::class, 'monu'])->name('monu');
-    Route::match(['GET', 'POST'], 'role-add', [RolePermissionController::class, 'addRole'])->name('role.add');
+     Route::match(['GET', 'POST'], 'role-add', [RolePermissionController::class, 'addRole'])->name('role.add');
     Route::match(['GET', 'POST'], 'role-permission', [RolePermissionController::class, 'addPermission'])->name('permission.add');
     Route::match(['GET', 'POST'], 'give-role/{user}', [RolePermissionController::class, 'giveRole'])->name('give.role');
     Route::match(['GET', 'POST'], 'assign-permission-to-role/{role}', [RolePermissionController::class, 'assignPerRole'])->name('assign.permission.to.role');

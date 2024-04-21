@@ -188,12 +188,12 @@ class AttendenceController extends Controller
             ->get()
             ->groupBy('student_id');
 
-        foreach ($mm as $key => $value) {
-            echo "Student ID: $key\n";
-            foreach ($value as $attendance) {
-                echo "Attendance Type: $attendance->attendance_type\n";
-            }
-        }
+        // foreach ($mm as $key => $value) {
+        //     echo "Student ID: $key\n";
+        //     foreach ($value as $attendance) {
+        //         echo "Attendance Type: $attendance->attendance_type\n";
+        //     }
+        // }
 
         // dd($mm);
         return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear'));

@@ -65,7 +65,7 @@ class HomeController extends Controller
     }
 
 
-    public function monu() {
-       return view('AdminNew.dashboard');
-    }
+    // public function monu() {
+    //    return view('Admin');
+    // }
 }

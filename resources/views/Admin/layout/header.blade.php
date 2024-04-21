@@ -8,13 +8,13 @@
     <div class="header">
 
         <div class="header-left">
-            <a href="index.html" class="logo">
+            <a href="" class="logo">
                 @if ($setting)
                     {{ $setting->webistename }}
                     <img src="{{ asset($setting->websiteimage ?? 'null') }}" alt="Logo">
                 @endif
             </a>
-            <a href="index.html" class="logo logo-small">
+            <a href="" class="logo logo-small">
 
                 <img src="{{ asset($setting->websiteimage ?? 'null') }}" alt="Logo" width="30" height="30">
             </a>

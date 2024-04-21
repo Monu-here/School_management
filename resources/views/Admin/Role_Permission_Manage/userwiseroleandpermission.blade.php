@@ -1,7 +1,7 @@
 @extends('Admin.layout.app')
 @section('content')
     <div class="container">
-        <form action="{{ route('admin.give.role') }}" method="POST">
+        <form action="{{ route('admin.role-permission.giveRole') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-3">

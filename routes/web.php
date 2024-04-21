@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AttendenceController;
 use App\Http\Controllers\Admin\CommunicationController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ExamController;
+use App\Http\Controllers\Admin\FeedbackController;
 use App\Http\Controllers\Admin\FrontDetailController;
 use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\HomeController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentPromotion;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\ViewHomeworkSubmit;
 use App\Http\Controllers\Front\HomeController as FrontHomeController;
 use App\Http\Controllers\Front\ServiceController;
 use App\Http\Controllers\Teacher\DepartmentController as TeacherDepartmentController;
@@ -57,7 +59,7 @@ Route::prefix('admin')->name('adminLogin.')->group(function () {
 
 // Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 Route::prefix('AdminDashboard')->name('admin.')->group(function () {
-    Route::group(['middleware' => 'role:SuperAdmin,Admin,Teacher'], function () {;
+    Route::group(['middleware' => 'role:SuperAdmin,Admin,Teacher,HR,Student'], function () {;
 
         Route::get('', [HomeController::class, 'index'])->name('index');
 
@@ -65,7 +67,6 @@ Route::prefix('AdminDashboard')->name('admin.')->group(function () {
         Route::get('del-event/{event}', [HomeController::class, 'eventDel'])->name('eventDel');
         Route::get('view/notice/{id}', [HomeController::class, 'viewNotice'])->name('showme');
 
-        Route::get('/monu', [HomeController::class, 'monu'])->name('monu');
         Route::prefix('role-permission')->name('role-permission.')->group(function () {
             Route::match(['GET', 'POST'], 'role-add', [RolePermissionController::class, 'addRole'])->name('addRole');
             Route::match(['GET', 'POST'], 'role-edit/{role}', [RolePermissionController::class, 'editRole'])->name('editRole');
@@ -168,6 +169,17 @@ Route::prefix('AdminDashboard')->name('admin.')->group(function () {
         Route::prefix('time-table')->name('time-table')->group(function () {
             Route::match(['GET', 'POST'], '', [TeacherController::class, 'addtimetable'])->name('time');
         });
+        Route::prefix('homework')->name('homework.')->group(function () {
+            Route::get('', [ViewHomeworkSubmit::class, 'index'])->name('index');
+            Route::match(['GET', 'POST'], 'submit-homework', [ViewHomeworkSubmit::class, 'submit'])->name('submit');
+            Route::get('/view-homework', [ViewHomeworkSubmit::class, 'viewHomework'])->name('viewHomework');
+            Route::match(['GET', 'POST'], 'add-teacher', [ViewHomeworkSubmit::class, 'addHomework'])->name('addHomework');
+        });
+        Route::prefix('feedback')->name('feedback.')->group(function(){
+            Route::get('', [FeedbackController::class, 'index'])->name('index');
+            Route::match(['GET', 'POST'], 'add-feedback', [FeedbackController::class, 'addFeedback'])->name('addFeedback');
+
+        });
     });
 });
 // Here admin route will be END
@@ -190,10 +202,9 @@ Route::prefix('AdminDashboard')->name('admin.')->group(function () {
 // Here route of teacher END
 
 // Route::prefix('StudentDashboard')->name('student.')->middleware(['auth', 'student'])->group(function () {
-Route::prefix('StudentDashboard')->name('student.')->middleware(['auth'])->group(function () {
-    Route::group(['middleware' => 'role:techer'], function () {
+// Route::prefix('StudentDashboard')->name('student.')->middleware(['auth'])->group(function () {
+//     Route::group(['middleware' => 'role:techer'], function () {
 
-        // Route::get('', [StudentController::class, 'index'])->name('index');
-        // Add other student-specific routes here
-    });
-});
+       
+//     });
+// });

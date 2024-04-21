@@ -256,7 +256,7 @@
         @endforeach
         <p>---------------------</p>
         @foreach ($mm as $attendanceDate => $attendances)
-            <p>Attendance Date: {{ $attendanceDate }}</p>
+            <p>Attendance Date: {{Carbon\Carbon::createFromDate ($attendanceDate)->format('Y-m-d')  }}</p>
             <ul>
                 @foreach ($attendances as $attendance)
                     <li>{{ $attendance->attendance_type }}</li>
@@ -270,6 +270,7 @@
 
 @section('js')
     <script>
+        var monu = {!! json_encode($attendanceDate) !!}
         $(document).ready(function() {
             $('#clienttable').DataTable({
                 "responsive": false,

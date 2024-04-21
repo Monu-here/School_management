@@ -82,9 +82,9 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('.photo').dropify();
-    });
+    // $(document).ready(function() {
+    //     $('.photo').dropify();
+    // });
 
 
 </script>

@@ -1,16 +1,16 @@
 @extends('Admin.layout.app')
 @section('title')
-@php
-    $user = Auth::user();
-    $setting = getSetting();
+    @php
+        $user = Auth::user();
+        $setting = getSetting();
 
-@endphp
-{{-- @if (Auth::user()->role_name) --}}
+    @endphp
+    {{-- @if (Auth::user()->role_name) --}}
     <div class="page-header">
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-sub-header">
-                    <h3 class="page-title">Welcome {{$user->name}}!</h3>
+                    <h3 class="page-title">Welcome {{ $user->name }}!</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb-item active">Admin</li>
@@ -409,21 +409,20 @@
 @section('js')
     <script>
         //notice showing Start
-        $(document).ready(function() {
+        document.addEventListener("DOMContentLoaded", function() {
             $('.view-notice').click(function() {
                 var noticeId = $(this).data('notice-id');
                 var noticeTitle = $(this).data('notice-title');
                 var noticeMessage = $(this).data('notice-message');
                 var publishOn = $(this).data('publish-on');
-
                 // Set modal content
                 $('#modal-notice-title').text(noticeTitle);
                 $('#modal-notice-message').text(noticeMessage);
                 $('#modal-publish-on').text(publishOn);
-
                 $('#opennotice').modal('show');
             });
         });
+        
         // notice showing End
     </script>
 @endsection

@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <script>
-    function showToastr() {
+    function ShowTost() {
         @if (Session::has('message') || Session::has('error') || Session::has('info') || Session::has('warning'))
             toastr.options = {
                 "closeButton": true,

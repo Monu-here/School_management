@@ -8,10 +8,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     @if ($setting)
-
-    <title>{{$setting->titletext}}</title>
+        <title>{{ $setting->titletext }}</title>
     @endif
-    <link rel="shortcut icon" href="{{asset($setting->favicon ?? 'monu')}}">
+    <link rel="shortcut icon" href="{{ asset($setting->favicon ?? 'monu') }}">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap"rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/newDesign/plugins/bootstrap/css/bootstrap.min.css') }}">
@@ -28,15 +27,15 @@
     @yield('css')
     <style>
         input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 </head>
 
@@ -66,17 +65,23 @@ input[type=number] {
 
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @include('Admin.tostar.index')
     @include('Admin.layout.jshelper')
     @include('Admin.Teacher.add')
     {{-- @include('Admin.Role_Permission_Manage.editRole') --}}
     @yield('js')
     <script>
-        window.onload = () => {
-            showToastr();
-
+         function ShowTost() {
+             window.onload = () => {
+            }
+            
         }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            // $('.photo').dropify();
+            ShowTost();
+        });
     </script>
 </body>
 
