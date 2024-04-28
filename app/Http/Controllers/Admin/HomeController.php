@@ -37,10 +37,8 @@ class HomeController extends Controller
 
     public function viewNotice($id)
     {
-        // Fetch notice details for the given ID
         $notice = Notice::findOrFail($id);
 
-        // Return the view containing the notice details
         return view('Admin.Notice.show', compact('notice'));
     }
 
@@ -61,11 +59,11 @@ class HomeController extends Controller
     public function eventDel($event)
     {
         DB::table('events')->where('id', $event)->delete();
-        return redirect()->back();
+         return redirect()->back();
     }
 
 
-    // public function monu() {
-    //    return view('Admin');
-    // }
+    public function monu() {
+       return view('Front.404');
+    }
 }

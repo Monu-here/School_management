@@ -27,16 +27,23 @@
                     <form action="{{ route('admin.homework.addHomework') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-5">
                                 <label for="titile">Homework Title</label>
                                 <input type="text" name="title" class="form-control">
                             </div>
                             <div class="col-md-3">
                                 <label for="techer">Given By</label>
-
                                 <select name="teacher_id" id="teacher_id" class="form-control">
                                     @foreach ($techers as $techer)
                                         <option value="{{ $techer->id }}">{{ $techer->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="techer">Given To</label>
+                                <select name="teacher_id" id="teacher_id" class="form-control">
+                                    @foreach ($students as $student)
+                                        <option value="{{ $student->id }}">{{ $student->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -18,84 +18,118 @@
         }
     </style>
 @endsection
-@section('content')
-    <form method="POST" action="{{ route('admin.user.edit', ['user' => $user->id]) }}">
-        @csrf
+@section('title')
+    <div class="page-header">
         <div class="row">
-            <div class="col-12">
-                <h5 class="form-title"><span>Basic Details</span></h5>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group local-forms">
-                    <label>Image <span class="login-danger">*</span></label>
-                    <input type="file" class="form-control photo" name="image" placeholder="Enter Image"
-                        data-default-file={{ asset($user->image) }}>
-                </div>
-
-            </div>
-            <div class="col-md-9">
-                <div class="row">
-                    <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                            <label>Name <span class="login-danger">*</span></label>
-                            <input type="text" id="formControlLg" class="form-control" name="name"
-                                placeholder="Enter Name" value="{{ $user->name }}" />
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                            <label>Phone Number <span class="login-danger">*</span></label>
-                            <input type="number" class="form-control" name="number" placeholder="Enter Number"
-                                value="{{ $user->number }}">
-
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                            <label>Email <span class="login-danger">*</span></label>
-                            <input type="text" class="form-control" name="email" placeholder="Enter Email"
-                                value="{{ $user->email }}">
-                        </div>
-                    </div>
-                    <!-- ... (other form fields) ... -->
-                    <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                            <label>Role <span class="login-danger">*</span></label>
-                            <select class="form-control" name="role_name">
-                                <option disabled>Select Role</option>
-                                <option value="Admin"
-                                    {{ old('role_name', $user->role_name) == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="Teacher"
-                                    {{ old('role_name', $user->role_name) == 'Teacher' ? 'selected' : '' }}>Teacher</option>
-                                <option value="Student"
-                                    {{ old('role_name', $user->role_name) == 'Student' ? 'selected' : '' }}>Student</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- ... (other form fields) ... -->
-
-                    <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                            <label>Password <span class="login-danger">*</span></label>
-                            <div class="password-container">
-                                <input type="password" class="form-control" name="password" id="password-input"
-                                    placeholder="Enter Password" value="{{ $user->password }}">
-                                <i class="fas fa-eye password-toggle" id="password-toggle"
-                                    onclick="togglePasswordVisibility()"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="student-submit mt-3">
-                            <a href="{{ route('admin.user.index') }}" type="submit" class="btn btn-danger">Cancle</a>
-                        </div>
-                        <button type="submit" class="btn btn-primary">save </a>
-                    </div>
+            <div class="col-sm-12">
+                <div class="page-sub-header">
+                    <h3 class="page-title">User</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Edit</a></li>
+                        <li class="breadcrumb-item active"> / {{ $user->name }}</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+@endsection
+@section('content')
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table comman-shadow">
+                <div class="card-body">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Users</h3>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <form method="POST" action="{{ route('admin.user.edit', ['user' => $user->id]) }}">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group local-forms">
+                                    <label>Image <span class="login-danger">*</span></label>
+                                    <input type="file" class="form-control photo" name="image"
+                                        placeholder="Enter Image" data-default-file={{ asset($user->image) }}>
+                                </div>
+
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Name <span class="login-danger">*</span></label>
+                                            <input type="text" id="formControlLg" class="form-control" name="name"
+                                                placeholder="Enter Name" value="{{ $user->name }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Phone Number <span class="login-danger">*</span></label>
+                                            <input type="number" class="form-control" name="number"
+                                                placeholder="Enter Number" value="{{ $user->number }}">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Email <span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" name="email"
+                                                placeholder="Enter Email" value="{{ $user->email }}" readonly>
+                                        </div>
+                                    </div>
+                                    <!-- ... (other form fields) ... -->
+                                    {{-- <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Role <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="role_name">
+                                                <option disabled>Select Role</option>
+                                                <option value="Admin"
+                                                    {{ old('role_name', $user->role_name) == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                                <option value="Teacher"
+                                                    {{ old('role_name', $user->role_name) == 'Teacher' ? 'selected' : '' }}>Teacher</option>
+                                                <option value="Student"
+                                                    {{ old('role_name', $user->role_name) == 'Student' ? 'selected' : '' }}>Student</option>
+                                            </select>
+                                        </div>
+                                    </div> --}}
+                                    <!-- ... (other form fields) ... -->
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label> New Password <span class="login-danger">*</span></label>
+                                            <div class="password-container">
+                                                <input type="password" class="form-control" name="password"
+                                                    id="password-input" placeholder="Enter Password" value="">
+                                                <i class="fas fa-eye password-toggle" id="password-toggle"
+                                                    onclick="togglePasswordVisibility()"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12  ">
+                                        <a href="{{ route('admin.user.index') }}" type="submit"
+                                            class="btn btn-danger">Cancle</a>
+                                        <button type="submit" class="btn btn-primary">Update </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
     <script>

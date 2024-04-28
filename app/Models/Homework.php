@@ -11,9 +11,13 @@ class Homework extends Model
     protected $fillable = [
         'title',
         'image',
-        'techer_id'
+        'techer_id',
+        'user_id'
     ];
     public function teacher(){
         return $this->belongsTo(Teacher::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);  
     }
 }

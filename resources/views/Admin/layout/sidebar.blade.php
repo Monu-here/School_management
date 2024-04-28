@@ -83,7 +83,7 @@
                         <li><a href="{{ route('admin.student.index') }}"
                                 class="{{ Route::currentRouteNamed('admin.student.index') ? 'active' : '' }}">Student
                                 List</a></li>
-                        @role('Admin', 'HR', 'Teacher')
+                        @role('Admin', 'HR', 'Teacher','SuperAdmin')
                             <li><a href="{{ route('admin.atten.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.atten.index') ? 'active' : '' }}">Student
                                     Attendence</a></li>
@@ -161,6 +161,21 @@
                                 <a href="{{ route('admin.homework.viewHomework') }}"
                                     class="{{ Route::currentRouteNamed('admin.homework.viewHomework') ? 'active' : '' }}">View
                                     HomeWork from teacher</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                @endrole()
+                @role('Teacher')
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-book-reader"></i> <span> HomeWork</span> <span
+                                class="menu-arrow"></span></a>
+
+                        <ul>
+                             
+                            <li>
+                                <a href="{{ route('admin.homework.addHomework') }}"
+                                    class="{{ Route::currentRouteNamed('admin.homework.addHomework') ? 'active' : '' }}">Add HomeWork for student</a>
                             </li>
 
                         </ul>

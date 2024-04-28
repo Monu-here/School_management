@@ -1,12 +1,11 @@
 @extends('Admin.layout.app')
 {{-- @section('css') --}}
-    <style>
-        .con img {
-    max-width: 100%;
-    height: auto;
-}
-
-    </style>
+<style>
+    .con img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 {{-- @endsection --}}
 @section('title')
     <div class="page-header">
@@ -59,6 +58,7 @@
                                     <th>Title</th>
                                     <th>Submit To</th>
                                     <th>Content</th>
+                                    <th>Action</th>
 
                                 </tr>
                             </thead>
@@ -79,7 +79,7 @@
                                             {{ $homework->teacher->name }}
 
                                         </td>
-                                        <td >
+                                        <td>
 
                                             <div class="con">
                                                 {!! $homework->content !!}
@@ -87,7 +87,10 @@
 
                                         </td>
 
-
+                                        <td>
+                                            <a href="{{ route('admin.homework.show', ['viewId' => $homework->id]) }}"
+                                                class="btn btn-primary">Show</a>
+                                        </td>
 
                                     </tr>
                                 @endforeach

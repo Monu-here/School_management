@@ -270,8 +270,7 @@
 
 @section('js')
     <script>
-        var monu = {!! json_encode($attendanceDate) !!}
-        $(document).ready(function() {
+         $(document).ready(function() {
             $('#clienttable').DataTable({
                 "responsive": false,
                 scrollX: true,

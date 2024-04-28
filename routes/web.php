@@ -58,7 +58,8 @@ Route::prefix('admin')->name('adminLogin.')->group(function () {
 // This route is for admin site START
 
 // Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-Route::prefix('AdminDashboard')->name('admin.')->group(function () {
+    Route::get('monu',[HomeController::class,'monu']);
+Route::prefix('admin-dashboard')->name('admin.')->group(function () {
     Route::group(['middleware' => 'role:SuperAdmin,Admin,Teacher,HR,Student'], function () {;
 
         Route::get('', [HomeController::class, 'index'])->name('index');
@@ -81,12 +82,8 @@ Route::prefix('AdminDashboard')->name('admin.')->group(function () {
         });
         Route::prefix('user')->name('user.')->group(function () {
             Route::get('', [LoginController::class, 'index'])->name('index');
-
-
-
-
             Route::match(['GET', 'POST'], 'add', [LoginController::class, 'add'])->name('add');
-            // Route::match(['GET', 'POST'], 'edit/{user}', [LoginController::class, 'edit'])->name('edit');
+            Route::match(['GET', 'POST'], 'edit/{user}', [LoginController::class, 'edit'])->name('edit');
             Route::get('show/{userId}', [LoginController::class, 'show'])->name('show');
             Route::get('del/{user}', [LoginController::class, 'del'])->name('del');
             Route::get('role/teacher', [LoginController::class, 'roleTeacher'])->name('roleTeacher');
@@ -172,13 +169,13 @@ Route::prefix('AdminDashboard')->name('admin.')->group(function () {
         Route::prefix('homework')->name('homework.')->group(function () {
             Route::get('', [ViewHomeworkSubmit::class, 'index'])->name('index');
             Route::match(['GET', 'POST'], 'submit-homework', [ViewHomeworkSubmit::class, 'submit'])->name('submit');
+            Route::get('show-homework/{viewId}', [ViewHomeworkSubmit::class, 'show'])->name('show');
             Route::get('/view-homework', [ViewHomeworkSubmit::class, 'viewHomework'])->name('viewHomework');
             Route::match(['GET', 'POST'], 'add-teacher', [ViewHomeworkSubmit::class, 'addHomework'])->name('addHomework');
         });
-        Route::prefix('feedback')->name('feedback.')->group(function(){
+        Route::prefix('feedback')->name('feedback.')->group(function () {
             Route::get('', [FeedbackController::class, 'index'])->name('index');
             Route::match(['GET', 'POST'], 'add-feedback', [FeedbackController::class, 'addFeedback'])->name('addFeedback');
-
         });
     });
 });

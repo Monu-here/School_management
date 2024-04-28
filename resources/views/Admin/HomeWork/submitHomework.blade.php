@@ -26,6 +26,7 @@
                 <div class="card-body">
                     <form action="{{ route('admin.homework.submit') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" value="{{Auth::user()->name}}" name="user_id">
                         <div class="row">
                             <div class="col-md-9">
                                 <label for="titile">Homework Title</label>

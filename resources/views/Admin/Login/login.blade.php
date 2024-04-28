@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @php
         $setting = getSetting();
@@ -238,7 +240,7 @@
     .password-toggle {
         position: absolute;
         right: 50px;
-        top: 50%;
+        top: 54%;
         transform: translateY(-50%);
         cursor: pointer;
     }
@@ -250,19 +252,12 @@
             <form action="{{ route('adminLogin.login') }}" method="POST">
                 @csrf
                 <h1>Log In</h1>
-                {{-- <div class="social-icons">
-                    <a href="#" class="icons"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icons"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icons"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icons"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div> --}}
-                {{-- <span>or use your email/password</span> --}}
 
-                <input type="email" placeholder="Email" name="email">
-                <input type="password" placeholder="Password" name="password" id="password-input">
+
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Password" name="password" id="password-input" required>
                 <i class="fas fa-eye password-toggle" id="password-toggle" onclick="togglePasswordVisibilitydd()"></i>
-                <a href="#">Forget your Password?</a>
-                <button type="submit">Login</button>
+                 <button type="submit">Login</button>
             </form>
         </div>
         <div class="toggle-container">
@@ -281,12 +276,35 @@
             </div>
         </div>
     </div>
-    @include('Admin.tostar.index')
+    {{-- @include('Admin.tostar.index') --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+   
+    <script>
+        @if (Session::has('message') || Session::has('error') || Session::has('info') || Session::has('warning'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+
+            @if (Session::has('message'))
+                toastr.success("{{ session('message') }}");
+            @endif
+
+            @if (Session::has('error'))
+                toastr.error("{{ session('error') }}");
+            @endif
+
+            @if (Session::has('info'))
+                toastr.info("{{ session('info') }}");
+            @endif
+
+            @if (Session::has('warning'))
+                toastr.warning("{{ session('warning') }}");
+            @endif
+        @endif
+    </script>
 
     <script>
-        showToastr();
-
         function togglePasswordVisibilitydd() {
             var passwordInput = document.getElementById('password-input');
             var passwordToggle = document.getElementById('password-toggle');
