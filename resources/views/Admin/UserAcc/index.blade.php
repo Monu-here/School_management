@@ -73,10 +73,13 @@
         </div> --}}
 
 
-    <form action="{{ route('admin.user.index') }}" method="GET">
-        <input type="text" name="name" id="name">
+    {{-- <form action="{{ route('admin.user.index') }}" method="GET">
+        @php
+            $me = Auth::user()->role_name;
+         @endphp
+        <input type="text" name="name" id="name" value="{{$me}}">
         <button class="btn btn-primary">mib</button>
-    </form>
+    </form> --}}
 
     <div class="row">
         <div class="col-sm-12">

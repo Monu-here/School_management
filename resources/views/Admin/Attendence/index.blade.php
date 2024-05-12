@@ -146,56 +146,66 @@
                                         <form action="{{ route('admin.atten.mark') }}" method="POST">
                                             @csrf
                                             @if ($students)
+                                                @php
+                                                    $i = 1;
+                                                @endphp
                                                 @foreach ($students as $student)
                                                     <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
                                                     <tr>
-                                                        <td>1</td>
+                                                        <td>{{ $i++ }}</td>
                                                         <td>
                                                             {{ $student->roll }}
 
                                                         </td>
                                                         <td>
-                                                            <img src="{{ asset($student->image) }}" class="card-img-top"
-                                                                alt="StudentImage" style="width: 25px">
-                                                            {{ $student->name }}
+                                                            <h2 class="table-avatar">
+                                                                <a href="" class="avatar avatar-sm me-2"><img
+                                                                        class="avatar-img rounded-circle"
+                                                                        src="{{ asset($student->image) }}"
+                                                                        alt="User Image" /></a>
+                                                                <a href="">{{ $student->name }}</a>
+                                                            </h2>
+                                                           
                                                         </td>
                                                         <td>
                                                             <div class="form-group">
                                                                 <div class="radio-button">
-                                                                    <div class="radio-style">
-                                                                       <abbr title="Present"> <input type="radio" class="p"
-                                                                            id="present_{{ $student->id }}"
-                                                                            name="attendance_types[{{ $student->id }}]"
-                                                                            value="P">
-                                                                        <label for="present_{{ $student->id }}"
-                                                                            class="label-class">
 
-                                                                        </label>
-                                                                       </abbr>
+                                                                    <div class="radio-style">
+                                                                        <span>Present</span>
+                                                                        <abbr title="Present">
+                                                                            <input type="radio" class="p"
+                                                                                id="present_{{ $student->id }}"
+                                                                                name="attendance_types[{{ $student->id }}]"
+                                                                                value="P">
+                                                                            <label for="present_{{ $student->id }}"
+                                                                                class="label-class">
+
+                                                                            </label>
+                                                                        </abbr>
                                                                     </div>
                                                                     <div class="radio-style">
-                                                                        <abbr title="Absent">   <input type="radio"
-                                                                            id="absent_{{ $student->id }}"
-                                                                            name="attendance_types[{{ $student->id }}]"
-                                                                            class="a" value="A">
-                                                                        <label for="absent_{{ $student->id }}"
-                                                                            class="label-class">
+                                                                         <abbr title="Absent">
+                                                                            <input type="radio"
+                                                                                id="absent_{{ $student->id }}"
+                                                                                name="attendance_types[{{ $student->id }}]"
+                                                                                class="a" value="A">
+                                                                            <label for="absent_{{ $student->id }}"
+                                                                                class="label-class">
 
-                                                                        </label>
+                                                                            </label>
                                                                         </abbr>
 
                                                                     </div>
                                                                     <div class="radio-style">
-                                                                        <abbr title="Leave">   <input type="radio"
-                                                                            id="leave_{{ $student->id }}"
-                                                                            name="attendance_types[{{ $student->id }}]"
-                                                                            class="l" value="L">
-                                                                        <label for="leave_{{ $student->id }}"
-                                                                            class="label-class">
-                                                                        </label>
-                                                                        </abbr>
-
-
+                                                                             <p>Present</p>
+                                                                            <input type="radio"
+                                                                                id="leave_{{ $student->id }}"
+                                                                                name="attendance_types[{{ $student->id }}]"
+                                                                                class="l" value="L">
+                                                                            <label for="leave_{{ $student->id }}"
+                                                                                class="label-class">
+                                                                            </label>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -150,7 +150,7 @@ Route::prefix('admin-dashboard')->name('admin.')->group(function () {
             Route::get('del/{notice}', [CommunicationController::class, 'del'])->name('del');
             // Route::get('show/{notice}', [CommunicationController::class, 'show'])->name('show');
         });
-        Route::prefix('atten')->name('atten.')->group(function () {
+        Route::prefix('attendance')->name('atten.')->group(function () {
             Route::match(['GET', 'POST'], '', [AttendenceController::class, 'index'])->name('index');
             Route::match(['GET', 'POST'], 'mark', [AttendenceController::class, 'mark'])->name('mark');
             // Route::match(['GET', 'POST'], 'mark/{studentId}', [AttendenceController::class, 'mark'])->name('mark');
