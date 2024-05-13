@@ -165,14 +165,14 @@
                                                                         alt="User Image" /></a>
                                                                 <a href="">{{ $student->name }}</a>
                                                             </h2>
-                                                           
+
                                                         </td>
                                                         <td>
                                                             <div class="form-group">
                                                                 <div class="radio-button">
 
                                                                     <div class="radio-style">
-                                                                        <span>Present</span>
+                                                                       
                                                                         <abbr title="Present">
                                                                             <input type="radio" class="p"
                                                                                 id="present_{{ $student->id }}"
@@ -184,8 +184,8 @@
                                                                             </label>
                                                                         </abbr>
                                                                     </div>
-                                                                    <div class="radio-style">
-                                                                         <abbr title="Absent">
+                                                                     <div class="radio-style">
+                                                                        <abbr title="Absent">
                                                                             <input type="radio"
                                                                                 id="absent_{{ $student->id }}"
                                                                                 name="attendance_types[{{ $student->id }}]"
@@ -195,17 +195,16 @@
 
                                                                             </label>
                                                                         </abbr>
-
+                                                                        
                                                                     </div>
                                                                     <div class="radio-style">
-                                                                             <p>Present</p>
-                                                                            <input type="radio"
-                                                                                id="leave_{{ $student->id }}"
-                                                                                name="attendance_types[{{ $student->id }}]"
-                                                                                class="l" value="L">
-                                                                            <label for="leave_{{ $student->id }}"
-                                                                                class="label-class">
-                                                                            </label>
+                                                                         <input type="radio"
+                                                                            id="leave_{{ $student->id }}"
+                                                                            name="attendance_types[{{ $student->id }}]"
+                                                                            class="l" value="L">
+                                                                        <label for="leave_{{ $student->id }}"
+                                                                            class="label-class">
+                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                             </div>

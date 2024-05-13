@@ -14,10 +14,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 @endsection
 @section('content')
     <form action="{{ route('admin.student.index') }}" method="GET">
@@ -27,18 +23,18 @@
             <div class="row">
 
                 <div class="col-lg-3 col-md-6">
-                     <div class="form-group">
-                         <input type="text" name="name" class="form-control" placeholder="Student Search"
-                             value="{{ $selectedName }}">
-                     </div>
-                 </div>
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Student Search"
+                            value="{{ $selectedName }}">
+                    </div>
+                </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="form-group">
                         <input type="number" name="idno" class="form-control" placeholder="Search by ID ..."
                             value="{{ $selectedIdno }}" />
                     </div>
                 </div>
-                 {{-- <div class="col-lg-4 col-md-6">
+                {{-- <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                         <select name="section_id" id="section_id" class="form-control">
                             <option value="">Select section</option>
@@ -75,7 +71,8 @@
                                         class="feather-grid"></i></a>
                                 <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
                                     Download</a>
-                                <a href="{{route('admin.student.add')}}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('admin.student.add') }}" class="btn btn-primary"><i
+                                        class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -96,6 +93,7 @@
                                     <th>Parent Name</th>
                                     <th>Mobile Number</th>
                                     <th>Address</th>
+                                    <th class="text-end ">Action</th>
                                     <th class="text-end ">Action</th>
                                     <th class="text-end d-none">Marksheet Show</th>
                                     <th class="text-end d-none">Marksheet send To Parent</th>
@@ -143,16 +141,25 @@
                                         <td>{{ $student->f_no }}</td>
                                         <td>{{ $student->address }}</td>
                                         <td>
+                                            @can('view post')
                                             <a href="{{ route('admin.student.studentShow', ['student' => $student->id]) }}"
                                                 class="btn btn-sm btn-success"><i class="fa fa-eye text-white"></i></a>
+                                            @endcan
+                                            @can('delete post')
                                             <a href="{{ route('admin.student.del', ['student' => $student->id]) }}"
-                                                class="btn btn-sm btn-danger" onclick="return yes()"><i class="fa fa-trash text-white"></i></a>
+                                                class="btn btn-sm btn-danger" onclick="return yes()"><i
+                                                    class="fa fa-trash text-white"></i></a>
+                                                
+                                            @endcan
+                                        </td>
+                                        <td> {{ getAgo($student->created_at) }}
                                         </td>
                                         <td>
                                             <a href="{{ route('admin.mark.admin.marksheet', $student->id) }}"
                                                 class="btn btn-primary text-white">Show
                                                 Marksheet</a>
                                         </td>
+
                                         <td>
                                             <form
                                                 action="{{ route('admin.mark.admin.mark.email', ['sendMail' => $student->id]) }}"

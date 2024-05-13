@@ -24,8 +24,7 @@
             <tr>
                 <thead>
                     <th>Student Roll No</th>
-                    {{-- <th>Student Class</th> --}}
-                    <th>Student Name</th>
+                     <th>Student Name</th>
                     <th>
                         Attendence
                         <br>
@@ -34,12 +33,10 @@
 
                                 <div class="checkbox-button">
                                     <div class="checkbox-style">
-                                        {{-- <p class="" style="font-size: 12px">Absent</p> --}}
-                                        <input type="checkbox" id="selectAll" class="p">
+                                         <input type="checkbox" id="selectAll" class="p">
                                         <label for="selectAll" class="checkbox-label-class">
                                         </label>
-                                        {{-- <span>Present</span> --}}
-                                    </div>
+                                     </div>
 
                                     <div class="radio-style">
                                         <input type="checkbox" id="allAbsent" class="a">

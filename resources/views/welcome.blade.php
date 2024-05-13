@@ -97,12 +97,12 @@
                         <div class="col-6">
                             <ul class="chart-list-out">
                                 <li>
-                                    {{-- @role('SuperAdmin') --}}
+                                    @can('edit-post')
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#createEventModal">
                                         Add Event
                                     </button>
-                                    {{-- @endrole() --}}
+                                    @endcan()
                                 </li>
 
                             </ul>
@@ -356,7 +356,7 @@
         </div>
     </div> --}}
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-xl-3 col-sm-6 col-12">
             <div class="card flex-fill fb sm-box">
                 <div class="social-likes">
@@ -401,7 +401,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     </div>
 
     </div>

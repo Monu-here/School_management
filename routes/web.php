@@ -58,7 +58,7 @@ Route::prefix('admin')->name('adminLogin.')->group(function () {
 // This route is for admin site START
 
 // Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('monu',[HomeController::class,'monu']);
+Route::get('monu', [HomeController::class, 'monu']);
 Route::prefix('admin-dashboard')->name('admin.')->group(function () {
     Route::group(['middleware' => 'role:SuperAdmin,Admin,Teacher,HR,Student'], function () {;
 

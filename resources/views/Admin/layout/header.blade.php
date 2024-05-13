@@ -95,7 +95,7 @@
             <li class="nav-item dropdown has-arrow new-user-menus">
                 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                     <span class="user-img">
-                        <img class="rounded-circle" src="{{ asset($user->images) }}" width="31" alt="Soeng Souy">
+                        <img class="rounded-circle" src="{{ asset($user->image) }}" width="31" alt="Soeng Souy">
                         <div class="user-text">
                             <h6>{{ $user->name }}</h6>
                             <p class="text-muted mb-0">{{ $user->role_name }}</p>
@@ -105,7 +105,7 @@
                 <div class="dropdown-menu">
                     <div class="user-header">
                         <div class="avatar avatar-sm">
-                            <img src="{{ asset($user->images) }}" alt="User Image" class="avatar-img rounded-circle">
+                            <img src="{{ asset($user->image) }}" alt="User Image" class="avatar-img rounded-circle">
                         </div>
                         <div class="user-text">
                             <h6>{{ $user->name }}</h6>

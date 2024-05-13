@@ -12,6 +12,17 @@
         p {
             font-size: 10px;
         }
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
     </style>
 @endsection
 @section('linkbar')
@@ -25,7 +36,8 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.student.add') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.student.add') }}" id="form1" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <marquee>Id no will be auto generate</marquee>
                         <div class="row">
@@ -225,11 +237,7 @@
                                                 name="m_no" placeholder="Enter Mother Phone Number" />
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <button class="btn btn-primary">Submit</button>
-                                        </div>
-                                    </div>
+
                                 </div>
 
                             </div>
@@ -237,11 +245,148 @@
                     </form>
                 </div>
             </div>
-        </div>
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('admin.user.add') }}" id="form2" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Student Login Details</span></h5>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group local-forms">
+                                    <label>Image <span class="login-danger">*</span></label>
+                                    <input type="file" class="form-control photo" name="image"
+                                        placeholder="Enter Image" accept="image/*">
+                                </div>
 
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Name <span class="login-danger">*</span></label>
+                                            <input type="text" id="formControlLg" class="form-control"
+                                                name="name" placeholder="Enter Name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Phone Number <span class="login-danger">*</span></label>
+                                            <input type="number" class="form-control" name="number"
+                                                placeholder="Enter Number">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Email <span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" name="email"
+                                                placeholder="Enter Email">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Role <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="role_name">
+                                                <option selected disabled>Select Role</option>
+                                                @role('SuperAdmin')
+                                                    <option value="Admin">Admin</option>
+                                                @endrole()
+                                                <option value="Teacher">Teacher
+                                                </option>
+                                                <option value="Student">
+                                                    Student</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Password <span class="login-danger">*</span></label>
+                                            <div class="password-container">
+                                                <input type="password" class="form-control" name="password"
+                                                    id="password-input" placeholder="Enter Password">
+                                                <i class="fas fa-eye password-toggle" id="password-toggle"
+                                                    onclick="togglePasswordVisibility()"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="student-submit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 @section('js')
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", function(event) {
+            event.preventDefault();
+
+            // Submit both forms
+            var form1 = document.getElementById("form1");
+            var form2 = document.getElementById("form2");
+
+            // Submit Form 1
+            var formData1 = new FormData(form1);
+            fetch(form1.action, {
+                    method: 'POST',
+                    body: formData1
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log("Form 1 submitted successfully");
+                    return response.text();
+                })
+                .catch(error => {
+                    console.error("Error submitting Form 1:", error);
+                });
+
+            // Submit Form 2
+            var formData2 = new FormData(form2);
+            fetch(form2.action, {
+                    method: 'POST',
+                    body: formData2
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log("Form 2 submitted successfully");
+                    return response.text();
+                })
+                .then(data => {
+                    console.log("Form 2 submission response:", data);
+                    alert("Forms submitted successfully");
+
+                    location.reload(); // Reload the page
+                })
+                .catch(error => {
+                    console.error("Error submitting Form 2:", error);
+                });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     {{-- @if ($errors->any())
         <script>

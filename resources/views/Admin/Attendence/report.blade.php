@@ -224,45 +224,53 @@
                 </div>
             </div>
         </div>
-        <p>---------------------</p>
-        @foreach ($mm as $key => $value)
-            <p>Student ID: {{ $key }}</p>
-            <ul>
-                @foreach ($value as $attendance)
-                    <li>Attendance Type: {{ $attendance->attendance_type }}</li>
-                @endforeach
-            </ul>
-        @endforeach
-        <p>---------------------</p>
-        @foreach ($mm as $studentId => $attendances)
-            <p>Student ID: {{ $studentId }}</p>
-            <ul>
-                @php
-                    $attendanceCounts = $attendances->groupBy('attendance_type')->map->count();
-                @endphp
-                @foreach ($attendanceCounts as $attendanceType => $count)
-                    <li>{{ $attendanceType }}: {{ $count }}</li>
-                @endforeach
-            </ul>
-        @endforeach
-        <p>---------------------</p>
-        @foreach ($mm as $attendanceDate => $attendances)
-            <p>Attendance Date: {{ $attendanceDate }}</p>
-            <ul>
-                @foreach ($attendances as $attendance)
-                    <li>{{ $attendance->attendance_type }}</li>
-                @endforeach
-            </ul>
-        @endforeach
-        <p>---------------------</p>
-        @foreach ($mm as $attendanceDate => $attendances)
-            <p>Attendance Date: {{Carbon\Carbon::createFromDate ($attendanceDate)->format('Y-m-d')  }}</p>
-            <ul>
-                @foreach ($attendances as $attendance)
-                    <li>{{ $attendance->attendance_type }}</li>
-                @endforeach
-            </ul>
-        @endforeach
+        <h5 class="card card-body ">Number of student present in month </h5>
+        <div class="section_of_present_abbsent">
+            <div class="present">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student Name</th>
+                                    <th>Total Present in Month</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $j = 1;
+                                @endphp
+                                @foreach ($mm as $studentId => $attendances)
+                                    <tr>
+
+                                        <td>{{ $j++ }}</td>
+                                        <td>
+                                            {{ $attendanceReport->where('student_id', $studentId)->first()->student->name }}
+                                        </td>
+                                        <td>
+                                            @php
+
+                                                $attendanceCounts = $attendances
+                                                    ->groupBy('attendance_type')
+                                                    ->map->count();
+                                            @endphp
+                                            @foreach ($attendanceCounts as $attendanceType => $count)
+                                                {{ $attendanceType }}: {{ $count }},
+                                            @endforeach
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
     </div>
@@ -270,7 +278,7 @@
 
 @section('js')
     <script>
-         $(document).ready(function() {
+        $(document).ready(function() {
             $('#clienttable').DataTable({
                 "responsive": false,
                 scrollX: true,
