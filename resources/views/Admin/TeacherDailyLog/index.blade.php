@@ -14,43 +14,55 @@
         </div>
     </div>
 @endsection
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+@endsection
 @section('content')
     @php
         $user = Auth::user();
         $setting = getSetting();
     @endphp
-    @role('Teacher')
-        <div class="row" id="add">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{ route('admin.teacher.index') }}" method="POST" enctype="multipart/form-data"
-                            id="">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control"
-                                        value="{{ $user->name }}" readonly>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{ route('admin.teacher.index') }}" method="POST" enctype="multipart/form-data"
+                                id="">
+                                @csrf
+                                <div class="row">
+                                    <input type="hidden" name="name" id="name" class="form-control"
+                                        value="{{ Auth::user()->name }}" >
+
+                                    <div class="col-md-4">
+                                        <label for="date">Date</label>
+                                        <input type="date" name="date" id="date" class="form-control">
+                                    </div>
+                                    
+                                    <div class="col-md-12">
+                                        <label for="desc">Description</label>
+                                        <textarea name="desc" id="summernote" cols="10" rows="10" class="form-control"></textarea>
+                                    </div>
+                                     <div class="col-md-2">
+                                        <br>
+                                         <button class="btn btn-primary">Submit</button>
+
+                                     </div>
+                                    
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="date">Date</label>
-                                    <input type="date" name="date" id="date" class="form-control">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="desc">Description</label>
-                                    <textarea name="desc" id="desc" cols="5" rows="5" class="form-control"></textarea>
-                                </div>
-                                <div class="col-md-2 mt-5">
-                                    <button class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    @endrole()
+    </div>
+
     <div class="row" id="">
         <div class="col-sm-12">
             <div class="card card-table comman-shadow">
@@ -65,9 +77,13 @@
                                         class="feather-list"></i></a>
                                 <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
                                         class="feather-grid"></i></a>
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
-                                    Download</a>
-                                <a href="#add" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+
+                                @role('Teacher')
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                        <i class="fas fa-plus"></i></a>
+                                    </button>
+                                @endrole()
                             </div>
                         </div>
                     </div>
@@ -125,10 +141,6 @@
             </div>
         </div>
     </div>
-
-
- 
-
 @endsection
 @section('js')
     <script>
@@ -139,6 +151,14 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+     <script>
+
+        $(document).ready(function() {
+            $('#summernote').summernote();
         });
     </script>
 @endsection

@@ -17,8 +17,23 @@ class HomeController extends Controller
         $deps = DB::table('departments')->get();
         $cls = DB::table('classses')->get();
         $events = DB::table('events')->get();
+        // $assigns = DB::table('assign_subject_to_teachers')->get();
         $event = Event::all();
         $notices = Notice::all();
+
+
+
+
+
+ 
+
+        
+
+
+
+
+
+
 
         return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices'));
     }
@@ -59,11 +74,12 @@ class HomeController extends Controller
     public function eventDel($event)
     {
         DB::table('events')->where('id', $event)->delete();
-         return redirect()->back();
+        return redirect()->back();
     }
 
 
-    public function monu() {
-       return view('Front.404');
+    public function monu()
+    {
+        return view('Front.404');
     }
 }

@@ -54,4 +54,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Permission::class, 'user_id');
     }
+    public function assignedSubjects()
+    {
+        return $this->hasMany(AssignSubjectToTeacher::class, 'user_id');
+    }
+    public function ss()
+    {
+        return $this->hasMany(ViewHomeworkFromTeacher::class, 'student_id');
+    }
+   
 }

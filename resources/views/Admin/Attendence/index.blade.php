@@ -23,6 +23,15 @@
             flex-grow: 1;
         }
     </style>
+    <style>
+        .present-abbr {
+            border: 2px solid blue; /* Default border color for present */
+        }
+        .absent-abbr {
+            border: 2px solid red; /* Default border color for absent */
+        }
+    </style>
+    
 @endsection
 
 @section('content')
@@ -113,18 +122,17 @@
                             <div class="page-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="page-title">Students</h3>
+                                        <h3 class="page-title">Students Attendence</h3>
                                     </div>
-                                    <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                                class="feather-list"></i></a>
-                                        <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                                class="feather-grid"></i></a>
-                                        <a href="#" class="btn btn-outline-primary me-2"><i
-                                                class="fas fa-download"></i>
-                                            Download</a>
-                                        <a href="{{ route('admin.student.add') }}" class="btn btn-primary"><i
-                                                class="fas fa-plus"></i></a>
+                                 
+                                    
+                                        <div class="d-flex gap-3">
+
+                                            <p class=" rounded-circle" style="width: 20px; height: 20px;background-color: blue;"></p><span>: - Present</span>
+                                            <p class=" rounded-circle" style="width: 20px; height: 20px;background-color: rgb(255, 0, 0);"></p><span>: - Absent</span>
+                                        </div>
+                                        
+                                    
                                     </div>
                                 </div>
                             </div>
@@ -135,11 +143,10 @@
                                     <tr>
                                         <thead class="student-thread">
                                             <th>ID</th>
-                                            <th>ROll NO</th>
+                                            <th>SYMBOOL NO</th>
                                             <th>NAME</th>
                                             <th>ATTENDENCE</th>
-                                            <th>NOTE</th>
-
+ 
                                         </thead>
                                     </tr>
                                     <tbody>
@@ -197,26 +204,11 @@
                                                                         </abbr>
                                                                         
                                                                     </div>
-                                                                    <div class="radio-style">
-                                                                         <input type="radio"
-                                                                            id="leave_{{ $student->id }}"
-                                                                            name="attendance_types[{{ $student->id }}]"
-                                                                            class="l" value="L">
-                                                                        <label for="leave_{{ $student->id }}"
-                                                                            class="label-class">
-                                                                        </label>
-                                                                    </div>
+ 
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            <div class="form-group" class="p">
-                                                                <input type="text" class="form-control"
-                                                                    id="notes_{{ $student->id }}"
-                                                                    name="notes[{{ $student->id }}]"
-                                                                    placeholder="Enter notes" value="">
-                                                            </div>
-                                                        </td>
+                                                        
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -231,8 +223,7 @@
                     </div>
                 </div>
             </div>
-            {{-- @include('Admin.Attendence.add') --}}
-        @endif
+         @endif
     @endif
 @endsection
 
@@ -247,4 +238,5 @@
             }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
         });
     </script>
+    
 @endsection

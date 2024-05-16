@@ -43,47 +43,39 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something" />
-                                        </div>
-                                    </th>
+                                     
                                     <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Given By</th>
-                                    <th>Content</th>
+                                    <th>Assigement Title</th>
+                                    <th>Assigement Content</th>
+                                    <th>Assigement Given By</th>
+                                    <th>Assigement Given to Semester</th>
+                                    <th>Assigement Givent To Semester section</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
 
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $i=1;
+                                @endphp
                                 @foreach ($addHomeworks as $addHomework)
                                     <tr>
-                                        <td>
-                                            <div class="form-check check-tables">
-                                                <input class="form-check-input" type="checkbox" value="something" />
-                                            </div>
-                                        </td>
-                                        {{-- <td>{{ $addHomework->idno }}</td> --}}
-                                        <td>hey</td>
-                                        <td>
-                                            {{ $addHomework->title }}
-                                        </td>
-                                        <td>
-                                            {{ $addHomework->teacher->name }}
-
-                                        </td>
-                                        <td >
-
-                                            <div class="con">
-                                                {!! $addHomework->content !!}
-                                            </div>
-
-                                        </td>
-
+                                         <td>{{$i++}}</td>
+                                        <td>{{ $addHomework->title }}</td>
+                                        <td style="word-break: break-all;">{!! $addHomework->content !!}</td>
+                                         <td>{{ $addHomework->teacher_id }}</td>
+                                        <td>{{ $addHomework->classs ? $addHomework->classs->name : 'N/A' }}</td>
+                                        <td>{{ $addHomework->section ? $addHomework->section->name : 'N/A' }}</td>
+                                        <td><a href="{{route('admin.homework.nn',['id'=>$addHomework->id])}}" class="btn btn btn-primary text-white ">Submit Assignment</a></td>
+                                        <td> <span class="{{ $addHomework->status == 'submitted' ? 'text-primary' : 'text-danger' }}">
+                                            {{ ucfirst($addHomework->status) }}
+                                        </span></td>
 
 
                                     </tr>
                                 @endforeach
+                                
 
                             </tbody>
                         </table>

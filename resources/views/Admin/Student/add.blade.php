@@ -320,7 +320,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </form>
                     <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
                 </div>

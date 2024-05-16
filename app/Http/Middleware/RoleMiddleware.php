@@ -33,8 +33,10 @@ class RoleMiddleware
             if ($request->user()->hasRole(trim($role))) {
                 return $next($request);
             }
+            // else {
+            //     return redirect()->route('adminLogin.login');
+            // }
         }
-
         abort(403, 'Unauthorized action, no right to access.');
     }
 }

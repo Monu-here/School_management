@@ -20,13 +20,46 @@
 @endsection
 
 @section('content')
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    Assigment Title : <br> <span class="text-capitalize "> {{ $addHomework->title }} </span>
+                    <br>
+                    <br>
+                    Assigment Content : <span  class="text-capitalize ">{!! $addHomework->content !!} </span> 
+
+
+                </div>
+                @role('Student')
+                    <div class="col-md-3">
+                        <span>Change The Homework Status</span>
+                        <form action="{{ route('admin.homework.updatestatus', ['homeworkId' => $addHomework->id]) }}"
+                            method="POST">
+                            @csrf
+                            <input type="hidden" name="student_id" value="{{Auth::user()->id}}">
+                            <select name="status" class="form-control">
+                                <option value="not submitted" {{ $addHomework->status == 'not submitted' ? 'selected' : '' }}>
+                                    Not
+                                    Submitted</option>
+                                <option value="submitted" {{ $addHomework->status == 'submitted' ? 'selected' : '' }}>Submitted
+                                </option>
+                            </select>
+                            <button type="submit" class="btn btn-primary mt-2">Update Status</button>
+                        </form>
+                    </div>
+                @endrole()
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.homework.submit') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.homework.submit', ['nnn' => $addHomework->id]) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" value="{{Auth::user()->name}}" name="user_id">
+                        <input type="hidden" value="{{ Auth::user()->name }}" name="user_id">
                         <div class="row">
                             <div class="col-md-9">
                                 <label for="titile">Homework Title</label>

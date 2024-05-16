@@ -11,9 +11,22 @@ class ViewHomeworkFromTeacher extends Model
     protected $fillable = [
         'title',
         'image',
+        'teacher_id',
+        'class_id',
+        'section_id',
         'teacher_id'
     ];
-    public function teacher(){
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+    public function teacher()
+    {
         return $this->belongsTo(Teacher::class);
     }
+    public function classs()
+    {
+        return $this->belongsTo(Classs::class, 'class_id');
+    }
+   
 }

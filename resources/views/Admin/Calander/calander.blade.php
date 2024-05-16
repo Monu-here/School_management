@@ -181,9 +181,11 @@
                     html: `<div class="" style="display:flex; justify-content:center;">
                     <span>${arg.event.title} </span>
                     </div>
+                    @role('SuperAdmin')
                     <div style="display:flex; justify-content:center;">
                         <a href="${url}/del-event/${eventId}" class="btn btn-danger">Del</a>
                         </div>
+                    @endrole()
                         `
                 };
             }

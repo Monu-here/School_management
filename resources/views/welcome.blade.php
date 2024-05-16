@@ -22,66 +22,188 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-xl-3 col-sm-6 col-12 d-flex">
-            <div class="card bg-comman w-100">
-                <div class="card-body">
-                    <div class="db-widgets d-flex justify-content-between align-items-center">
-                        <div class="db-info">
-                            <h6>Students</h6>
-                            <h3>{{ $students->count() }}</h3>
+        @role('SuperAdmin')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-info">
+                                <h6>Students</h6>
+                                <h3>{{ $students->count() }}</h3>
+                            </div>
+                            <div class="db-icon">
+                                <img src="{{ asset('assets/newDesign/img/icons/dash-icon-01.svg') }}" alt="Dashboard Icon">
+                            </div>
                         </div>
-                        <div class="db-icon">
-                            <img src="{{ asset('assets/newDesign/img/icons/dash-icon-01.svg') }}" alt="Dashboard Icon">
+
+                        {{-- <div class="d-flex justify-content-around  mb-4 ">
+                            <form action="{{ route('admin.checkinout.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="action" value="check-in">
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                <button type="submit" id="check-in-btn" class="btn">Check In</button>
+                            </form>
+
+                            <form action="{{ route('admin.checkinout.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
+                                <input type="hidden" name="action" value="check-out">
+                                <button type="submit" id="check-out-btn" class="btn">Check Out</button>
+                            </form>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        @endrole()
+        @role('Teacher')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-around  mb-4 ">
+                            <form action="{{ route('admin.checkinout.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="action" value="check-in">
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                <button type="submit" id="check-in-btn" class="btn">Check In</button>
+                            </form>
+
+                            <form action="{{ route('admin.checkinout.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
+                                <input type="hidden" name="action" value="check-out">
+                                <button type="submit" id="check-out-btn" class="btn">Check Out</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        @endrole()
+        @role('Student')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            @php
+                                $user = Auth::user();
+                                $ss = $user->ss;
+                                $totalSubmissions = 0;
+                            @endphp
+                            <div class="db-info">
+                                <h6>Total Homework Submit</h6>
+                                @if ($ss->isEmpty())
+                                    <p>No students have submitted their homework.</p>
+                                @else
+                                    @foreach ($ss as $submission)
+                                        @php
+                                            $submissionStatus = is_array($submission->status)? $submission->status : [$submission->status];
+                                            $totalSubmissions += count($submissionStatus);
+                                        @endphp
+                                    @endforeach
+                                    <p>Total submissions: {{ $totalSubmissions }}</p>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 col-12 d-flex">
-            <div class="card bg-comman w-100">
-                <div class="card-body">
-                    <div class="db-widgets d-flex justify-content-between align-items-center">
-                        <div class="db-info">
-                            <h6>Teacher</h6>
-                            <h3>{{ $users->where('role_name', 'Teacher')->count() }}</h3>
-                        </div>
-                        <div class="db-icon">
-                            <img src="{{ asset('assets/newDesign/img/icons/dash-icon-02.svg') }}" alt="Dashboard Icon">
+        @endrole
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @role('Teacher')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            @php
+                                $user = Auth::user();
+                                $assignedSubjects = $user->assignedSubjects;
+                            @endphp
+                            <div class="db-info">
+                                <h6>Assign Subject</h6>
+                                @if ($assignedSubjects->isEmpty())
+                                    <p>You have no subjects assigned.</p>
+                            </div>
+                        @else
+                            <ul>
+                                @foreach ($assignedSubjects as $subject)
+                                    <li>{{ $subject->subject }}</li>
+                                @endforeach
+                            </ul>
+                            @endif
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 col-12 d-flex">
-            <div class="card bg-comman w-100">
-                <div class="card-body">
-                    <div class="db-widgets d-flex justify-content-between align-items-center">
-                        <div class="db-info">
-                            <h6>Department</h6>
-                            <h3>{{ $deps->count() }}</h3>
-                        </div>
-                        <div class="db-icon">
-                            <img src="{{ asset('assets/newDesign/img/icons/dash-icon-03.svg') }}" alt="Dashboard Icon">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 col-12 d-flex">
-            <div class="card bg-comman w-100">
-                <div class="card-body">
-                    <div class="db-widgets d-flex justify-content-between align-items-center">
-                        <div class="db-info">
-                            <h6>Class</h6>
-                            <h3>{{ $cls->count() }}</h3>
-                        </div>
-                        <div class="db-icon">
-                            <img src="{{ asset('assets/newDesign/img/icons/dash-icon-04.svg') }}" alt="Dashboard Icon">
+        @endrole()
+        @role('SuperAdmin')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-info">
+                                <h6>Teacher</h6>
+                                <h3>{{ $users->where('role_name', 'Teacher')->count() }}</h3>
+                            </div>
+                            <div class="db-icon">
+                                <img src="{{ asset('assets/newDesign/img/icons/dash-icon-02.svg') }}" alt="Dashboard Icon">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-info">
+                                <h6>Department</h6>
+                                <h3>{{ $deps->count() }}</h3>
+                            </div>
+                            <div class="db-icon">
+                                <img src="{{ asset('assets/newDesign/img/icons/dash-icon-03.svg') }}" alt="Dashboard Icon">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-info">
+                                <h6>Class</h6>
+                                <h3>{{ $cls->count() }}</h3>
+                            </div>
+                            <div class="db-icon">
+                                <img src="{{ asset('assets/newDesign/img/icons/dash-icon-04.svg') }}" alt="Dashboard Icon">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endrole()
     </div>
 
     <div class="row">
@@ -98,10 +220,10 @@
                             <ul class="chart-list-out">
                                 <li>
                                     @can('edit-post')
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#createEventModal">
-                                        Add Event
-                                    </button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#createEventModal">
+                                            Add Event
+                                        </button>
                                     @endcan()
                                 </li>
 
@@ -126,11 +248,7 @@
                             <h5 class="card-title">Notice Board</h5>
                         </div>
                         <div class="col-6">
-                            <ul class="chart-list-out">
-                                <li><span class="circle-blue"></span>Teacher</li>
-                                <li><span class="circle-green"></span>Student</li>
-                                <li class="star-menus"><a href="javascript:;"><i class="fas fa-ellipsis-v"></i></a></li>
-                            </ul>
+
                         </div>
                     </div>
                 </div>
@@ -422,7 +540,33 @@
                 $('#opennotice').modal('show');
             });
         });
-        
+        ShowTost();
+        @if (Session::has('status'))
+            toastr.success("{{ session('status') }}");
+        @endif
+        document.addEventListener('DOMContentLoaded', function() {
+            let lastAction = "{{ session('last_action', 'default') }}";
+
+            let checkInButton = document.getElementById('check-in-btn');
+            let checkOutButton = document.getElementById('check-out-btn');
+
+            if (lastAction === 'check-in') {
+                checkInButton.classList.remove('btn-primary');
+                checkInButton.classList.add('btn-secondary');
+
+                checkOutButton.classList.remove('btn-secondary');
+                checkOutButton.classList.add('btn-primary');
+            } else if (lastAction === 'check-out') {
+                checkInButton.classList.remove('btn-secondary');
+                checkInButton.classList.add('btn-primary');
+
+                checkOutButton.classList.remove('btn-primary');
+                checkOutButton.classList.add('btn-secondary');
+            } else {
+                checkInButton.classList.add('btn-primary');
+                checkOutButton.classList.add('btn-secondary');
+            }
+        });
         // notice showing End
     </script>
 @endsection

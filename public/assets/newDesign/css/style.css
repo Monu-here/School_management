@@ -9379,61 +9379,87 @@ body[data-layout-mode="dark"]
     background-color: #0b7dda;
   }
  */
-.radio-button{
+
+ .radio-button {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
- .radio-style {
+
+.radio-style {
     margin: 1rem 0;
     display: flex;
     justify-content: space-around;
-  }
+}
 
-  input[type="radio"] {
+input[type="radio"] {
     display: none;
+}
 
-  }
-
-
-  .label-class {
+.label-class {
     cursor: pointer;
     position: relative;
     font-size: 4rem;
     display: flex;
     justify-content: space-around;
-  }
+}
 
-  .label-class::before {
+/* Present: blue border and fill */
+input[type="radio"].p + .label-class::before {
+    border-color: blue;
+}
+
+input[type="radio"].p + .label-class::after {
+    background-color: transparent;
+    border-color: blue;
+}
+
+input[type="radio"].p:checked + .label-class::after {
+    background-color: blue;
+    transform: translateY(-50%) scale(0.55);
+}
+
+/* Absent: red border and fill */
+input[type="radio"].a + .label-class::before {
+    border-color: red;
+}
+
+input[type="radio"].a + .label-class::after {
+    background-color: transparent;
+    border-color: red;
+}
+
+input[type="radio"].a:checked + .label-class::after {
+    background-color: red;
+    transform: translateY(-50%) scale(0.55);
+}
+
+.label-class::before {
     content: "";
     position: absolute;
     width: 25px;
     height: 25px;
-    background-color: transparent;
-    border: 2px solid #000;
+    border: 2px solid;
     border-radius: 50%;
     top: 50%;
     left: -5rem;
     transform: translateY(-50%);
     transition: border-color 400ms ease;
-  }
-
-  .label-class::after {
+}
+.label-class::after {
     content: "";
     position: absolute;
     width: 25px;
     height: 25px;
-    background-color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    border: 2px solid;
     border-radius: 50%;
     top: 50%;
     left: -5rem;
     transform: translateY(-50%) scale(0);
-    transition: transform 400ms ease;
-  }
-
-  input[type="radio"]:checked + .label-class::before {
-    border-color: var(--primary-color);
-  }
+    transition: transform 400ms ease, background-color 400ms ease;
+}
+input[type="radio"]:checked + .label-class::before {
+    /* border-color: inherit; */
+}
 
   input[type="radio"]:checked + .label-class::after {
     transform: translateY(-50%) scale(0.55);

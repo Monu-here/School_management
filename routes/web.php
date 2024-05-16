@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\RolePermissionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentPromotion;
+use App\Http\Controllers\Admin\TeacherCheck_in_check_out;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\ViewHomeworkSubmit;
 use App\Http\Controllers\Front\HomeController as FrontHomeController;
@@ -76,6 +77,7 @@ Route::prefix('admin-dashboard')->name('admin.')->group(function () {
             Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assignPerRole');
         });
 
+        Route::post('/check-in-out', [TeacherCheck_in_check_out::class, 'store'])->name('checkinout.store');
 
         Route::prefix('setting')->name('setting.')->group(function () {
             Route::match(['GET', 'POST'], '', [SettingController::class, 'add'])->name('add');
@@ -162,20 +164,27 @@ Route::prefix('admin-dashboard')->name('admin.')->group(function () {
 
         Route::prefix('teacher')->name('teacher.')->group(function () {
             Route::match(['GET', 'POST'], '', [TeacherController::class, 'index'])->name('index');
+            Route::match(['GET', 'POST'], 'assign-subject', [TeacherController::class, 'assign_subject'])->name('assign_subject');
+            Route::match(['GET', 'POST'], 'assign-subject-add', [TeacherController::class, 'assign_subject_add'])->name('assign_subject_add');
         });
         Route::prefix('time-table')->name('time-table')->group(function () {
             Route::match(['GET', 'POST'], '', [TeacherController::class, 'addtimetable'])->name('time');
         });
         Route::prefix('homework')->name('homework.')->group(function () {
             Route::get('', [ViewHomeworkSubmit::class, 'index'])->name('index');
-            Route::match(['GET', 'POST'], 'submit-homework', [ViewHomeworkSubmit::class, 'submit'])->name('submit');
+            Route::match(['GET', 'POST'], 'submit-homework/{nnn}', [ViewHomeworkSubmit::class, 'submit'])->name('submit');
             Route::get('show-homework/{viewId}', [ViewHomeworkSubmit::class, 'show'])->name('show');
             Route::get('/view-homework', [ViewHomeworkSubmit::class, 'viewHomework'])->name('viewHomework');
+            Route::get('/view-homework/{id}', [ViewHomeworkSubmit::class, 'nn'])->name('nn');
             Route::match(['GET', 'POST'], 'add-teacher', [ViewHomeworkSubmit::class, 'addHomework'])->name('addHomework');
+            Route::match(['GET', 'POST'], 'update-status/{homeworkId}', [ViewHomeworkSubmit::class, 'updatestatus'])->name('updatestatus');
         });
         Route::prefix('feedback')->name('feedback.')->group(function () {
             Route::get('', [FeedbackController::class, 'index'])->name('index');
             Route::match(['GET', 'POST'], 'add-feedback', [FeedbackController::class, 'addFeedback'])->name('addFeedback');
+        });
+
+        Route::prefix('regester-your-subject')->name('reg.')->group(function () {
         });
     });
 });
