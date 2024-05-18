@@ -20,10 +20,6 @@ class LoginController extends Controller
             $credentials = $request->only('email', 'password');
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
-
-                // Send email here, after successful authentication
-                // Mail::to('testmehere000@gmail.com')->send(new MyEmail($student));
-
                 switch ($user->role_name) {
 
                     case 'SuperAdmin':
@@ -58,10 +54,8 @@ class LoginController extends Controller
     {
         $name = $request->input('name');
         $users = User::where('name', 'like', "%$name%")->get();
-        // dd($user);
-
-        // $users = DB::table('users')->get();
-        return view('Admin.UserAcc.index', compact('users'));
+     
+         return view('Admin.UserAcc.index', compact('users'));
     }
     public function add(Request $request)
     {
@@ -87,8 +81,7 @@ class LoginController extends Controller
 
             $user->save();
             return redirect()->back()->with('message', 'User Add Successfully');
-            // dd($user);
-        } else {
+         } else {
             return view('Admin.UserAcc.add');
         }
     }

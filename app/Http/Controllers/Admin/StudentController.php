@@ -126,9 +126,8 @@ class StudentController extends Controller
     public function teacheradd(Request $request)
     {
         if ($request->getMethod() == "POST") {
-            // dd($request->all());
-            $teacher = Teacher::all();
-            // dd($teacher);
+             $teacher = Teacher::all();
+             
             $teacher = new Teacher();
             $teacher->image = $request->image->store('uploads/teacher');
             $teacher->cv = $request->cv->store('uploads/teacher');
@@ -144,8 +143,7 @@ class StudentController extends Controller
             $teacher->sub = json_encode($request->input('sub'));
             $teacher->save();
             return redirect()->back();
-            // return response()->json(['teacher' => $teacher]);
-        }
+         }
         
     }
     public function teacherShow($teacher)

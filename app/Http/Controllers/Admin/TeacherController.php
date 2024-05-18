@@ -45,7 +45,7 @@ class TeacherController extends Controller
     }
     public function assign_subject(Request $request)
     {
-        $users = DB::table('users')->where('role_name', 'Teacher')->get(['id', 'name']);
+        $users = DB::table('teachers')->get(['id', 'name']);
         // dd($users);
         $subjects = DB::table('subjects')->get();
         $assigns = AssignSubjectToTeacher::with('user','subject')->get(); 

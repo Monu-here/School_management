@@ -25,9 +25,9 @@ class HomeController extends Controller
 
 
 
- 
 
-        
+
+
 
 
 
@@ -62,6 +62,23 @@ class HomeController extends Controller
 
     public function createEvent(Request $request)
     {
+        // Validate the request data
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+        ]);
+
+        // Check if an event with the same title, start date, and end date already exists
+        $existingEvent = Event::where('title', $request->title)
+            ->where('start', $request->start)
+            ->where('end', $request->end)
+            ->first();
+
+        if ($existingEvent) {
+            // Redirect back with an error message
+            return redirect()->route('admin.index')->with('error', 'An event with the same title and dates already exists. Please delete the existing event first.');
+        }
 
         Event::create([
             'title' => $request->title,
