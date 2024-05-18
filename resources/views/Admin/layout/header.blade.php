@@ -11,12 +11,7 @@
             <a href="" class="logo">
                 @if ($setting)
                     {{ $setting->webistename }}
-                    <img src="{{ asset($setting->websiteimage ?? 'null') }}" alt="Logo">
-                @endif
-            </a>
-            <a href="" class="logo logo-small">
-
-                <img src="{{ asset($setting->websiteimage ?? 'null') }}" alt="Logo" width="30" height="30">
+                 @endif
             </a>
         </div>
         <div class="menu-toggle">
@@ -95,7 +90,7 @@
             <li class="nav-item dropdown has-arrow new-user-menus">
                 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                     <span class="user-img">
-                        <img class="rounded-circle" src="{{ asset($user->image) }}" width="31" alt="Soeng Souy">
+                        <img class="rounded-circle" src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png" width="31" alt="">
                         <div class="user-text">
                             <h6>{{ $user->name }}</h6>
                             <p class="text-muted mb-0">{{ $user->role_name }}</p>
@@ -105,7 +100,7 @@
                 <div class="dropdown-menu">
                     <div class="user-header">
                         <div class="avatar avatar-sm">
-                            <img src="{{ asset($user->image) }}" alt="User Image" class="avatar-img rounded-circle">
+                            <img src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png" alt="User Image" class="avatar-img rounded-circle">
                         </div>
                         <div class="user-text">
                             <h6>{{ $user->name }}</h6>
