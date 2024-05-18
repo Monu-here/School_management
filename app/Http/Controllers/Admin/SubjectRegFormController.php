@@ -22,7 +22,6 @@ class SubjectRegFormController extends Controller
             $subject_reg->user_id = $request->user_id;
             $subject_reg->student_code = $request->student_code;
             $subject_reg->subject = $request->subject;
-            dd($subject_reg);
             $subject_reg->save();
             return redirect()->back()->with('message', 'Subject Add Sucessfully');
         }
