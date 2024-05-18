@@ -223,12 +223,17 @@
                         </ul>
                     </li>
                 @endrole
-                @role('Student')
+                @role('Student','SuperAdmin')
                     <li class="submenu">
                         <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Report</span> <span
                                 class="menu-arrow"></span></a>
                         <ul>
 
+                            <li>
+
+                                <a href="{{ route('admin.reg.index') }}"
+                                    class="{{ Route::currentRouteNamed('admin.reg.index') ? 'active' : '' }}">Regester Subject
+                            </li>
                             <li>
 
                                 <a href="{{ route('admin.feedback.addFeedback') }}"

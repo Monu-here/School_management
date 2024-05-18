@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('subject_regs', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_sode');   //roll no;
+            $table->unsignedBigInteger('user_id');
+            $table->string('student_code');   //roll no;
             $table->text('subject');
-            $table->text('status');
+            $table->string('status')->default('Not Verify');
             $table->timestamps();
         });
     }

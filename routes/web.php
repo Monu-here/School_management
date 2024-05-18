@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\RolePermissionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentPromotion;
+use App\Http\Controllers\Admin\SubjectRegFormController;
 use App\Http\Controllers\Admin\TeacherCheck_in_check_out;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\ViewHomeworkSubmit;
@@ -25,6 +26,7 @@ use App\Http\Controllers\Teacher\DepartmentController as TeacherDepartmentContro
 use App\Http\Controllers\Teacher\TeacherDashbaordController;
 use App\Mail\MyEmail;
 use App\Models\Role;
+use App\Models\SubjectReg;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -183,8 +185,10 @@ Route::prefix('admin-dashboard')->name('admin.')->group(function () {
             Route::get('', [FeedbackController::class, 'index'])->name('index');
             Route::match(['GET', 'POST'], 'add-feedback', [FeedbackController::class, 'addFeedback'])->name('addFeedback');
         });
-
+        
         Route::prefix('regester-your-subject')->name('reg.')->group(function () {
+            Route::get('',[SubjectRegFormController::class,'index'])->name('index');
+            Route::match(['GET', 'POST'], 'regester-your-subject', [SubjectRegFormController::class, 'regSub'])->name('regSub');
         });
     });
 });
