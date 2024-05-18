@@ -49,13 +49,14 @@ class AttendenceController extends Controller
     {
         if ($request->getMethod() == 'POST') {
             // dd($request->all());
+            $note = "note";
             $attendanceDate = now()->toDateString(); // Get the current date
 
             // Iterate over submitted form data for each student
             foreach ($request->input('student_ids') as $studentId) {
                 // Retrieve attendance data for the current student
                 $attendanceType = $request->input('attendance_types')[$studentId];
-                $notes = $request->input('notes')[$studentId];
+                $notes = $note;
 
                 // Check if attendance already exists for the student on the current date
                 $existingAttendance = Attendence::where('student_id', $studentId)

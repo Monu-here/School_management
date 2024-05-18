@@ -223,7 +223,7 @@
                         </ul>
                     </li>
                 @endrole
-                @role('Student','SuperAdmin')
+                @role('Student', 'SuperAdmin')
                     <li class="submenu">
                         <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Report</span> <span
                                 class="menu-arrow"></span></a>
@@ -232,13 +232,16 @@
                             <li>
 
                                 <a href="{{ route('admin.reg.index') }}"
-                                    class="{{ Route::currentRouteNamed('admin.reg.index') ? 'active' : '' }}">Regester Subject
+                                    class="{{ Route::currentRouteNamed('admin.reg.index') ? 'active' : '' }}">Regester
+                                    Subject
+                                </a>
                             </li>
                             <li>
 
                                 <a href="{{ route('admin.feedback.addFeedback') }}"
                                     class="{{ Route::currentRouteNamed('admin.feedback.') ? 'active' : '' }}">Add
                                     Feedback for Teacher
+                                </a>
                             </li>
                         </ul>
                     </li>
@@ -279,6 +282,7 @@
                                 <a href="{{ route('admin.teacher.assign_subject') }}"
                                     class="{{ Route::currentRouteNamed('admin.teacher.assign_subject') ? 'active' : '' }}">Assign
                                     Subject To Techer
+                                </a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.mark.index') }}"
@@ -287,8 +291,8 @@
                             <li>
                                 <a href="{{ route('admin.department.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.department.index') ? 'active' : '' }}">Department
+                                </a>
                             </li>
-
                         </ul>
                     </li>
                 @endrole()
