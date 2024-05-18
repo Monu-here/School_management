@@ -70,8 +70,7 @@ class HomeController extends Controller
         ]);
 
         // Check if an event with the same title, start date, and end date already exists
-        $existingEvent = Event::where('title', $request->title)
-            ->where('start', $request->start)
+        $existingEvent = Event::where('start', $request->start)
             ->where('end', $request->end)
             ->first();
 
