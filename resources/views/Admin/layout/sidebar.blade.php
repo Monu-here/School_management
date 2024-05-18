@@ -211,12 +211,14 @@
                             <li>
                                 <a href="{{ route('admin.department.index') }}"
                                 class="{{ Route::currentRouteNamed('admin.department.index') ? 'active' : '' }}">Department
+                                </a>
                             </li>
                             <li>
                                 
                                 <a href="{{ route('admin.feedback.addFeedback') }}"
                                 class="{{ Route::currentRouteNamed('admin.feedback.addFeedback') ? 'active' : '' }}">Add
                                 Feedback
+                                </a>
                             </li>
 
                         </ul>
