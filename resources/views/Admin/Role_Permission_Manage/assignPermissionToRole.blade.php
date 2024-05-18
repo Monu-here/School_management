@@ -24,7 +24,7 @@
                             <div class="card-body">
                                 <label for="permission_id">Permission:</label>
                                 <select name="permission_id" id="permission_id" class="form-control select2" multiple>
-                                    <option value="null" selected disabled>Select Permission</option>
+                                    <option value="null"   disabled>Select Permission</option>
                                     @foreach ($permissions as $permission)
                                         <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                                     @endforeach

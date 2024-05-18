@@ -122,11 +122,12 @@
                                         </td>
 
                                         <td>
-                                            <a href="" class="btn btn-sm btn-success">
-                                                <i class="fa fa-eye text-white "></i>
+                                            <a href="{{ route('admin.role-permission.delrole', ['role' => $role->id]) }}"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash text-white "></i>
                                             </a>
                                             <a
-                                                href="{{ route('admin.role-permission.editRole', ['role' => $role->id]) }}"class="btn btn-sm btn-primary "><i
+                                                href="{{ route('admin.role-permission.editRole', ['role' => $role->id]) }}"class="btn btn-sm btn-primary text-white "><i
                                                     class="fa fa-pen"></i></a>
 
                                             </a>
@@ -205,11 +206,12 @@
                                         </td>
 
                                         <td>
-                                            <a href="" class="btn btn-sm btn-success">
-                                                <i class="fa fa-eye text-white "></i>
+                                            <a href="{{ route('admin.role-permission.editPermission', ['permission' => $permission->id]) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <i class="fa fa-pen text-white "></i>
                                             </a>
-                                            <a href="" class="btn btn-sm btn-primary"><i
-                                                    class="fa fa-pen text-white"></i></a>
+                                            <a href="{{ route('admin.role-permission.delPermission', ['permission' => $permission->id]) }}"
+                                                class="btn btn-sm btn-danger"><i class="fa fa-trash text-white"></i></a>
 
 
                                         </td>
@@ -227,4 +229,3 @@
         </div>
     </div>
 @endsection
-

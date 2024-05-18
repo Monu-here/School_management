@@ -62,7 +62,7 @@ Route::prefix('admin')->name('adminLogin.')->group(function () {
 
 // Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 Route::get('monu', [HomeController::class, 'monu']);
-Route::prefix('admin-dashboard')->name('admin.')->group(function () {
+Route::prefix('dashboard')->name('admin.')->group(function () {
     Route::group(['middleware' => 'role:SuperAdmin,Admin,Teacher,HR,Student'], function () {;
 
         Route::get('', [HomeController::class, 'index'])->name('index');
@@ -73,10 +73,13 @@ Route::prefix('admin-dashboard')->name('admin.')->group(function () {
 
         Route::prefix('role-permission')->name('role-permission.')->group(function () {
             Route::match(['GET', 'POST'], 'role-add', [RolePermissionController::class, 'addRole'])->name('addRole');
+            Route::get('role-add/{role}', [RolePermissionController::class, 'delrole'])->name('delrole');
             Route::match(['GET', 'POST'], 'role-edit/{role}', [RolePermissionController::class, 'editRole'])->name('editRole');
-            Route::match(['GET', 'POST'], 'role-permission', [RolePermissionController::class, 'addPermission'])->name('addPermission');
+            Route::match(['GET', 'POST'], 'permission-add', [RolePermissionController::class, 'addPermission'])->name('addPermission');
+            Route::match(['GET', 'POST'], 'permission-edit/{permission}', [RolePermissionController::class, 'editPermission'])->name('editPermission');
+            Route::get('permission-del/{permission}', [RolePermissionController::class, 'delPermission'])->name('delPermission');
             Route::match(['GET', 'POST'], 'give-role', [RolePermissionController::class, 'giveRole'])->name('giveRole');
-            Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assignPerRole');
+             Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assignPerRole');
         });
 
         Route::post('/check-in-out', [TeacherCheck_in_check_out::class, 'store'])->name('checkinout.store');
@@ -185,9 +188,9 @@ Route::prefix('admin-dashboard')->name('admin.')->group(function () {
             Route::get('', [FeedbackController::class, 'index'])->name('index');
             Route::match(['GET', 'POST'], 'add-feedback', [FeedbackController::class, 'addFeedback'])->name('addFeedback');
         });
-        
+
         Route::prefix('regester-your-subject')->name('reg.')->group(function () {
-            Route::get('',[SubjectRegFormController::class,'index'])->name('index');
+            Route::get('', [SubjectRegFormController::class, 'index'])->name('index');
             Route::match(['GET', 'POST'], 'regester-your-subject', [SubjectRegFormController::class, 'regSub'])->name('regSub');
         });
     });

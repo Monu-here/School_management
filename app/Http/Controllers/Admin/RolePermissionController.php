@@ -27,6 +27,11 @@ class RolePermissionController extends Controller
             return view('Admin.Role_Permission_Manage.addRole', compact('roles', 'permissions'));
         }
     }
+    public function delrole($role)
+    {
+        DB::table('roles')->where('id', $role)->delete();
+        return redirect()->back()->with('message', 'Role Delete Sucessfully');
+    }
     public function editRole(Request $request, Role $role)
     {
         if ($request->getMethod() == "POST") {
@@ -53,6 +58,24 @@ class RolePermissionController extends Controller
 
             return view('Admin.Role_Permission_Manage.addRole', compact('roles', 'permissions'));
         }
+    }
+    public function editPermission(Request $request, Permission $permission)
+    {
+        if ($request->getMethod() == "POST") {
+
+            $permission->name = $request->name;
+            $permission->save();
+            return redirect()->route('admin.role-permission.addRole')->with('message', 'Permission update Successfully');
+        } else {
+
+
+            return view('Admin.Role_Permission_Manage.editPermission', compact('permission'));
+        }
+    }
+    public function delPermission($permission)
+    {
+        DB::table('permissions')->where('id', $permission)->delete();
+        return redirect()->back()->with('message', 'Permission Delete Sucessfully');
     }
     // public function giveRole(Request $request)
     // {
@@ -105,7 +128,7 @@ class RolePermissionController extends Controller
             return view('Admin.Role_Permission_Manage.userwiseroleandpermission', compact('users', 'roles', 'permissions', 'users_permissions'));
         }
     }
-
+   
     public function assignPerRole(Request $request)
     {
 

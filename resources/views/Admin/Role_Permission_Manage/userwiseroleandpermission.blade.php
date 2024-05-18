@@ -60,7 +60,7 @@
 
             </div>
         </form>
-        hey
+      
         <div class="content">
             <div class="card card-table comman-shadow">
                 <div class="card-body">
@@ -87,24 +87,24 @@
                             <thead class="student-thread">
                                 <tr>
                                     <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something" />
-                                        </div>
+                                        SN
                                     </th>
                                     <th>Permission ID </th>
                                     <th>User ID</th>
-                                    <th>Action</th>
-                                    <th class="d-none">Created day</th>
+                                     <th class="d-none">Created day</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                     $previous_user_id = null;
+                                    $j=1;
                                 @endphp
+
                                 @foreach ($users_permissions as $key => $users_permission)
                                     @if ($previous_user_id !== $users_permission->user_id)
-                                        @php
+                                        @php 
+                                        
                                             // If the user ID is different from the previous one, start a new row
                                             $permissions = DB::table('users_permissions')
                                                 ->join(
@@ -122,13 +122,11 @@
                                                 ->select('users.name as user_name')
                                                 ->where('users.id', $users_permission->user_id)
                                                 ->first();
+                                                
                                         @endphp
                                         <tr data-entry-id="{{ $users_permission->user_id }}">
                                             <td>
-                                                <div class="form-check check-tables">
-                                                    <input class="form-check-input  d-block " type="radio"
-                                                        value="something" />
-                                                </div>
+                                                {{$j++}}
 
                                             </td>
                                             <td>
@@ -140,11 +138,7 @@
                                             <td>
                                                 {{ $user->user_name }}
                                             </td>
-                                            <td>
-                                                <a href="" class="btn btn-sm btn-success">
-                                                    <i class="fa fa-eye text-white "></i>
-                                                </a>
-                                            </td>
+                                             
                                         </tr>
 
                                         @php
