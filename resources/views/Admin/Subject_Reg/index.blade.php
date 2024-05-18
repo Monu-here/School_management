@@ -48,17 +48,14 @@
                                         <button type="button" class="btn btn-success" id="addUser">Add
                                             SubJect
                                         </button>
+                                        <input type="hidden" name="subject" id="hiddenSub" value="">
                                         <button class="btn btn-primary">Submit</button>
                                     </div>
-
-
                                 </div>
-
                                 <label for="">Selected Subjects</label>
                                 <ul id="selectedSubList"></ul>
-
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>

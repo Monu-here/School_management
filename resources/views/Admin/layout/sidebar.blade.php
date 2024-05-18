@@ -243,7 +243,7 @@
                         </ul>
                     </li>
                 @endrole()
-                @role('Admin')
+                @role('SuperAdmin')
                     <li class="submenu">
                         <a href="#"><i class="fas fa-clipboard"></i> <span> Front</span> <span
                                 class="menu-arrow"></span></a>

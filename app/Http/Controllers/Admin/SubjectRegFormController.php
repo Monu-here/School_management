@@ -13,7 +13,7 @@ class SubjectRegFormController extends Controller
     {
         $subject_regs = DB::table('subject_regs')->get();
         $subjects = DB::table('subjects')->get();
-        return view('Admin.Subject_Reg.index', compact('subject_regs','subjects'));
+        return view('Admin.Subject_Reg.index', compact('subject_regs', 'subjects'));
     }
     public function regSub(Request $request)
     {
@@ -22,6 +22,7 @@ class SubjectRegFormController extends Controller
             $subject_reg->user_id = $request->user_id;
             $subject_reg->student_code = $request->student_code;
             $subject_reg->subject = $request->subject;
+            dd($subject_reg);
             $subject_reg->save();
             return redirect()->back()->with('message', 'Subject Add Sucessfully');
         }

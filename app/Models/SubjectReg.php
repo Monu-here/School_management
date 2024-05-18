@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SubjectReg extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'subject',
+        'student_code'
+    ];
 }
