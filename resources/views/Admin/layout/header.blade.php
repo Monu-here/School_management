@@ -8,11 +8,13 @@
     <div class="header">
 
         <div class="header-left">
-            <a href="" class="logo">
-                @if ($setting)
-                    {{ $setting->webistename }}
+                 @if ($setting)
+                  <span>
+                      
+                      {{ $setting->webistename }}
+                </span> 
                  @endif
-            </a>
+             
         </div>
         <div class="menu-toggle">
             <a href="javascript:void(0);" id="toggle_btn">
