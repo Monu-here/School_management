@@ -25,14 +25,14 @@
                     <ul>
                         <li class=""><a href="{{ route('admin.index') }}"
                                 class="{{ Route::currentRouteNamed('admin.index') ? 'active' : '' }}">Dashboard</a></li>
-                        @role('SuperAdmin', 'Admin')
+                        
                             <li><a href="{{ route('admin.setting.add') }}"
                                     class="{{ Route::currentRouteNamed('admin.setting.add') ? 'active' : '' }}">Setting</a>
                             </li>
-                        @endrole()
+                       
                     </ul>
                 </li>
-                @role('SuperAdmin')
+                
                     <li class="submenu">
                         <a href="#"><i class="feather-grid"></i> <span> Role Manage</span> <span
                                 class="menu-arrow"></span></a>
@@ -54,15 +54,15 @@
                             </li>
                         </ul>
                     </li>
-                @endrole()
-                @role('SuperAdmin', 'Admin')
+               
+                
                     <li class="submenu">
-                        <a href="#"><i class="fas fa-graduation-cap"></i> <span> Admin Section</span> <span
+                        <a href="#"><i class="fas fa-graduation-cap"></i> <span> User Section</span> <span
                                 class="menu-arrow"></span></a>
                         <ul>
                             <li>
                                 <a href="{{ route('admin.user.index') }}"
-                                    class="{{ Route::currentRouteNamed('admin.user.index') ? 'active' : '' }}">Admin
+                                    class="{{ Route::currentRouteNamed('admin.user.index') ? 'active' : '' }}">User
                                     <span class="badge badge-pill badge-success">{{ $user->count() }}</span>
                                 </a>
                             </li>
@@ -75,34 +75,33 @@
                             </li>
                         </ul>
                     </li>
-                @endrole()
+               
                 <li class="submenu">
-                    @role('HR', 'SuperAdmin', 'Teacher')
+                   
                         <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
                                 class="menu-arrow"></span></a>
-                    @endrole()
+                   
                     <ul>
-                        @role('HR', 'SuperAdmin')
+                        
                             <li><a href="{{ route('admin.student.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.student.index') ? 'active' : '' }}">Student
                                     List</a></li>
                             <li><a href="{{ route('admin.promotion.list') }}"
                                     class="{{ Route::currentRouteNamed('admin.promotion.list') ? 'active' : '' }}">Student
                                     Promote</a></li>
-                        @endrole('')
-                        @role('Teacher', 'SuperAdmin')
+                        
                             <li><a href="{{ route('admin.atten.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.atten.index') ? 'active' : '' }}">Student
                                     Attendence</a></li>
-                        @endrole()
-                        @role('SuperAdmin')
+                       
+                        
                             <li><a href="{{ route('admin.atten.report') }}"
                                     class="{{ Route::currentRouteNamed('admin.atten.report') ? 'active' : '' }}">Student
                                     Attendence Report</a></li>
-                        @endrole()
+                       
                     </ul>
                 </li>
-                @role('SuperAdmin')
+                
                     <li class="submenu">
                         <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Staff</span> <span
                                 class="menu-arrow"></span></a>
@@ -113,8 +112,8 @@
 
                         </ul>
                     </li>
-                @endrole()
-                @role('SuperAdmin', 'Admin')
+               
+                
                     <li class="submenu">
                         <a href="#"><i class="fas fa-building"></i> <span> Fee Collection</span> <span
                                 class="menu-arrow"></span></a>
@@ -130,8 +129,8 @@
                                     Wise Payment List</a></li>
                         </ul>
                     </li>
-                @endrole()
-                @role('SuperAdmin', 'Admin')
+               
+                
                     <li class="submenu">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> Examination</span> <span
                                 class="menu-arrow"></span></a>
@@ -152,9 +151,9 @@
                             </li>
                         </ul>
                     </li>
-                @endrole()
+               
 
-                @role('Student')
+                
                     <li class="submenu">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> HomeWork</span> <span
                                 class="menu-arrow"></span></a>
@@ -174,9 +173,9 @@
 
                         </ul>
                     </li>
-                @endrole()
+               
 
-                @role('Teacher')
+                 
                     <li class="submenu">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> HomeWork</span> <span
                                 class="menu-arrow"></span></a>
@@ -191,9 +190,9 @@
 
                         </ul>
                     </li>
-                @endrole()
+               
 
-                @role('Teacher')
+                
                     <li class="submenu">
                         <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Daily Log</span> <span
                                 class="menu-arrow"></span></a>
@@ -204,26 +203,25 @@
                                     DailyLog</a>
                             </li>
 
-                            {{-- <li>
+                            <li>
                                 <a href="{{ route('admin.time-tabletime') }}"
                                 class="{{ Route::currentRouteNamed('admin.time-tabletime') ? 'active' : '' }}">Time
                                 Table</a>
-                            </li> --}}
-                            {{-- <li>
+                            </li>
+                            <li>
                                 <a href="{{ route('admin.department.index') }}"
                                 class="{{ Route::currentRouteNamed('admin.department.index') ? 'active' : '' }}">Department
-                            </li> --}}
-                            {{-- <li>
+                            </li>
+                            <li>
                                 
                                 <a href="{{ route('admin.feedback.addFeedback') }}"
                                 class="{{ Route::currentRouteNamed('admin.feedback.addFeedback') ? 'active' : '' }}">Add
                                 Feedback
-                            </li> --}}
+                            </li>
 
                         </ul>
                     </li>
-                @endrole
-                @role('Student', 'SuperAdmin')
+                 
                     <li class="submenu">
                         <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Report</span> <span
                                 class="menu-arrow"></span></a>
@@ -245,8 +243,8 @@
                             </li>
                         </ul>
                     </li>
-                @endrole()
-                @role('SuperAdmin')
+               
+                
                     <li class="submenu">
                         <a href="#"><i class="fas fa-clipboard"></i> <span> Front</span> <span
                                 class="menu-arrow"></span></a>
@@ -263,8 +261,8 @@
 
                         </ul>
                     </li>
-                @endrole()
-                @role('SuperAdmin')
+               
+                
                     <li class="menu-title">
                         <span>Management</span>
                     </li>
@@ -295,7 +293,7 @@
                             </li>
                         </ul>
                     </li>
-                @endrole()
+               
 
 
 
