@@ -90,7 +90,7 @@ class HomeController extends Controller
     public function eventDel($event)
     {
         DB::table('events')->where('id', $event)->delete();
-        return redirect()->back();
+        return redirect()->route('admin.index')->with('message','Event delete sucessfully');
     }
 
 
