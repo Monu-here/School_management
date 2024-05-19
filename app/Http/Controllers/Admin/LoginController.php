@@ -54,8 +54,8 @@ class LoginController extends Controller
     {
         $name = $request->input('name');
         $users = User::where('name', 'like', "%$name%")->get();
-     
-         return view('Admin.UserAcc.index', compact('users'));
+
+        return view('Admin.UserAcc.index', compact('users'));
     }
     public function add(Request $request)
     {
@@ -69,8 +69,7 @@ class LoginController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:6',
                 'number' => 'required',
-                'role_name' => 'required|in:Admin,Teacher,Student',
-            ]);
+             ]);
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
@@ -81,8 +80,9 @@ class LoginController extends Controller
 
             $user->save();
             return redirect()->back()->with('message', 'User Add Successfully');
-         } else {
-            return view('Admin.UserAcc.add');
+        } else {
+           $roles =  DB::table('roles')->get();
+            return view('Admin.UserAcc.add',compact('roles'));
         }
     }
     public function show($userId)
@@ -98,10 +98,10 @@ class LoginController extends Controller
 
         if ($request->getMethod() == 'POST') {
 
-          
+
             $user->name = $request->name;
             $user->password = $request->password;
-             $user->number = $request->number;
+            $user->number = $request->number;
             if ($request->hasFile('image')) {
                 $user->image = $request->image->store('uploads/user');
             }

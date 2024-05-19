@@ -22,18 +22,18 @@
             </a>
         </div>
 
-        <div class="top-nav-search">
+        {{-- <div class="top-nav-search">
             <form>
                 <input type="text" class="form-control" placeholder="Search here">
                 <button class="btn" type="submit"><i class="fas fa-search"></i></button>
             </form>
-        </div>
+        </div> --}}
         <a class="mobile_btn" id="mobile_btn">
             <i class="fas fa-bars"></i>
         </a>
 
         <ul class="nav user-menu">
-            <li class="nav-item dropdown noti-dropdown language-drop me-2">
+            {{-- <li class="nav-item dropdown noti-dropdown language-drop me-2">
                 <a href="#" class="dropdown-toggle nav-link header-nav-list" data-bs-toggle="dropdown">
                     <img src="{{ asset('assets/newDesign/img/icons/header-icon-01.svg') }}" alt="">
                 </a>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </li> --}}
 
             <li class="nav-item dropdown noti-dropdown me-2">
                 <a href="#" class="dropdown-toggle nav-link header-nav-list" data-bs-toggle="dropdown">
@@ -62,15 +62,15 @@
                             <li class="notification-message">
                                 <a href="#">
                                     <div class="media d-flex">
-                                        <span class="avatar avatar-sm flex-shrink-0">
+                                        {{-- <span class="avatar avatar-sm flex-shrink-0">
                                             <img class="avatar-img rounded-circle" alt="User Image"
                                                 src="{{ asset('assets/newDesign/img/profiles/avatar-02.jpg') }}">
-                                        </span>
+                                        </span> --}}
                                         <div class="media-body flex-grow-1">
-                                            <p class="noti-details"><span class="noti-title">Carlson Tech</span> has
+                                            {{-- <p class="noti-details"><span class="noti-title">Carlson Tech</span> has
                                                 approved <span class="noti-title">your estimate</span></p>
                                             <p class="noti-time"><span class="notification-time">4 mins ago</span>
-                                            </p>
+                                            </p> --}}
                                         </div>
                                     </div>
                                 </a>

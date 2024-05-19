@@ -42,11 +42,11 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.role-permission.addRole') }}" method="POST">
+                    <form action="{{ route('admin.role-permission.addRole') }}" method="POST" id="roleSubmitForm">
                         @csrf
                         <label for="name">Role Name</label>
                         <input type="text" name="name" id="name" class="form-control" value="" required>
-                        <button class="btn btn-primary mt-3 ">Submit</button>
+                        <button class="btn btn-primary mt-3 " id="roleSubmitBtn">Submit</button>
 
                     </form>
                 </div>
@@ -55,15 +55,16 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.role-permission.addPermission') }}" method="POST">
+                    <form action="{{ route('admin.role-permission.addPermission') }}" method="POST" id="formSubmit">
                         @csrf
                         <label for="name">Permission Name</label>
                         <input type="text" name="name" id="name" class="form-control" required>
-                        <button class="btn btn-primary mt-3 ">Submit</button>
+                        <button type="submit" class="btn btn-primary mt-3" id="saveBtn">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
+
         <div class="col-sm-6">
             <div class="card card-table comman-shadow">
                 <div class="card-body">
@@ -73,13 +74,7 @@
                                 <h3 class="page-title">Users</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                                <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                        class="feather-list"></i></a>
-                                <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                        class="feather-grid"></i></a>
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
-                                    Download</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+
                             </div>
                         </div>
                     </div>
@@ -157,20 +152,14 @@
                                 <h3 class="page-title">Users</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                                <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                        class="feather-list"></i></a>
-                                <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                        class="feather-grid"></i></a>
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
-                                    Download</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+
                             </div>
                         </div>
                     </div>
 
                     <div class="table-responsive">
                         <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped"
-                            id="clienttable">
+                            id="clienttables">
                             <thead class="student-thread">
                                 <tr>
                                     <th>
@@ -228,4 +217,44 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    <script>
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
+        document.getElementById('roleSubmitForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var roleSubmitBtn = document.getElementById('roleSubmitBtn');
+            roleSubmitBtn.disabled = true;
+            roleSubmitBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
+    </script>
+    <script>
+        $(function() {
+            $('#clienttable').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
+        });
+        $(function() {
+            $('#clienttables').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 @endsection

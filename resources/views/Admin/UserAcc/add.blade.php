@@ -9,6 +9,10 @@
             color: red;
         }
 
+        p {
+            font-size: 16px;
+        }
+
         .password-container {
             position: relative;
         }
@@ -42,8 +46,10 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.user.add') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.user.add') }}" method="POST" enctype="multipart/form-data"
+                        id="formSubmit">
                         @csrf
+                        <marquee behavior="smooth" direction="left">Role will be given from role manage section</marquee>
                         <div class="row">
                             <div class="col-12">
                                 <h5 class="form-title"><span>Basic Details</span></h5>
@@ -85,13 +91,9 @@
                                             <label>Role <span class="login-danger">*</span></label>
                                             <select class="form-control" name="role_name">
                                                 <option selected disabled>Select Role</option>
-                                                @role('SuperAdmin')
-                                                <option value="Admin">Admin</option>
-                                                @endrole()
-                                                <option value="Teacher">Teacher
-                                                </option>
-                                                <option value="Student">
-                                                    Student</option>
+                                                @foreach ($roles as $role)
+                                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -109,7 +111,7 @@
 
                                     <div class="col-12">
                                         <div class="student-submit">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary" id="saveBtn" onclick="Msg()">Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -156,5 +158,20 @@
                 passwordToggle.classList.add('fa-eye');
             }
         }
+    </script>
+    <script>
+        const Msg = (msg = "Would you like to save  ? ") => {
+            return prompt(msg) == 'yes';
+            console.log(Msg);
+        }
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
     </script>
 @endsection

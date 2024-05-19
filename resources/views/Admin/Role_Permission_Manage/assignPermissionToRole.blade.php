@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="content">
-            <form action="{{ route('admin.role-permission.assignPerRole') }}" method="POST">
+            <form action="{{ route('admin.role-permission.assignPerRole') }}" method="POST" id="formSubmit">
                 @csrf
                 <div class="row">
                     <div class="col-md-5">
@@ -24,7 +24,7 @@
                             <div class="card-body">
                                 <label for="permission_id">Permission:</label>
                                 <select name="permission_id" id="permission_id" class="form-control select2" multiple>
-                                    <option value="null"   disabled>Select Permission</option>
+                                    <option value="null" disabled>Select Permission</option>
                                     @foreach ($permissions as $permission)
                                         <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                                     @endforeach
@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-primary ">Assign Permission to Role</button>
+                            <button type="submit" class="btn btn-primary " id="saveBtn" onclick="Msg()">Assign Permission to Role</button>
                         </div>
                     </div>
                 </div>
@@ -49,13 +49,7 @@
                                 <h3 class="page-title">Users</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                                <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                        class="feather-list"></i></a>
-                                <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                        class="feather-grid"></i></a>
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
-                                    Download</a>
-                                <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+
                             </div>
                         </div>
                     </div>
@@ -65,30 +59,47 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something" />
-                                        </div>
-                                    </th>
+
                                     <th>Role </th>
                                     <th>Permission</th>
-                                    <th>Action</th>
-                                    <th class="d-none">Created day</th>
 
                                 </tr>
                             </thead>
-                            <br><br>
+                            @php
+
+                                // Fetch all roles with their permissions in one query
+                                $roles_permissions = DB::table('roles')
+                                    ->leftJoin('roles_permissions', 'roles.id', '=', 'roles_permissions.role_id')
+                                    ->leftJoin('permissions', 'roles_permissions.permission_id', '=', 'permissions.id')
+                                    ->select(
+                                        'roles.id as role_id',
+                                        'roles.name as role_name',
+                                        'permissions.name as permission_name',
+                                    )
+                                    ->get()
+                                    ->groupBy('role_id'); // Group by role_id for easy access
+                            @endphp
+                            <tbody>
+                                @foreach ($roles_permissions as $role_id => $permissions)
+                                    <tr data-entry-id="{{ $role_id }}">
+                                        <td>{{ $permissions->first()->role_name }}</td>
+                                        <td>
+                                            @foreach ($permissions as $permission)
+                                                @if ($permission->permission_name)
+                                                    <span
+                                                        class="badge bg-info text-white">{{ $permission->permission_name }}</span>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
 
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
-        <div id="new"></div>
     </div>
 @endsection
 @section('js')
@@ -99,15 +110,26 @@
         }
         var data = {!! json_encode($roles_permissions) !!}
         let html = "";
-        
-        data.forEach(e => {
-            html += `${e.role_id}`
-        });
-        $('#new').append(html);
+
+        // data.forEach(e => {
+        //     html += `${e.role_id} ${e.permission_id},`
+        // });
+        // $('#new').append(html);
         console.log(data.length);
         console.log(data);
         $(document).ready(function() {
             $('.select2').select2();
+        });
+    </script>
+     <script>
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
         });
     </script>
 @endsection

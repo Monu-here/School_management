@@ -42,15 +42,34 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.role-permission.editPermission',['permission'=>$permission->id]) }}" method="POST">
+                    <form action="{{ route('admin.role-permission.editPermission', ['permission' => $permission->id]) }}"
+                        method="POST" id="formSubmit">
                         @csrf
                         <label for="name">Role Name</label>
-                        <input type="text" name="name" id="name" class="form-control" value="{{$permission->name}}" required>
-                        <button class="btn btn-primary mt-3 ">Submit</button>
+                        <input type="text" name="name" id="name" class="form-control"
+                            value="{{ $permission->name }}" required>
+                        <button class="btn btn-primary mt-3 " id="saveBtn" onclick="Msg()">Update</button>
 
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+@endsection
+@section('js')
+    <script>
+        const Msg = (msg = "Would you like to update the permission ? ") => {
+            return prompt(msg) == 'yes';
+            console.log(Msg);
+        }
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
+    </script>
+@endsection
