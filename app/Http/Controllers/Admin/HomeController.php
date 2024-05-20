@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Notice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -22,6 +23,8 @@ class HomeController extends Controller
         $notices = Notice::all();
 
 
+        $user = Auth::user();
+        $student = $user->student;
 
 
 
@@ -35,7 +38,9 @@ class HomeController extends Controller
 
 
 
-        return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices'));
+
+
+        return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices','student'));
     }
     // public function index()
     // {

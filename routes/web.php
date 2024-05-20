@@ -79,7 +79,7 @@ Route::prefix('dashboard')->name('admin.')->group(function () {
             Route::match(['GET', 'POST'], 'permission-edit/{permission}', [RolePermissionController::class, 'editPermission'])->name('editPermission');
             Route::get('permission-del/{permission}', [RolePermissionController::class, 'delPermission'])->name('delPermission');
             Route::match(['GET', 'POST'], 'give-role', [RolePermissionController::class, 'giveRole'])->name('giveRole');
-             Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assignPerRole');
+            Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assignPerRole');
         });
 
         Route::post('/check-in-out', [TeacherCheck_in_check_out::class, 'store'])->name('checkinout.store');
@@ -97,7 +97,9 @@ Route::prefix('dashboard')->name('admin.')->group(function () {
         });
         Route::prefix('student')->name('student.')->group(function () {
             Route::get('', [StudentController::class, 'index'])->name('index');
+            Route::get('students', [StudentController::class, 'create'])->name('student');
             Route::match(['GET', 'POST'], 'add', [StudentController::class, 'add'])->name('add');
+            Route::match(['GET', 'POST'], 'edit/{student}', [StudentController::class, 'studentedit'])->name('edit');
             Route::get('student/show/{student}', [StudentController::class, 'studentShow'])->name('studentShow');
             Route::get('del/{student}', [StudentController::class, 'del'])->name('del');
             Route::get('teacher', [StudentController::class, 'teacherIndex'])->name('teacherIndex');

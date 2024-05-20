@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role_name',
-        'number'
+        'number',
+        'image'
     ];
 
     /**
@@ -46,6 +47,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id');
@@ -62,5 +67,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(ViewHomeworkFromTeacher::class, 'student_id');
     }
+  
    
 }

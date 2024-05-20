@@ -1,5 +1,4 @@
 @extends('Admin.layout.app')
-
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -12,6 +11,7 @@
         p {
             font-size: 10px;
         }
+
         .password-container {
             position: relative;
         }
@@ -32,14 +32,23 @@
     </ul>
 @endsection
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.student.add') }}" id="form1" method="POST"
+                    <form action="{{ route('admin.student.add') }}" id="formSubmit" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        <marquee>Id no will be auto generate</marquee>
                         <div class="row">
                             <div class="col-12">
                                 <h5 class="form-title"><span>Student Information</span></h5>
@@ -47,45 +56,43 @@
                             <hr>
                             <div class="col-md-3">
                                 <div class="form-group local-forms">
-                                    <label>Student Image <span class="login-danger">*</span></label>
                                     <input required type="file" name="image" id="image" class="form-control photo"
                                         accept="image/*">
                                     <br>
-
                                     <label>Father Image <span class="login-danger">*</span></label>
                                     <input required type="file" class="form-control photo" name="f_image"
-                                        placeholder="Enter Image" accept="image/*">
+                                        accept="image/*">
                                     <br>
                                     <label>Student Image <span class="login-danger">*</span></label>
 
                                     <input required type="file" class="form-control photo" name="m_image"
-                                        placeholder="Enter Image" accept="image/*">
+                                        accept="image/*">
                                 </div>
 
                             </div>
                             <div class="col-md-9">
                                 <div class="row">
                                     <br>
-                                    <div class="col-12 col-sm-4" hidden>
+                                    <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>ID No<span class="login-danger">*</span></label>
-                                            <input required type="number" id="formControlLg" class="form-control" readonly
-                                                name="idno" value="{{ isset($idno) ? $idno : '' }}"
-                                                placeholder="Autogenerate ID No" outline="hidden" hidden />
+                                            <label for="symbool">Symbol No</label>
+                                            <input required type="number" class="form-control" name="idno"
+                                                outline="hidden" />
                                         </div>
 
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Name <span class="login-danger">*</span></label>
-                                            <input required type="text" id="formControlLg" class="form-control"
-                                                name="name" placeholder="Enter Name" />
+                                            <label for="name">Name</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                value="{{ old('name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Gender <span class="login-danger">*</span></label>
-                                            <select class="form-control" name="gender">
+                                            <select class="form-control" id="gender" name="gender"
+                                                value="{{ old('gender') }}">
                                                 <option selected disabled>Select Gender</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female
@@ -98,16 +105,16 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Date Of Birth <span class="login-danger">*</span></label>
-                                            <input required type="date" class="form-control" name="dob"
-                                                placeholder="Enter Date of Birth">
+                                            <input type="date" class="form-control" id="dob" name="dob"
+                                                value="{{ old('dob') }}" required>
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Roll No <span class="login-danger">*</span></label>
-                                            <input required type="number" class="form-control" name="roll"
-                                                placeholder="Enter Roll No">
+                                            <input type="number" class="form-control" id="roll" name="roll"
+                                                value="{{ old('roll') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
@@ -115,8 +122,10 @@
                                             <label>Class <span class="login-danger">*</span></label>
                                             <select class="form-control" name="class_id">
                                                 <option selected disabled>Select Class</option>
-                                                @foreach ($classes as $c)
-                                                    <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                                @foreach ($classes as $class)
+                                                    <option value="{{ $class->id }}"
+                                                        {{ old('class_id') == $class->id ? 'selected' : '' }}>
+                                                        {{ $class->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -125,7 +134,8 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Religion <span class="login-danger">*</span></label>
-                                            <select class="form-control" name="reli">
+                                            <select class="form-control" id="reli" name="reli"
+                                                value="{{ old('reli') }}">
                                                 <option selected disabled>Select Gender</option>
                                                 <option value="hindu">Hindu</option>
                                                 <option value="Christian">Christian</option>
@@ -140,8 +150,9 @@
                                                 <option selected disabled>Select Section</option>
 
                                                 @foreach ($sections as $section)
-                                                    <option value="{{ $section->id }}">{{ $section->name }}
-                                                    </option>
+                                                    <option value="{{ $section->id }}"
+                                                        {{ old('section_id') == $section->id ? 'selected' : '' }}>
+                                                        {{ $section->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -152,7 +163,9 @@
                                             <select class="form-control" name="blood_id">
                                                 <option selected disabled>Select Blood Group</option>
                                                 @foreach ($bloods as $blood)
-                                                    <option value="{{ $blood->id }}">{{ $blood->name }}</option>
+                                                    <option value="{{ $blood->id }}"
+                                                        {{ old('blood_id') == $blood->id ? 'selected' : '' }}>
+                                                        {{ $blood->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -160,28 +173,31 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Email <span class="login-danger"></span></label>
-                                            <input required type="email" class="form-control" name="email"
-                                                placeholder="Enter Email">
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                value="{{ old('email') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Phone Number <span class="login-danger"></span></label>
-                                            <input required type="number" class="form-control" name="number"
-                                                placeholder="Enter Number">
+                                            <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
+                                                id="number" name="number" value="{{ old('number') }}">
+
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Address <span class="login-danger"></span></label>
-                                            <input required type="text" class="form-control" name="address"
-                                                placeholder="Enter Address">
+                                            <input type="text" class="form-control" id="address" name="address"
+                                                value="{{ old('address') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Admit Year <span class="login-danger"></span></label>
-                                            <select id="yearDropdown" name="session_year" class="form-control"></select>
+                                            <select id="yearDropdown" name="session_year" id="session_year"
+                                                class="form-control" value="{{ old('session_year') }}"></select>
+
 
                                         </div>
                                     </div>
@@ -190,51 +206,55 @@
 
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Father Name<span class="login-danger">*</span></label>
-                                            <input required type="text" id="formControlLg" class="form-control"
-                                                name="f_name" placeholder="Enter Father Name" />
+                                            <label>Father's Name<span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" id="f_name" name="f_name"
+                                                value="{{ old('f_name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Father Occuptaion<span class="login-danger">*</span></label>
-                                            <input required type="text" id="formControlLg" class="form-control"
-                                                name="f_occ" placeholder="Enter Father Occuption" />
+                                            <label>Father's Occupation<span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" id="f_occ" name="f_occ"
+                                                value="{{ old('f_occ') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Father Phone Number<span class="login-danger">*</span></label>
-                                            <input required type="number" id="formControlLg" class="form-control"
-                                                name="f_no" placeholder="Enter Father Phone Number" />
+                                            <input type="number" class="form-control" pattern="[1-9]{1}[0-9]{9}"
+                                                id="f_no" name="f_no" value="{{ old('f_no') }}" required>
+
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
+                                            {{-- //////////  --}}
                                             <label>Father Email<span class="login-danger">*</span></label>
                                             <input required type="text" id="formControlLg" class="form-control"
-                                                name="parent_email" placeholder="Enter Father Email" />
+                                                name="parent_email" Email" value="{{ old('parent_email') }}" />
+                                            {{-- ////////////  --}}
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Mother Name<span class="login-danger">*</span></label>
-                                            <input required type="text" id="formControlLg" class="form-control"
-                                                name="m_name" placeholder="Enter Mother Name" />
+                                            <input type="text" class="form-control" id="m_name" name="m_name"
+                                                value="{{ old('m_name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Mother Occuptaion<span class="login-danger">*</span></label>
-                                            <input required type="text" id="formControlLg" class="form-control"
-                                                name="m_occ" placeholder="Enter Mother Occuption" />
+                                            <label>Mother Occupation<span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" id="m_occ" name="m_occ"
+                                                value="{{ old('m_occ') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Mother Phone Number<span class="login-danger">*</span></label>
-                                            <input required type="number" id="formControlLg" class="form-control"
-                                                name="m_no" placeholder="Enter Mother Phone Number" />
+                                            <input type="number" class="form-control" pattern="[1-9]{1}[0-9]{9}"
+                                                id="m_no" name="m_no" value="{{ old('m_no') }}" required>
+
                                         </div>
                                     </div>
 
@@ -242,186 +262,87 @@
 
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('admin.user.add') }}" id="form2" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-12">
-                                <h5 class="form-title"><span>Student Login Details</span></h5>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group local-forms">
-                                    <label>Image <span class="login-danger">*</span></label>
-                                    <input type="file" class="form-control photo" name="image"
-                                        placeholder="Enter Image" accept="image/*">
-                                </div>
+                        <div class="card">
+                            <div class="card-body">
 
-                            </div>
-                            <div class="col-md-9">
                                 <div class="row">
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Name <span class="login-danger">*</span></label>
-                                            <input type="text" id="formControlLg" class="form-control"
-                                                name="name" placeholder="Enter Name" />
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Phone Number <span class="login-danger">*</span></label>
-                                            <input type="number" class="form-control" name="number"
-                                                placeholder="Enter Number">
-
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Email <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control" name="email"
-                                                placeholder="Enter Email">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Role <span class="login-danger">*</span></label>
-                                            <select class="form-control" name="role_name">
-                                                <option selected disabled>Select Role</option>
-                                                @role('SuperAdmin')
-                                                    <option value="Admin">Admin</option>
-                                                @endrole()
-                                                <option value="Teacher">Teacher
-                                                </option>
-                                                <option value="Student">
-                                                    Student</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Password <span class="login-danger">*</span></label>
-                                            <div class="password-container">
-                                                <input type="password" class="form-control" name="password"
-                                                    id="password-input" placeholder="Enter Password">
-                                                <i class="fas fa-eye password-toggle" id="password-toggle"
-                                                    onclick="togglePasswordVisibility()"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="col-12">
-                                        <div class="student-submit">
+                                        <h5 class="form-title"><span>Student Login Details</span></h5>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group local-forms">
+                                            <label>Image <span class="login-danger">*</span></label>
+                                            <input type="file" class="form-control photo" name="images"
+                                                accept="image/*">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>UesrName <span class="login-danger">*</span></label>
+                                                    <input type="text" id="formControlLg" class="form-control"
+                                                        name="name" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Phone Number <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
+                                                        id="number" name="number" value="{{ old('number') }}"
+                                                        required>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Email <span class="login-danger">*</span></label>
+                                                    <input type="email" class="form-control" id="email"
+                                                        name="email" value="{{ old('email') }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Password <span class="login-danger">*</span></label>
+                                                    <div class="password-container">
+                                                        <input type="password" class="form-control"id="password-input" rd"
+                                                            name="password" required>
+                                                        <i class="fas fa-eye password-toggle" id="password-toggle"
+                                                            onclick="togglePasswordVisibility()"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </div>
+
+                                <button type="submit" class="btn btn-primary" onclick="Msg()"
+                                    id="saveBtn">Submit</button>
+                                <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
+
                             </div>
                         </div>
                     </form>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
 @section('js')
-    <script>
-        document.getElementById("submitBtn").addEventListener("click", function(event) {
-            event.preventDefault();
-
-            // Submit both forms
-            var form1 = document.getElementById("form1");
-            var form2 = document.getElementById("form2");
-
-            // Submit Form 1
-            var formData1 = new FormData(form1);
-            fetch(form1.action, {
-                    method: 'POST',
-                    body: formData1
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    console.log("Form 1 submitted successfully");
-                    return response.text();
-                })
-                .catch(error => {
-                    console.error("Error submitting Form 1:", error);
-                });
-
-            // Submit Form 2
-            var formData2 = new FormData(form2);
-            fetch(form2.action, {
-                    method: 'POST',
-                    body: formData2
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    console.log("Form 2 submitted successfully");
-                    return response.text();
-                })
-                .then(data => {
-                    console.log("Form 2 submission response:", data);
-                    alert("Forms submitted successfully");
-
-                    location.reload(); // Reload the page
-                })
-                .catch(error => {
-                    console.error("Error submitting Form 2:", error);
-                });
-        });
-    </script>
-
-
-
-
-
-
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    {{-- @if ($errors->any())
-        <script>
-            @foreach ($errors->all() as $error)
-                toastr.error('{{ $error }}');
-            @endforeach
-        </script> --}}
-    {{-- @else
-        <script>
-            toastr.success('{{ $message }}');
-        </script> --}}
-    {{-- @endif --}}
 
-    {{-- @include('Admin.tostar.index') --}}
     <script>
         $(document).ready(function() {
             $('.photo').dropify();
         });
-
-        // function togglePasswordVisibility() {
-        //     var passwordInput = document.getElementById('password-input');
-        //     var passwordToggle = document.getElementById('password-toggle');
-
-        //     if (passwordInput.type === 'password') {
-        //         passwordInput.type = 'text';
-        //         passwordToggle.classList.remove('fa-eye');
-        //         passwordToggle.classList.add('fa-eye-slash');
-        //     } else {
-        //         passwordInput.type = 'password';
-        //         passwordToggle.classList.remove('fa-eye-slash');
-        //         passwordToggle.classList.add('fa-eye');
-        //     }
-        // }
     </script>
     <script>
-        // Function to populate the year dropdown from 2000 to the current year
         function populateYearDropdown() {
             var currentYear = new Date().getFullYear();
             var dropdown = document.getElementById("yearDropdown");
@@ -434,22 +355,49 @@
             }
         }
 
-        // Call the function to populate the dropdown on page load
         populateYearDropdown();
 
-        // Optionally, you can update the dropdown dynamically if the current year changes
         setInterval(function() {
             var currentYear = new Date().getFullYear();
             var dropdown = document.getElementById("yearDropdown");
 
-            // Check if the last year in the dropdown is less than the current year
             if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
-                // Clear the current dropdown options
                 dropdown.options.length = 0;
 
-                // Repopulate the dropdown with updated years
                 populateYearDropdown();
             }
-        }, 5000); // Update every 1000 milliseconds (1 second)
+        }, 5000);
+
+        const Msg = (msg = "Would you like to submit this student form  ? ") => {
+            return prompt(msg) == 'yes';
+            console.log(Msg);
+        }
+    </script>
+    <script>
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
+    </script>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById('password-input');
+            var passwordToggle = document.getElementById('password-toggle');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.classList.remove('fa-eye');
+                passwordToggle.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.classList.remove('fa-eye-slash');
+                passwordToggle.classList.add('fa-eye');
+            }
+        }
     </script>
 @endsection

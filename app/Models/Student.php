@@ -10,11 +10,34 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
+        'gender',
+        'dob',
+        'roll',
         'class_id',
+        'number',
+        'address',
+        'blood_id',
+        'reli',
+        'email',
+        'email',
         'section_id',
-        'parent_email'
-        // other fields...
+        'session_year',
+        'parent_email',
+        'f_name',
+        'section',
+        'f_occ',
+        'f_no',
+        'm_name',
+        'm_occ',
+        'idno',  
+        'm_no',
+        'f_image',
+        'm_image',
+        'image',
+        'user_id'
     ];
+
     // Student model
     public function classes()
     {
@@ -39,7 +62,7 @@ class Student extends Model
     // Student.php
     public function section()
     {
-        return $this->belongsTo(Section::class, 'section_id','id');
+        return $this->belongsTo(Section::class, 'section_id', 'id');
     }
 
     public function marks()
@@ -49,5 +72,9 @@ class Student extends Model
     public function grade()
     {
         return $this->belongsTo(Grade::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

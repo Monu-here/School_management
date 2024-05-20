@@ -171,10 +171,8 @@
                                                     <label>Role <span class="login-danger">*</span></label>
                                                     <select class="form-control" name="role_name">
                                                         <option selected disabled>Select Role</option>
-                                                        {{-- @role('SuperAdmin') --}}
-                                                        <option value="Admin">Admin</option>
-                                                        {{-- @endrole() --}}
-                                                        <option value="Teacher">Teacher
+                                                         <option value="Admin">Admin</option>
+                                                         <option value="Teacher">Teacher
                                                         </option>
                                                         <option value="Student">
                                                             Student</option>

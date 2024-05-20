@@ -24,13 +24,13 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="Student Search"
+                        <input type="text" name="name" class="form-control" placeholder="Search By Name ..."
                             value="{{ $selectedName }}">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="form-group">
-                        <input type="number" name="idno" class="form-control" placeholder="Search by ID ..."
+                        <input type="number" name="idno" class="form-control" placeholder="Search by Symbol No ..."
                             value="{{ $selectedIdno }}" />
                     </div>
                 </div>
@@ -65,12 +65,7 @@
                                 <h3 class="page-title">Students</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                                <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                        class="feather-list"></i></a>
-                                <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                        class="feather-grid"></i></a>
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
-                                    Download</a>
+                                
                                 <a href="{{ route('admin.student.add') }}" class="btn btn-primary"><i
                                         class="fas fa-plus"></i></a>
                             </div>
@@ -82,11 +77,9 @@
                             <thead class="student-thread">
                                 <tr>
                                     <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something" />
-                                        </div>
+                                        SN
                                     </th>
-                                    <th>ID</th>
+                                    <th>Symbol No</th>
                                     <th>Name</th>
                                     <th>Section</th>
                                     <th>Class</th>
@@ -94,18 +87,18 @@
                                     <th>Mobile Number</th>
                                     <th>Address</th>
                                     <th class="text-end ">Action</th>
-                                    <th class="text-end ">Action</th>
-                                    <th class="text-end d-none">Marksheet Show</th>
-                                    <th class="text-end d-none">Marksheet send To Parent</th>
+                                    <th class="text-end ">Created at</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $i=1;
+                                @endphp
                                 @foreach ($students as $student)
                                     <tr>
                                         <td>
-                                            <div class="form-check check-tables">
-                                                <input class="form-check-input" type="checkbox" value="something" />
-                                            </div>
+                                            {{$i++}}
                                         </td>
                                         <td>{{ $student->idno }}</td>
                                         <td>
@@ -141,34 +134,20 @@
                                         <td>{{ $student->f_no }}</td>
                                         <td>{{ $student->address }}</td>
                                         <td>
-                                            @can('view post')
-                                            <a href="{{ route('admin.student.studentShow', ['student' => $student->id]) }}"
+                                             <a href="{{ route('admin.student.edit', ['student' => $student->id]) }}"
+                                                class="btn btn-sm btn-primary"><i class="fa fa-pen text-white"></i></a>
+                                             <a href="{{ route('admin.student.studentShow', ['student' => $student->id]) }}"
                                                 class="btn btn-sm btn-success"><i class="fa fa-eye text-white"></i></a>
-                                            @endcan
-                                            @can('delete post')
-                                            <a href="{{ route('admin.student.del', ['student' => $student->id]) }}"
+                                              <a href="{{ route('admin.student.del', ['student' => $student->id]) }}"
                                                 class="btn btn-sm btn-danger" onclick="return yes()"><i
                                                     class="fa fa-trash text-white"></i></a>
                                                 
-                                            @endcan
+                                             
+                                                
                                         </td>
                                         <td> {{ getAgo($student->created_at) }}
                                         </td>
-                                        <td>
-                                            <a href="{{ route('admin.mark.admin.marksheet', $student->id) }}"
-                                                class="btn btn-primary text-white">Show
-                                                Marksheet</a>
-                                        </td>
-
-                                        <td>
-                                            <form
-                                                action="{{ route('admin.mark.admin.mark.email', ['sendMail' => $student->id]) }}"
-                                                method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-primary">Send Marksheet to
-                                                    Parent</button>
-                                            </form>
-                                        </td>
+ 
                                     </tr>
                                 @endforeach
 

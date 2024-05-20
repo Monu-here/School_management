@@ -5,7 +5,13 @@
         $setting = getSetting();
 
     @endphp
-    {{-- @if (Auth::user()->role_name) --}}
+    @role('Student')
+        <h1>Welcome to Your Dashboard</h1>
+        @if (isset($student))
+            <p>Name: {{ $student->name }}</p>
+            <p>Email: {{ $student->email }}</p>
+        @endif
+    @endrole()
     <div class="page-header">
         <div class="row">
             <div class="col-sm-12">
@@ -99,7 +105,9 @@
                                 @else
                                     @foreach ($ss as $submission)
                                         @php
-                                            $submissionStatus = is_array($submission->status)? $submission->status : [$submission->status];
+                                            $submissionStatus = is_array($submission->status)
+                                                ? $submission->status
+                                                : [$submission->status];
                                             $totalSubmissions += count($submissionStatus);
                                         @endphp
                                     @endforeach
