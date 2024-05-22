@@ -24,9 +24,13 @@ class ViewHomeworkFromTeacher extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+    
     public function classs()
     {
         return $this->belongsTo(Classs::class, 'class_id');
     }
-   
+    public function student()
+    {
+        return $this->hasMany(Student::class, 'class_id', 'class_id')->where('section_id', $this->section_id);
+    }
 }

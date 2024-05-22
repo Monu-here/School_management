@@ -30,7 +30,10 @@ class Classs extends Model
 
 
 
-
+    // public function ViewHomeworkFromTeacher()
+    // {
+    //     return $this->hasMany(ViewHomeworkFromTeacher::class, 'class_id');
+    // }
 
 
 

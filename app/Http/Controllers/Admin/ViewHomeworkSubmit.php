@@ -7,6 +7,7 @@ use App\Models\Homework;
 use App\Models\Classs;
 use App\Models\ViewHomeworkFromTeacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ViewHomeworkSubmit extends Controller
@@ -65,8 +66,20 @@ class ViewHomeworkSubmit extends Controller
         //     'submittedStudents' => $submittedStudents
         // ]);
 
-
-        return view('Admin.HomeWork.Addformteacher.index', compact('addHomeworks'));
+        
+        $user = Auth::user();
+        $student = $user->student;
+        $assignedClassIds = explode(',', $student->class_id);
+        $assignedSectionIds = explode(',', $student->section_id);
+        $assignedClassIds = array_map('intval', $assignedClassIds);
+        $assignedSectionIds = array_map('intval', $assignedSectionIds);
+        $view_homework_from_teachers = DB::table('view_homework_from_teachers')
+        ->whereIn('class_id', $assignedClassIds)
+        ->whereIn('section_id', $assignedSectionIds)
+        ->get();
+        
+        // dd($student,$assignedClassIds,$assignedSectionIds,$view_homework_from_teachers);
+        return view('Admin.HomeWork.Addformteacher.index', compact('addHomeworks','view_homework_from_teachers'));
     }
 
     public function updateStatus(Request $request, $homeworkId)
@@ -100,8 +113,15 @@ class ViewHomeworkSubmit extends Controller
             $sections = DB::table('sections')->get();
             $views = ViewHomeworkFromTeacher::with('classs', 'section')->get();
             // dd($views);
-
-            return view('Admin.HomeWork.Addformteacher.addhome', compact('students', 'classes', 'sections', 'views'));
+            
+            $user = Auth::user();
+            $teacher = $user->teacher;
+            $assignedClassIds = explode(',', $teacher->class_id);
+            $assignedSectionIds = explode(',', $teacher->section_id);
+            $assignedClassIds = array_map('intval', $assignedClassIds);
+            $assignedSectionIds = array_map('intval', $assignedSectionIds);
+            // dd('assignedClassIds:', $assignedClassIds, 'assignedSectionIds', $assignedSectionIds, 'students',);
+            return view('Admin.HomeWork.Addformteacher.addhome', compact('students', 'classes', 'sections', 'views','assignedSectionIds','assignedClassIds'));
         }
     }
     public function show($viewId)

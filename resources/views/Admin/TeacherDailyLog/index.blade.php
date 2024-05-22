@@ -73,10 +73,7 @@
                                 <h3 class="page-title">Teacher Daily Log</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                                <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                        class="feather-list"></i></a>
-                                <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                        class="feather-grid"></i></a>
+                                 
 
                                 @role('Teacher')
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"

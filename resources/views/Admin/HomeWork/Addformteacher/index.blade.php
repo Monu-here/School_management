@@ -49,7 +49,7 @@
                                     <th>Assigement Content</th>
                                     <th>Assigement Given By</th>
                                     <th>Assigement Given to Semester</th>
-                                    <th>Assigement Givent To Semester section</th>
+                                    <th>Assigement Given To Semester section</th>
                                     <th>Action</th>
                                     <th>Status</th>
 
@@ -59,24 +59,20 @@
                                 @php
                                     $i=1;
                                 @endphp
-                                @foreach ($addHomeworks as $addHomework)
+                                @foreach ($view_homework_from_teachers as $addHomework)
                                     <tr>
                                          <td>{{$i++}}</td>
                                         <td>{{ $addHomework->title }}</td>
                                         <td style="word-break: break-all;">{!! $addHomework->content !!}</td>
                                          <td>{{ $addHomework->teacher_id }}</td>
-                                        <td>{{ $addHomework->classs ? $addHomework->classs->name : 'N/A' }}</td>
-                                        <td>{{ $addHomework->section ? $addHomework->section->name : 'N/A' }}</td>
+                                        <td>{{ $addHomework->class_id}}</td>
+                                        <td>{{ $addHomework->section_id  }}</td>
                                         <td><a href="{{route('admin.homework.nn',['id'=>$addHomework->id])}}" class="btn btn btn-primary text-white ">Submit Assignment</a></td>
                                         <td> <span class="{{ $addHomework->status == 'submitted' ? 'text-primary' : 'text-danger' }}">
                                             {{ ucfirst($addHomework->status) }}
                                         </span></td>
-
-
                                     </tr>
-                                @endforeach
-                                
-
+                                @endforeach                               
                             </tbody>
                         </table>
                     </div>

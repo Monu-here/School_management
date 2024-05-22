@@ -53,25 +53,25 @@
                                     <th>Assigement Given to Semester</th>
                                     <th>Assigement Givent To Semester section</th>
                                     <th>Status</th>
-                                 </tr>
+                                </tr>
                             </thead>
                             <tbody>
                                 @php
-                                    $i=1;
+                                    $i = 1;
                                 @endphp
                                 @foreach ($views as $view)
-                                <tr>
-                                    <td>{{$i++}}</td>
-                                   <td>{{ $view->title }}</td>
-                                   <td style="word-break: break-all;">{!! $view->content !!}</td>
-                                    <td>{{ $view->teacher_id }}</td>
-                                   <td>{{ $view->classs ? $view->classs->name : 'N/A' }}</td>
-                                   <td>{{ $view->section ? $view->section->name : 'N/A' }}</td>
-                                   <td><span class="{{ $view->status == 'Submitted' ? 'text-primary' : 'text-danger' }}">
-                                    {{ ucfirst($view->status) }}
-                                </span></td>
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $view->title }}</td>
+                                        <td style="word-break: break-all;">{!! $view->content !!}</td>
+                                        <td>{{ $view->teacher_id }}</td>
+                                        <td>{{ $view->classs ? $view->classs->name : 'N/A' }}</td>
+                                        <td>{{ $view->section ? $view->section->name : 'N/A' }}</td>
+                                        <td><span class="{{ $view->status == 'submitted' ? 'text-primary' : 'text-danger' }}">
+                                            {{ ucfirst($view->status) }}
+                                        </span></td>
 
-                               </tr>
+                                    </tr>
                                 @endforeach
 
                             </tbody>
@@ -111,17 +111,30 @@
 
                                             <div class="col-md-6">
                                                 <label for="techer">Assigement Given to Class</label>
-                                                <select name="class_id" id="class_id" class="form-control">
-                                                    @foreach ($classes as $cls)
-                                                        <option value="{{ $cls->id }}">{{ $cls->name }}</option>
+                                                <select name="class_id" id="class_id" class="form-control" required>
+                                                    <option value="">Select Class</option>
+                                                    @foreach ($assignedClassIds as $classId)
+                                                        @php
+                                                            $class = App\Models\Classs::find($classId);
+                                                        @endphp
+                                                        <option value="{{ $classId }}"
+                                                            {{ isset($class_id) ? ($class_id == $classId ? 'selected' : '') : (request('class_id') == $classId ? 'selected' : '') }}>
+                                                            {{ $class ? $class->name : 'Class Name Not Found' }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="techer">Assigement Given To Class's section</label>
-                                                <select name="section_id" id="section_id" class="form-control">
-                                                    @foreach ($sections as $sec)
-                                                        <option value="{{ $sec->id }}">{{ $sec->name }}</option>
+                                                <select name="section_id" id="section_id" class="form-control" required>
+                                                    <option value="">Select Section</option>
+                                                    @foreach ($assignedSectionIds as $sectionId)
+                                                        @php
+                                                            $section = App\Models\Section::find($sectionId);
+                                                        @endphp
+                                                        <option value="{{ $sectionId }}"
+                                                            {{ isset($section_id) ? ($section_id == $sectionId ? 'selected' : '') : (request('section_id') == $sectionId ? 'selected' : '') }}>
+                                                            {{ $section ? $section->name : ' Section Not found' }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

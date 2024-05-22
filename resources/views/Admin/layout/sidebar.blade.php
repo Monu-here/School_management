@@ -81,32 +81,34 @@
                     </li>
                 @endrole()
 
-                <li class="submenu">
+               @role('SuperAdmin','Teacher')
+               <li class="submenu">
 
-                    <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
-                            class="menu-arrow"></span></a>
+                <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
+                        class="menu-arrow"></span></a>
 
-                    <ul>
+                <ul>
 
-                        <li><a href="{{ route('admin.student.index') }}"
-                                class="{{ Route::currentRouteNamed('admin.student.index') ? 'active' : '' }}">Student
-                                List</a></li>
-                        @role('SuperAdmin')
-                            <li><a href="{{ route('admin.promotion.list') }}"
-                                    class="{{ Route::currentRouteNamed('admin.promotion.list') ? 'active' : '' }}">Student
-                                    Promote</a></li>
-                        @endrole()
-                        <li><a href="{{ route('admin.atten.index') }}"
-                                class="{{ Route::currentRouteNamed('admin.atten.index') ? 'active' : '' }}">Student
-                                Attendence</a></li>
+                    <li><a href="{{ route('admin.student.index') }}"
+                            class="{{ Route::currentRouteNamed('admin.student.index') ? 'active' : '' }}">Student
+                            List</a></li>
+                    @role('SuperAdmin')
+                        <li><a href="{{ route('admin.promotion.list') }}"
+                                class="{{ Route::currentRouteNamed('admin.promotion.list') ? 'active' : '' }}">Student
+                                Promote</a></li>
+                    @endrole()
+                    <li><a href="{{ route('admin.atten.index') }}"
+                            class="{{ Route::currentRouteNamed('admin.atten.index') ? 'active' : '' }}">Student
+                            Attendence</a></li>
 
 
-                        <li><a href="{{ route('admin.atten.report') }}"
-                                class="{{ Route::currentRouteNamed('admin.atten.report') ? 'active' : '' }}">Student
-                                Attendence Report</a></li>
+                    <li><a href="{{ route('admin.atten.report') }}"
+                            class="{{ Route::currentRouteNamed('admin.atten.report') ? 'active' : '' }}">Student
+                            Attendence Report</a></li>
 
-                    </ul>
-                </li>
+                </ul>
+            </li>
+               @endrole()
 
                 @role('SuperAdmin')
                     <li class="submenu">

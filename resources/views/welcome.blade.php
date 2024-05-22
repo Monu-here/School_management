@@ -32,7 +32,7 @@
 @endsection
 @section('content')
     <div class="row">
-            {{-- @if ($teacher->class)
+        {{-- @if ($teacher->class)
             <h2>Class: {{ $teacher->class->name }}</h2>
 
             <h3>Students in Your Class</h3>
@@ -132,6 +132,95 @@
                                     @endforeach
                                     <p>Total submissions: {{ $totalSubmissions }}</p>
                                 @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endrole
+        @role('Student')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            @php
+                                $ss = $user->ss;
+                                $totalSubmissions = 0;
+                                $user = Auth::user();
+                                $student = $user->student;
+                                $assignedClassIds = explode(',', $student->class_id);
+                                $assignedSectionIds = explode(',', $student->section_id);
+                                $assignedClassIds = array_map('intval', $assignedClassIds);
+                                $assignedSectionIds = array_map('intval', $assignedSectionIds);
+
+                                $mm = App\Models\Attendence::with('student')
+                                    ->select('student_id', 'class_id', 'attendance_type')
+                                    ->whereHas('student', function ($query) use (
+                                        $assignedClassIds,
+                                        $assignedSectionIds,
+                                    ) {
+                                        $query
+                                            ->where('class_id', $assignedClassIds)
+                                            ->where('section_id', $assignedSectionIds);
+                                    })
+                                    ->get()
+                                    ->groupBy('student_id');
+                            @endphp
+                            <div class="db-info">
+
+                                <h6>All Attendence</h6>
+
+                                <span>P = Present & A = Absent</span>
+                                <br>
+                                @foreach ($mm as $studentId => $attendance)
+                                    @php
+                                        $attendanceCounts = $attendance->groupBy('attendance_type')->map->count();
+                                    @endphp
+                                    @foreach ($attendanceCounts as $attendanceType => $count)
+                                        {{ $attendanceType }}: {{ $count }},
+                                    @endforeach
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endrole
+        @role('Student')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            @php
+
+                                $user = Auth::user();
+                                $student = $user->student;
+                                $assignedClassIds = explode(',', $student->class_id);
+                                $assignedSectionIds = explode(',', $student->section_id);
+                                $assignedClassIds = array_map('intval', $assignedClassIds);
+                                $assignedSectionIds = array_map('intval', $assignedSectionIds);
+                                // dd($assignedClassIds);
+                            @endphp
+                            <div class="db-info">
+
+                                <h6>Current Semister</h6>
+                                @foreach ($assignedClassIds as $classId)
+                                    @php
+                                        $class = App\Models\Classs::find($classId);
+                                    @endphp
+                                    <input type="hidden" value="{{ $classId }}"
+                                        {{ isset($class_id) ? ($class_id == $classId ? 'selected' : '') : (request('class_id') == $classId ? 'selected' : '') }}>
+                                    {{ $class ? $class->name : 'Class Name Not Found' }}
+                                @endforeach
+                                &amp;
+                                @foreach ($assignedSectionIds as $sectionId)
+                                    @php
+                                        $section = App\Models\Section::find($sectionId);
+                                    @endphp
+                                    <input type="hidden" value="{{ $sectionId }}"
+                                        {{ isset($section_id) ? ($section_id == $sectionId ? 'selected' : '') : (request('section_id') == $sectionId ? 'selected' : '') }}>
+                                    {{ $section ? $section->name : 'Class Name Not Found' }}
+                                @endforeach
                             </div>
                         </div>
                     </div>
