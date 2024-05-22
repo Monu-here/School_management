@@ -85,76 +85,148 @@
             <div class="card-header header-elements-inline">
                 <h5 class="card-title font-weight-bold">Student Attendance Report</h5>
             </div>
-            @if ($attendanceReport->isEmpty())
-                <div class="alert alert-danger" role="alert">
-                    No attendance data found for the selected class and section.
-                </div>
-            @else
-            @endif
+
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form method="POST" action="{{ route('admin.atten.report') }}">
+                        <form method="POST" action="{{ route('admin.atten.report') }}" id="formSubmit">
                             @csrf
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="class_id">Select Class:</label>
-                                        <select name="class_id" id="class_id" class="form-control">
-                                            @foreach ($classes as $class)
-                                                <option value="{{ $class->id }}"
-                                                    {{ old('class_id') == $class->id ? 'selected' : '' }}>
-                                                    {{ $class->name }}
-                                                </option>
-                                            @endforeach
+                            @role('SuperAdmin')
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="class_id">Select Class:</label>
+                                            <select name="class_id" id="class_id" class="form-control">
+                                                @foreach ($classes as $class)
+                                                    <option value="{{ $class->id }}"
+                                                        {{ request('class_id') == $class->id ? 'selected' : '' }}>
+                                                        {{ $class->name }}
+                                                    </option>
+                                                @endforeach
 
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="section_id">Select Section:</label>
-                                        <select name="section_id" id="section_id" class="form-control">
-                                            @foreach ($sections as $section)
-                                                <option value="{{ $section->id }}">{{ $section->name }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="section_id">Select Section:</label>
+                                            <select name="section_id" id="section_id" class="form-control">
+                                                @foreach ($sections as $section)
+                                                    <option value="{{ $section->id }}"
+                                                        {{ request('class_id') == $class->id ? 'selected' : '' }}>
+                                                        {{ $section->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="month">Select Month:</label>
-                                        <select name="month" id="month" class="form-control">
-                                            @for ($i = 1; $i <= 12; $i++)
-                                                <option value="{{ $i }}" {{ $i == date('n') ? 'selected' : '' }}>
-                                                    {{ Carbon\Carbon::createFromFormat('m', $i)->format('F') }}
-                                                </option>
-                                            @endfor
-                                        </select>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="month">Select Month:</label>
+                                            <select name="month" id="month" class="form-control">
+                                                @for ($i = 1; $i <= 12; $i++)
+                                                    <option value="{{ $i }}" {{ $i == date('n') ? 'selected' : '' }}>
+                                                        {{ Carbon\Carbon::createFromFormat('m', $i)->format('F') }}
+                                                    </option>
+                                                @endfor
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="year">Select Year:</label>
-                                        <select name="year" id="year" class="form-control">
-                                            @for ($i = date('Y'); $i >= 2010; $i--)
-                                                <option value="{{ $i }}"
-                                                    {{ $i == date('Y') ? 'selected' : '' }}>
-                                                    {{ $i }}</option>
-                                            @endfor
-                                        </select>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="year">Select Year:</label>
+                                            <select name="year" id="year" class="form-control">
+                                                @for ($i = date('Y'); $i >= 2010; $i--)
+                                                    <option value="{{ $i }}"
+                                                        {{ $i == date('Y') ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12 mt-20 text-right justify-content-end d-flex">
-                                    <button type="submit" class="btn btn-primary">Generate Report</button>
+                                    <div class="col-lg-12 mt-20 text-right justify-content-end d-flex">
+                                        <button type="submit" class="btn btn-primary" id="saveBtn">Generate Report</button>
 
+                                    </div>
                                 </div>
-                            </div>
+                            @endrole()
+                            @role('Teacher')
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="class_id">Select Class:</label>
+                                            <select name="class_id" id="class_id" class="form-control" required>
+                                                <option value="">Select Class</option>
+                                                @foreach ($assignedClassIds as $classId)
+                                                    @php
+                                                        $class = App\Models\Classs::find($classId);
+                                                    @endphp
+                                                    <option value="{{ $classId }}"
+                                                        {{ isset($class_id) ? ($class_id == $classId ? 'selected' : '') : (request('class_id') == $classId ? 'selected' : '') }}>
+                                                        {{ $class ? $class->name : 'Class Name Not Found' }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="section_id">Select Section:</label>
+                                            <select name="section_id" id="section_id" class="form-control" required>
+                                                <option value="">Select Section</option>
+
+                                                @foreach ($assignedSectionIds as $sectionId)
+                                                    @php
+                                                        $section = App\Models\Section::find($sectionId);
+                                                    @endphp
+                                                    <option value="{{ $sectionId }}"
+                                                        {{ isset($section_id) ? ($section_id == $sectionId ? 'selected' : '') : (request('section_id') == $sectionId ? 'selected' : '') }}>
+                                                        {{ $section ? $section->name : ' Section Not found' }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="month">Select Month:</label>
+                                            <select name="month" id="month" class="form-control">
+                                                @for ($i = 1; $i <= 12; $i++)
+                                                    <option value="{{ $i }}"
+                                                        {{ $i == date('n') ? 'selected' : '' }}>
+                                                        {{ Carbon\Carbon::createFromFormat('m', $i)->format('F') }}
+                                                    </option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="year">Select Year:</label>
+                                            <select name="year" id="year" class="form-control">
+                                                @for ($i = date('Y'); $i >= 2010; $i--)
+                                                    <option value="{{ $i }}"
+                                                        {{ $i == date('Y') ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mt-20 text-right justify-content-end d-flex">
+                                        <button type="submit" class="btn btn-primary" id="saveBtn">Generate Report</button>
+
+                                    </div>
+                                </div>
+                            @endrole()
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        @if ($attendanceReport->isEmpty())
+            <div class="alert alert-danger" role="alert">
+                No attendance data found for the selected class and section.
+            </div>
+        @else
+        @endif
         <div class="card">
             <div class="card-body">
                 <h5>Attendance Report:</h5>
@@ -167,11 +239,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
                 <div class="table-responsive" style="width: 100%">
                     <table id="clienttable" class="table">
                         <thead>
@@ -189,8 +256,6 @@
                                         {{ $day }}
                                     </th>
                                 @endfor
-
-
                             </tr>
                         </thead>
                         <tbody>
@@ -224,54 +289,57 @@
                 </div>
             </div>
         </div>
-        <h5 class="card card-body ">Number of student present in month </h5>
-        <div class="section_of_present_abbsent">
+
+        <h5 class="card card-body">Number of students present in the month</h5>
+        <div class="section_of_present_absent">
             <div class="present">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Student Name</th>
-                                    <th>Total Present in Month</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $j = 1;
-                                @endphp
-                                @foreach ($mm as $studentId => $attendances)
+                        @if ($mm->isEmpty())
+                            <p>No attendance data available for the selected month.</p>
+                        @else
+                            <table class="table">
+                                <thead>
                                     <tr>
-
-                                        <td>{{ $j++ }}</td>
-                                        <td>
-                                            {{ $attendanceReport->where('student_id', $studentId)->first()->student->name }}
-                                        </td>
-                                        <td>
-                                            @php
-
-                                                $attendanceCounts = $attendances
-                                                    ->groupBy('attendance_type')
-                                                    ->map->count();
-                                            @endphp
-                                            @foreach ($attendanceCounts as $attendanceType => $count)
-                                                {{ $attendanceType }}: {{ $count }},
-                                            @endforeach
-
-                                        </td>
-
+                                        <th>#</th>
+                                        <th>Student Name</th>
+                                        <th>Total Present in Month</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $j = 1;
+                                    @endphp
+                                    @foreach ($mm as $studentId => $attendance)
+                                        @php
+                                            $student =
+                                                $attendanceReport->where('student_id', $studentId)->first()->student ??
+                                                null;
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $j++ }}</td>
+                                            <td>
+                                                {{ $student ? $student->name : 'N/A' }}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $attendanceCounts = $attendance
+                                                        ->groupBy('attendance_type')
+                                                        ->map->count();
+                                                @endphp
+                                                @foreach ($attendanceCounts as $attendanceType => $count)
+                                                    {{ $attendanceType }}: {{ $count }},
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-
-
 
     </div>
 @endsection
@@ -291,6 +359,15 @@
         // var productGroups = {!! json_encode($attendanceReport, JSON_NUMERIC_CHECK) ?? '[]' !!};
     </script>
     <script>
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
         // toastr.error('No students found for the selected class and section.');
     </script>
 @endsection

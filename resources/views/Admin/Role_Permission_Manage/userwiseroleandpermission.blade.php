@@ -1,6 +1,21 @@
 @extends('Admin.layout.app')
+@section('title')
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-sub-header">
+                <h3 class="page-title">Role Manager</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">Role</a></li>
+                    <li class="breadcrumb-item active">User Wise Role</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
 @section('content')
-    <div class="container">
+    <div class=" ">
         <form action="{{ route('admin.role-permission.giveRole') }}" method="POST" id="formSubmit">
             @csrf
             <div class="row">
@@ -60,7 +75,6 @@
 
             </div>
         </form>
-
         <div class="content">
             <div class="card card-table comman-shadow">
                 <div class="card-body">

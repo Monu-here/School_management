@@ -47,6 +47,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    // public function students()
+    // { 
+    //     return $this->hasOne(Student::class , 'user_id');
+    // }
     public function student()
     {
         return $this->hasOne(Student::class);
@@ -67,6 +71,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(ViewHomeworkFromTeacher::class, 'student_id');
     }
-  
-   
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
 }

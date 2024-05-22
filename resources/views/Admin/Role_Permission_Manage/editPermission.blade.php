@@ -30,7 +30,7 @@
                     <h3 class="page-title">Permission</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">Permission</a></li>
-                        <li class="breadcrumb-item active">Permission Manage</li>
+                        <li class="breadcrumb-item active">Permission Edit</li>
                     </ul>
                 </div>
             </div>

@@ -9,8 +9,10 @@ use App\Models\Section;
 use Carbon\Carbon;
 
 use App\Models\Student;
+use App\Models\Teacher;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AttendenceController extends Controller
@@ -42,13 +44,81 @@ class AttendenceController extends Controller
                 $students = Student::all();
             }
         }
-        return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate'));
+
+        // class assign wise class list 
+        $user = Auth::user();
+        $teacher = $user->teacher;
+        $assignedClassIds = explode(',', $teacher->class_id);
+        $assignedSectionIds = explode(',', $teacher->section_id);
+        $assignedClassIds = array_map('intval', $assignedClassIds);
+        $assignedSectionIds = array_map('intval', $assignedSectionIds);
+        $studentss = DB::table('students')
+            ->whereIn('class_id', $assignedClassIds)
+            ->whereIn('section_id', $assignedSectionIds)
+            ->get();
+        // class assign wise class list 
+
+
+
+        return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate', 'assignedClassIds', 'assignedSectionIds'));
     }
+    //this si currentlu working
+    // public function mark(Request $request)
+    // {
+    //     if ($request->getMethod() == 'POST') {
+    //         // dd($request->all());
+    //         $note = "note";
+    //         $attendanceDate = now()->toDateString(); // Get the current date
+
+    //         // Iterate over submitted form data for each student
+    //         foreach ($request->input('student_ids') as $studentId) {
+    //             // Retrieve attendance data for the current student
+    //             $attendanceType = $request->input('attendance_types')[$studentId];
+    //             $notes = $note;
+
+    //             // Check if attendance already exists for the student on the current date
+    //             $existingAttendance = Attendence::where('student_id', $studentId)
+    //                 ->whereDate('attendance_date', $attendanceDate)
+    //                 ->first();
+
+    //             if ($existingAttendance) {
+    //                 return redirect()->back()->with('error', 'Attendance for this student on this date has already been marked.');
+    //             }
+
+    //             // Check if attendance exists for the student on the previous day
+    //             $previousDate = now()->subDay()->toDateString(); // Get the previous day's date
+    //             $previousAttendance = Attendence::where('student_id', $studentId)
+    //                 ->whereDate('attendance_date', $previousDate)
+    //                 ->first();
+    //             // dd($previousDate);
+    //             // If attendance exists for the previous day, delete it
+    //             // if ($previousAttendance) {
+    //             //     $previousAttendance->delete();
+    //             // }
+
+    //             // Save attendance for the current student
+    //             $attendance = new Attendence();
+    //             $attendance->student_id = $studentId;
+    //             $attendance->attendance_type = $attendanceType;
+    //             $attendance->notes = $notes;
+    //             $attendance->attendance_date = $attendanceDate;
+    //             $attendance->save();
+    //         }
+
+    //         return redirect()->back()->with('success', 'Attendance marked successfully');
+    //     } else {
+    //         // If it's not a POST request, retrieve student data and load the view
+    //         $students = Student::all();
+    //         return view('Admin.Attendence.add', compact('students'));
+    //     }
+    // }
+
+    // thsi sis currentlu worju
+
 
     public function mark(Request $request)
     {
         if ($request->getMethod() == 'POST') {
-            // dd($request->all());
             $note = "note";
             $attendanceDate = now()->toDateString(); // Get the current date
 
@@ -67,22 +137,20 @@ class AttendenceController extends Controller
                     return redirect()->back()->with('error', 'Attendance for this student on this date has already been marked.');
                 }
 
-                // Check if attendance exists for the student on the previous day
-                $previousDate = now()->subDay()->toDateString(); // Get the previous day's date
-                $previousAttendance = Attendence::where('student_id', $studentId)
-                    ->whereDate('attendance_date', $previousDate)
-                    ->first();
-                // dd($previousDate);
-                // If attendance exists for the previous day, delete it
-                // if ($previousAttendance) {
-                //     $previousAttendance->delete();
-                // }
+                // Check if class_id is an array or a single value
+                $classIds = is_array($request->class_id) ? $request->class_id : [$request->class_id];
 
-                // Save attendance for the current student
+
+
+                // Iterate over each class ID and save attendance
+                // Save attendance for the current student and class
                 $attendance = new Attendence();
                 $attendance->student_id = $studentId;
                 $attendance->attendance_type = $attendanceType;
                 $attendance->notes = $notes;
+                foreach ($classIds as $classId) {
+                    $attendance->class_id = $classId; // Use the current class ID
+                }
                 $attendance->attendance_date = $attendanceDate;
                 $attendance->save();
             }
@@ -94,7 +162,6 @@ class AttendenceController extends Controller
             return view('Admin.Attendence.add', compact('students'));
         }
     }
-
 
 
 
@@ -182,10 +249,13 @@ class AttendenceController extends Controller
 
         $classes = Classs::all();
         $sections = Section::all();
+
         $mm = Attendence::with('student')
-            ->select('student_id', 'attendance_type')
-            ->whereYear('attendance_date', $selectedYear)
-            ->whereMonth('attendance_date', $selectedMonth)
+            ->select('student_id', 'class_id', 'attendance_type')
+            ->whereHas('student', function ($query) use ($classId, $sectionId) {
+                $query->where('class_id', $classId)
+                    ->where('section_id', $sectionId);
+            })
             ->get()
             ->groupBy('student_id');
 
@@ -195,8 +265,20 @@ class AttendenceController extends Controller
         //         echo "Attendance Type: $attendance->attendance_type\n";
         //     }
         // }
-
+        // 
         // dd($mm);
-        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear'));
+
+
+
+        $user = Auth::user();
+        $teacher = $user->teacher;
+        $assignedClassIds = explode(',', $teacher->class_id);
+        $assignedSectionIds = explode(',', $teacher->section_id);
+        $assignedClassIds = array_map('intval', $assignedClassIds);
+        $assignedSectionIds = array_map('intval', $assignedSectionIds);
+
+        // dd('assignedClassIds:', $assignedClassIds, 'assignedSectionIds', $assignedSectionIds, 'students', $studentss);
+
+        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear', 'assignedClassIds', 'assignedSectionIds'));
     }
 }

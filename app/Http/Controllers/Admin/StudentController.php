@@ -12,6 +12,7 @@ use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\DB;
@@ -61,6 +62,7 @@ class StudentController extends Controller
         $students = $studentsQuery->get();
         $sections = DB::table('sections')->get();
         $cls = DB::table('classses')->get();
+
 
         return view('Admin.Student.index', compact('cls', 'sections', 'students', 'selectedSection', 'selectedName', 'selectedIdno'));
     }
@@ -235,29 +237,118 @@ class StudentController extends Controller
     public function teacheradd(Request $request)
     {
         if ($request->getMethod() == "POST") {
-            $teacher = Teacher::all();
-
-            $teacher = new Teacher();
-            $teacher->image = $request->image->store('uploads/teacher');
-            $teacher->cv = $request->cv->store('uploads/teacher');
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'gender' => 'required|string|',
+                'dob' => 'required|date',
+                'class_id' => 'required|exists:classses,id',
+                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email|unique:teachers,email',
+                'number' => 'required|digits:10',
+                'address' => 'required|string|max:255',
+                'section_id' => 'required|exists:sections,id',
+                'image' => 'required|image',
+                'cv' => 'required|image',
+                'password' => 'required|string|min:8|',
+                'workinghrs' => 'string',
+            ]);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'number' => $request->number,
+                'role_name' => 'Teacher',
+                'image' => $request->image->store('uploads/user'),
+            ]);
+            $teacher = new Teacher([
+                'user_id' => $user->id,
+                'image' => $request->image->store('uploads/teacher'),
+                'cv' => $request->cv->store('uploads/teacher'),
+                'name' => $request->name,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'email' => $request->email,
+                'number' => $request->number,
+                'address' => $request->address,
+                'jd' => $request->jd,
+                'exp' => $request->exp,
+                'qual' => $request->qual,
+                'class_id' => $request->class_id,
+                'workinghrs' => $request->workinghrs,
+                'section_id' => $request->section_id,
+                'sub' => json_encode($request->input('sub')),
+            ]);
+            $teacher->save();
+            return redirect()->back()->with('message', 'Data added successfully');
+        } else {
+            $classes = Classs::all();
+            $sections = Section::all();
+            return view('Admin.Teacher.add', compact('classes', 'sections'));
+        }
+    }
+    public function teacherEdit(Request $request, Teacher $teacher)
+    {
+        if ($request->getMethod() == "POST") {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'gender' => 'required|string|',
+                'dob' => 'required|date',
+                'class_id' => 'required|exists:classses,id',
+                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email|unique:teachers,email',
+                'number' => 'required|digits:10',
+                'address' => 'required|string|max:255',
+                'section_id' => 'required|exists:sections,id',
+                'image' => 'required|image',
+                'cv' => 'required|image',
+            ]);
+            // $user = User::create([
+            //     'name' => $request->name,
+            //     'email' => $request->email,
+            //     'password' => Hash::make($request->password),
+            //     'number' => $request->number,
+            //     'role_name' => 'Teacher',
+            //     'image' => $request->image->store('uploads/user'),
+            // ]);
+            if ($request->hasFile('image')) {
+                $teacher->image = $request->image->store('uploads/teacher');
+            }
+            if ($request->hasFile('cv')) {
+                $teacher->cv = $request->cv->store('uploads/teacher');
+            }
             $teacher->name = $request->name;
             $teacher->gender = $request->gender;
             $teacher->dob = $request->dob;
+            $teacher->email = $request->email;
             $teacher->number = $request->number;
             $teacher->address = $request->address;
             $teacher->jd = $request->jd;
             $teacher->exp = $request->exp;
-            $teacher->email = $request->email;
             $teacher->qual = $request->qual;
+            $teacher->class_id = $request->class_id;
+            $teacher->section_id = $request->section_id;
+            $teacher->workinghrs = $request->workinghrs;
             $teacher->sub = json_encode($request->input('sub'));
+
             $teacher->save();
-            return redirect()->back();
+            return redirect()->back()->with('message', 'Data added successfully');
+        } else {
+            $classes = Classs::all();
+            $sections = Section::all();
+            return view('Admin.Teacher.edit', compact('classes', 'sections', 'teacher'));
         }
     }
     public function teacherShow($teacher)
     {
         $teacherData = DB::table('teachers')->find($teacher);
-        return view('Admin.Teacher.show', compact('teacherData'));
+        $classes = Classs::all();
+        $sections = Section::all();
+        return view('Admin.Teacher.show', compact('teacherData', 'classes', 'sections'));
+    }
+    public function teacherDel($teacher)
+    {
+        DB::table('teachers')->where('id', $teacher)->delete();
+        return redirect()->back()->with('message', 'Data delete sucessfully');
     }
     public function studentShow($student)
     {

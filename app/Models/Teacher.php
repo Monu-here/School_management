@@ -8,10 +8,56 @@ use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'image',
+        'cv',
+        'name',
+        'gender',
+        'dob',
+        'email',
+        'number',
+        'address',
+        'jd',
+        'exp',
+        'qual',
+        'class_id',
+        'section_id',
+        'workinghrs',
+        'sub',
+    ];
     protected $casts = [
         'sub' => 'array',
     ];
     public function teacherdailylog() {
         return $this->hasMany(TeacherDailyLog::class);
     }
+
+
+
+
+
+    public function class()
+    {
+        return $this->belongsTo(Classs::class, 'class_id');
+    }
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+    public function classes()
+    {
+        return $this->belongsTo(Classs::class);
+    }
+
+    // Define the relationship with the Student model through the Class model
+    // public function students()
+    // {
+    //     return $this->hasManyThrough(Student::class, Classs::class, 'id', 'class_id', 'class_id', 'id');
+    // }
+    public function student()
+    {
+        return $this->hasMany(Student::class, 'class_id', 'class_id')->where('section_id', $this->section_id);
+    }
+       
 }

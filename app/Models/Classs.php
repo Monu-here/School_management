@@ -26,4 +26,21 @@ class Classs extends Model
     {
         return $this->belongsTo(Mark::class);
     }
+
+
+
+
+
+
+
+
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'class_id');
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class, 'class_id');
+    }
 }

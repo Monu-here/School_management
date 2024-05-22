@@ -63,7 +63,7 @@ Route::prefix('admin')->name('adminLogin.')->group(function () {
 // Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 Route::get('monu', [HomeController::class, 'monu']);
 Route::prefix('dashboard')->name('admin.')->group(function () {
-    Route::group(['middleware' => 'role:SuperAdmin,Admin,Teacher,HR,Student'], function () {;
+    Route::group(['middleware' =>[ 'auth','role:SuperAdmin,Admin,Teacher,HR,Student']], function () {;
 
         Route::get('', [HomeController::class, 'index'])->name('index');
 
@@ -95,6 +95,13 @@ Route::prefix('dashboard')->name('admin.')->group(function () {
             Route::get('del/{user}', [LoginController::class, 'del'])->name('del');
             Route::get('role/teacher', [LoginController::class, 'roleTeacher'])->name('roleTeacher');
         });
+        Route::prefix('teacher')->name('teacher.')->group(function () {
+            Route::get('teacher', [StudentController::class, 'teacherIndex'])->name('teacherIndex');
+            Route::match(['GET', 'POST'], 'teacheradd', [StudentController::class, 'teacheradd'])->name('teacheradd');
+            Route::get('teacher/show/{teacher}', [StudentController::class, 'teacherShow'])->name('teacherShow');
+            Route::match(['GET', 'POST'], 'teacheredit/{teacher}', [StudentController::class, 'teacherEdit'])->name('teacheredit');
+            Route::get('del/{teacher}', [StudentController::class, 'teacherDel'])->name('teacherdel');
+        });
         Route::prefix('student')->name('student.')->group(function () {
             Route::get('', [StudentController::class, 'index'])->name('index');
             Route::get('students', [StudentController::class, 'create'])->name('student');
@@ -102,9 +109,6 @@ Route::prefix('dashboard')->name('admin.')->group(function () {
             Route::match(['GET', 'POST'], 'edit/{student}', [StudentController::class, 'studentedit'])->name('edit');
             Route::get('student/show/{student}', [StudentController::class, 'studentShow'])->name('studentShow');
             Route::get('del/{student}', [StudentController::class, 'del'])->name('del');
-            Route::get('teacher', [StudentController::class, 'teacherIndex'])->name('teacherIndex');
-            Route::match(['GET', 'POST'], 'teacheradd', [StudentController::class, 'teacheradd'])->name('teacheradd');
-            Route::get('teacher/show/{teacher}', [StudentController::class, 'teacherShow'])->name('teacherShow');
         });
         Route::prefix('department')->name('department.')->group(function () {
             Route::get('', [DepartmentController::class, 'index'])->name('index');

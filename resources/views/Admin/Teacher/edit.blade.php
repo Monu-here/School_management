@@ -32,8 +32,8 @@
                 <div class="page-sub-header">
                     <h3 class="page-title">Teachers</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('admin.teacher.teacherIndex')}}">List</a></li>
-                        <li class="breadcrumb-item active">Add Teacher      </li>
+                        <li class="breadcrumb-item"><a href="index.html">Edit</a></li>
+                        <li class="breadcrumb-item active">Teacher / {{ $teacher->id }}</li>
                     </ul>
                 </div>
             </div>
@@ -55,8 +55,8 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.teacher.teacheradd') }}" id="formSubmit" method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('admin.teacher.teacheredit', ['teacher' => $teacher->id]) }}" id="formSubmit"
+                        method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <marquee behavior="smooth" direction="left">Here Class and Section will Assign which show in
@@ -70,10 +70,10 @@
                                     <label>Image <span class="login-danger">*</span></label>
 
                                     <input required type="file" name="image" id="image" class="form-control photo"
-                                        accept="image/*">
-                                        <br>
-                                         <input required type="file" class="form-control photo" name="cv"
-                                        accept="image/*">
+                                        accept="image/*" data-default-file={{ asset($teacher->image) }}>
+                                    <br>
+                                    <input required type="file" class="form-control photo" name="cv"
+                                        accept="image/*" data-default-file={{ asset($teacher->cv) }}>
                                 </div>
 
                             </div>
@@ -85,7 +85,7 @@
                                         <div class="form-group local-forms">
                                             <label for="name">Name</label>
                                             <input type="text" class="form-control" id="name" name="name"
-                                                value="{{ old('name') }}" required>
+                                                value="{{ $teacher->name }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
@@ -94,10 +94,11 @@
                                             <select class="form-control" id="gender" name="gender"
                                                 value="{{ old('gender') }}">
                                                 <option selected disabled>Select Gender</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female
-                                                </option>
-                                                <option value="other">
+                                                <option value="male" {{ $teacher->gender == 'male' ? 'selected' : '' }}>
+                                                    Male</option>
+                                                <option value="female" {{ $teacher->gender == 'female' ? 'selected' : '' }}>
+                                                    Female</option>
+                                                <option value="other" {{ $teacher->gender == 'other' ? 'selected' : '' }}>
                                                     Other</option>
                                             </select>
                                         </div>
@@ -108,10 +109,13 @@
                                             <select class="form-control" id="workinghrs" name="workinghrs"
                                                 value="{{ old('workinghrs') }}">
                                                 <option selected disabled>Select Working Hours</option>
-                                                <option value="Part-time">Part Time</option>
-                                                <option value="Full-time">Full Time
-                                                </option>
-                                                 
+                                                <option value="Part-time"
+                                                    {{ $teacher->workinghrs == 'Part-time' ? 'selected' : '' }}>
+                                                    Male</option>
+                                                <option value="Full-time"
+                                                    {{ $teacher->workinghrs == 'Full-time' ? 'selected' : '' }}>
+                                                    Female</option>
+
                                             </select>
                                         </div>
                                     </div>
@@ -122,8 +126,9 @@
                                                 <option selected disabled>Select Class</option>
                                                 @foreach ($classes as $class)
                                                     <option value="{{ $class->id }}"
-                                                        {{ old('class_id') == $class->id ? 'selected' : '' }}>
-                                                        {{ $class->name }}</option>
+                                                        {{ collect(old('class_id'))->contains($class->id) ? 'selected' : '' }}>
+                                                        {{ $class->name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             <br>
@@ -140,8 +145,9 @@
 
                                                 @foreach ($sections as $section)
                                                     <option value="{{ $section->id }}"
-                                                        {{ old('section_id') == $section->id ? 'selected' : '' }}>
-                                                        {{ $section->name }}</option>
+                                                        {{ collect(old('section_id'))->contains($section->id) ? 'selected' : '' }}>
+                                                        {{ $section->name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             <br>
@@ -154,21 +160,21 @@
                                         <div class="form-group local-forms">
                                             <label>Date Of Birth <span class="login-danger">*</span></label>
                                             <input type="date" class="form-control" id="dob" name="dob"
-                                                value="{{ old('dob') }}" required>
+                                                value="{{ $teacher->dob }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Email <span class="login-danger"></span></label>
                                             <input type="email" class="form-control" id="email" name="email"
-                                                value="{{ old('email') }}" required>
+                                                value="{{ $teacher->email }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Phone Number <span class="login-danger"></span></label>
                                             <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                id="number" name="number" value="{{ old('number') }}">
+                                                id="number" name="number" value="{{ $teacher->number }}">
 
                                         </div>
                                     </div>
@@ -176,35 +182,35 @@
                                         <div class="form-group local-forms">
                                             <label>Address <span class="login-danger"></span></label>
                                             <input type="text" class="form-control" id="address" name="address"
-                                                value="{{ old('address') }}" required>
+                                                value="{{ $teacher->address }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Joinign Date <span class="login-danger"></span></label>
                                             <input type="text" class="form-control" id="jd" name="jd"
-                                                value="{{ old('jd') }}" required>
+                                                value="{{ $teacher->jd }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Experience <span class="login-danger"></span></label>
                                             <input type="text" class="form-control" id="exp" name="exp"
-                                                value="{{ old('exp') }}" required>
+                                                value="{{ $teacher->exp }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Qualification <span class="login-danger"></span></label>
                                             <input type="text" class="form-control" id="qual" name="qual"
-                                                value="{{ old('qual') }}" required>
+                                                value="{{ $teacher->qual }}" required>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="card">
+                        {{-- <div class="card">
                             <div class="card-body">
 
                                 <div class="row">
@@ -257,25 +263,39 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-3" id="selectedClassListContainer">
-                                                <label for="">Selected Class</label>
-                                                <li id="selectedClassList"></li>
-                                            </div>
-                                            <div class="col-3" id="selectedSubListContainer">
-                                                <label for="">Selected Subject</label>
-                                                <li id="selectedSubList"></li>
-                                            </div>
+                                            
 
                                         </div>
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary" onclick="Msg()"
-                                    id="saveBtn">Submit</button>
-                                <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
-
+                                
                             </div>
+                        </div> --}}
+                        <div class="col-3" id="selectedClassListContainer">
+                            <label for="">New Class Assign</label>
+                            <li id="selectedClassList"></li>
                         </div>
+                        <div class="col-3" id="selectedSubListContainer">
+                            <label for="">New Subject Assign</label>
+                            <li id="selectedSubList"></li>
+                        </div>
+                        <div class="col-3" id="selectedClassListContainer">
+                            <label for="">Selected Class</label>
+                            <li id=" ">
+                                {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->class_id)) !!}
+                            </li>
+                        </div>
+                        <div class="col-3" id="selectedSubListContainer">
+                            <label for="">Selected Subject</label>
+                            <li id=" ">
+
+                                {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->section->name)) !!}
+
+                            </li>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="edit()" id="saveBtn">Update</button>
+                        <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
                     </form>
                 </div>
             </div>
@@ -287,6 +307,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
+        // var data = {!! json_encode($teacher) !!};
+
         $(document).ready(function() {
             $('.photo').dropify();
         });

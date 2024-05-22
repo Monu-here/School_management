@@ -113,8 +113,8 @@
                         <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Staff</span> <span
                                 class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="{{ route('admin.student.teacherIndex') }}"
-                                    class="{{ Route::currentRouteNamed('admin.student.teacherIndex') ? 'active' : '' }}">Teacher
+                            <li><a href="{{ route('admin.teacher.teacherIndex') }}"
+                                    class="{{ Route::currentRouteNamed('admin.teacher.teacherIndex') ? 'active' : '' }}">Teacher
                                     List</a></li>
 
                         </ul>
@@ -122,7 +122,7 @@
                 @endrole()
 
 
-                @role('SuperAdmin')
+                {{-- @role('SuperAdmin')
                     <li class="submenu">
                         <a href="#"><i class="fas fa-building"></i> <span> Fee Collection</span> <span
                                 class="menu-arrow"></span></a>
@@ -138,7 +138,7 @@
                                     Wise Payment List</a></li>
                         </ul>
                     </li>
-                @endrole()
+                @endrole() --}}
 
                 @role('SuperAdmin')
                     <li class="submenu">

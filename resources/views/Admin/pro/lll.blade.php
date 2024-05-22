@@ -30,7 +30,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form method="post" action="{{ route('admin.promotion.index') }}">
+                <form method="post" action="{{ route('admin.promotion.index') }}" id="formSubmit">
                     @csrf
                     <div class="row">
                         <div class="col-md-10 col-sm-6">
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="col-md-4 mt-4">
                                         <div class="text-right mt-1">
-                                            <button type="submit" class="btn btn-primary">Manage Promotion</button>
+                                            <button type="submit" class="btn btn-primary" id="saveBtn">Manage Promotion</button>
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class=" ">
         <div class="card">
             <div class="card-header header-elements-inline">
                 <h5 class="card-title font-weight-bold">Student Promotion List
@@ -137,7 +137,7 @@
                                         <td>
                                             <button type="button" onclick="openPromoteForm({{ $student->id }})"
                                                 class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">Promote</button>
+                                                data-bs-target="#exampleModal" >Promote</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -201,16 +201,13 @@
                                     </fieldset>
                                 </div>
                                 <div class="text-right mt-1">
-                                    <button type="submit" class="btn btn-primary  ">Submit</button>
+                                    <button type="submit" class="btn btn-primary  " onclick="prmt()">Submit</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                 
             </div>
         </div>
     </div>
@@ -234,5 +231,17 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
         });
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
+        const prmt = (msg = "would you like to promot") => {
+        return prompt(msg) == 'yes';
+    }
     </script>
 @endsection

@@ -48,7 +48,7 @@
                     </div>
 
 
-                    <form method="POST" action="{{ route('admin.user.edit', ['user' => $user->id]) }}">
+                    <form method="POST" action="{{ route('admin.user.edit', ['user' => $user->id]) }}" id="formSubmit">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -107,7 +107,7 @@
                                             <label> New Password <span class="login-danger">*</span></label>
                                             <div class="password-container">
                                                 <input type="password" class="form-control" name="password"
-                                                    id="password-input" placeholder="Enter Password" value="">
+                                                    id="password-input" required placeholder="Enter Password" value="">
                                                 <i class="fas fa-eye password-toggle" id="password-toggle"
                                                     onclick="togglePasswordVisibility()"></i>
                                             </div>
@@ -117,7 +117,7 @@
                                     <div class="col-12  ">
                                         <a href="{{ route('admin.user.index') }}" type="submit"
                                             class="btn btn-danger">Cancle</a>
-                                        <button type="submit" class="btn btn-primary">Update </a>
+                                        <button type="submit" class="btn btn-primary" id="saveBtn">Update </a>
                                     </div>
                                 </div>
                             </div>
@@ -151,5 +151,14 @@
                 passwordToggle.classList.add('fa-eye');
             }
         }
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
     </script>
 @endsection

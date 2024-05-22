@@ -30,7 +30,7 @@
                     <h3 class="page-title">Role</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">Role</a></li>
-                        <li class="breadcrumb-item active">Role Manage</li>
+                        <li class="breadcrumb-item active">Role Edit</li>
                     </ul>
                 </div>
             </div>

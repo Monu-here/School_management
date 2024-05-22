@@ -37,7 +37,10 @@ class Student extends Model
         'image',
         'user_id'
     ];
-
+    public function attendence()
+    {
+        return $this->belongsTo(Attendence::class, 'student_id');
+    }
     // Student model
     public function classes()
     {
@@ -46,7 +49,7 @@ class Student extends Model
     // public function section() {
     //     return $this->belongsTo()
     // }
-
+  
     public function paymentRecords()
     {
         return $this->hasMany(Payment_record::class, 'student_id');
@@ -77,4 +80,31 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+
+
+
+
+    // public function classs()
+    // {
+    //     return $this->belongsTo(Classs::class);
+    // }
+    
+    // public function sections()
+    // {
+    //     return $this->belongsTo(Section::class);
+    // }
+
+
+
+
+
+
+// student.php 
+
+public function class()
+{
+    return $this->belongsTo(Classs::class, 'class_id');
+}
 }

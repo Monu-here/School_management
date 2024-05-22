@@ -12,6 +12,10 @@
             <p>Email: {{ $student->email }}</p>
         @endif
     @endrole()
+
+
+
+
     <div class="page-header">
         <div class="row">
             <div class="col-sm-12">
@@ -28,40 +32,22 @@
 @endsection
 @section('content')
     <div class="row">
-        @role('SuperAdmin')
-            <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                <div class="card bg-comman w-100">
-                    <div class="card-body">
-                        <div class="db-widgets d-flex justify-content-between align-items-center">
-                            <div class="db-info">
-                                <h6>Students</h6>
-                                <h3>{{ $students->count() }}</h3>
-                            </div>
-                            <div class="db-icon">
-                                <img src="{{ asset('assets/newDesign/img/icons/dash-icon-01.svg') }}" alt="Dashboard Icon">
-                            </div>
-                        </div>
+            {{-- @if ($teacher->class)
+            <h2>Class: {{ $teacher->class->name }}</h2>
 
-                        {{-- <div class="d-flex justify-content-around  mb-4 ">
-                            <form action="{{ route('admin.checkinout.store') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="action" value="check-in">
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                <button type="submit" id="check-in-btn" class="btn">Check In</button>
-                            </form>
-
-                            <form action="{{ route('admin.checkinout.store') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-
-                                <input type="hidden" name="action" value="check-out">
-                                <button type="submit" id="check-out-btn" class="btn">Check Out</button>
-                            </form>
-                        </div> --}}
-                    </div>
+            <h3>Students in Your Class</h3>
+            @foreach ($students as $student)
+                <div>
+                    <p>Name: {{ $student->name }}</p>
+                    <p>Email: {{ $student->email }}</p>
+                    <p>Roll: {{ $student->roll }}</p>
+                    <p>Gender: {{ $student->gender }}</p>
+                    <!-- Add other data as necessary -->
                 </div>
-            </div>
-        @endrole()
+            @endforeach
+            @else
+            <p>You do not have a class assigned.</p>
+            @endif --}}
         @role('Teacher')
             <div class="col-xl-3 col-sm-6 col-12 d-flex">
                 <div class="card bg-comman w-100">
@@ -88,6 +74,39 @@
                 </div>
             </div>
         @endrole()
+        @role('Teacher')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        @if (isset($teacher))
+                            <p>Name: {{ $teacher->name }}</p>
+                            <p>Working Hours: {{ $teacher->workinghrs }}</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endrole()
+
+        @role('SuperAdmin')
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-comman w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-info">
+                                <h6>Students</h6>
+                                <h3>{{ $students->count() }}</h3>
+                            </div>
+                            <div class="db-icon">
+                                <img src="{{ asset('assets/newDesign/img/icons/dash-icon-01.svg') }}" alt="Dashboard Icon">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        @endrole()
+
         @role('Student')
             <div class="col-xl-3 col-sm-6 col-12 d-flex">
                 <div class="card bg-comman w-100">
@@ -227,12 +246,12 @@
                         <div class="col-6">
                             <ul class="chart-list-out">
                                 <li>
-                                    @can('edit-post')
+                                    @role('SuperAdmin')
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                             data-target="#createEventModal">
                                             Add Event
                                         </button>
-                                    @endcan()
+                                    @endrole()
                                 </li>
 
                             </ul>

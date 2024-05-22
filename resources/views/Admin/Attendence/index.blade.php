@@ -1,14 +1,14 @@
 @extends('Admin.layout.app')
 
-@section('linkbar')
+@section('title')
     <div class="page-header">
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-sub-header">
-                    <h3 class="page-title">Students</h3>
+                    <h3 class="page-title">Students Attendence</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Student</a></li>
-                        <li class="breadcrumb-item active">All Students</li>
+                        <li class="breadcrumb-item"><a href="">Attendence</a></li>
+                        <li class="breadcrumb-item active">All Students Attendence</li>
                     </ul>
                 </div>
             </div>
@@ -25,13 +25,15 @@
     </style>
     <style>
         .present-abbr {
-            border: 2px solid blue; /* Default border color for present */
+            border: 2px solid blue;
+            /* Default border color for present */
         }
+
         .absent-abbr {
-            border: 2px solid red; /* Default border color for absent */
+            border: 2px solid red;
+            /* Default border color for absent */
         }
     </style>
-    
 @endsection
 
 @section('content')
@@ -43,56 +45,105 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form method="POST" action="{{ route('admin.atten.index') }}">
+                        <form method="POST" action="{{ route('admin.atten.index') }}" id="formSubmit">
                             @csrf
                             <div class="row">
                                 <div class="col-md-10 col-sm-6">
+                                    @role('SuperAdmin')
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="class_id" style="font-weight: 700; font-size: 12px">
+                                                        Class:</label>
+                                                    <select name="class_id" id="class_id" class="form-control" required>
+                                                        <option value="">Select Class</option>
+                                                        @foreach ($cc as $class)
+                                                            <option value="{{ $class->id }}"
+                                                                {{ isset($class_id) ? ($class_id == $class->id ? 'selected' : '') : (old('class') == $class->id ? 'selected' : '') }}>
+                                                                {{ $class->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="section_id" style="font-weight: 700; font-size: 12px">
+                                                        Section:</label>
+                                                    <select name="section_id" id="section_id" class="form-control" required>
+                                                        <option value="">Select Section</option>
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="class_id" style="font-weight: 700; font-size: 12px">
-                                                    Class:</label>
-                                                <select name="class_id" id="class_id" class="form-control" required>
-                                                    <option value="">Select Class</option>
-                                                    @foreach ($cc as $class)
-                                                        <option value="{{ $class->id }}"
-                                                            {{ isset($class_id) ? ($class_id == $class->id ? 'selected' : '') : (old('class') == $class->id ? 'selected' : '') }}>
-                                                            {{ $class->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                        @foreach ($se as $sec)
+                                                            <option value="{{ $sec->id }}"
+                                                                {{ isset($section_id) ? ($section_id == $sec->id ? 'selected' : '') : (old('sec') == $sec->id ? 'selected' : '') }}>
+                                                                {{ $sec->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="Date" style="font-weight: 700; font-size: 12px">Date</label>
+                                                    <input type="date" name="attendance_date" class="form-control"
+                                                        value="{{ isset($date) ? $date : date('Y-m-d') }}">
+                                                </div>
+
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="section_id" style="font-weight: 700; font-size: 12px">
-                                                    Section:</label>
-                                                <select name="section_id" id="section_id" class="form-control" required>
-                                                    <option value="">Select Section</option>
+                                    @endrole()
+                                    @role('Teacher')
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="class_id" style="font-weight: 700; font-size: 12px">
+                                                        Class:</label>
+                                                    <select name="class_id" id="class_id" class="form-control" required>
+                                                        <option value="">Select Class</option>
+                                                        @foreach ($assignedClassIds as $classId)
+                                                            @php
+                                                                $class = App\Models\Classs::find($classId);
+                                                            @endphp
+                                                            <option value="{{ $classId }}"
+                                                                {{ isset($class_id) ? ($class_id == $classId ? 'selected' : '') : (request('class_id') == $classId ? 'selected' : '') }}>
+                                                                {{ $class ? $class->name : 'Class Name Not Found' }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
 
-                                                    @foreach ($se as $sec)
-                                                        <option value="{{ $sec->id }}"
-                                                            {{ isset($section_id) ? ($section_id == $sec->id ? 'selected' : '') : (old('sec') == $sec->id ? 'selected' : '') }}>
-                                                            {{ $sec->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="section_id" style="font-weight: 700; font-size: 12px">
+                                                        Section:</label>
+                                                    <select name="section_id" id="section_id" class="form-control" required>
+                                                        <option value="">Select Section</option>
+
+                                                        @foreach ($assignedSectionIds as $sectionId)
+                                                            @php
+                                                                $section = App\Models\Section::find($sectionId);
+                                                            @endphp
+                                                            <option value="{{ $sectionId }}"
+                                                                {{ isset($section_id) ? ($section_id == $sectionId ? 'selected' : '') : (request('section_id') == $sectionId ? 'selected' : '') }}>
+                                                                {{ $section ? $section->name : ' Section Not found' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="Date" style="font-weight: 700; font-size: 12px">Date</label>
+                                                    <input type="date" name="attendance_date" class="form-control"
+                                                        value="{{ isset($date) ? $date : date('Y-m-d') }}">
+                                                </div>
+
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="Date" style="font-weight: 700; font-size: 12px">Date</label>
-                                                <input type="date" name="attendance_date" class="form-control"
-                                                    value="{{ isset($date) ? $date : date('Y-m-d') }}">
-                                            </div>
-
-                                        </div>
-                                    </div>
-
+                                    @endrole()
                                 </div>
                                 <div class="col-md-2 mt-4">
                                     <div class="text-right mt-1">
-                                        <button type="submit" class="btn btn-primary">Select</button>
+                                        <button type="submit" class="btn btn-primary" id="saveBtn">Select</button>
                                     </div>
                                 </div>
                             </div>
@@ -124,109 +175,109 @@
                                     <div class="col">
                                         <h3 class="page-title">Students Attendence</h3>
                                     </div>
-                                 
-                                    
-                                        <div class="d-flex gap-3">
-
-                                            <p class=" rounded-circle" style="width: 20px; height: 20px;background-color: blue;"></p><span>: - Present</span>
-                                            <p class=" rounded-circle" style="width: 20px; height: 20px;background-color: rgb(255, 0, 0);"></p><span>: - Absent</span>
-                                        </div>
-                                        
-                                    
+                                    <div class="d-flex gap-3">
+                                        <p class=" rounded-circle"
+                                            style="width: 20px; height: 20px;background-color: blue;"></p><span>: -
+                                            Present</span>
+                                        <p class=" rounded-circle"
+                                            style="width: 20px; height: 20px;background-color: rgb(255, 0, 0);"></p><span>:
+                                            - Absent</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table
-                                    class="table border-0 star-student table-hover table-center mb-0 datatable table-striped"
-                                    id="clienttable">
-                                    <tr>
-                                        <thead class="student-thread">
-                                            <th>ID</th>
-                                            <th>SYMBOOL NO</th>
-                                            <th>NAME</th>
-                                            <th>ATTENDENCE</th>
- 
-                                        </thead>
-                                    </tr>
-                                    <tbody>
-                                        <form action="{{ route('admin.atten.mark') }}" method="POST">
-                                            @csrf
-                                            @if ($students)
-                                                @php
-                                                    $i = 1;
-                                                @endphp
-                                                @foreach ($students as $student)
-                                                    <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
-                                                    <tr>
-                                                        <td>{{ $i++ }}</td>
-                                                        <td>
-                                                            {{ $student->roll }}
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped"
+                                id="clienttable">
+                                <tr>
+                                    <thead class="student-thread">
+                                        <th>ID</th>
+                                        <th>SYMBOOL NO</th>
+                                        <th>NAME</th>
+                                        <th>ATTENDENCE</th>
 
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="" class="avatar avatar-sm me-2"><img
-                                                                        class="avatar-img rounded-circle"
-                                                                        src="{{ asset($student->image) }}"
-                                                                        alt="User Image" /></a>
-                                                                <a href="">{{ $student->name }}</a>
-                                                            </h2>
+                                    </thead>
+                                </tr>
+                                <tbody>
+                                    <form action="{{ route('admin.atten.mark') }}" method="POST">
+                                        @csrf
+                                        @if ($students)
+                                            @php
+                                                $i = 1;
+                                            @endphp
+                                            @foreach ($students as $student)
+                                                <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
+                                                <input type="hidden" name="class_id[]" value="{{ $student->class_id }}">
+                                                <tr>
+                                                    <td>{{ $i++ }}</td>
+                                                    <td>
+                                                        {{ $student->roll }}
 
-                                                        </td>
-                                                        <td>
-                                                            <div class="form-group">
-                                                                <div class="radio-button">
+                                                    </td>
+                                                    <td>
+                                                        <h2 class="table-avatar">
+                                                            <a href="" class="avatar avatar-sm me-2"><img
+                                                                    class="avatar-img rounded-circle"
+                                                                    src="{{ asset($student->image) }}"
+                                                                    alt="User Image" /></a>
+                                                            <a href="">{{ $student->name }}</a>
+                                                        </h2>
 
-                                                                    <div class="radio-style">
-                                                                       
-                                                                        <abbr title="Present">
-                                                                            <input type="radio" class="p"
-                                                                                id="present_{{ $student->id }}"
-                                                                                name="attendance_types[{{ $student->id }}]"
-                                                                                value="P">
-                                                                            <label for="present_{{ $student->id }}"
-                                                                                class="label-class">
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <div class="radio-button">
 
-                                                                            </label>
-                                                                        </abbr>
-                                                                    </div>
-                                                                     <div class="radio-style">
-                                                                        <abbr title="Absent">
-                                                                            <input type="radio"
-                                                                                id="absent_{{ $student->id }}"
-                                                                                name="attendance_types[{{ $student->id }}]"
-                                                                                class="a" value="A">
-                                                                            <label for="absent_{{ $student->id }}"
-                                                                                class="label-class">
+                                                                <div class="radio-style">
 
-                                                                            </label>
-                                                                        </abbr>
-                                                                        
-                                                                    </div>
- 
+                                                                    <abbr title="Present">
+                                                                        <input type="radio" class="p"
+                                                                            id="present_{{ $student->id }}"
+                                                                            name="attendance_types[{{ $student->id }}]"
+                                                                            value="P">
+                                                                        <label for="present_{{ $student->id }}"
+                                                                            class="label-class">
+
+                                                                        </label>
+                                                                    </abbr>
                                                                 </div>
+                                                                <div class="radio-style">
+                                                                    <abbr title="Absent">
+                                                                        <input type="radio"
+                                                                            id="absent_{{ $student->id }}"
+                                                                            name="attendance_types[{{ $student->id }}]"
+                                                                            class="a" value="A">
+                                                                        <label for="absent_{{ $student->id }}"
+                                                                            class="label-class">
+
+                                                                        </label>
+                                                                    </abbr>
+                                                                   
+                                                                   
+                                                                </div>
+
                                                             </div>
-                                                        </td>
-                                                        
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                            <div class="form-group" style="display: flex; justify-content: end">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </form>
-                                    </tbody>
-                                </table>
-                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                 
+                                            @endforeach
+                                        @endif
+                                        <div class="form-group" style="display: flex; justify-content: end">
+                                            <button type="submit" class="btn btn-primary"
+                                                onclick="atten()">Submit</button>
+                                        </div>
+                                    </form>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-         @endif
+            </div>
+        @endif
     @endif
 @endsection
-
 @section('js')
     <script>
         $(function() {
@@ -237,6 +288,18 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
         });
+        document.getElementById('formSubmit').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = 'Please wait...';
+            setTimeout(function() {
+                event.target.submit();
+            }, 2000);
+        });
+
+        const atten = (msg = "would you like submit today attendence") => {
+            return prompt(msg) == 'yes';
+        }
     </script>
-    
 @endsection

@@ -21,10 +21,12 @@ class HomeController extends Controller
         // $assigns = DB::table('assign_subject_to_teachers')->get();
         $event = Event::all();
         $notices = Notice::all();
-
-
+        // student listing on there dashboard there detail listing
         $user = Auth::user();
         $student = $user->student;
+        // techer listing detail and assign class srtdent listing
+        $teacher = Auth::user()->teacher;
+        // $students = $teacher->students;
 
 
 
@@ -39,8 +41,7 @@ class HomeController extends Controller
 
 
 
-
-        return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices','student'));
+        return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices', 'student', 'teacher', 'students'));
     }
     // public function index()
     // {
@@ -95,7 +96,7 @@ class HomeController extends Controller
     public function eventDel($event)
     {
         DB::table('events')->where('id', $event)->delete();
-        return redirect()->back()->with('message','Event delete sucessfully');
+        return redirect()->back()->with('message', 'Event delete sucessfully');
     }
 
 
