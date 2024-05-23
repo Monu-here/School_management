@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('attendences', function (Blueprint $table) {
-            $table->unsignedBigInteger('student_id')->nullable();
-            $table->json('attendance_type')->nullable();
-            $table->string('notes')->nullable();
-            $table->date('attendance_date')->nullable();
+            $table->timestamp('attendance_timestamp')->nullable();
+
         });
     }
 
@@ -25,10 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('attendences', function (Blueprint $table) {
-            $table->dropColumn('student_id');
-            $table->dropColumn('attendance_type');
-            $table->dropColumn('notes');
-            $table->dropColumn('attendance_date');
+            $table->dropColumn('attendance_timestamp');
+
         });
     }
 };

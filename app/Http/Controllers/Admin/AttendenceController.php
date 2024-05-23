@@ -46,21 +46,12 @@ class AttendenceController extends Controller
         }
 
         // class assign wise class list 
-        $user = Auth::user();
-        $teacher = $user->teacher;
-        $assignedClassIds = explode(',', $teacher->class_id);
-        $assignedSectionIds = explode(',', $teacher->section_id);
-        $assignedClassIds = array_map('intval', $assignedClassIds);
-        $assignedSectionIds = array_map('intval', $assignedSectionIds);
-        $studentss = DB::table('students')
-            ->whereIn('class_id', $assignedClassIds)
-            ->whereIn('section_id', $assignedSectionIds)
-            ->get();
+
         // class assign wise class list 
 
 
 
-        return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate', 'assignedClassIds', 'assignedSectionIds'));
+        return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate'));
     }
     //this si currentlu working
     // public function mark(Request $request)
@@ -120,48 +111,50 @@ class AttendenceController extends Controller
     {
         if ($request->getMethod() == 'POST') {
             $note = "note";
-            $attendanceDate = now()->toDateString(); // Get the current date
-
-            // Iterate over submitted form data for each student
+            $attendanceDate = now()->toDateString();
             foreach ($request->input('student_ids') as $studentId) {
-                // Retrieve attendance data for the current student
                 $attendanceType = $request->input('attendance_types')[$studentId];
                 $notes = $note;
 
-                // Check if attendance already exists for the student on the current date
+                $classIds = is_array($request->class_id) ? $request->class_id : [$request->class_id];
                 $existingAttendance = Attendence::where('student_id', $studentId)
                     ->whereDate('attendance_date', $attendanceDate)
                     ->first();
 
+                $previousAttendanceType = null;
+
                 if ($existingAttendance) {
-                    return redirect()->back()->with('error', 'Attendance for this student on this date has already been marked.');
+                    $attendanceTypes = $existingAttendance->attendance_type ?? [];
+
+                    if (is_string($attendanceTypes)) {
+                        $attendanceTypes = json_decode($attendanceTypes, true) ?? [];
+                    }
+                    $attendanceTypes[] = $attendanceType;
+
+                    $existingAttendance->update([
+                        'attendance_type' => $attendanceTypes,
+                        'notes' => $notes,
+                    ]);
+                } else {
+                    $attendance = new Attendence();
+                    $attendance->student_id = $studentId;
+                    $attendance->attendance_type = [$attendanceType];
+                    $attendance->notes = $notes;
+                    $attendance->attendance_date = $attendanceDate;
+                    foreach ($classIds as $classId) {
+                        $attendance->class_id = $classId;
+                    }
+                    $attendance->save();
                 }
-
-                // Check if class_id is an array or a single value
-                $classIds = is_array($request->class_id) ? $request->class_id : [$request->class_id];
-
-
-
-                // Iterate over each class ID and save attendance
-                // Save attendance for the current student and class
-                $attendance = new Attendence();
-                $attendance->student_id = $studentId;
-                $attendance->attendance_type = $attendanceType;
-                $attendance->notes = $notes;
-                foreach ($classIds as $classId) {
-                    $attendance->class_id = $classId; // Use the current class ID
-                }
-                $attendance->attendance_date = $attendanceDate;
-                $attendance->save();
             }
 
             return redirect()->back()->with('success', 'Attendance marked successfully');
         } else {
-            // If it's not a POST request, retrieve student data and load the view
             $students = Student::all();
             return view('Admin.Attendence.add', compact('students'));
         }
     }
+
 
 
 
@@ -270,15 +263,10 @@ class AttendenceController extends Controller
 
 
 
-        $user = Auth::user();
-        $teacher = $user->teacher;
-        $assignedClassIds = explode(',', $teacher->class_id);
-        $assignedSectionIds = explode(',', $teacher->section_id);
-        $assignedClassIds = array_map('intval', $assignedClassIds);
-        $assignedSectionIds = array_map('intval', $assignedSectionIds);
+
 
         // dd('assignedClassIds:', $assignedClassIds, 'assignedSectionIds', $assignedSectionIds, 'students', $studentss);
 
-        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear', 'assignedClassIds', 'assignedSectionIds'));
+        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear'));
     }
 }

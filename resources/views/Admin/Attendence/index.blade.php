@@ -59,7 +59,7 @@
                                                         <option value="">Select Class</option>
                                                         @foreach ($cc as $class)
                                                             <option value="{{ $class->id }}"
-                                                                {{ isset($class_id) ? ($class_id == $class->id ? 'selected' : '') : (old('class') == $class->id ? 'selected' : '') }}>
+                                                                {{ isset($class_id) ? ($class_id == $class->id ? 'selected' : '') : (request('class_id') == $class->id ? 'selected' : '') }}>
                                                                 {{ $class->name }}
                                                             </option>
                                                         @endforeach
@@ -75,7 +75,7 @@
 
                                                         @foreach ($se as $sec)
                                                             <option value="{{ $sec->id }}"
-                                                                {{ isset($section_id) ? ($section_id == $sec->id ? 'selected' : '') : (old('sec') == $sec->id ? 'selected' : '') }}>
+                                                                {{ isset($section_id) ? ($section_id == $sec->id ? 'selected' : '') : (request('section_id') == $sec->id ? 'selected' : '') }}>
                                                                 {{ $sec->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -92,6 +92,15 @@
                                         </div>
                                     @endrole()
                                     @role('Teacher')
+                                        @php
+
+                                            $user = Auth::user();
+                                            $teacher = $user->teacher;
+                                            $assignedClassIds = explode(',', $teacher->class_id);
+                                            $assignedSectionIds = explode(',', $teacher->section_id);
+                                            $assignedClassIds = array_map('intval', $assignedClassIds);
+                                            $assignedSectionIds = array_map('intval', $assignedSectionIds);
+                                        @endphp
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -207,7 +216,8 @@
                                             @endphp
                                             @foreach ($students as $student)
                                                 <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
-                                                <input type="hidden" name="class_id[]" value="{{ $student->class_id }}">
+                                                <input type="hidden" name="class_id[]"
+                                                    value="{{ $student->class_id }}">
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
                                                     <td>
@@ -252,15 +262,14 @@
 
                                                                         </label>
                                                                     </abbr>
-                                                                   
-                                                                   
+
+
                                                                 </div>
 
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                 
                                             @endforeach
                                         @endif
                                         <div class="form-group" style="display: flex; justify-content: end">

@@ -150,6 +150,15 @@
                                 </div>
                             @endrole()
                             @role('Teacher')
+                                @php
+
+                                    $user = Auth::user();
+                                    $teacher = $user->teacher;
+                                    $assignedClassIds = explode(',', $teacher->class_id);
+                                    $assignedSectionIds = explode(',', $teacher->section_id);
+                                    $assignedClassIds = array_map('intval', $assignedClassIds);
+                                    $assignedSectionIds = array_map('intval', $assignedSectionIds);
+                                @endphp
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -267,20 +276,38 @@
                                     <td>{{ $attendanceReport->where('student_id', $studentId)->first()->student->roll }}
                                     </td>
                                     @for ($day = 1; $day <= Carbon\Carbon::createFromDate($selectedYear, $selectedMonth)->daysInMonth; $day++)
-                                        <td>
-                                            @php
-                                                $status = isset($attendance[$day]) ? $attendance[$day] : ''; // Check if attendance data exists for this day
-                                                $class = '';
-                                                if ($status == 'P') {
+                                    <td>
+                                        @php
+                                             $dayAttendance = isset($attendance[$day]) ? $attendance[$day] : [];
+                                            
+                                             $statusString = '';
+                                            
+                                             if (is_array($dayAttendance)) {
+                                                foreach ($dayAttendance as $periodStatus) {
+                                                    $class = '';
+                                                    if ($periodStatus == 'P') {
+                                                        $class = 'badge badge-pill badge-success';
+                                                    } elseif ($periodStatus == 'L') {
+                                                        $class = 'badge badge-pill badge-warning';
+                                                    } elseif ($periodStatus == 'A') {
+                                                        $class = 'badge badge-pill badge-danger';
+                                                    }
+                                                    $statusString .= "<strong class='badge $class'>$periodStatus</strong> ";
+                                                }
+                                            } else {
+                                                 $class = '';
+                                                if ($dayAttendance == 'P') {
                                                     $class = 'badge badge-pill badge-success';
-                                                } elseif ($status == 'L') {
+                                                } elseif ($dayAttendance == 'L') {
                                                     $class = 'badge badge-pill badge-warning';
-                                                } elseif ($status == 'A') {
+                                                } elseif ($dayAttendance == 'A') {
                                                     $class = 'badge badge-pill badge-danger';
                                                 }
-                                            @endphp
-                                            <strong class="badge {{ $class }}">{{ $status }}</strong>
-                                        </td>
+                                                $statusString = "<strong class='badge $class'>$dayAttendance</strong>";
+                                            }
+                                        @endphp
+                                        {!! $statusString !!}
+                                    </td>
                                     @endfor
                                 </tr>
                             @endforeach
