@@ -6,7 +6,7 @@
                 <div class="page-sub-header">
                     <h3 class="page-title">Students Promotion</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('admin.promotion.list')}}">Student</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.promotion.list') }}">Student</a></li>
                         <li class="breadcrumb-item active">All Students Promotion</li>
                     </ul>
                 </div>
@@ -23,7 +23,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="content">
+    <div class=" ">
         <div class="card">
             <div class="card-header header-elements-inline">
                 <h5 class="card-title font-weight-bold">Select Student Promotion From Class
@@ -36,31 +36,50 @@
                         <div class="col-md-10 col-sm-6">
                             <fieldset>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="from_class" style="font-weight: 700; font-size: 12px">From
-                                                Class:</label>
-                                            <select name="from_class" id="from_class" class="form-control">
-                                                @foreach ($cc as $class)
-                                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+
+                                            <label for="from_class" style="font-weight: 700; font-size: 12px">Choose
+                                                Faculity:</label>
+                                            <select name="from_faculity" id="from_faculity" class="form-control">
+                                                @foreach ($facu as $f)
+                                                    <option value="{{ $f->id }}"
+                                                        {{ isset($from_faculity) ? ($from_faculity == $f->id ? 'selected' : '') : (request('from_faculity') == $f->id ? 'selected' : '') }}>
+                                                        {{ $f->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="from_section" style="font-weight: 700; font-size: 12px">From
+                                            <label for="from_class" style="font-weight: 700; font-size: 12px">Choose
+                                                Semester:</label>
+                                            <select name="from_class" id="from_class" class="form-control">
+                                                @foreach ($cc as $class)
+                                                    <option value="{{ $class->id }}"
+                                                        {{ isset($from_class) ? ($from_class == $class->id ? 'selected' : '') : (request('from_class') == $class->id ? 'selected' : '') }}>
+                                                        {{ $class->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="from_section" style="font-weight: 700; font-size: 12px">Choose
                                                 Section:</label>
                                             <select name="from_section" id="from_section" class="form-control">
                                                 @foreach ($se as $sec)
-                                                    <option value="{{ $sec->id }}">{{ $sec->name }}</option>
+                                                    <option
+                                                        value="{{ $sec->id }}"{{ isset($from_section) ? ($from_section == $sec->id ? 'selected' : '') : (request('from_section') == $sec->id ? 'selected' : '') }}>
+                                                        {{ $sec->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mt-4">
+                                    <div class="col-md-3 mt-4">
                                         <div class="text-right mt-1">
-                                            <button type="submit" class="btn btn-primary" id="saveBtn">Manage Promotion</button>
+                                            <button type="submit" class="btn btn-primary" id="saveBtn">Manage
+                                                Promotion</button>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +115,8 @@
                                     </th>
                                     <th>#</th>
                                     <th>Student Name</th>
-                                    <th>Current Class</th>
+                                    <th>Current Faculity</th>
+                                    <th>Current Semester</th>
                                     <th>Manage</th>
                                 </tr>
                             </thead>
@@ -116,13 +136,15 @@
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a href="" class="avatar avatar-sm me-2"><img
-                                                        class="avatar-img rounded-circle" src="{{ asset($student->image) }}"
-                                                        alt="User Image" /></a>
+                                                        class="avatar-img rounded-circle"
+                                                        src="{{ asset($student->image) }}" alt="User Image" /></a>
                                                 <a href="">{{ $student->name }}</a>
                                             </h2>
 
                                         </td>
-
+                                        <td>
+                                            {{$student->faculity->name}}
+                                        </td>
                                         <td>
 
                                             @php
@@ -137,7 +159,7 @@
                                         <td>
                                             <button type="button" onclick="openPromoteForm({{ $student->id }})"
                                                 class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal" >Promote</button>
+                                                data-bs-target="#exampleModal">Promote</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -169,7 +191,7 @@
 
                                         <div class="form-group">
                                             <input type="hidden" name="student_id" id="student_id">
-                                            <label for="to_class">To Class:</label>
+                                            <label for="to_class">Choose Semester:</label>
                                             <select name="to_class" id="to_class" class="form-control">
                                                 @foreach ($cc as $class)
                                                     <option value="{{ $class->id }}">
@@ -180,7 +202,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="to_section">To Section:</label>
+                                            <label for="to_section">Choose Section:</label>
                                             <select name="to_section" id="to_section" class="form-control">
                                                 @foreach ($se as $sec)
                                                     <option value="{{ $sec->id }}">
@@ -207,7 +229,7 @@
                         </form>
                     </div>
                 </div>
-                 
+
             </div>
         </div>
     </div>
@@ -241,7 +263,7 @@
             }, 2000);
         });
         const prmt = (msg = "would you like to promot") => {
-        return prompt(msg) == 'yes';
-    }
+            return prompt(msg) == 'yes';
+        }
     </script>
 @endsection

@@ -109,6 +109,7 @@
                             <p class="text-muted mb-0">{{ $user->role_name }}</p>
                         </div>
                     </div>
+                    <a class="dropdown-item" href="{{route('admin.setting')}}">Setting</a>
                     <a class="dropdown-item" href="{{ route('admin.user.edit',['user'=>$user->id]) }}">Setting</a>
                     <a class="dropdown-item" href="{{ route('adminLogin.logout') }}">Logout</a>
                 </div>

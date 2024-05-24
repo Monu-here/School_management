@@ -1,12 +1,11 @@
 @extends('Admin.layout.app')
 {{-- @section('css') --}}
-    <style>
-        .con img {
-    max-width: 100%;
-    height: auto;
-}
-
-    </style>
+<style>
+    .con img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 {{-- @endsection --}}
 @section('title')
     <div class="page-header">
@@ -34,7 +33,7 @@
                                 <h3 class="page-title">Homework</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                              
+
                             </div>
                         </div>
                     </div>
@@ -43,7 +42,7 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                     
+
                                     <th>ID</th>
                                     <th>Assigement Title</th>
                                     <th>Assigement Content</th>
@@ -57,22 +56,28 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $i=1;
+                                    $i = 1;
                                 @endphp
                                 @foreach ($view_homework_from_teachers as $addHomework)
                                     <tr>
-                                         <td>{{$i++}}</td>
+                                        <td>{{ $i++ }}</td>
                                         <td>{{ $addHomework->title }}</td>
                                         <td style="word-break: break-all;">{!! $addHomework->content !!}</td>
-                                         <td>{{ $addHomework->teacher_id }}</td>
-                                        <td>{{ $addHomework->class_id}}</td>
-                                        <td>{{ $addHomework->section_id  }}</td>
-                                        <td><a href="{{route('admin.homework.nn',['id'=>$addHomework->id])}}" class="btn btn btn-primary text-white ">Submit Assignment</a></td>
-                                        <td> <span class="{{ $addHomework->status == 'submitted' ? 'text-primary' : 'text-danger' }}">
-                                            {{ ucfirst($addHomework->status) }}
-                                        </span></td>
+                                        <td>{{ $addHomework->teacher_id }}</td>
+                                        {{-- <td>{{ $addHomework->faculity_id}}</td> --}}
+                                        <td>{{ $addHomework->classs->name }}</td>
+                                        <td>{{ $addHomework->section->name }}</td>
+                                        <td><a href="{{ route('admin.homework.nn', ['id' => $addHomework->id]) }}"
+                                                class="btn btn-primary text-white">Submit Assignment</a></td>
+                                        <td>
+                                            <span
+                                                class="{{ $addHomework->status == 'submitted' ? 'text-primary' : 'text-danger' }}">
+                                                {{ ucfirst($addHomework->status) }}
+                                            </span>
+                                        </td>
                                     </tr>
-                                @endforeach                               
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>

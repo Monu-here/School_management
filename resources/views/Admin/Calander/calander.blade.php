@@ -102,7 +102,7 @@
     });
 </script>
 <style> --}}
-    <div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="createEventModalLabel"
+<div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="createEventModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -150,13 +150,13 @@
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-</script>
+ </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var myModal = new bootstrap.Modal(document.getElementById('createEventModal'));
         var calendarEl = document.getElementById('calendarContainer');
         var eventsData = {!! json_encode($events) !!}; // Convert PHP array to JavaScript variable
-        const url = 'http://127.0.0.1:8000/admin-dashboard'; // Replace with your actual base URL
+        const url = 'http://127.0.0.1:8000/dashboard'; // Replace with your actual base URL
         var calendar = new FullCalendar.Calendar(calendarEl, {
             showNonCurrentDates: false,
             events: [
@@ -164,7 +164,7 @@
                     {
                         title: '{{ $event->title }}',
                         start: '{{ $event->start }}',
-                        end: '{{ date("Y-m-d", strtotime($event->end . ' +1 day')) }}',
+                        end: '{{ date('Y-m-d', strtotime($event->end . ' +1 day')) }}',
                         eventId: '{{ $event->id }}'
                     },
                 @endforeach
@@ -179,7 +179,6 @@
                 const eventId = arg.event.extendedProps.eventId;
                 return {
                     html: `<div class="" style="display:flex; justify-content:center;">
-                    <span>${arg.event.title} </span>
                     </div>
                     @role('SuperAdmin')
                     <div style="display:flex; justify-content:center;">

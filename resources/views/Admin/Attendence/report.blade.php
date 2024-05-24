@@ -95,8 +95,26 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="class_id">Select Class:</label>
+                                            <label for="faculity_id">Select Faculity:</label>
+                                            <select name="faculity_id" id="faculity_id" class="form-control">
+                                                <option value="">Select Faculity</option>
+
+                                                @foreach ($facts as $fact)
+                                                    <option value="{{ $fact->id }}"
+                                                        {{ request('faculity_id') == $fact->id ? 'selected' : '' }}>
+                                                        {{ $fact->name }}
+                                                    </option>
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="class_id">Select Semester:</label>
                                             <select name="class_id" id="class_id" class="form-control">
+                                                <option value="">Select Semester</option>
+
                                                 @foreach ($classes as $class)
                                                     <option value="{{ $class->id }}"
                                                         {{ request('class_id') == $class->id ? 'selected' : '' }}>
@@ -107,31 +125,34 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="section_id">Select Section:</label>
                                             <select name="section_id" id="section_id" class="form-control">
+                                                <option value="">Select Section</option>
+
                                                 @foreach ($sections as $section)
                                                     <option value="{{ $section->id }}"
-                                                        {{ request('class_id') == $class->id ? 'selected' : '' }}>
+                                                        {{ request('section_id') == $section->id ? 'selected' : '' }}>
                                                         {{ $section->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="month">Select Month:</label>
                                             <select name="month" id="month" class="form-control">
                                                 @for ($i = 1; $i <= 12; $i++)
-                                                    <option value="{{ $i }}" {{ $i == date('n') ? 'selected' : '' }}>
+                                                    <option value="{{ $i }}"
+                                                        {{ $i == date('n') ? 'selected' : '' }}>
                                                         {{ Carbon\Carbon::createFromFormat('m', $i)->format('F') }}
                                                     </option>
                                                 @endfor
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="year">Select Year:</label>
                                             <select name="year" id="year" class="form-control">
@@ -143,7 +164,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 mt-20 text-right justify-content-end d-flex">
+                                    <div class="col-md-1 col-lg-12 mt-20 text-right justify-content-end d-flex">
                                         <button type="submit" class="btn btn-primary" id="saveBtn">Generate Report</button>
 
                                     </div>
@@ -154,12 +175,33 @@
 
                                     $user = Auth::user();
                                     $teacher = $user->teacher;
+                                    $assignedFaculityIds = explode(',', $teacher->faculity_id);
                                     $assignedClassIds = explode(',', $teacher->class_id);
                                     $assignedSectionIds = explode(',', $teacher->section_id);
                                     $assignedClassIds = array_map('intval', $assignedClassIds);
                                     $assignedSectionIds = array_map('intval', $assignedSectionIds);
+                                    $assignedFaculityIds = array_map('intval', $assignedFaculityIds);
+
                                 @endphp
                                 <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="class_id" style="font-weight: 700; font-size: 12px">
+                                                Faculity:</label>
+                                            <select name="faculity_id" id="faculity_id" class="form-control" required>
+                                                <option value="">Select Faculity</option>
+                                                @foreach ($assignedFaculityIds as $factId)
+                                                    @php
+                                                        $fact = App\Models\Faculity::find($factId);
+                                                    @endphp
+                                                    <option value="{{ $factId }}"
+                                                        {{ isset($faculity_id) ? ($faculity_id == $factId ? 'selected' : '') : (request('faculity_id') == $factId ? 'selected' : '') }}>
+                                                        {{ $fact ? $fact->name : 'Faculity Not Found' }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="class_id">Select Class:</label>
@@ -276,38 +318,38 @@
                                     <td>{{ $attendanceReport->where('student_id', $studentId)->first()->student->roll }}
                                     </td>
                                     @for ($day = 1; $day <= Carbon\Carbon::createFromDate($selectedYear, $selectedMonth)->daysInMonth; $day++)
-                                    <td>
-                                        @php
-                                             $dayAttendance = isset($attendance[$day]) ? $attendance[$day] : [];
-                                            
-                                             $statusString = '';
-                                            
-                                             if (is_array($dayAttendance)) {
-                                                foreach ($dayAttendance as $periodStatus) {
+                                        <td>
+                                            @php
+                                                $dayAttendance = isset($attendance[$day]) ? $attendance[$day] : [];
+
+                                                $statusString = '';
+
+                                                if (is_array($dayAttendance)) {
+                                                    foreach ($dayAttendance as $periodStatus) {
+                                                        $class = '';
+                                                        if ($periodStatus == 'P') {
+                                                            $class = 'badge badge-pill badge-success';
+                                                        } elseif ($periodStatus == 'L') {
+                                                            $class = 'badge badge-pill badge-warning';
+                                                        } elseif ($periodStatus == 'A') {
+                                                            $class = 'badge badge-pill badge-danger';
+                                                        }
+                                                        $statusString .= "<strong class='badge $class'>$periodStatus</strong> ";
+                                                    }
+                                                } else {
                                                     $class = '';
-                                                    if ($periodStatus == 'P') {
+                                                    if ($dayAttendance == 'P') {
                                                         $class = 'badge badge-pill badge-success';
-                                                    } elseif ($periodStatus == 'L') {
+                                                    } elseif ($dayAttendance == 'L') {
                                                         $class = 'badge badge-pill badge-warning';
-                                                    } elseif ($periodStatus == 'A') {
+                                                    } elseif ($dayAttendance == 'A') {
                                                         $class = 'badge badge-pill badge-danger';
                                                     }
-                                                    $statusString .= "<strong class='badge $class'>$periodStatus</strong> ";
+                                                    $statusString = "<strong class='badge $class'>$dayAttendance</strong>";
                                                 }
-                                            } else {
-                                                 $class = '';
-                                                if ($dayAttendance == 'P') {
-                                                    $class = 'badge badge-pill badge-success';
-                                                } elseif ($dayAttendance == 'L') {
-                                                    $class = 'badge badge-pill badge-warning';
-                                                } elseif ($dayAttendance == 'A') {
-                                                    $class = 'badge badge-pill badge-danger';
-                                                }
-                                                $statusString = "<strong class='badge $class'>$dayAttendance</strong>";
-                                            }
-                                        @endphp
-                                        {!! $statusString !!}
-                                    </td>
+                                            @endphp
+                                            {!! $statusString !!}
+                                        </td>
                                     @endfor
                                 </tr>
                             @endforeach

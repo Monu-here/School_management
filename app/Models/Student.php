@@ -35,7 +35,9 @@ class Student extends Model
         'f_image',
         'm_image',
         'image',
-        'user_id'
+        'user_id',
+        'faculity_id'
+
     ];
     public function attendence()
     {
@@ -66,6 +68,10 @@ class Student extends Model
     public function section()
     {
         return $this->belongsTo(Section::class, 'section_id', 'id');
+    }
+    public function faculity()
+    {
+        return $this->belongsTo(Faculity::class, 'faculity_id', 'id');
     }
 
     public function marks()

@@ -110,9 +110,24 @@
 
 
                                             <div class="col-md-6">
-                                                <label for="techer">Assigement Given to Class</label>
+                                                <label for="techer">Assigement Given to Faculity</label>
+                                                <select name="faculity_id" id="faculity_id" class="form-control" required>
+                                                    <option value="">Select Faculity</option>
+                                                    @foreach ($assignedFaculityIds as $faculityId)
+                                                        @php
+                                                            $faculity = App\Models\Faculity::find($faculityId);
+                                                        @endphp
+                                                        <option value="{{ $faculityId }}"
+                                                            {{ isset($faculity_id) ? ($faculity_id == $faculityId ? 'selected' : '') : (request('faculity_id') == $faculityId ? 'selected' : '') }}>
+                                                            {{ $faculity ? $faculity->name : 'Class Name Not Found' }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="techer">Assigement Given to Semester</label>
                                                 <select name="class_id" id="class_id" class="form-control" required>
-                                                    <option value="">Select Class</option>
+                                                    <option value="">Select Semester</option>
                                                     @foreach ($assignedClassIds as $classId)
                                                         @php
                                                             $class = App\Models\Classs::find($classId);

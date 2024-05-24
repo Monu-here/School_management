@@ -5,13 +5,7 @@
         $setting = getSetting();
 
     @endphp
-    @role('Student')
-        <h1>Welcome to Your Dashboard</h1>
-        @if (isset($student))
-            <p>Name: {{ $student->name }}</p>
-            <p>Email: {{ $student->email }}</p>
-        @endif
-    @endrole()
+   
 
 
 
@@ -397,7 +391,7 @@
                     </table>
                 </div>
                 @include('Admin.Notice.show')
-
+                @include('Admin.Calander.show')
             </div>
 
         </div>
@@ -656,6 +650,20 @@
                 $('#opennotice').modal('show');
             });
         });
+        document.addEventListener("DOMContentLoaded", function() {
+            $('.xyz').click(function() {
+                var eventId = $(this).data('event-id');
+                var eventTitle = $(this).data('event-title');
+                var eventStart = $(this).data('event-start');
+                var eventEnd = $(this).data('event-end');
+                // Set modal content
+                $('#modal-event-title').text(noticeTitle);
+                $('#modal-event-start').text(noticeMessage);
+                $('#modal-event-end').text(publishOn);
+                $('#xxxx').modal('show');
+            });
+        });
+
         ShowTost();
         @if (Session::has('status'))
             toastr.success("{{ session('status') }}");

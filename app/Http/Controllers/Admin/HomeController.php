@@ -43,6 +43,16 @@ class HomeController extends Controller
 
         return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices', 'student', 'teacher', 'students'));
     }
+
+
+
+    public function setting()
+    {
+        $user = Auth::user();
+        $student = $user->student;
+        // techer listing detail and assign class srtdent listing
+         return view('setting',compact('student'));
+    }
     // public function index()
     // {
     //     $students = DB::table('students')->get();
@@ -61,6 +71,12 @@ class HomeController extends Controller
         $notice = Notice::findOrFail($id);
 
         return view('Admin.Notice.show', compact('notice'));
+    }
+    public function eventShow($event)
+    {
+        $notice = Event::findOrFail($event);
+
+        return view('Admin.Calander.show', compact('notice'));
     }
 
 

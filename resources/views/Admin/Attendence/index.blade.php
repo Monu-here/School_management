@@ -51,12 +51,27 @@
                                 <div class="col-md-10 col-sm-6">
                                     @role('SuperAdmin')
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="class_id" style="font-weight: 700; font-size: 12px">
-                                                        Class:</label>
+                                                        Faculity:</label>
+                                                    <select name="faculity_id" id="faculity_id" class="form-control" required>
+                                                        <option value="">Select Faculity</option>
+                                                        @foreach ($facts as $fact)
+                                                            <option value="{{ $fact->id }}"
+                                                                {{ isset($faculity_id) ? ($faculity_id == $fact->id ? 'selected' : '') : (request('faculity_id') == $fact->id ? 'selected' : '') }}>
+                                                                {{ $fact->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="class_id" style="font-weight: 700; font-size: 12px">
+                                                        Semester:</label>
                                                     <select name="class_id" id="class_id" class="form-control" required>
-                                                        <option value="">Select Class</option>
+                                                        <option value="">Select Semester</option>
                                                         @foreach ($cc as $class)
                                                             <option value="{{ $class->id }}"
                                                                 {{ isset($class_id) ? ($class_id == $class->id ? 'selected' : '') : (request('class_id') == $class->id ? 'selected' : '') }}>
@@ -66,7 +81,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="section_id" style="font-weight: 700; font-size: 12px">
                                                         Section:</label>
@@ -81,7 +96,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="Date" style="font-weight: 700; font-size: 12px">Date</label>
                                                     <input type="date" name="attendance_date" class="form-control"
@@ -97,31 +112,51 @@
                                             $user = Auth::user();
                                             $teacher = $user->teacher;
                                             $assignedClassIds = explode(',', $teacher->class_id);
+                                            $assignedFaculityIds = explode(',', $teacher->faculity_id);
                                             $assignedSectionIds = explode(',', $teacher->section_id);
                                             $assignedClassIds = array_map('intval', $assignedClassIds);
                                             $assignedSectionIds = array_map('intval', $assignedSectionIds);
-                                        @endphp
+                                            $assignedFaculityIds = array_map('intval', $assignedFaculityIds);
+                                            @endphp
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="class_id" style="font-weight: 700; font-size: 12px">
-                                                        Class:</label>
+                                                        Faculity:</label>
+                                                    <select name="faculity_id" id="faculity_id" class="form-control" required>
+                                                        <option value="">Select Faculity</option>
+                                                        @foreach ($assignedFaculityIds as $factId)
+                                                        @php
+                                                        $fact = App\Models\Faculity::find($factId);
+                                                    @endphp
+                                                            <option value="{{ $factId}}"
+                                                                {{ isset($faculity_id) ? ($faculity_id == $factId ? 'selected' : '') : (request('faculity_id') == $factId? 'selected' : '') }}>
+                                                                {{ $fact ? $fact->name : 'Faculity Not Found' }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="class_id" style="font-weight: 700; font-size: 12px">
+                                                        Semester:</label>
                                                     <select name="class_id" id="class_id" class="form-control" required>
-                                                        <option value="">Select Class</option>
+                                                        <option value="">Select Semester</option>
                                                         @foreach ($assignedClassIds as $classId)
                                                             @php
                                                                 $class = App\Models\Classs::find($classId);
                                                             @endphp
                                                             <option value="{{ $classId }}"
                                                                 {{ isset($class_id) ? ($class_id == $classId ? 'selected' : '') : (request('class_id') == $classId ? 'selected' : '') }}>
-                                                                {{ $class ? $class->name : 'Class Name Not Found' }}
+                                                                {{ $class ? $class->name : 'Semester Name Not Found' }}
                                                             </option>
                                                         @endforeach
                                                     </select>
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="section_id" style="font-weight: 700; font-size: 12px">
                                                         Section:</label>
@@ -139,7 +174,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="Date" style="font-weight: 700; font-size: 12px">Date</label>
                                                     <input type="date" name="attendance_date" class="form-control"
@@ -151,7 +186,7 @@
                                     @endrole()
                                 </div>
                                 <div class="col-md-2 mt-4">
-                                    <div class="text-right mt-1">
+                                    <div class="text-right mt-2">
                                         <button type="submit" class="btn btn-primary" id="saveBtn">Select</button>
                                     </div>
                                 </div>
@@ -171,9 +206,7 @@
     </div>
     @if ($students !== null)
         @if ($students->isEmpty())
-            <script>
-                toastr.error('No students found for the selected class and section.');
-            </script>
+             
         @else
             <div class="row">
                 <div class="col-sm-12">
@@ -196,7 +229,8 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped"
+                            <table
+                                class="table border-0 star-student table-hover table-center mb-0 datatable table-striped"
                                 id="clienttable">
                                 <tr>
                                     <thead class="student-thread">
@@ -216,8 +250,9 @@
                                             @endphp
                                             @foreach ($students as $student)
                                                 <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
-                                                <input type="hidden" name="class_id[]"
-                                                    value="{{ $student->class_id }}">
+                                                <input type="hidden" name="class_id[]" value="{{ $student->class_id }}">
+                                                <input type="hidden" name="faculity_id[]" value="{{ $student->faculity_id }}">
+                                                <input type="hidden" name="section_id[]" value="{{ $student->section_id }}">
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
                                                     <td>

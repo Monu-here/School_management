@@ -59,6 +59,7 @@
                     @if ($students)
                         @foreach ($students as $student)
                             <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
+                            <input type="hidden" name="faculity_id[]" value="{{ $student->id }}">
                             <tbody>
 
                                 <td>

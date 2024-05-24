@@ -25,11 +25,20 @@
         }
     </style>
 @endsection
-@section('linkbar')
-    <ul class="breadcrumb ms-3">
-        <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}" style="text-decoration: none">Student</a></li>
-        <li class="breadcrumb-item active">Add Student</li>
-    </ul>
+@section('title')
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-sub-header">
+                <h3 class="page-title">Students</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{route('admin.student.index')}}">Student</a></li>
+                    <li class="breadcrumb-item active">Add</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('content')
     @if ($errors->any())
@@ -44,33 +53,19 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <div class="card">
-                <div class="card-body">
+            <div class="">
+                <div class="">
                     <form action="{{ route('admin.student.add') }}" id="formSubmit" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="col-12">
-                                <h5 class="form-title"><span>Student Information</span></h5>
-                            </div>
-                            <hr>
-                            <div class="col-md-3">
-                                <div class="form-group local-forms">
-                                    <input required type="file" name="image" id="image" class="form-control photo"
-                                        accept="image/*">
-                                    <br>
-                                    <label>Father Image <span class="login-danger">*</span></label>
-                                    <input required type="file" class="form-control photo" name="f_image"
-                                        accept="image/*">
-                                    <br>
-                                    <label>Student Image <span class="login-danger">*</span></label>
-
-                                    <input required type="file" class="form-control photo" name="m_image"
-                                        accept="image/*">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="form-title"><span>Student Information</span></h5>
+                                    </div>
+                                    <hr>
                                 </div>
-
-                            </div>
-                            <div class="col-md-9">
                                 <div class="row">
                                     <br>
                                     <div class="col-12 col-sm-4">
@@ -119,6 +114,31 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
+                                            <label>Religion <span class="login-danger">*</span></label>
+                                            <select class="form-control" id="reli" name="reli"
+                                                value="{{ old('reli') }}">
+                                                <option selected disabled>Select Gender</option>
+                                                <option value="hindu">Hindu</option>
+                                                <option value="Christian">Christian</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Faculity <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="faculity_id">
+                                                <option selected disabled>Select Faculity</option>
+                                                @foreach ($faculitys as $faculity)
+                                                    <option value="{{ $faculity->id }}"
+                                                        {{ old('faculity_id') == $faculity->id ? 'selected' : '' }}>
+                                                        {{ $faculity->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
                                             <label>Class <span class="login-danger">*</span></label>
                                             <select class="form-control" name="class_id">
                                                 <option selected disabled>Select Class</option>
@@ -131,18 +151,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Religion <span class="login-danger">*</span></label>
-                                            <select class="form-control" id="reli" name="reli"
-                                                value="{{ old('reli') }}">
-                                                <option selected disabled>Select Gender</option>
-                                                <option value="hindu">Hindu</option>
-                                                <option value="Christian">Christian</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Section <span class="login-danger">*</span></label>
@@ -201,9 +210,21 @@
 
                                         </div>
                                     </div>
-                                    <hr style="border-top: 1px dashed #8c8b8b">
-                                    <p class="form-title text-start"><span><u>Parent Information</u> </span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="form-title"><span>Parent Information</span></h5>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
 
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Father's Name<span class="login-danger">*</span></label>
@@ -257,27 +278,26 @@
 
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
+
                         <div class="card">
                             <div class="card-body">
-
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 class="form-title"><span>Student Login Details</span></h5>
+                                        <h5 class="form-title"><span>User Information</span></h5>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group local-forms">
-                                            <label>Image <span class="login-danger">*</span></label>
-                                            <input type="file" class="form-control photo" name="images"
-                                                accept="image/*">
-                                        </div>
+                                    <hr>
+                                    <div class="col-md-12">
 
                                     </div>
-                                    <div class="col-md-9">
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                    </div>
+
+                                    <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
@@ -321,10 +341,59 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary" onclick="Msg()"
-                                    id="saveBtn">Submit</button>
-                                <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
 
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="form-title"><span>Image Section</span></h5>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group local-forms">
+                                            <input required type="file" name="image" id="image"
+                                                class="form-control photo" accept="image/*">
+                                            <label>Student Image <span class="login-danger">*</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group local-forms">
+                                            <input required type="file" class="form-control photo" name="f_image"
+                                                accept="image/*">
+                                            <label>Father Image<span class="login-danger">*</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group local-forms">
+                                            <input required type="file" class="form-control photo" name="m_image"
+                                                accept="image/*">
+                                            <label>Mother Image<span class="login-danger">*</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group local-forms">
+                                            <label>User Login Image <span class="login-danger">*</span></label>
+                                            <input type="file" class="form-control photo" name="images"
+                                                accept="image/*">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+
+                                        <button type="submit" class="btn btn-primary" onclick="Msg()"
+                                            id="saveBtn">Submit</button>
+                                        <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

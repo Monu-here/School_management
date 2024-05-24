@@ -25,7 +25,7 @@
                                 <h3 class="page-title">Students</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                                 
+
                                 <a href="{{ route('admin.promotion.index') }}" class="btn btn-primary"><i
                                         class="fas fa-plus"></i></a>
                             </div>
@@ -44,8 +44,9 @@
                                     </th>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>From Class</th>
-                                    <th>To Class</th>
+                                    <th>Faculity</th>
+                                    <th> From Semester</th>
+                                    <th>To Semester</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,10 +76,18 @@
                                             </h2>
                                         </td>
                                         <td>
+                                            @if ($pro->fromFaculity)
+                                                {{ $pro->fromFaculity->name }}
+                                            @endif
+                                            {{-- @if ($pro->fromSection)
+                                                ({{ $pro->fromSection->name }})
+                                            @endif --}}
+                                        </td>
+                                        <td>
                                             @if ($pro->fromClass)
                                                 {{ $pro->fromClass->name }}
                                             @endif
-                                            @if ($pro->fromSection)
+                                            @if ($pro->fromSection)/
                                                 ({{ $pro->fromSection->name }})
                                             @endif
                                         </td>
@@ -86,7 +95,7 @@
                                             @if ($pro->toClass)
                                                 {{ $pro->toClass->name }}
                                             @endif
-                                            @if ($pro->toSection)
+                                            @if ($pro->toSection)/
                                                 ({{ $pro->toSection->name }})
                                             @endif
                                         </td>

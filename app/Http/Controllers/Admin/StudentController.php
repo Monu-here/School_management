@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Blood;
 use App\Models\Classs;
+use App\Models\Faculity;
 use App\Models\Mark;
 use App\Models\Section;
 use App\Models\Student;
@@ -62,9 +63,10 @@ class StudentController extends Controller
         $students = $studentsQuery->get();
         $sections = DB::table('sections')->get();
         $cls = DB::table('classses')->get();
+        $facts = Faculity::get();
 
 
-        return view('Admin.Student.index', compact('cls', 'sections', 'students', 'selectedSection', 'selectedName', 'selectedIdno'));
+        return view('Admin.Student.index', compact('cls', 'sections', 'students', 'selectedSection', 'selectedName', 'selectedIdno','facts'));
     }
 
     public function add(Request $request)
@@ -97,85 +99,65 @@ class StudentController extends Controller
                 'image' => 'required|image',
                 'idno' => 'required',
                 'password' => 'required|string|min:8|',
+                'faculity_id' => 'required|exists:faculities,id',
             ]);
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'number' => $request->number,
-                'role_name' => 'Student',
-                'image' => $request->image->store('uploads/user'),
-            ]);
-            $section = 0;
-            $student = new Student([
-                'user_id' => $user->id,
-                'name' => $request->name,
-                'gender' => $request->gender,
-                'dob' => $request->dob,
-                'section' => $section,
-                'roll' => $request->roll,
-                'class_id' => $request->class_id,
-                'number' => $request->number,
-                'address' => $request->address,
-                'blood_id' => $request->blood_id,
-                'reli' => $request->reli,
-                'email' => $request->email,
-                'section_id' => $request->section_id,
-                'session_year' => $request->session_year,
-                'parent_email' => $request->parent_email,
-                'f_name' => $request->f_name,
-                'f_occ' => $request->f_occ,
-                'f_no' => $request->f_no,
-                'm_name' => $request->m_name,
-                'm_occ' => $request->m_occ,
-                'idno' => $request->idno,
-                'm_no' => $request->m_no,
-                'f_image' => $request->file('f_image')->store('uploads/student/father'),
-                'm_image' => $request->file('m_image')->store('uploads/student/mother'),
-                'image' => $request->file('image')->store('uploads/student'),
-            ]);
-            $student->save();
-            return redirect()->back()->with('message', 'Data added successfully');
+
+            try {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'number' => $request->number,
+                    'role_name' => 'Student',
+                    'image' => $request->image->store('uploads/user'),
+                ]);
+
+                $student = new Student([
+                    'user_id' => $user->id,
+                    'name' => $request->name,
+                    'gender' => $request->gender,
+                    'dob' => $request->dob,
+                    'section' => 0,
+                    'roll' => $request->roll,
+                    'class_id' => $request->class_id,
+                    'number' => $request->number,
+                    'address' => $request->address,
+                    'blood_id' => $request->blood_id,
+                    'reli' => $request->reli,
+                    'email' => $request->email,
+                    'section_id' => $request->section_id,
+                    'session_year' => $request->session_year,
+                    'parent_email' => $request->parent_email,
+                    'f_name' => $request->f_name,
+                    'f_occ' => $request->f_occ,
+                    'f_no' => $request->f_no,
+                    'm_name' => $request->m_name,
+                    'm_occ' => $request->m_occ,
+                    'idno' => $request->idno,
+                    'm_no' => $request->m_no,
+                    'f_image' => $request->file('f_image')->store('uploads/student/father'),
+                    'm_image' => $request->file('m_image')->store('uploads/student/mother'),
+                    'image' => $request->file('image')->store('uploads/student'),
+                    'faculity_id' => $request->faculity_id,
+                ]);
+
+                $student->save();
+                return redirect()->back()->with('message', 'Student & User added successfully');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Error adding student & user: ' . $e->getMessage());
+            }
         } else {
             $classes = Classs::all();
             $bloods = DB::table('bloods')->get();
             $sections = Section::all();
-            return view('Admin.Student.add', compact('classes', 'bloods', 'sections'));
+            $faculitys = Faculity::all();
+            return view('Admin.Student.add', compact('classes', 'bloods', 'sections', 'faculitys'));
         }
     }
 
     public function studentedit(Request $request, Student $student)
     {
         if ($request->isMethod('post')) {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'gender' => 'required|string',
-                'dob' => 'required|date',
-                'roll' => 'required|integer',
-                'class_id' => 'required|exists:classses,id',
-                'number' => 'required|digits:10',
-                'address' => 'required|string|max:255',
-                'blood_id' => 'required|exists:bloods,id',
-                'reli' => 'required|string|max:50',
-                'section_id' => 'required|exists:sections,id',
-                'session_year' => 'required|string|max:4',
-                'parent_email' => 'required|email',
-                'f_name' => 'required|string|max:255',
-                'f_occ' => 'required|string|max:255',
-                'f_no' => 'required|digits:10',
-                'm_name' => 'required|string|max:255',
-                'm_occ' => 'required|string|max:255',
-                'm_no' => 'required|digits:10',
-                'idno' => 'required',
-            ]);
-            // $user = User::create([
-            //     'name' => $request->name,
-            //     'email' => $request->email,
-            //     'password' => Hash::make($request->password),
-            //     'number' => $request->number,
-            //     'role_name' => 'Student',
-            //     'image' => $request->image->store('uploads/user'),
-            // ]);
             $section = 0;
             $student->name = $request->name;
             $student->gender = $request->gender;
@@ -196,6 +178,7 @@ class StudentController extends Controller
             $student->m_occ = $request->m_occ;
             $student->idno = $request->idno;
             $student->m_no = $request->m_no;
+            $student->faculity_id = $request->faculity_id;
 
             if ($request->hasFile('image')) {
                 $student->image = $request->image->store('uploads/student');
@@ -210,12 +193,14 @@ class StudentController extends Controller
 
             $student->save();
 
-            return redirect()->back()->with('message', 'Data update successfully');
+            return redirect()->back()->with('message', 'Student & User  update successfully');
         } else {
             $classes = Classs::all();
             $bloods = DB::table('bloods')->get();
             $sections = Section::all();
-            return view('Admin.Student.edit', compact('classes', 'bloods', 'sections', 'student'));
+            $faculitys = Faculity::all();
+
+            return view('Admin.Student.edit', compact('classes', 'bloods', 'sections', 'student', 'faculitys'));
         }
     }
     public function del($student)
@@ -251,6 +236,8 @@ class StudentController extends Controller
                 'cv' => 'required|image',
                 'password' => 'required|string|min:8|',
                 'workinghrs' => 'string',
+                'faculity_id' => 'required|exists:faculities,id',
+
             ]);
             $user = User::create([
                 'name' => $request->name,
@@ -276,6 +263,7 @@ class StudentController extends Controller
                 'class_id' => $request->class_id,
                 'workinghrs' => $request->workinghrs,
                 'section_id' => $request->section_id,
+                'faculity_id' => $request->faculity_id,
                 'sub' => json_encode($request->input('sub')),
             ]);
             $teacher->save();
@@ -283,7 +271,8 @@ class StudentController extends Controller
         } else {
             $classes = Classs::all();
             $sections = Section::all();
-            return view('Admin.Teacher.add', compact('classes', 'sections'));
+            $facts = Faculity::all();
+            return view('Admin.Teacher.add', compact('classes', 'sections','facts'));
         }
     }
     public function teacherEdit(Request $request, Teacher $teacher)
@@ -328,6 +317,8 @@ class StudentController extends Controller
             $teacher->class_id = $request->class_id;
             $teacher->section_id = $request->section_id;
             $teacher->workinghrs = $request->workinghrs;
+            $teacher->faculity_id = $request->faculity_id;
+ 
             $teacher->sub = json_encode($request->input('sub'));
 
             $teacher->save();
@@ -335,7 +326,9 @@ class StudentController extends Controller
         } else {
             $classes = Classs::all();
             $sections = Section::all();
-            return view('Admin.Teacher.edit', compact('classes', 'sections', 'teacher'));
+            $facts = Faculity::all();
+
+            return view('Admin.Teacher.edit', compact('classes', 'sections', 'teacher','facts'));
         }
     }
     public function teacherShow($teacher)

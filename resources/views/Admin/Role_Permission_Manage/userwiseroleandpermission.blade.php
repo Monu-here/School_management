@@ -151,7 +151,7 @@
                                         @endphp
                                     @endif
                                 @endforeach
-                                @php
+                                {{-- @php
                                     $permissions = DB::table('users_permissions')
                                         ->join('permissions', 'users_permissions.permission_id', '=', 'permissions.id')
                                         ->select('permissions.name as permission_name')
@@ -163,7 +163,7 @@
                                         $permission_names[] = $permission->permission_name;
                                     }
                                     $permission_string = implode(', ', $permission_names);
-                                @endphp
+                                @endphp --}}
                             </tbody>
                         </table>
                     </div>

@@ -17,10 +17,20 @@ class StudentPromotion extends Model
         'from_session',
         'to_session',
         'status',
+        'from_faculity',
+        'to_faculity'
     ];
     public function fromClass()
     {
         return $this->belongsTo(Classs::class, 'from_class');
+    }
+    public function fromFaculity()
+    {
+        return $this->belongsTo(Faculity::class, 'from_faculity','id');
+    }
+    public function toFaculity()
+    {
+        return $this->belongsTo(Faculity::class, 'to_faculity','id');
     }
 
     public function toClass()
@@ -43,5 +53,9 @@ class StudentPromotion extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+    public function faculity()
+    {
+        return $this->belongsTo(Faculity::class,);
     }
 }

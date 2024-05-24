@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('', [FrontHomeController::class, 'home'])->name('home');
+Route::get('', [FrontHomeController::class, 'home'])->name('home')  ;
 Route::get('about', [FrontHomeController::class, 'about'])->name('about');
 Route::get('course', [FrontHomeController::class, 'course'])->name('course');
 Route::get('team', [FrontHomeController::class, 'team'])->name('team');
@@ -66,9 +66,11 @@ Route::prefix('dashboard')->name('admin.')->group(function () {
     Route::group(['middleware' =>[ 'auth','role:SuperAdmin,Admin,Teacher,HR,Student']], function () {;
 
         Route::get('', [HomeController::class, 'index'])->name('index');
+        Route::get('student-setting', [HomeController::class, 'setting'])->name('setting');
 
         Route::post('create-event', [HomeController::class, 'createEvent'])->name('event');
         Route::get('del-event/{event}', [HomeController::class, 'eventDel'])->name('eventDel');
+        Route::get('show-event/{event}', [HomeController::class, 'eventShow'])->name('eventShow');
         Route::get('view/notice/{id}', [HomeController::class, 'viewNotice'])->name('showme');
 
         Route::prefix('role-permission')->name('role-permission.')->group(function () {

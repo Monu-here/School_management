@@ -159,15 +159,14 @@
                                             </a>
 
 
-                                            @can('delete post')
+                                           
                                                 @if ($user->role_name != 'SuperAdmin')
                                                     <a href="{{ route('admin.user.del', ['user' => $user->id]) }}"
                                                         class="btn btn-sm btn-danger">
                                                         <i class="fa fa-trash text-white"></i>
                                                     </a>
                                                 @endif
-                                            @endcan
-                                        </td>
+                                         </td>
                                         <td>
                                             {{ getAgo($user->created_at) }}
                                         </td>

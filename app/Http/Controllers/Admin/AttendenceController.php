@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attendence;
 use App\Models\Classs;
+use App\Models\Faculity;
 use App\Models\Section;
 use Carbon\Carbon;
 
@@ -26,32 +27,29 @@ class AttendenceController extends Controller
         $cc = Classs::all();
         $ss = Student::all();
         $se = Section::all();
+        $facts = Faculity::all();
         $sections = DB::table('sections')->get();
         $attendanceDate = now();
         $students = null;
         if ($request->getMethod() == "POST") {
             // dd($request->all());
-            if ($request->filled('class_id') && $request->filled('section_id')) {
+            if ($request->filled('faculity_id') && $request->filled('class_id') && $request->filled('section_id')) {
+                $fromFaculity = $request->input('faculity_id');
                 $fromClass = $request->input('class_id');
                 $fromSection = $request->input('section_id');
 
                 // Query students based on the selected class and section
-                $students = Student::whereHas('classes', function ($query) use ($fromClass, $fromSection) {
-                    $query->where('class_id', $fromClass)->where('section_id', $fromSection);
+                $students = Student::whereHas('classes', function ($query) use ($fromFaculity, $fromClass, $fromSection) {
+                    $query->where('faculity_id', $fromFaculity)->where('class_id', $fromClass)->where('section_id', $fromSection);
                 })->get();
+                if ($students->isEmpty()) {
+                    return redirect()->back()->with('error', 'No Record  Found');
+                }
             } else {
-                // If the form is not submitted, retrieve all students
                 $students = Student::all();
             }
         }
-
-        // class assign wise class list 
-
-        // class assign wise class list 
-
-
-
-        return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate'));
+        return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate', 'facts'));
     }
     //this si currentlu working
     // public function mark(Request $request)
@@ -117,6 +115,8 @@ class AttendenceController extends Controller
                 $notes = $note;
 
                 $classIds = is_array($request->class_id) ? $request->class_id : [$request->class_id];
+                $faculityIds = is_array($request->faculity_id) ? $request->faculity_id : [$request->faculity_id];
+                $sectiondIds = is_array($request->section_id) ? $request->section_id : [$request->section_id];
                 $existingAttendance = Attendence::where('student_id', $studentId)
                     ->whereDate('attendance_date', $attendanceDate)
                     ->first();
@@ -144,10 +144,16 @@ class AttendenceController extends Controller
                     foreach ($classIds as $classId) {
                         $attendance->class_id = $classId;
                     }
+                    foreach ($faculityIds as $faculityId) {
+                        $attendance->faculity_id = $faculityId;
+                    }
+                    foreach ($sectiondIds as $sectiondId) {
+                        $attendance->section_id = $sectiondId;
+                    }
                     $attendance->save();
+                    // dd($attendance);
                 }
             }
-
             return redirect()->back()->with('success', 'Attendance marked successfully');
         } else {
             $students = Student::all();
@@ -210,19 +216,22 @@ class AttendenceController extends Controller
 
     public function report(Request $request)
     {
+        $faculityId = $request->input('faculity_id');
         $classId = $request->input('class_id');
         $sectionId = $request->input('section_id');
         $selectedMonth = $request->input('month');
         $selectedYear = $request->input('year');
         $attendanceReport = Attendence::with('student')
-            ->whereHas('student', function ($query) use ($classId, $sectionId) {
+            ->whereHas('student', function ($query) use ($classId, $faculityId, $sectionId) {
                 $query->where('class_id', $classId)
+                    ->where('faculity_id', $faculityId)
                     ->where('section_id', $sectionId);
             })
             ->whereYear('attendance_date', $selectedYear)
             ->whereMonth('attendance_date', $selectedMonth)
             ->get();
-
+             
+            // dd($attendanceReport);
 
         $attendanceData = [];
 
@@ -242,11 +251,13 @@ class AttendenceController extends Controller
 
         $classes = Classs::all();
         $sections = Section::all();
+        $facts = Faculity::all();
 
         $mm = Attendence::with('student')
-            ->select('student_id', 'class_id', 'attendance_type')
-            ->whereHas('student', function ($query) use ($classId, $sectionId) {
+            ->select('student_id', 'class_id', 'faculity_id', 'attendance_type')
+            ->whereHas('student', function ($query) use ($classId, $sectionId, $faculityId) {
                 $query->where('class_id', $classId)
+                    ->where('faculity_id', $faculityId)
                     ->where('section_id', $sectionId);
             })
             ->get()
@@ -262,11 +273,10 @@ class AttendenceController extends Controller
         // dd($mm);
 
 
-
-
+ 
 
         // dd('assignedClassIds:', $assignedClassIds, 'assignedSectionIds', $assignedSectionIds, 'students', $studentss);
 
-        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear'));
+        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'facts', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear'));
     }
 }

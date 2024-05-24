@@ -39,7 +39,7 @@
     </style>
 </head>
 
-<body>
+<body onload="ShowTost()">
     @include('Admin.layout.sidebar')
     @include('Admin.layout.header')
     <div class="main-wrapper" style="">
@@ -72,11 +72,7 @@
     {{-- @include('Admin.Role_Permission_Manage.editRole') --}}
     @yield('js')
     <script>
-         function ShowTost() {
-             window.onload = () => {
-            }
-            
-        }
+        
         
         document.addEventListener("DOMContentLoaded", function() {
             // $('.photo').dropify();

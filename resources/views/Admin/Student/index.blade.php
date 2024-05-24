@@ -147,10 +147,13 @@
                                     $user = Auth::user();
                                     $teacher = $user->teacher;
                                     $assignedClassIds = explode(',', $teacher->class_id);
+                                    $assignedFaculityIds = explode(',', $teacher->faculity_id);
                                     $assignedSectionIds = explode(',', $teacher->section_id);
                                     $assignedClassIds = array_map('intval', $assignedClassIds);
+                                    $assignedFaculityIds = array_map('intval', $assignedFaculityIds);
                                     $assignedSectionIds = array_map('intval', $assignedSectionIds);
                                     $students = DB::table('students')
+                                        ->whereIn('faculity_id', $assignedFaculityIds)
                                         ->whereIn('class_id', $assignedClassIds)
                                         ->whereIn('section_id', $assignedSectionIds)
                                         ->get();

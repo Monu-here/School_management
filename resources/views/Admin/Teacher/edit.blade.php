@@ -53,234 +53,210 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <div class="card">
-                <div class="card-body">
+            <div class=" ">
+                <div class="">
                     <form action="{{ route('admin.teacher.teacheredit', ['teacher' => $teacher->id]) }}" id="formSubmit"
                         method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <marquee behavior="smooth" direction="left">Here Class and Section will Assign which show in
-                                teacher dashboard which student is belong to that assign class</marquee>
-                            <div class="col-12">
-                                <h5 class="form-title"><span>Teacher Information</span></h5>
-                            </div>
-                            <hr>
-                            <div class="col-md-3">
-                                <div class="form-group local-forms">
-                                    <label>Image <span class="login-danger">*</span></label>
-
-                                    <input required type="file" name="image" id="image" class="form-control photo"
-                                        accept="image/*" data-default-file={{ asset($teacher->image) }}>
-                                    <br>
-                                    <input required type="file" class="form-control photo" name="cv"
-                                        accept="image/*" data-default-file={{ asset($teacher->cv) }}>
-                                </div>
-
-                            </div>
-                            <div class="col-md-9">
-                                <div class="row">
-                                    <br>
-
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label for="name">Name</label>
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                value="{{ $teacher->name }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Gender <span class="login-danger">*</span></label>
-                                            <select class="form-control" id="gender" name="gender"
-                                                value="{{ old('gender') }}">
-                                                <option selected disabled>Select Gender</option>
-                                                <option value="male" {{ $teacher->gender == 'male' ? 'selected' : '' }}>
-                                                    Male</option>
-                                                <option value="female" {{ $teacher->gender == 'female' ? 'selected' : '' }}>
-                                                    Female</option>
-                                                <option value="other" {{ $teacher->gender == 'other' ? 'selected' : '' }}>
-                                                    Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Working Hours <span class="login-danger">*</span></label>
-                                            <select class="form-control" id="workinghrs" name="workinghrs"
-                                                value="{{ old('workinghrs') }}">
-                                                <option selected disabled>Select Working Hours</option>
-                                                <option value="Part-time"
-                                                    {{ $teacher->workinghrs == 'Part-time' ? 'selected' : '' }}>
-                                                    Male</option>
-                                                <option value="Full-time"
-                                                    {{ $teacher->workinghrs == 'Full-time' ? 'selected' : '' }}>
-                                                    Female</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4 ">
-                                        <div class="form-group local-forms">
-                                            <label>Class Assign <span class="login-danger">*</span></label>
-                                            <select class="form-control" name="class_id[]" id="class">
-                                                <option selected disabled>Select Class</option>
-                                                @foreach ($classes as $class)
-                                                    <option value="{{ $class->id }}"
-                                                        {{ collect(old('class_id'))->contains($class->id) ? 'selected' : '' }}>
-                                                        {{ $class->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <br>
-                                            <button type="button" class="btn btn-success" id="addclass">Add
-                                                More Class</button>
-                                            <input type="hidden" name="class_id" id="hiddenclass" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4" id="userFieldsContainer">
-                                        <div class="form-group local-forms">
-                                            <label>Section <span class="login-danger">*</span></label>
-                                            <select class="form-control" name="section_id[] " id="new">
-                                                <option selected disabled>Select Section</option>
-
-                                                @foreach ($sections as $section)
-                                                    <option value="{{ $section->id }}"
-                                                        {{ collect(old('section_id'))->contains($section->id) ? 'selected' : '' }}>
-                                                        {{ $section->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <br>
-                                            <button type="button" class="btn btn-success" id="addUser">Add
-                                                More Section</button>
-                                            <input type="hidden" name="section_id" id="hiddensection" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Date Of Birth <span class="login-danger">*</span></label>
-                                            <input type="date" class="form-control" id="dob" name="dob"
-                                                value="{{ $teacher->dob }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Email <span class="login-danger"></span></label>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                value="{{ $teacher->email }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Phone Number <span class="login-danger"></span></label>
-                                            <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                id="number" name="number" value="{{ $teacher->number }}">
-
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Address <span class="login-danger"></span></label>
-                                            <input type="text" class="form-control" id="address" name="address"
-                                                value="{{ $teacher->address }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Joinign Date <span class="login-danger"></span></label>
-                                            <input type="text" class="form-control" id="jd" name="jd"
-                                                value="{{ $teacher->jd }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Experience <span class="login-danger"></span></label>
-                                            <input type="text" class="form-control" id="exp" name="exp"
-                                                value="{{ $teacher->exp }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Qualification <span class="login-danger"></span></label>
-                                            <input type="text" class="form-control" id="qual" name="qual"
-                                                value="{{ $teacher->qual }}" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        {{-- <div class="card">
+                        <div class="card">
                             <div class="card-body">
-
                                 <div class="row">
+                                    <marquee behavior="smooth" direction="left">Here Class and Section will Assign which
+                                        show in
+                                        teacher dashboard which student is belong to that assign class</marquee>
                                     <div class="col-12">
-                                        <h5 class="form-title"><span>Teacher Login Details</span></h5>
+                                        <h5 class="form-title"><span>Teacher Information</span></h5>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group local-forms">
-                                            <label>Image <span class="login-danger">*</span></label>
-                                            <input type="file" class="form-control photo" name="images"
-                                                accept="image/*">
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-9">
+                                    <hr>
+                                    <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-12 col-sm-4">
+                                            <br>
+
+                                            <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>UesrName <span class="login-danger">*</span></label>
-                                                    <input type="text" id="formControlLg" class="form-control"
-                                                        name="name" />
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        value="{{ $teacher->name }}" required>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-4">
+                                            <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Phone Number <span class="login-danger">*</span></label>
+                                                    <label>Gender <span class="login-danger">*</span></label>
+                                                    <select class="form-control" id="gender" name="gender"
+                                                        value="{{ old('gender') }}">
+                                                        <option selected disabled>Select Gender</option>
+                                                        <option value="male"
+                                                            {{ $teacher->gender == 'male' ? 'selected' : '' }}>
+                                                            Male</option>
+                                                        <option value="female"
+                                                            {{ $teacher->gender == 'female' ? 'selected' : '' }}>
+                                                            Female</option>
+                                                        <option value="other"
+                                                            {{ $teacher->gender == 'other' ? 'selected' : '' }}>
+                                                            Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Working Hours <span class="login-danger">*</span></label>
+                                                    <select class="form-control" id="workinghrs" name="workinghrs"
+                                                        value="{{ old('workinghrs') }}">
+                                                        <option selected disabled>Select Working Hours</option>
+                                                        <option value="Part-time"
+                                                            {{ $teacher->workinghrs == 'Part-time' ? 'selected' : '' }}>
+                                                            Male</option>
+                                                        <option value="Full-time"
+                                                            {{ $teacher->workinghrs == 'Full-time' ? 'selected' : '' }}>
+                                                            Female</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Date Of Birth <span class="login-danger">*</span></label>
+                                                    <input type="date" class="form-control" id="dob" name="dob"
+                                                        value="{{ $teacher->dob }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Email <span class="login-danger"></span></label>
+                                                    <input type="email" class="form-control" id="email" name="email"
+                                                        value="{{ $teacher->email }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Phone Number <span class="login-danger"></span></label>
                                                     <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                        id="number" name="number" value="{{ old('number') }}"
-                                                        required>
-
+                                                        id="number" name="number" value="{{ $teacher->number }}">
 
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-4">
+                                            <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Email <span class="login-danger">*</span></label>
-                                                    <input type="email" class="form-control" id="email"
-                                                        name="email" value="{{ old('email') }}" required>
+                                                    <label>Address <span class="login-danger"></span></label>
+                                                    <input type="text" class="form-control" id="address" name="address"
+                                                        value="{{ $teacher->address }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Joinign Date <span class="login-danger"></span></label>
+                                                    <input type="text" class="form-control" id="jd" name="jd"
+                                                        value="{{ $teacher->jd }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Experience <span class="login-danger"></span></label>
+                                                    <input type="text" class="form-control" id="exp"
+                                                        name="exp" value="{{ $teacher->exp }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-3">
+                                                <div class="form-group local-forms">
+                                                    <label>Qualification <span class="login-danger"></span></label>
+                                                    <input type="text" class="form-control" id="qual"
+                                                        name="qual" value="{{ $teacher->qual }}" required>
                                                 </div>
                                             </div>
 
-                                            <div class="col-12 col-sm-4">
+                                            <div class="col-12 col-sm-2">
                                                 <div class="form-group local-forms">
-                                                    <label>Password <span class="login-danger">*</span></label>
-                                                    <div class="password-container">
-                                                        <input type="password" class="form-control"id="password-input"
-                                                            name="password" required>
-                                                        <i class="fas fa-eye password-toggle" id="password-toggle"
-                                                            onclick="togglePasswordVisibility()"></i>
-                                                    </div>
+                                                    <label>Assign faculty <span class="login-danger">*</span></label>
+                                                    <select class="form-control" name="faculity_id[]" id="faculty">
+                                                        <option value="" disabled selected>Select Faculty</option>
+                                                        @foreach ($facts as $fact)
+                                                            <option value="{{ $fact->id }}"
+                                                                {{ old('faculity_id') == $fact->id ? 'selected' : '' }}>
+
+                                                                 {{ $fact->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <br>
+                                                    <button type="button" class="btn btn-success" id="addFaculty">Add
+                                                        More
+                                                        Faculty</button>
+                                                    <input type="hidden" name="faculity_id" id="hiddenFaculty"
+                                                        value="">
+                                                     
+
                                                 </div>
                                             </div>
-                                            
+                                            <div class="col-12 col-sm-2">
+                                                <div class="form-group local-forms">
+                                                    <label>Assign Semester <span class="login-danger">*</span></label>
+                                                    <select class="form-control" name="class_id[]" id="class">
+                                                        <option value="" selected disabled>Select Class</option>
+                                                        @foreach ($classes as $class)
+                                                            <option value="{{ $class->id }}"
+                                                                {{ old('class_id') == $class->id ? 'selected' : '' }}>
+                                                                {{ $class->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <br>
+                                                    <button type="button" class="btn btn-success" id="addclass">Add
+                                                        More
+                                                        Class</button>
+                                                    <input type="hidden" name="class_id" id="hiddenclass"
+                                                        value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-2" id="userFieldsContainer">
+                                                <div class="form-group local-forms">
+                                                    <label>Section <span class="login-danger">*</span></label>
+                                                    <select class="form-control" name="section_id[]" id="new">
+                                                        <option value="" selected disabled>Select Section</option>
+                                                        @foreach ($sections as $section)
+                                                            <option value="{{ $section->id }}"
+                                                                {{ old('section_id') == $section->id ? 'selected' : '' }}>
+                                                                {{ $section->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <br>
+                                                    <button type="button" class="btn btn-success" id="addUser">Add
+                                                        More
+                                                        Section</button>
+                                                    <input type="hidden" name="section_id" id="hiddensection"
+                                                        value="">
+                                                </div>
+                                            </div>
 
                                         </div>
+
                                     </div>
                                 </div>
-
-                                
                             </div>
-                        </div> --}}
-                        <div class="col-3" id="selectedClassListContainer">
-                            <label for="">New Class Assign</label>
-                            <li id="selectedClassList"></li>
                         </div>
-                        <div class="col-3" id="selectedSubListContainer">
-                            <label for="">New Subject Assign</label>
-                            <li id="selectedSubList"></li>
+                       <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1" id="">
+                                    <span>Assign Faculity</span>
+                                    <ul id="selectedFacultyList"></ul>
+                                </div>
+                                <div class="col-md-2" id="">
+                                    <span>Assign Semester</span>
+                                    <ul id="selectedClassList"></ul>
+                                </div>
+                                <div class="col-md-1" id="">
+                                    <span>Assign Section</span>
+                                    <ul id="selectedSubList"></ul>
+        
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-3" id="selectedClassListContainer">
+                       </div>
+
+
+                        {{-- <div class="col-3" id="selectedClassListContainer">
                             <label for="">Selected Class</label>
                             <li id=" ">
                                 {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->class_id)) !!}
@@ -293,7 +269,7 @@
                                 {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->section->name)) !!}
 
                             </li>
-                        </div>
+                        </div> --}}
                         <button type="submit" class="btn btn-primary" onclick="edit()" id="saveBtn">Update</button>
                         <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
                     </form>
@@ -301,44 +277,20 @@
             </div>
         </div>
     </div>
-
+    <p id="new"></p>
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
-        // var data = {!! json_encode($teacher) !!};
-
         $(document).ready(function() {
             $('.photo').dropify();
+
+
+
         });
     </script>
     <script>
-        function populateYearDropdown() {
-            var currentYear = new Date().getFullYear();
-            var dropdown = document.getElementById("yearDropdown");
-
-            for (var year = 2000; year <= currentYear; year++) {
-                var option = document.createElement("option");
-                option.value = year;
-                option.text = year;
-                dropdown.add(option);
-            }
-        }
-
-        populateYearDropdown();
-
-        setInterval(function() {
-            var currentYear = new Date().getFullYear();
-            var dropdown = document.getElementById("yearDropdown");
-
-            if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
-                dropdown.options.length = 0;
-
-                populateYearDropdown();
-            }
-        }, 5000);
-
         const Msg = (msg = "Would you like to submit this student form  ? ") => {
             return prompt(msg) == 'yes';
             console.log(Msg);
@@ -373,20 +325,17 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#addclass').on('click', function() {
-                var selectedValue = $('#class option:selected').val();
-                if (selectedValue) {
-                    $('#selectedClassList').append('<li>' + selectedValue + '</li>');
-                }
-            });
-        });
-        $(document).ready(function() {
             var selectedSubjects = [];
 
             $('#addclass').on('click', function() {
-                var selectedValue = $('#class option:selected').val();
-                if (selectedValue) {
-                    selectedSubjects.push(selectedValue);
+                var selectedOption = $('#class option:selected');
+                var selectedValue = selectedOption.val();
+                var selectedText = selectedOption.text();
+                if (selectedValue && !selectedSubjects.some(e => e.id === selectedValue)) {
+                    selectedSubjects.push({
+                        id: selectedValue,
+                        name: selectedText
+                    });
                     updateSelectedSubjectsList();
                 }
             });
@@ -394,30 +343,34 @@
             function updateSelectedSubjectsList() {
                 $('#selectedClassList').empty();
                 selectedSubjects.forEach(function(subject) {
-                    $('#selectedClassList').append('<li>' + subject + '</li>');
+                    $('#selectedClassList').append('<li>' + subject.name + '</li>');
                 });
 
-                var cleanString = JSON.parse(JSON.stringify(selectedSubjects)).join(',');
-                cleanString = cleanString.replace(/["'\\]/g,
+                var cleanString = JSON.stringify(selectedSubjects.map(subject => subject.id)).replace(/["'\\[\]]/g,
                     '');
                 $('#hiddenclass').val(cleanString);
             }
         });
-        $(document).ready(function() {
-            $('#addUser').on('click', function() {
-                var selectedValue = $('#new option:selected').val();
-                if (selectedValue) {
-                    $('#selectedSubList').append('<li>' + selectedValue + '</li>');
-                }
-            });
-        });
+
+
+
+
+
+
+
+
         $(document).ready(function() {
             var selectedSubjects = [];
 
             $('#addUser').on('click', function() {
-                var selectedValue = $('#new option:selected').val();
-                if (selectedValue) {
-                    selectedSubjects.push(selectedValue);
+                var selectedOption = $('#new option:selected');
+                var selectedValue = selectedOption.val();
+                var selectedText = selectedOption.text();
+                if (selectedValue && !selectedSubjects.some(e => e.id === selectedValue)) {
+                    selectedSubjects.push({
+                        id: selectedValue,
+                        name: selectedText
+                    });
                     updateSelectedSubjectsList();
                 }
             });
@@ -425,13 +378,45 @@
             function updateSelectedSubjectsList() {
                 $('#selectedSubList').empty();
                 selectedSubjects.forEach(function(subject) {
-                    $('#selectedSubList').append('<li>' + subject + '</li>');
+                    $('#selectedSubList').append('<li>' + subject.name + '</li>');
                 });
 
-                var cleanString = JSON.parse(JSON.stringify(selectedSubjects)).join(',');
-                cleanString = cleanString.replace(/["'\\]/g,
+                var cleanString = JSON.stringify(selectedSubjects.map(subject => subject.id)).replace(/["'\\[\]]/g,
                     '');
                 $('#hiddensection').val(cleanString);
+            }
+        });
+
+
+
+
+
+
+        $(document).ready(function() {
+            var selectedSubjects = [];
+
+            $('#addFaculty').on('click', function() {
+                var selectedOption = $('#faculty option:selected');
+                var selectedValue = selectedOption.val();
+                var selectedText = selectedOption.text();
+                if (selectedValue && !selectedSubjects.some(e => e.id === selectedValue)) {
+                    selectedSubjects.push({
+                        id: selectedValue,
+                        name: selectedText
+                    });
+                    updateSelectedSubjectsList();
+                }
+            });
+
+            function updateSelectedSubjectsList() {
+                $('#selectedFacultyList').empty();
+                selectedSubjects.forEach(function(subject) {
+                    $('#selectedFacultyList').append('<li>' + subject.name + '</li>');
+                });
+
+                var cleanString = JSON.stringify(selectedSubjects.map(subject => subject.id)).replace(/["'\\[\]]/g,
+                    '');
+                $('#hiddenFaculty').val(cleanString);
             }
         });
     </script>

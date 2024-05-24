@@ -50,37 +50,25 @@ class ViewHomeworkSubmit extends Controller
 
     public function viewHomework()
     {
-        $addHomeworks = ViewHomeworkFromTeacher::with('teacher', 'classs')->get();
-        // $submittedHomeworks = DB::table('view_homework_from_teachers')
-        //     ->where('status', 'submitted')
-        //     ->get();
+        // Using Eloquent to get the homework with all relationships
+        $addHomeworks = ViewHomeworkFromTeacher::with('teacher', 'classs', 'section', 'student')->get();
 
-        // // Count the number of submitted records
-        // $submittedCount = $submittedHomeworks->count();
-
-        // // Display specific student details if needed
-        // $submittedStudents = $submittedHomeworks->pluck('student_id');
-
-        // dd([
-        //     'submittedCount' => $submittedCount,
-        //     'submittedStudents' => $submittedStudents
-        // ]);
-
-        
         $user = Auth::user();
         $student = $user->student;
         $assignedClassIds = explode(',', $student->class_id);
         $assignedSectionIds = explode(',', $student->section_id);
         $assignedClassIds = array_map('intval', $assignedClassIds);
         $assignedSectionIds = array_map('intval', $assignedSectionIds);
-        $view_homework_from_teachers = DB::table('view_homework_from_teachers')
-        ->whereIn('class_id', $assignedClassIds)
-        ->whereIn('section_id', $assignedSectionIds)
-        ->get();
-        
-        // dd($student,$assignedClassIds,$assignedSectionIds,$view_homework_from_teachers);
-        return view('Admin.HomeWork.Addformteacher.index', compact('addHomeworks','view_homework_from_teachers'));
+
+        // Using Eloquent to get filtered homework
+        $view_homework_from_teachers = ViewHomeworkFromTeacher::with('teacher', 'classs', 'section')
+            ->whereIn('class_id', $assignedClassIds)
+            ->whereIn('section_id', $assignedSectionIds)
+            ->get();
+
+        return view('Admin.HomeWork.Addformteacher.index', compact('addHomeworks', 'view_homework_from_teachers'));
     }
+
 
     public function updateStatus(Request $request, $homeworkId)
     {
@@ -102,6 +90,7 @@ class ViewHomeworkSubmit extends Controller
             $addHomework->teacher_id = $request->teacher_id;
             $addHomework->class_id = $request->class_id;
             $addHomework->section_id = $request->section_id;
+            $addHomework->faculity_id = $request->faculity_id;
             // $addHomework->student = $request->student;
             $addHomework->save();
             // dd($addHomework);
@@ -113,15 +102,16 @@ class ViewHomeworkSubmit extends Controller
             $sections = DB::table('sections')->get();
             $views = ViewHomeworkFromTeacher::with('classs', 'section')->get();
             // dd($views);
-            
+
             $user = Auth::user();
             $teacher = $user->teacher;
+            $assignedFaculityIds = explode(',', $teacher->faculity_id);
             $assignedClassIds = explode(',', $teacher->class_id);
             $assignedSectionIds = explode(',', $teacher->section_id);
             $assignedClassIds = array_map('intval', $assignedClassIds);
             $assignedSectionIds = array_map('intval', $assignedSectionIds);
-            // dd('assignedClassIds:', $assignedClassIds, 'assignedSectionIds', $assignedSectionIds, 'students',);
-            return view('Admin.HomeWork.Addformteacher.addhome', compact('students', 'classes', 'sections', 'views','assignedSectionIds','assignedClassIds'));
+            $assignedFaculityIds = array_map('intval', $assignedFaculityIds);
+            return view('Admin.HomeWork.Addformteacher.addhome', compact('students', 'classes', 'sections', 'views', 'assignedSectionIds', 'assignedClassIds', 'assignedFaculityIds'));
         }
     }
     public function show($viewId)

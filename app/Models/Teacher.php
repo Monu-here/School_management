@@ -25,11 +25,13 @@ class Teacher extends Model
         'section_id',
         'workinghrs',
         'sub',
+        'faculity_id'
     ];
     protected $casts = [
         'sub' => 'array',
     ];
-    public function teacherdailylog() {
+    public function teacherdailylog()
+    {
         return $this->hasMany(TeacherDailyLog::class);
     }
 
@@ -57,7 +59,11 @@ class Teacher extends Model
     // }
     public function student()
     {
-        return $this->hasMany(Student::class, 'class_id', 'class_id')->where('section_id', $this->section_id);
+        return $this->hasMany(Student::class, 'class_id', 'class_id')->where('section_id', $this->section_id)->where('faculity_id',$this->faculity_id);
     }
-       
+
+    public function faculity()
+    {
+        return $this->belongsTo(Faculity::class);
+    }
 }

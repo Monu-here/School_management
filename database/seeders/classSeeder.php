@@ -17,19 +17,14 @@ class classSeeder extends Seeder
         DB::table('classses')->delete();
 
         $classes = [
-            ['name' => 'Nursery'],
-            ['name' => 'LKG'],
-            ['name' => 'UKG'],
-            ['name' => 'ONE'],
-            ['name' => 'TWO'],
-            ['name' => 'THREE'],
-            ['name' => 'FOUR'],
-            ['name' => 'FIVE'],
-            ['name' => 'SIX'],
-            ['name' => 'SEVEN'],
-            ['name' => 'EIGHT'],
-            ['name' => 'NINE'],
-            ['name' => 'TEN'],
+            ['name' => 'Sem 1'],
+            ['name' => 'Sem 2'],
+            ['name' => 'Sem 3'],
+            ['name' => 'Sem 4'],
+            ['name' => 'Sem 5'],
+            ['name' => 'Sem 6'],
+            ['name' => 'Sem 7'],
+            ['name' => 'Sem 8'],
         ];
 
         foreach ($classes as $class) {
