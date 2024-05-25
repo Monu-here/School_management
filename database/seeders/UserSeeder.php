@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => 'SuperAdmin',
+            'name' => 'super',
         ]);
     }
 }
