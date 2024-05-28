@@ -46,12 +46,12 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Assigement Title</th>
-                                    <th>Assigement Content</th>
-                                    <th>Assigement Given By</th>
-                                    <th>Assigement Given to Semester</th>
-                                    <th>Assigement Givent To Semester section</th>
+                                    <th>SN</th>
+                                    <th>  Title</th>
+                                    <th>  Content</th>
+                                    <th> Given By</th>
+                                    <th> Given to Semester</th>
+                                    <th> Given To Semester section</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -67,9 +67,10 @@
                                         <td>{{ $view->teacher_id }}</td>
                                         <td>{{ $view->classs ? $view->classs->name : 'N/A' }}</td>
                                         <td>{{ $view->section ? $view->section->name : 'N/A' }}</td>
-                                        <td><span class="{{ $view->status == 'submitted' ? 'text-primary' : 'text-danger' }}">
-                                            {{ ucfirst($view->status) }}
-                                        </span></td>
+                                        <td><span
+                                                class="{{ $view->status == 'submitted' ? 'text-primary' : 'text-danger' }}">
+                                                {{ ucfirst($view->status) }}
+                                            </span></td>
 
                                     </tr>
                                 @endforeach

@@ -74,7 +74,7 @@
 
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label for="name">Name</label>
+                                                    <label for="name">Name <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="name" name="name"
                                                         value="{{ $teacher->name }}" required>
                                                 </div>
@@ -123,14 +123,14 @@
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Email <span class="login-danger"></span></label>
+                                                    <label>Email <span class="login-danger">*</span></label>
                                                     <input type="email" class="form-control" id="email" name="email"
                                                         value="{{ $teacher->email }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Phone Number <span class="login-danger"></span></label>
+                                                    <label>Phone Number <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
                                                         id="number" name="number" value="{{ $teacher->number }}">
 
@@ -138,28 +138,28 @@
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Address <span class="login-danger"></span></label>
+                                                    <label>Address <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="address" name="address"
                                                         value="{{ $teacher->address }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Joinign Date <span class="login-danger"></span></label>
+                                                    <label>Joinign Date <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="jd" name="jd"
                                                         value="{{ $teacher->jd }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Experience <span class="login-danger"></span></label>
+                                                    <label>Experience <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="exp"
                                                         name="exp" value="{{ $teacher->exp }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Qualification <span class="login-danger"></span></label>
+                                                    <label>Qualification <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="qual"
                                                         name="qual" value="{{ $teacher->qual }}" required>
                                                 </div>
@@ -174,7 +174,7 @@
                                                             <option value="{{ $fact->id }}"
                                                                 {{ old('faculity_id') == $fact->id ? 'selected' : '' }}>
 
-                                                                 {{ $fact->name }}
+                                                                {{ $fact->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -184,7 +184,7 @@
                                                         Faculty</button>
                                                     <input type="hidden" name="faculity_id" id="hiddenFaculty"
                                                         value="">
-                                                     
+
 
                                                 </div>
                                             </div>
@@ -235,25 +235,25 @@
                                 </div>
                             </div>
                         </div>
-                       <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-1" id="">
-                                    <span>Assign Faculity</span>
-                                    <ul id="selectedFacultyList"></ul>
-                                </div>
-                                <div class="col-md-2" id="">
-                                    <span>Assign Semester</span>
-                                    <ul id="selectedClassList"></ul>
-                                </div>
-                                <div class="col-md-1" id="">
-                                    <span>Assign Section</span>
-                                    <ul id="selectedSubList"></ul>
-        
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-1" id="">
+                                        <span>Assign Faculity</span>
+                                        <ul id="selectedFacultyList"></ul>
+                                    </div>
+                                    <div class="col-md-2" id="">
+                                        <span>Assign Semester</span>
+                                        <ul id="selectedClassList"></ul>
+                                    </div>
+                                    <div class="col-md-1" id="">
+                                        <span>Assign Section</span>
+                                        <ul id="selectedSubList"></ul>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                       </div>
 
 
                         {{-- <div class="col-3" id="selectedClassListContainer">
@@ -291,6 +291,20 @@
         });
     </script>
     <script>
+        var data = {!! json_encode($teacher) !!};
+        console.log(data); // Debugging: Log the data to the console to check its type and content
+
+        // if (Array.isArray(data)) {
+        var html = '';
+        data.forEach(e => {
+            html += `${e.id}`;
+            // });
+            $('#new').append(html); // Append the generated HTML to the element with ID 'new'
+            console.error('Data is not an array:', data);
+        });
+
+
+
         const Msg = (msg = "Would you like to submit this student form  ? ") => {
             return prompt(msg) == 'yes';
             console.log(Msg);
@@ -305,6 +319,7 @@
             setTimeout(function() {
                 event.target.submit();
             }, 2000);
+
         });
     </script>
     <script>

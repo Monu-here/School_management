@@ -65,7 +65,7 @@
                         <div class="page-header">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h3 class="page-title">Users</h3>
+                                    {{-- <h3 class="page-title">Users</h3> --}}
                                 </div>
                                 <div class="col-auto text-end float-end ms-auto download-grp">
                                         
@@ -78,27 +78,22 @@
                                 id="clienttable">
                                 <thead class="student-thread">
                                     <tr>
-                                        <th>
-                                            <div class="form-check check-tables">
-                                                <input class="form-check-input" type="checkbox" value="something" />
-                                            </div>
-                                        </th>
-                                        <th>#</th>
-                                        <th>Image</th>
+                                       
+                                        <th>SN</th>
+                                        <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                         <th class="d-none">Created day</th>
+                                         <th >Created at</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $i=1;
+                                    @endphp
                                     @foreach ($user->where('role_name', 'Teacher') as $teacher)
                                     <tr>
-                                            <td>
-                                                <div class="form-check check-tables">
-                                                    <input class="form-check-input" type="checkbox" value="something" />
-                                                </div>
-                                            </td>
-                                            <td>{{ $teacher->id }}</td>
+
+                                            <td>{{ $i++}}</td>
                                             <td>
                                                 <h2 class="table-avatar">
 

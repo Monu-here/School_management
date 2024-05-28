@@ -104,8 +104,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Teacher List</h3>
-                            </div>
+                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
                                 <a href="{{ route('admin.teacher.teacheradd') }}" class="btn btn-primary"><i
                                         class="fas fa-plus"></i></a>

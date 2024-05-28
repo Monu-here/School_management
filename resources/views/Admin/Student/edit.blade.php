@@ -70,7 +70,7 @@
                                     <br>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label for="symbool">Symbol No</label>
+                                            <label for="symbool">Symbol No <span class="login-danger">*</span> </label>
                                             <input  type="number" class="form-control" name="idno"
                                                 outline="hidden" value="{{ $student->idno }}" />
                                         </div>
@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label for="name">Name</label>
+                                            <label for="name">Name <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" id="name" name="name"
                                                 value="{{ $student->name }}" >
                                         </div>
@@ -105,16 +105,10 @@
                                                 value="{{ $student->dob }}" >
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Roll No <span class="login-danger">*</span></label>
-                                            <input type="number" class="form-control" id="roll" name="roll"
-                                                value="{{ $student->roll }}" >
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Religion <span class="login-danger">*</span></label>
+                                            <label>Religion </label>
                                             <select class="form-control" id="reli" name="reli"
                                                 value="{{ old('reli') }}">
                                                 <option selected disabled>Select Gender</option>
@@ -177,7 +171,7 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Blood Group <span class="login-danger">*</span></label>
+                                            <label>Blood Group  </label>
                                             <select class="form-control" name="blood_id">
                                                 <option selected disabled>Select Blood Group</option>
                                                 @foreach ($bloods as $blood)
@@ -188,16 +182,16 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-4">
+                                    {{-- <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Email <span class="login-danger"></span></label>
                                             <input type="email" class="form-control" id="email" name="email"
                                                 value="{{ $student->email }}" >
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Phone Number <span class="login-danger"></span></label>
+                                            <label>Phone Number <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
                                                 id="number" name="number" value="{{ $student->number }}">
 
@@ -205,14 +199,14 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Address <span class="login-danger"></span></label>
+                                            <label>Address <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" id="address" name="address"
                                                 value="{{ $student->address }}" >
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Admit Year <span class="login-danger"></span></label>
+                                            <label>Admit Year <span class="login-danger">*</span></label>
                                             <select id="yearDropdown" name="session_year" class="form-control">
                                                 <option selected disabled>Select Session Year</option>
                                                 @for ($year = date('Y'); $year >= 2000; $year--)
@@ -248,7 +242,7 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Father's Occupation<span class="login-danger">*</span></label>
+                                            <label>Father's Occupation<span class="login-danger"></span></label>
                                             <input type="text" class="form-control" id="f_occ" name="f_occ"
                                                 value="{{ $student->f_occ }}" >
                                         </div>
@@ -272,21 +266,21 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Mother Name<span class="login-danger">*</span></label>
+                                            <label>Mother Name<span class="login-danger"></span></label>
                                             <input type="text" class="form-control" id="m_name" name="m_name"
                                                 value="{{ $student->m_name }}" >
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Mother Occupation<span class="login-danger">*</span></label>
+                                            <label>Mother Occupation<span class="login-danger"></span></label>
                                             <input type="text" class="form-control" id="m_occ" name="m_occ"
                                                 value="{{ $student->m_occ }}" >
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Mother Phone Number<span class="login-danger">*</span></label>
+                                            <label>Mother Phone Number<span class="login-danger"></span></label>
                                             <input type="number" class="form-control" pattern="[1-9]{1}[0-9]{9}"
                                                 id="m_no" name="m_no" value="{{ $student->m_no }}" >
 
@@ -382,14 +376,14 @@
                                         <div class="form-group local-forms">
                                             <input  type="file" class="form-control photo" name="f_image"
                                                 accept="image/*" data-default-file={{asset($student->f_image)}}>
-                                            <label>Father Image<span class="login-danger">*</span></label>
+                                            <label>Father Image<span class="login-danger"></span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group local-forms">
                                             <input  type="file" class="form-control photo" name="m_image"
                                                 accept="image/*" data-default-file={{asset($student->m_image)}}>
-                                            <label>Mother Image<span class="login-danger">*</span></label>
+                                            <label>Mother Image<span class="login-danger"></span></label>
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-3">

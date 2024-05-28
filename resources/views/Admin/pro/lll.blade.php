@@ -42,6 +42,7 @@
                                             <label for="from_class" style="font-weight: 700; font-size: 12px">Choose
                                                 Faculity:</label>
                                             <select name="from_faculity" id="from_faculity" class="form-control">
+                                                <option value="" selected disabled>Select Faculity</option>
                                                 @foreach ($facu as $f)
                                                     <option value="{{ $f->id }}"
                                                         {{ isset($from_faculity) ? ($from_faculity == $f->id ? 'selected' : '') : (request('from_faculity') == $f->id ? 'selected' : '') }}>
@@ -55,6 +56,8 @@
                                             <label for="from_class" style="font-weight: 700; font-size: 12px">Choose
                                                 Semester:</label>
                                             <select name="from_class" id="from_class" class="form-control">
+                                                <option value="" selected disabled>Select Semester</option>
+
                                                 @foreach ($cc as $class)
                                                     <option value="{{ $class->id }}"
                                                         {{ isset($from_class) ? ($from_class == $class->id ? 'selected' : '') : (request('from_class') == $class->id ? 'selected' : '') }}>
@@ -68,6 +71,8 @@
                                             <label for="from_section" style="font-weight: 700; font-size: 12px">Choose
                                                 Section:</label>
                                             <select name="from_section" id="from_section" class="form-control">
+                                                <option value="" selected disabled>Select Section</option>
+
                                                 @foreach ($se as $sec)
                                                     <option
                                                         value="{{ $sec->id }}"{{ isset($from_section) ? ($from_section == $sec->id ? 'selected' : '') : (request('from_section') == $sec->id ? 'selected' : '') }}>
@@ -108,12 +113,7 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input d-block " type="checkbox" value="something" />
-                                        </div>
-                                    </th>
-                                    <th>#</th>
+                                    <th>SN</th>
                                     <th>Student Name</th>
                                     <th>Current Faculity</th>
                                     <th>Current Semester</th>
@@ -126,12 +126,7 @@
                                 @endphp
                                 @foreach ($students as $student)
                                     <tr>
-                                        <td>
-                                            <div class="form-check check-tables">
-                                                <input class="form-check-input d-block " type="checkbox"
-                                                    value="something" />
-                                            </div>
-                                        </td>
+                                      
                                         <td>{{ $i++ }}</td>
                                         <td>
                                             <h2 class="table-avatar">

@@ -38,4 +38,5 @@ class PermissionsServiceProvider extends ServiceProvider
             return "<?php endif; ?>";
         });
     }
+    
 }

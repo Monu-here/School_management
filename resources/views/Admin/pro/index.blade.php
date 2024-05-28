@@ -22,8 +22,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Students</h3>
-                            </div>
+                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
                                 <a href="{{ route('admin.promotion.index') }}" class="btn btn-primary"><i
@@ -37,12 +36,8 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input d-block " type="checkbox" value="something" />
-                                        </div>
-                                    </th>
-                                    <th>ID</th>
+                                    
+                                    <th>SN</th>
                                     <th>Name</th>
                                     <th>Faculity</th>
                                     <th> From Semester</th>
@@ -55,12 +50,7 @@
                                 @endphp
                                 @foreach ($pros as $pro)
                                     <tr>
-                                        <td>
-                                            <div class="form-check check-tables">
-                                                <input class="form-check-input d-block " type="checkbox"
-                                                    value="something" />
-                                            </div>
-                                        </td>
+                                         
                                         <td>{{ $i++ }}</td>
                                         <td>
                                             <h2 class="table-avatar">

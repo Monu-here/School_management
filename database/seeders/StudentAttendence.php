@@ -42,6 +42,7 @@ class StudentAttendence extends Seeder
                     $sa                  = new Attendence();
                     $sa->student_id      = $student->id;
                     $sa->attendance_type = $status;
+                    $sa->faculity_id = $student->faculity_id;
                     $sa->notes           = 'Sample Attendance for ' . $str;
                     $sa->attendance_date = $str;
                     $sa->save();

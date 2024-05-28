@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-sub-header">
-                <h3 class="page-title">Role Manager</h3>
+                <h3 class="page-title">Role Permission Manage</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">Role</a></li>
                     <li class="breadcrumb-item active">User Wise Role</li>
@@ -81,7 +81,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Users</h3>
+                                <h3 class="page-title">Permission / User</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
@@ -97,10 +97,9 @@
                                     <th>
                                         SN
                                     </th>
-                                    <th>Permission ID </th>
-                                    <th>User ID</th>
-                                    <th class="d-none">Created day</th>
-                                </tr>
+                                    <th>Permission Name </th>
+                                    <th>User Name</th>
+                                 </tr>
                             </thead>
                             <tbody>
                                 @php
@@ -143,6 +142,7 @@
                                             <td>
                                                 {{ $user->user_name }}
                                             </td>
+                                            
 
                                         </tr>
 

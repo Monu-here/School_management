@@ -268,18 +268,18 @@
                     <button class="hidden" id="login">Sign In</button>
                 </div>
                 <div class="toggle-panel toggle-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Register with your Personal details to use all of site features</p>
+                    {{-- <h1>Hello, Friend!</h1> --}}
+                    {{-- <p>Register with your Personal details to use all of site features</p> --}}
                 </div>
                 <img src="https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg"
                     alt="">
             </div>
         </div>
     </div>
-    {{-- @include('Admin.tostar.index') --}}
+    @include('Admin.tostar.index')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
    
-    <script>
+    {{-- <script>
         @if (Session::has('message') || Session::has('error') || Session::has('info') || Session::has('warning'))
             toastr.options = {
                 "closeButton": true,
@@ -302,9 +302,10 @@
                 toastr.warning("{{ session('warning') }}");
             @endif
         @endif
-    </script>
+    </script> --}}
 
     <script>
+        // ShowTost();
         function togglePasswordVisibilitydd() {
             var passwordInput = document.getElementById('password-input');
             var passwordToggle = document.getElementById('password-toggle');
@@ -319,6 +320,7 @@
                 passwordToggle.classList.add('fa-eye');
             }
         }
+
     </script>
 </body>
 

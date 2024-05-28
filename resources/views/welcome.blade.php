@@ -5,11 +5,6 @@
         $setting = getSetting();
 
     @endphp
-   
-
-
-
-
     <div class="page-header">
         <div class="row">
             <div class="col-sm-12">
@@ -100,7 +95,6 @@
                 </div>
             </div>
         @endrole()
-
         @role('Student')
             <div class="col-xl-3 col-sm-6 col-12 d-flex">
                 <div class="card bg-comman w-100">
@@ -221,25 +215,6 @@
                 </div>
             </div>
         @endrole
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         @role('Teacher')
             <div class="col-xl-3 col-sm-6 col-12 d-flex">
                 <div class="card bg-comman w-100">
@@ -273,11 +248,13 @@
                     <div class="card-body">
                         <div class="db-widgets d-flex justify-content-between align-items-center">
                             <div class="db-info">
-                                <h6>Teacher</h6>
+                                <h6>Teachers</h6>
                                 <h3>{{ $users->where('role_name', 'Teacher')->count() }}</h3>
                             </div>
                             <div class="db-icon">
-                                <img src="{{ asset('assets/newDesign/img/icons/dash-icon-02.svg') }}" alt="Dashboard Icon">
+                                <img width="48" height="48" src="https://img.icons8.com/color/48/teacher.png"
+                                    alt="teacher" />
+                                {{-- <img src="{{ asset('assets/newDesign/img/teacher.png') }}" alt="Dashboard Icon"> --}}
                             </div>
                         </div>
                     </div>
@@ -288,7 +265,7 @@
                     <div class="card-body">
                         <div class="db-widgets d-flex justify-content-between align-items-center">
                             <div class="db-info">
-                                <h6>Department</h6>
+                                <h6>Faculity</h6>
                                 <h3>{{ $deps->count() }}</h3>
                             </div>
                             <div class="db-icon">
@@ -303,11 +280,13 @@
                     <div class="card-body">
                         <div class="db-widgets d-flex justify-content-between align-items-center">
                             <div class="db-info">
-                                <h6>Class</h6>
+                                <h6>Semester</h6>
                                 <h3>{{ $cls->count() }}</h3>
                             </div>
                             <div class="db-icon">
-                                <img src="{{ asset('assets/newDesign/img/icons/dash-icon-04.svg') }}" alt="Dashboard Icon">
+
+                                <img width="64" height="64" src="https://img.icons8.com/wired/64/class.png"
+                                    alt="class" />
                             </div>
                         </div>
                     </div>
@@ -315,11 +294,8 @@
             </div>
         @endrole()
     </div>
-
     <div class="row">
-
         <div class="col-md-12 col-lg-6">
-
             <div class="card card-chart">
                 <div class="card-header">
                     <div class="row align-items-center">
@@ -630,7 +606,7 @@
             </div>
         </div>
     </div> --}}
-    </div>
+    {{-- </div> --}}
 
     </div>
 @endsection
@@ -664,7 +640,7 @@
             });
         });
 
-        ShowTost();
+        // ShowTost();
         @if (Session::has('status'))
             toastr.success("{{ session('status') }}");
         @endif

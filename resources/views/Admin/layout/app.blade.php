@@ -39,7 +39,7 @@
     </style>
 </head>
 
-<body onload="ShowTost()">
+<body>
     @include('Admin.layout.sidebar')
     @include('Admin.layout.header')
     <div class="main-wrapper" style="">
@@ -72,13 +72,20 @@
     {{-- @include('Admin.Role_Permission_Manage.editRole') --}}
     @yield('js')
     <script>
-        
-        
         document.addEventListener("DOMContentLoaded", function() {
             // $('.photo').dropify();
             ShowTost();
         });
     </script>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 </body>
 
 </html>

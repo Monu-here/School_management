@@ -13,8 +13,11 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create([
-            'name' => 'edit-post',
-        ]);
+        $pers = ['edit-post', 'delete-post', 'view-post'];
+        foreach ($pers as $per) {
+            Permission::create([
+                'name' => $per,
+            ]);
+        }
     }
 }

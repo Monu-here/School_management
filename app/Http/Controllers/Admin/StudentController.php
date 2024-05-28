@@ -66,7 +66,7 @@ class StudentController extends Controller
         $facts = Faculity::get();
 
 
-        return view('Admin.Student.index', compact('cls', 'sections', 'students', 'selectedSection', 'selectedName', 'selectedIdno','facts'));
+        return view('Admin.Student.index', compact('cls', 'sections', 'students', 'selectedSection', 'selectedName', 'selectedIdno', 'facts'));
     }
 
     public function add(Request $request)
@@ -75,27 +75,23 @@ class StudentController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'gender' => 'required|string|',
-                'dob' => 'required|date',
-                'roll' => 'required|integer',
+                'dob' => 'nullable|date',
                 'class_id' => 'required|exists:classses,id',
                 'email' => 'required|email|unique:users,email',
-                'email' => 'required|email|unique:students,email',
-                'number' => 'required|digits:10',
                 'address' => 'required|string|max:255',
-                'blood_id' => 'required|exists:bloods,id',
-                'reli' => 'required|string|max:50',
+                'blood_id' => 'nullable|exists:bloods,id',
+                'reli' => 'nullable|string|max:50',
                 'section_id' => 'required|exists:sections,id',
-                'session_year' => 'required|string|max:4',
+                'session_year' => 'string|max:4',
                 'parent_email' => 'required|email',
                 'f_name' => 'required|string|max:255',
-                'f_occ' => 'required|string|max:255',
-                'f_no' => 'required|digits:10',
-                'm_name' => 'required|string|max:255',
-                'm_occ' => 'required|string|max:255',
-                'm_no' => 'required|digits:10',
-                'image' => 'required|image',
+                'f_occ' => 'nullable|max:255',
+                'f_no' => 'digits:10',
+                'm_name' => 'nullable|string|max:255',
+                'm_occ' => 'nullable|max:255',
+                'm_no' => 'nullable|digits:10',
                 'f_image' => 'required|image',
-                'm_image' => 'required|image',
+                'm_image' => 'nullable|image',
                 'image' => 'required|image',
                 'idno' => 'required',
                 'password' => 'required|string|min:8|',
@@ -118,13 +114,10 @@ class StudentController extends Controller
                     'gender' => $request->gender,
                     'dob' => $request->dob,
                     'section' => 0,
-                    'roll' => $request->roll,
                     'class_id' => $request->class_id,
-                    'number' => $request->number,
                     'address' => $request->address,
                     'blood_id' => $request->blood_id,
                     'reli' => $request->reli,
-                    'email' => $request->email,
                     'section_id' => $request->section_id,
                     'session_year' => $request->session_year,
                     'parent_email' => $request->parent_email,
@@ -140,7 +133,7 @@ class StudentController extends Controller
                     'image' => $request->file('image')->store('uploads/student'),
                     'faculity_id' => $request->faculity_id,
                 ]);
-
+                // dd($student);    
                 $student->save();
                 return redirect()->back()->with('message', 'Student & User added successfully');
             } catch (\Exception $e) {
@@ -162,8 +155,7 @@ class StudentController extends Controller
             $student->name = $request->name;
             $student->gender = $request->gender;
             $student->dob = $request->dob;
-            $student->roll = $request->roll;
-            $student->class_id = $request->class_id;
+             $student->class_id = $request->class_id;
             $student->number = $request->number;
             $student->address = $request->address;
             $student->blood_id = $request->blood_id;
@@ -193,7 +185,7 @@ class StudentController extends Controller
 
             $student->save();
 
-            return redirect()->back()->with('message', 'Student & User  update successfully');
+            return redirect()->back()->with('message', 'Student  update successfully');
         } else {
             $classes = Classs::all();
             $bloods = DB::table('bloods')->get();
@@ -264,15 +256,14 @@ class StudentController extends Controller
                 'workinghrs' => $request->workinghrs,
                 'section_id' => $request->section_id,
                 'faculity_id' => $request->faculity_id,
-                'sub' => json_encode($request->input('sub')),
-            ]);
+             ]);
             $teacher->save();
             return redirect()->back()->with('message', 'Data added successfully');
         } else {
             $classes = Classs::all();
             $sections = Section::all();
             $facts = Faculity::all();
-            return view('Admin.Teacher.add', compact('classes', 'sections','facts'));
+            return view('Admin.Teacher.add', compact('classes', 'sections', 'facts'));
         }
     }
     public function teacherEdit(Request $request, Teacher $teacher)
@@ -318,7 +309,7 @@ class StudentController extends Controller
             $teacher->section_id = $request->section_id;
             $teacher->workinghrs = $request->workinghrs;
             $teacher->faculity_id = $request->faculity_id;
- 
+
             $teacher->sub = json_encode($request->input('sub'));
 
             $teacher->save();
@@ -328,7 +319,7 @@ class StudentController extends Controller
             $sections = Section::all();
             $facts = Faculity::all();
 
-            return view('Admin.Teacher.edit', compact('classes', 'sections', 'teacher','facts'));
+            return view('Admin.Teacher.edit', compact('classes', 'sections', 'teacher', 'facts'));
         }
     }
     public function teacherShow($teacher)

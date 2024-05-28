@@ -27,10 +27,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-sub-header">
-                    <h3 class="page-title">Role</h3>
+                    <h3 class="page-title">Roles & Permissions</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">Role</a></li>
-                        <li class="breadcrumb-item active">Role Manage</li>
+                        <li class="breadcrumb-item active">Permission</li>
                     </ul>
                 </div>
             </div>
@@ -39,7 +39,7 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-sm-6">
+        {{-- <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('admin.role-permission.addRole') }}" method="POST" id="roleSubmitForm">
@@ -51,8 +51,8 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6">
+        </div> --}}
+        {{-- <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('admin.role-permission.addPermission') }}" method="POST" id="formSubmit">
@@ -63,7 +63,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-sm-6">
             <div class="card card-table comman-shadow">
@@ -71,7 +71,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Users</h3>
+                                <h3 class="page-title">Roles</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
@@ -84,15 +84,11 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something" />
-                                        </div>
-                                    </th>
-                                    <th>#</th>
+                                   
+                                    <th>SN</th>
                                     <th>Role Name</th>
                                     <th>Action</th>
-                                    <th class="d-none">Created day</th>
+                                    <th class="">Created at</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,11 +97,7 @@
                                 @endphp
                                 @foreach ($roles as $role)
                                     <tr>
-                                        <td>
-                                            <div class="form-check check-tables">
-                                                <input class="form-check-input" type="checkbox" value="something" />
-                                            </div>
-                                        </td>
+                                         
 
                                         <td>
                                             {{ $i++ }}
@@ -149,7 +141,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Users</h3>
+                                <h3 class="page-title">Permissions</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
@@ -162,15 +154,11 @@
                             id="clienttables">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something" />
-                                        </div>
-                                    </th>
-                                    <th>#</th>
+                                     
+                                    <th>SN</th>
                                     <th>Permission Name</th>
                                     <th>Action</th>
-                                    <th class="d-none">Created day</th>
+                                    <th>Created at</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -179,11 +167,7 @@
                                 @endphp
                                 @foreach ($permissions as $permission)
                                     <tr>
-                                        <td>
-                                            <div class="form-check check-tables">
-                                                <input class="form-check-input" type="checkbox" value="something" />
-                                            </div>
-                                        </td>
+                                        
 
                                         <td>
                                             {{ $i++ }}

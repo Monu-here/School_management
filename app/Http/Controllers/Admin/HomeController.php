@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $students = DB::table('students')->get();
         $users = DB::table('users')->get();
-        $deps = DB::table('departments')->get();
+        $deps = DB::table('faculities')->get();
         $cls = DB::table('classses')->get();
         $events = DB::table('events')->get();
         // $assigns = DB::table('assign_subject_to_teachers')->get();

@@ -51,10 +51,10 @@
                                     Wise
                                     Role and Permission Manage</a>
                             </li>
-                            <li><a href="{{ route('admin.role-permission.assignPerRole') }}"
+                            {{-- <li><a href="{{ route('admin.role-permission.assignPerRole') }}"
                                     class="{{ Route::currentRouteNamed('admin.role-permission.assignPerRole') ? 'active' : '' }}">Permission
                                     To Role</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                 @endrole()
@@ -67,14 +67,13 @@
                             <li>
                                 <a href="{{ route('admin.user.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.user.index') ? 'active' : '' }}">User
-                                    <span class="badge badge-pill badge-success">{{ $user->count() }}</span>
+                                    {{-- <span class="badge badge-pill ">{{ $user->count() }}</span> --}}
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.user.roleTeacher') }}"
                                     class="{{ Route::currentRouteNamed('admin.user.roleTeacher') ? 'active' : '' }}">Teacher
-                                    <span
-                                        class="badge badge-pill badge-success">{{ $user->where('role_name', 'Teacher')->count() }}</span>
+                                    {{-- <span class="badge badge-pill badge-success">{{ $user->where('role_name', 'Teacher')->count() }}</span> --}}
                                 </a>
                             </li>
                         </ul>
@@ -208,7 +207,7 @@
                 @endrole()
 
 
-                @role('Teacher')
+                @role('Teacher','SuperAdmin')
                     <li class="submenu">
                         <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Daily Log</span> <span
                                 class="menu-arrow"></span></a>

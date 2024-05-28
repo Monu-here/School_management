@@ -17,11 +17,11 @@ return new class extends Migration
             $table->text('name');
             $table->text('gender');
             $table->date('dob');
-            $table->integer('roll');
             $table->text('email')->nullable();
             $table->text('number')->nullable();
             $table->text('image')->nullable();
             $table->text('section');
+            
             $table->timestamps();
         });
     }

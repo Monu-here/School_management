@@ -26,7 +26,7 @@
                     <h3 class="page-title">User</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Edit</a></li>
-                        <li class="breadcrumb-item active"> / {{ $user->name }}</li>
+                        <li class="breadcrumb-item active">  {{ $user->name }}</li>
                     </ul>
                 </div>
             </div>
@@ -34,6 +34,15 @@
     </div>
 @endsection
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="row">
         <div class="col-sm-12">
             <div class="card card-table comman-shadow">
@@ -41,18 +50,19 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Users</h3>
+                                <h3 class="page-title">User Edit</h3>
                             </div>
 
                         </div>
                     </div>
 
 
-                    <form method="POST" action="{{ route('admin.user.edit', ['user' => $user->id]) }}" id="formSubmit">
+                    <form method="POST" action="{{ route('admin.user.edit', ['user' => $user->id]) }}" id="formSubmit"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                             </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group local-forms">
                                     <label>Image <span class="login-danger">*</span></label>
@@ -107,7 +117,8 @@
                                             <label> New Password <span class="login-danger">*</span></label>
                                             <div class="password-container">
                                                 <input type="password" class="form-control" name="password"
-                                                    id="password-input" required placeholder="Enter Password" value="">
+                                                    id="password-input"  placeholder="Enter Password"
+                                                    value="">
                                                 <i class="fas fa-eye password-toggle" id="password-toggle"
                                                     onclick="togglePasswordVisibility()"></i>
                                             </div>
@@ -152,13 +163,10 @@
             }
         }
         document.getElementById('formSubmit').addEventListener('submit', function(event) {
-            event.preventDefault();
             var saveBtn = document.getElementById('saveBtn');
             saveBtn.disabled = true;
             saveBtn.innerHTML = 'Please wait...';
-            setTimeout(function() {
-                event.target.submit();
-            }, 2000);
+          
         });
     </script>
 @endsection

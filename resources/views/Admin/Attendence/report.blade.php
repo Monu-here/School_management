@@ -97,7 +97,7 @@
                                         <div class="form-group">
                                             <label for="faculity_id">Select Faculity:</label>
                                             <select name="faculity_id" id="faculity_id" class="form-control">
-                                                <option value="">Select Faculity</option>
+                                                <option value="" disabled>Select Faculity</option>
 
                                                 @foreach ($facts as $fact)
                                                     <option value="{{ $fact->id }}"
@@ -113,7 +113,7 @@
                                         <div class="form-group">
                                             <label for="class_id">Select Semester:</label>
                                             <select name="class_id" id="class_id" class="form-control">
-                                                <option value="">Select Semester</option>
+                                                <option value="" disabled>Select Semester</option>
 
                                                 @foreach ($classes as $class)
                                                     <option value="{{ $class->id }}"
@@ -129,7 +129,7 @@
                                         <div class="form-group">
                                             <label for="section_id">Select Section:</label>
                                             <select name="section_id" id="section_id" class="form-control">
-                                                <option value="">Select Section</option>
+                                                <option value="" disabled>Select Section</option>
 
                                                 @foreach ($sections as $section)
                                                     <option value="{{ $section->id }}"
@@ -186,7 +186,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="class_id" style="font-weight: 700; font-size: 12px">
+                                                <label for="faculity_id" > Select
                                                 Faculity:</label>
                                             <select name="faculity_id" id="faculity_id" class="form-control" required>
                                                 <option value="">Select Faculity</option>
@@ -202,9 +202,9 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <label for="class_id">Select Class:</label>
+                                            <label for="class_id">Select Semester:</label>
                                             <select name="class_id" id="class_id" class="form-control" required>
                                                 <option value="">Select Class</option>
                                                 @foreach ($assignedClassIds as $classId)
@@ -219,7 +219,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="section_id">Select Section:</label>
                                             <select name="section_id" id="section_id" class="form-control" required>
@@ -236,7 +236,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="month">Select Month:</label>
                                             <select name="month" id="month" class="form-control">
@@ -249,7 +249,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="year">Select Year:</label>
                                             <select name="year" id="year" class="form-control">
@@ -277,19 +277,18 @@
                 No attendance data found for the selected class and section.
             </div>
         @else
-        @endif
         <div class="card">
             <div class="card-body">
-                <h5>Attendance Report:</h5>
+                {{-- <h5>Attendance Report:</h5> --}}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="lateday d-flex mt-4">
-                            <div class="mr-3">Present: <span class="text-success">P</span></div>
-                            <div class="mr-3">Late: <span class="text-warning">L</span></div>
-                            <div class="mr-3">Absent: <span class="text-danger">A</span></div>
+                            <div class="mr-3">Present: <span class="badge badge-pill badge-success text-white">P</span></div>
+                             <div class="mr-3">Absent: <span class="badge badge-pill badge-danger text-white">A</span></div>
                         </div>
                     </div>
                 </div>
+                <br>
                 <div class="table-responsive" style="width: 100%">
                     <table id="clienttable" class="table">
                         <thead>
@@ -358,6 +357,8 @@
                 </div>
             </div>
         </div>
+        @endif
+       
 
         <h5 class="card card-body">Number of students present in the month</h5>
         <div class="section_of_present_absent">
@@ -370,7 +371,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>SN</th>
                                         <th>Student Name</th>
                                         <th>Total Present in Month</th>
                                     </tr>
@@ -378,6 +379,7 @@
                                 <tbody>
                                     @php
                                         $j = 1;
+                                        
                                     @endphp
                                     @foreach ($mm as $studentId => $attendance)
                                         @php

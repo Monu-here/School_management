@@ -96,13 +96,13 @@
                                         </div>
                                     </th>
 
-                                    <th>#</th>
+                                    <th>SN</th>
                                     <th>Name</th>
                                     <th>Date</th>
                                     <th>
                                         Description
                                     </th>
-                                    <th class="d-none">Created day</th>
+                                    <th class="">Created at</th>
 
 
                                 </tr>

@@ -49,12 +49,14 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Students</h3>
+                                {{-- <h3 class="page-title">Students</h3> --}}
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
-                                <a href="{{ route('admin.student.add') }}" class="btn btn-primary"><i
-                                        class="fas fa-plus"></i></a>
+                               @role('SuperAdmin')
+                               <a href="{{ route('admin.student.add') }}" class="btn btn-primary"><i
+                                class="fas fa-plus"></i></a>
+                               @endrole()
                             </div>
                         </div>
                     </div>
@@ -70,9 +72,11 @@
                                     <th>Name</th>
                                     <th>Section</th>
                                     <th>Class</th>
-                                    <th>Parent Name</th>
-                                    <th>Mobile Number</th>
-                                    <th>Address</th>
+                                    @role('SuperAdmin')
+                                        <th>Parent Name</th>
+                                        <th>Mobile Number</th>
+                                        <th>Address</th>
+                                    @endrole()
                                     <th class="text-end ">Action</th>
                                     <th class="text-end ">Created at</th>
 

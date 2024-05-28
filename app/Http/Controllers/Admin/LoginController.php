@@ -28,8 +28,8 @@ class LoginController extends Controller
                         return redirect()->route('admin.index')->with('message', 'Successfully logged in to Admin Dashboard');
                     case 'Teacher':
                         return redirect()->route('admin.index')->with('message', 'Successfully logged in to Teacher Dashboard');
-                    case 'HR':
-                        return redirect()->route('admin.index')->with('message', 'Successfully logged in to HR Dashboard');
+                    // case 'HR':
+                    //     return redirect()->route('admin.index')->with('message', 'Successfully logged in to HR Dashboard');
                     case 'Student':
                         return redirect()->route('admin.index')->with('message', 'Successfully logged in to Student Dashboard');
                     default:
@@ -47,7 +47,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('adminLogin.login');
+        return redirect()->route('adminLogin.login')->with('message', 'Logout Sucessfully');
     }
     public function index(Request $request)
 
@@ -69,7 +69,8 @@ class LoginController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:6',
                 'number' => 'required',
-             ]);
+                'image' => 'sometimes|files|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
+            ]);
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
@@ -81,8 +82,8 @@ class LoginController extends Controller
             $user->save();
             return redirect()->back()->with('message', 'User Add Successfully');
         } else {
-           $roles =  DB::table('roles')->get();
-            return view('Admin.UserAcc.add',compact('roles'));
+            $roles =  DB::table('roles')->get();
+            return view('Admin.UserAcc.add', compact('roles'));
         }
     }
     public function show($userId)
@@ -97,16 +98,26 @@ class LoginController extends Controller
     {
 
         if ($request->getMethod() == 'POST') {
-
-
+            // dd(($request->hasFile('image')));
+            // dd($request->all());
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'password' => 'nullable|string|min:6',
+                'number' => 'required',
+                'image' => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
             $user->name = $request->name;
-            $user->password = $request->password;
             $user->number = $request->number;
+            if ($request->filled('password')) {
+
+                $user->password = bcrypt($request->password);
+            }
             if ($request->hasFile('image')) {
                 $user->image = $request->image->store('uploads/user');
             }
 
-            $user->password = Hash::make($request->password);
+            // $user->password = Hash::make($request->password);
 
             $user->save();
             return redirect()->back()->with('message', 'User Add Successfully');

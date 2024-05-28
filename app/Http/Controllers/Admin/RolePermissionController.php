@@ -118,7 +118,7 @@ class RolePermissionController extends Controller
             }
             $user->roles()->syncWithoutDetaching($role);
             $user->permissions()->syncWithoutDetaching($permission);
-            return redirect()->back();
+            return redirect()->back()->with('message','Role added sucessfully');
         } else {
             $roles = Role::all();
             $permissions = Permission::all();

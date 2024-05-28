@@ -77,11 +77,11 @@ Route::prefix('dashboard')->name('admin.')->group(function () {
             Route::match(['GET', 'POST'], 'role-add', [RolePermissionController::class, 'addRole'])->name('addRole');
             Route::get('role-add/{role}', [RolePermissionController::class, 'delrole'])->name('delrole');
             Route::match(['GET', 'POST'], 'role-edit/{role}', [RolePermissionController::class, 'editRole'])->name('editRole');
-            Route::match(['GET', 'POST'], 'permission-add', [RolePermissionController::class, 'addPermission'])->name('addPermission');
+            // Route::match(['GET', 'POST'], 'permission-add', [RolePermissionController::class, 'addPermission'])->name('addPermission');
             Route::match(['GET', 'POST'], 'permission-edit/{permission}', [RolePermissionController::class, 'editPermission'])->name('editPermission');
             Route::get('permission-del/{permission}', [RolePermissionController::class, 'delPermission'])->name('delPermission');
             Route::match(['GET', 'POST'], 'give-role', [RolePermissionController::class, 'giveRole'])->name('giveRole');
-            Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assignPerRole');
+            // Route::match(['GET', 'POST'], 'assign-permission-to-role', [RolePermissionController::class, 'assignPerRole'])->name('assignPerRole');
         });
 
         Route::post('/check-in-out', [TeacherCheck_in_check_out::class, 'store'])->name('checkinout.store');

@@ -215,7 +215,7 @@
                             <div class="page-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="page-title">Students Attendence</h3>
+                                        {{-- <h3 class="page-title">Students Attendence</h3> --}}
                                     </div>
                                     <div class="d-flex gap-3">
                                         <p class=" rounded-circle"
@@ -234,7 +234,7 @@
                                 id="clienttable">
                                 <tr>
                                     <thead class="student-thread">
-                                        <th>ID</th>
+                                        <th>SN</th>
                                         <th>SYMBOOL NO</th>
                                         <th>NAME</th>
                                         <th>ATTENDENCE</th>
@@ -256,7 +256,7 @@
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
                                                     <td>
-                                                        {{ $student->roll }}
+                                                        {{ $student->idno }}
 
                                                     </td>
                                                     <td>

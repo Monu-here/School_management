@@ -61,7 +61,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Users</h3>
+                                <h3 class="page-title">Role / Permission</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
@@ -74,6 +74,7 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
+                                    <th>SN</th>
 
                                     <th>Role </th>
                                     <th>Permission</th>
@@ -82,8 +83,7 @@
                             </thead>
                             @php
 
-                                // Fetch all roles with their permissions in one query
-                                $roles_permissions = DB::table('roles')
+                                 $roles_permissions = DB::table('roles')
                                     ->leftJoin('roles_permissions', 'roles.id', '=', 'roles_permissions.role_id')
                                     ->leftJoin('permissions', 'roles_permissions.permission_id', '=', 'permissions.id')
                                     ->select(
@@ -95,8 +95,12 @@
                                     ->groupBy('role_id'); // Group by role_id for easy access
                             @endphp
                             <tbody>
+                                @php
+                                    $i=1;
+                                @endphp
                                 @foreach ($roles_permissions as $role_id => $permissions)
                                     <tr data-entry-id="{{ $role_id }}">
+                                        <td>{{$i++}}</td>
                                         <td>{{ $permissions->first()->role_name }}</td>
                                         <td>
                                             @foreach ($permissions as $permission)

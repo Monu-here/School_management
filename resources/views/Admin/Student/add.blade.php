@@ -26,30 +26,22 @@
     </style>
 @endsection
 @section('title')
-<div class="page-header">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="page-sub-header">
-                <h3 class="page-title">Students</h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('admin.student.index')}}">Student</a></li>
-                    <li class="breadcrumb-item active">Add</li>
-                </ul>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-sub-header">
+                    <h3 class="page-title">Students</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.student.index') }}">Student</a></li>
+                        <li class="breadcrumb-item active">Add</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+
 
     <div class="row">
         <div class="col-sm-12">
@@ -70,15 +62,15 @@
                                     <br>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label for="symbool">Symbol No</label>
+                                            <label for="symbool">Symbol No <span class="login-danger">*</span></label>
                                             <input required type="number" class="form-control" name="idno"
-                                                outline="hidden" />
+                                                outline="hidden" required />
                                         </div>
 
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label for="name">Name</label>
+                                            <label for="name">Name <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" id="name" name="name"
                                                 value="{{ old('name') }}" required>
                                         </div>
@@ -87,7 +79,7 @@
                                         <div class="form-group local-forms">
                                             <label>Gender <span class="login-danger">*</span></label>
                                             <select class="form-control" id="gender" name="gender"
-                                                value="{{ old('gender') }}">
+                                                value="{{ old('gender') }}" required>
                                                 <option selected disabled>Select Gender</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female
@@ -105,16 +97,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-sm-4">
+                                    <div class="col-12 col-sm-4 d-none">
                                         <div class="form-group local-forms">
                                             <label>Roll No <span class="login-danger">*</span></label>
-                                            <input type="number" class="form-control" id="roll" name="roll"
-                                                value="{{ old('roll') }}" required>
+                                            <input type="hidden" class="form-control" id="roll" name="roll"
+                                                value="{{ old('roll') }}" >
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Religion <span class="login-danger">*</span></label>
+                                            <label>Religion </label>
                                             <select class="form-control" id="reli" name="reli"
                                                 value="{{ old('reli') }}">
                                                 <option selected disabled>Select Gender</option>
@@ -127,7 +119,7 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Faculity <span class="login-danger">*</span></label>
-                                            <select class="form-control" name="faculity_id">
+                                            <select class="form-control" name="faculity_id" required>
                                                 <option selected disabled>Select Faculity</option>
                                                 @foreach ($faculitys as $faculity)
                                                     <option value="{{ $faculity->id }}"
@@ -139,9 +131,9 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Class <span class="login-danger">*</span></label>
-                                            <select class="form-control" name="class_id">
-                                                <option selected disabled>Select Class</option>
+                                            <label>Semester <span class="login-danger">*</span></label>
+                                            <select class="form-control" name="class_id" required>
+                                                <option selected disabled>Select Semester</option>
                                                 @foreach ($classes as $class)
                                                     <option value="{{ $class->id }}"
                                                         {{ old('class_id') == $class->id ? 'selected' : '' }}>
@@ -155,9 +147,8 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Section <span class="login-danger">*</span></label>
-                                            <select class="form-control" name="section_id">
+                                            <select class="form-control" name="section_id" required>
                                                 <option selected disabled>Select Section</option>
-
                                                 @foreach ($sections as $section)
                                                     <option value="{{ $section->id }}"
                                                         {{ old('section_id') == $section->id ? 'selected' : '' }}>
@@ -168,7 +159,7 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Blood Group <span class="login-danger">*</span></label>
+                                            <label>Blood Group </label>
                                             <select class="form-control" name="blood_id">
                                                 <option selected disabled>Select Blood Group</option>
                                                 @foreach ($bloods as $blood)
@@ -179,35 +170,27 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Email <span class="login-danger"></span></label>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                value="{{ old('email') }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Phone Number <span class="login-danger"></span></label>
+                                            <label>Phone Number<span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                id="number" name="number" value="{{ old('number') }}">
+                                                id="number" name="number" value="{{ old('number') }}" required>
 
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Address <span class="login-danger"></span></label>
+                                            <label>Address <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" id="address" name="address"
                                                 value="{{ old('address') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Admit Year <span class="login-danger"></span></label>
+                                            <label>Admit Year <span class="login-danger">*</span></label>
                                             <select id="yearDropdown" name="session_year" id="session_year"
                                                 class="form-control" value="{{ old('session_year') }}"></select>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -227,16 +210,16 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Father's Name<span class="login-danger">*</span></label>
+                                            <label>Father's Name <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" id="f_name" name="f_name"
                                                 value="{{ old('f_name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Father's Occupation<span class="login-danger">*</span></label>
+                                            <label>Father's Occupation</label>
                                             <input type="text" class="form-control" id="f_occ" name="f_occ"
-                                                value="{{ old('f_occ') }}" required>
+                                                value="{{ old('f_occ') }}">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
@@ -252,29 +235,29 @@
                                             {{-- //////////  --}}
                                             <label>Father Email<span class="login-danger">*</span></label>
                                             <input required type="text" id="formControlLg" class="form-control"
-                                                name="parent_email" Email" value="{{ old('parent_email') }}" />
+                                                name="parent_email" Email value="{{ old('parent_email') }}" />
                                             {{-- ////////////  --}}
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Mother Name<span class="login-danger">*</span></label>
+                                            <label>Mother Name</label>
                                             <input type="text" class="form-control" id="m_name" name="m_name"
-                                                value="{{ old('m_name') }}" required>
+                                                value="{{ old('m_name') }}"    >
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Mother Occupation<span class="login-danger">*</span></label>
+                                            <label>Mother Occupation</label>
                                             <input type="text" class="form-control" id="m_occ" name="m_occ"
-                                                value="{{ old('m_occ') }}" required>
+                                                value="{{ old('m_occ') }}"   >
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Mother Phone Number<span class="login-danger">*</span></label>
+                                            <label>Mother Phone Number</label>
                                             <input type="number" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                id="m_no" name="m_no" value="{{ old('m_no') }}" required>
+                                                id="m_no" name="m_no" value="{{ old('m_no') }}"    >
 
                                         </div>
                                     </div>
@@ -306,16 +289,13 @@
                                                         name="name" />
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-4">
+                                            {{-- <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
-                                                    <label>Phone Number <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                        id="number" name="number" value="{{ old('number') }}"
-                                                        required>
-
-
-                                                </div>
-                                            </div>
+                                                    <label>Phone Number <span class="login-danger">*</span></label> --}}
+                                            <input type="hidden" class="form-control" pattern="[1-9]{1}[0-9]{9}"
+                                                id="number" name="number" value="{{ old('number') }}">
+                                            {{-- </div>
+                                            </div> --}}
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Email <span class="login-danger">*</span></label>
@@ -365,26 +345,26 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group local-forms">
-                                            <input required type="file" class="form-control photo" name="f_image"
+                                            <input   type="file" class="form-control photo" name="f_image"
                                                 accept="image/*">
-                                            <label>Father Image<span class="login-danger">*</span></label>
+                                            <label>Father Image<span class="login-danger"></span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group local-forms">
-                                            <input required type="file" class="form-control photo" name="m_image"
+                                            <input   type="file" class="form-control photo" name="m_image"
                                                 accept="image/*">
-                                            <label>Mother Image<span class="login-danger">*</span></label>
+                                            <label>Mother Image<span class="login-danger"> </span></label>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    {{-- <div class="col-md-3">
                                         <div class="form-group local-forms">
                                             <label>User Login Image <span class="login-danger">*</span></label>
                                             <input type="file" class="form-control photo" name="images"
                                                 accept="image/*">
                                         </div>
 
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2">

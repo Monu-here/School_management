@@ -73,7 +73,7 @@
                                             <br>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label for="name">Name</label>
+                                                    <label for="name">Name <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="name" name="name"
                                                         value="{{ old('name') }}" required>
                                                 </div>
@@ -115,14 +115,14 @@
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Email <span class="login-danger"></span></label>
+                                                    <label>Email <span class="login-danger">*</span></label>
                                                     <input type="email" class="form-control" id="email" name="email"
                                                         value="{{ old('email') }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Phone Number <span class="login-danger"></span></label>
+                                                    <label>Phone Number <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
                                                         id="number" name="number" value="{{ old('number') }}">
 
@@ -130,28 +130,28 @@
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Address <span class="login-danger"></span></label>
+                                                    <label>Address <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="address" name="address"
                                                         value="{{ old('address') }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Joinign Date <span class="login-danger"></span></label>
+                                                    <label>Joinign Date <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="jd" name="jd"
                                                         value="{{ old('jd') }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Experience <span class="login-danger"></span></label>
+                                                    <label>Experience <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="exp"
                                                         name="exp" value="{{ old('exp') }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Qualification <span class="login-danger"></span></label>
+                                                    <label>Qualification <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" id="qual"
                                                         name="qual" value="{{ old('qual') }}" required>
                                                 </div>
@@ -229,7 +229,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 class="form-title"><span>Teacher Information</span></h5>
+                                        <h5 class="form-title"><span>User Information</span></h5>
                                     </div>
                                     <hr>
                                     <div class="col-md-12">
@@ -241,14 +241,14 @@
                                                         name="name" />
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-3">
+                                            {{-- <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
                                                     <label>Phone Number <span class="login-danger">*</span></label>
                                                     <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
                                                         id="number" name="number" value="{{ old('number') }}"
                                                         required>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
                                                     <label>Email <span class="login-danger">*</span></label>
@@ -297,13 +297,13 @@
                                         <h5 class="form-title"><span>Image Section</span></h5>
                                     </div>
                                     <hr>
-                                    <div class="col-md-3">
+                                    {{-- <div class="col-md-3">
                                         <div class="form-group local-forms">
                                             <label>User Login Image <span class="login-danger">*</span></label>
                                             <input type="file" class="form-control photo" name="images"
                                                 accept="image/*">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-3">
                                         <div class="form-group local-forms">
                                             <label>Teacher Image <span class="login-danger">*</span></label>
