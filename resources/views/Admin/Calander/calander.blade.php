@@ -24,12 +24,14 @@
                         <input type="date" class="form-control" id="end" name="end" required>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Event</button>
-                    <button type="button" class="btn btn-danger" id="deleteEventButton" style="display: none;"
-                        onclick="deleteEvent()">Delete Event</button>
-                </div>
+                @role('SuperAdmin')
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Event</button>
+                        <button type="button" class="btn btn-danger" id="deleteEventButton" style="display: none;"
+                            onclick="deleteEvent()">Delete Event</button>
+                    </div>
+                @endrole()
             </form>
         </div>
     </div>
