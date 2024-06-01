@@ -116,9 +116,11 @@ class LoginController extends Controller
             if ($request->hasFile('image')) {
                 $user->image = $request->image->store('uploads/user');
             }
+            if ($request->filled('image')) {
+                $user->password = $request->password;
+            }
 
-            // $user->password = Hash::make($request->password);
-
+ 
             $user->save();
             return redirect()->back()->with('message', 'User Add Successfully');
         } else {

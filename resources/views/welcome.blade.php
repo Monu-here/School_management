@@ -41,24 +41,22 @@
             <div class="col-xl-3 col-sm-6 col-12 d-flex">
                 <div class="card bg-comman w-100">
                     <div class="card-body">
-
-                        <div class="d-flex justify-content-around  mb-4 ">
-                            <form action="{{ route('admin.checkinout.store') }}" method="POST">
+                        <div class="d-flex justify-content-around mb-4">
+                            <form id="check-in-form" action="{{ route('admin.checkinout.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="action" value="check-in">
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                 <button type="submit" id="check-in-btn" class="btn">Check In</button>
                             </form>
 
-                            <form action="{{ route('admin.checkinout.store') }}" method="POST">
+                            <form id="check-out-form" action="{{ route('admin.checkinout.store') }}" method="POST"
+                                style="display: none;">
                                 @csrf
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-
                                 <input type="hidden" name="action" value="check-out">
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                 <button type="submit" id="check-out-btn" class="btn">Check Out</button>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -667,6 +665,43 @@
                 checkOutButton.classList.add('btn-secondary');
             }
         });
-        // notice showing End
+
+
+
+ 
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check local storage to see which form to show
+            if (localStorage.getItem('checkedIn') === 'true') {
+                document.getElementById('check-in-form').style.display = 'none';
+                document.getElementById('check-out-form').style.display = 'block';
+            } else {
+                document.getElementById('check-in-form').style.display = 'block';
+                document.getElementById('check-out-form').style.display = 'none';
+            }
+        });
+    
+        document.getElementById('check-in-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting immediately
+            // Hide the check-in form and show the check-out form
+            document.getElementById('check-in-form').style.display = 'none';
+            document.getElementById('check-out-form').style.display = 'block';
+            // Store state in local storage
+            localStorage.setItem('checkedIn', 'true');
+            // Submit the form after hiding the button
+            this.submit();
+        });
+    
+        document.getElementById('check-out-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting immediately
+            // Hide the check-out form and show the check-in form
+            document.getElementById('check-out-form').style.display = 'none';
+            document.getElementById('check-in-form').style.display = 'block';
+            // Store state in local storage
+            localStorage.setItem('checkedIn', 'false');
+            // Submit the form after hiding the button
+            this.submit();
+        });
     </script>
 @endsection

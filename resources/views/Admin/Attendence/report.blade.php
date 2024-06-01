@@ -272,11 +272,11 @@
                 </div>
             </div>
         </div>
-        @if ($attendanceReport->isEmpty())
-            <div class="alert alert-danger" role="alert">
+        {{-- @if ($attendanceReport->isEmpty()) --}}
+            {{-- <div class="alert alert-danger" role="alert">
                 No attendance data found for the selected class and section.
-            </div>
-        @else
+            </div> --}}
+        {{-- @else --}}
         <div class="card">
             <div class="card-body">
                 {{-- <h5>Attendance Report:</h5> --}}
@@ -357,7 +357,7 @@
                 </div>
             </div>
         </div>
-        @endif
+        {{-- @endif --}}
        
 
         <h5 class="card card-body">Number of students present in the month</h5>

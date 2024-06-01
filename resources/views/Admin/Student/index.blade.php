@@ -76,9 +76,10 @@
                                         <th>Parent Name</th>
                                         <th>Mobile Number</th>
                                         <th>Address</th>
+                                        <th >Action</th>
                                     @endrole()
-                                    <th class="text-end ">Action</th>
-                                    <th class="text-end ">Created at</th>
+                                    {{-- <th class="text-end ">Action</th> --}}
+                                    <th >Created at</th>
 
                                 </tr>
                             </thead>
@@ -121,7 +122,7 @@
                                                 {{ $className ?? 'N/A' }}
                                             </td>
 
-
+ 
                                             <td>{{ $student->f_name }}</td>
                                             <td>{{ $student->f_no }}</td>
                                             <td>{{ $student->address }}</td>
@@ -198,10 +199,10 @@
                                                     @endphp
                                                     {{ $className ?? 'N/A' }}
                                                 </td>
-                                                <td>{{ $ss->f_name }}</td>
+                                                {{-- <td>{{ $ss->f_name }}</td>
                                                 <td>{{ $ss->f_no }}</td>
-                                                <td>{{ $ss->address }}</td>
-                                                <td>
+                                                <td>{{ $ss->address }}</td> --}}
+                                                {{-- <td>
                                                     <a href="{{ route('admin.student.edit', ['student' => $ss->id]) }}"
                                                         class="btn btn-sm btn-primary"><i class="fa fa-pen text-white"></i></a>
                                                     <a href="{{ route('admin.student.studentShow', ['student' => $ss->id]) }}"
@@ -209,7 +210,7 @@
                                                     <a href="{{ route('admin.student.del', ['student' => $ss->id]) }}"
                                                         class="btn btn-sm btn-danger" onclick="return yes()"><i
                                                             class="fa fa-trash text-white"></i></a>
-                                                </td>
+                                                </td> --}}
                                                 <td> {{ getAgo($ss->created_at) }}
                                                 </td>
                                             </tr>

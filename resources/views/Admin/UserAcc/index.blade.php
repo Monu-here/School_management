@@ -145,10 +145,10 @@
 
                                         <td>
 
-                                            <a href="{{ route('admin.user.show', ['userId' => $user->id]) }}"
+                                            {{-- <a href="{{ route('admin.user.show', ['userId' => $user->id]) }}"
                                                 class="btn btn-sm btn-success">
                                                 <i class="fa fa-eye text-white "></i>
-                                            </a>
+                                            </a> --}}
                                             <a href="{{ route('admin.user.edit', ['user' => $user->id]) }}"
                                                 class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pen text-white "></i>

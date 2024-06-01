@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('admin.event') }}" method="POST">
+            <form id="eventForm" action="{{ route('admin.event') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -27,6 +27,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save Event</button>
+                    <button type="button" class="btn btn-danger" id="deleteEventButton" style="display: none;"
+                        onclick="deleteEvent()">Delete Event</button>
                 </div>
             </form>
         </div>
@@ -36,6 +38,7 @@
 <div class="container">
     <div id='calendarContainer'></div>
 </div>
+
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.10/index.global.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.10/index.global.min.js'></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -47,54 +50,56 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
 </script>
+
 <script>
+    let currentEventId = null;
+
     document.addEventListener('DOMContentLoaded', function() {
         var myModal = new bootstrap.Modal(document.getElementById('createEventModal'));
         var calendarEl = document.getElementById('calendarContainer');
-        var eventsData = {!! json_encode($events) !!}; // Convert PHP array to JavaScript variable
-        const url = 'http://127.0.0.1:8000/dashboard'; // Replace with your actual base URL
+        var eventsData = {!! json_encode($events) !!};
+
         var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
             showNonCurrentDates: false,
-            events: [
-                @foreach ($events as $event)
-                    {
-                        title: '{{ $event->title }}',
-                        start: '{{ $event->start }}',
-                        end: '{{ date('Y-m-d', strtotime($event->end . ' +1 day')) }}',
-                        eventId: '{{ $event->id }}'
-                    },
-                @endforeach
-            ],
+            events: eventsData.map(event => ({
+                title: event.title,
+                start: event.start,
+                end: new Date(new Date(event.end).setDate(new Date(event.end).getDate() +
+                    1)).toISOString().split('T')[0],
+                id: event.id
+            })),
             dateClick: function(info) {
                 myModal.show();
-                $('#start').val(info.dateStr);
-                $('#end').val('');
-                $('#end').attr('min', info.dateStr);
+                document.getElementById('eventForm').action = "{{ route('admin.event') }}";
+                document.getElementById('title').value = '';
+                document.getElementById('start').value = info.dateStr;
+                document.getElementById('end').value = '';
+                document.getElementById('end').setAttribute('min', info.dateStr);
+                document.getElementById('deleteEventButton').style.display = 'none';
+                currentEventId = null;
             },
-            eventContent: function(arg) {
-                const eventId = arg.event.extendedProps.eventId;
-                return {
-                    html: `<div class="" style="display:flex; justify-content:center;">
-                        <span class="event-title" data-toggle="modal" data-target="#createEventModal" data-title="${arg.event.title}">${arg.event.title}</span>
-                        </div>
-                        <div style="display:flex; justify-content:center;">
-                            @role('SuperAdmin')
-                            <a href="${url}/del-event/${eventId}" class="btn btn-danger">Del</a>
-                            @endrole()
-                        </div>`
-                };
-            }
-        });
-
-        // Event listener for event title click
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('event-title')) {
-                var eventTitle = event.target.getAttribute('data-title');
-                document.getElementById('title').value = eventTitle;
+            eventClick: function(info) {
+                var event = info.event;
+                document.getElementById('eventForm').action = "{{ route('admin.event') }}/" + event
+                    .id;
+                document.getElementById('title').value = event.title;
+                document.getElementById('start').value = event.startStr;
+                document.getElementById('end').value = event.endStr ? event.endStr.split('T')[0] :
+                    '';
+                document.getElementById('deleteEventButton').style.display = 'inline-block';
+                currentEventId = event.id;
                 myModal.show();
             }
         });
 
         calendar.render();
     });
+
+    function deleteEvent() {
+        if (currentEventId) {
+            var url = "{{ route('admin.eventDel', ':id') }}".replace(':id', currentEventId);
+            window.location.href = url;
+        }
+    }
 </script>

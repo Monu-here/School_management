@@ -19,7 +19,7 @@
     </style>
 @endsection
 @section('content')
-    <form method="POST" action="{{ route('admin.user.show', ['userId' => $user->id]) }}">
+    <form method="POST" action="{{ route('admin.user.show', ['userId' => $user->id]) }}" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-12">
@@ -58,33 +58,10 @@
                         </div>
                     </div>
                     <!-- ... (other form fields) ... -->
-                    <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                            <label>Role <span class="login-danger">*</span></label>
-                            <select class="form-control" name="role_name">
-                                <option disabled>Select Role</option>
-                                <option value="Admin"
-                                    {{ old('role_name', $user->role_name) == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="Teacher"
-                                    {{ old('role_name', $user->role_name) == 'Teacher' ? 'selected' : '' }}>Teacher</option>
-                                <option value="Student"
-                                    {{ old('role_name', $user->role_name) == 'Student' ? 'selected' : '' }}>Student</option>
-                            </select>
-                        </div>
-                    </div>
+                    
                     <!-- ... (other form fields) ... -->
 
-                    <div class="col-12 col-sm-4">
-                        <div class="form-group local-forms">
-                            <label>Password <span class="login-danger">*</span></label>
-                            <div class="password-container">
-                                <input type="password" class="form-control" name="password" id="password-input"
-                                    placeholder="Enter Password" value="{{ $user->password }}" readonly>
-                                <i class="fas fa-eye password-toggle" id="password-toggle"
-                                    onclick="togglePasswordVisibility()"></i>
-                            </div>
-                        </div>
-                    </div>
+                     
 
                     <div class="col-12">
                         <div class="student-submit mt-3">

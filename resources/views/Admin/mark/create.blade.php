@@ -16,7 +16,7 @@
         </div>
     @endsection
     @section('content')
-        <div class="container">
+        <div class=" ">
             <h2 class="ms-3"> Create Mark</h2>
 
 

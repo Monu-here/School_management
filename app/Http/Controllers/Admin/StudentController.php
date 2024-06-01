@@ -86,7 +86,7 @@ class StudentController extends Controller
                 'parent_email' => 'required|email',
                 'f_name' => 'required|string|max:255',
                 'f_occ' => 'nullable|max:255',
-                'f_no' => 'digits:10',
+                'f_no' => 'digia ts:10',
                 'm_name' => 'nullable|string|max:255',
                 'm_occ' => 'nullable|max:255',
                 'm_no' => 'nullable|digits:10',
@@ -155,7 +155,7 @@ class StudentController extends Controller
             $student->name = $request->name;
             $student->gender = $request->gender;
             $student->dob = $request->dob;
-             $student->class_id = $request->class_id;
+            $student->class_id = $request->class_id;
             $student->number = $request->number;
             $student->address = $request->address;
             $student->blood_id = $request->blood_id;
@@ -231,34 +231,40 @@ class StudentController extends Controller
                 'faculity_id' => 'required|exists:faculities,id',
 
             ]);
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'number' => $request->number,
-                'role_name' => 'Teacher',
-                'image' => $request->image->store('uploads/user'),
-            ]);
-            $teacher = new Teacher([
-                'user_id' => $user->id,
-                'image' => $request->image->store('uploads/teacher'),
-                'cv' => $request->cv->store('uploads/teacher'),
-                'name' => $request->name,
-                'gender' => $request->gender,
-                'dob' => $request->dob,
-                'email' => $request->email,
-                'number' => $request->number,
-                'address' => $request->address,
-                'jd' => $request->jd,
-                'exp' => $request->exp,
-                'qual' => $request->qual,
-                'class_id' => $request->class_id,
-                'workinghrs' => $request->workinghrs,
-                'section_id' => $request->section_id,
-                'faculity_id' => $request->faculity_id,
-             ]);
-            $teacher->save();
-            return redirect()->back()->with('message', 'Data added successfully');
+
+            try {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'number' => $request->number,
+                    'role_name' => 'Teacher',
+                    'image' => $request->image->store('uploads/user'),
+                ]);
+                $teacher = new Teacher([
+                    'user_id' => $user->id,
+                    'image' => $request->image->store('uploads/teacher'),
+                    'cv' => $request->cv->store('uploads/teacher'),
+                    'name' => $request->name,
+                    'gender' => $request->gender,
+                    'dob' => $request->dob,
+                    'email' => $request->email,
+                    'number' => $request->number,
+                    'address' => $request->address,
+                    'jd' => $request->jd,
+                    'exp' => $request->exp,
+                    'qual' => $request->qual,
+                    'class_id' => $request->class_id,
+                    'workinghrs' => $request->workinghrs,
+                    'section_id' => $request->section_id,
+                    'faculity_id' => $request->faculity_id,
+                ]);
+                //  dd($teacher);
+                $teacher->save();
+                return redirect()->back()->with('message', 'Teacher and User successfully added');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Error adding teacher & user: ' . $e->getMessage());
+            }
         } else {
             $classes = Classs::all();
             $sections = Section::all();
@@ -270,17 +276,17 @@ class StudentController extends Controller
     {
         if ($request->getMethod() == "POST") {
             $request->validate([
-                'name' => 'required|string|max:255',
-                'gender' => 'required|string|',
-                'dob' => 'required|date',
-                'class_id' => 'required|exists:classses,id',
-                'email' => 'required|email|unique:users,email',
-                'email' => 'required|email|unique:teachers,email',
-                'number' => 'required|digits:10',
-                'address' => 'required|string|max:255',
-                'section_id' => 'required|exists:sections,id',
-                'image' => 'required|image',
-                'cv' => 'required|image',
+                'name' => 'nullable|string|max:255',
+                'gender' => 'nullable|string|',
+                'dob' => 'nullable|date',
+                'class_id' => 'nullable|exists:classses,id',
+                'email' => 'nullable|email|unique:users,email',
+                'email' => 'nullable|email|unique:teachers,email',
+                'number' => 'nullable|digits:10',
+                'address' => 'nullable|string|max:255',
+                'section_id' => 'nullable|exists:sections,id',
+                'image' => 'nullable|image',
+                'cv' => 'nullable|image',
             ]);
             // $user = User::create([
             //     'name' => $request->name,

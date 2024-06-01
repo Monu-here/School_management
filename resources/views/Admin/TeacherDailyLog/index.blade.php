@@ -90,13 +90,9 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something" />
-                                        </div>
-                                    </th>
+                                   
 
-                                    <th>SN</th>
+                                    <th> SN</th>
                                     <th>Name</th>
                                     <th>Date</th>
                                     <th>
@@ -111,18 +107,14 @@
                                 @php $i = 1; @endphp
                                 @foreach ($dailys as $daily)
                                     <tr>
-                                        <td>
-                                            <div class="form-check check-tables">
-                                                <input class="form-check-input d-block" type="checkbox" value="something" />
-                                            </div>
-                                        </td>
+                                     
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $daily->name }}</td>
                                         <td>{{ $daily->date }}</td>
 
 
                                         <td>
-                                            {{ $daily->desc }}
+                                            {!!$daily->desc !!}
                                         </td>
                                         <td>
                                             {{ getAgo($daily->created_at) }}

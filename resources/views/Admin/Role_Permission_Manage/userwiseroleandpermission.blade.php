@@ -23,10 +23,19 @@
                     <div class="card">
                         <div class="card-body">
                             <label for="user">Choose User</label>
-                            <select name="user_id" id="user_id" class="form-control" required>
+                            <select name="user_id" id="user_id" class="form-control select2" required>
                                 <option value="null" selected disabled>Select User</option>
-
-                                @foreach ($users as $user)
+                                @foreach ($users->where('role_name', 'SuperAdmin') as $user)
+                                    <option value="{{ $user->id }}" old={{ $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}</option>
+                                @endforeach
+                                <option value="null"   disabled>Teacher</option>
+                                @foreach ($users->where('role_name', 'Teacher') as $user)
+                                    <option value="{{ $user->id }}" old={{ $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}</option>
+                                @endforeach
+                                <option value="null"   disabled>Student</option>
+                                @foreach ($users->where('role_name', 'Student') as $user)
                                     <option value="{{ $user->id }}" old={{ $user->id ? 'selected' : '' }}>
                                         {{ $user->name }}</option>
                                 @endforeach
