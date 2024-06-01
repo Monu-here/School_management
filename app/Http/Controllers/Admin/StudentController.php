@@ -86,7 +86,7 @@ class StudentController extends Controller
                 'parent_email' => 'required|email',
                 'f_name' => 'required|string|max:255',
                 'f_occ' => 'nullable|max:255',
-                'f_no' => 'digiats:10',
+                'f_no' => 'nullable|digits:10',
                 'm_name' => 'nullable|string|max:255',
                 'm_occ' => 'nullable|max:255',
                 'm_no' => 'nullable|digits:10',
