@@ -45,21 +45,32 @@ class TeacherController extends Controller
     }
     public function assign_subject(Request $request)
     {
-        $users = DB::table('teachers')->get(['id', 'name']);
-        // dd($users);
+        $users = DB::table('users')->where('role_name', 'Teacher')->get(['id', 'name']);
         $subjects = DB::table('subjects')->get();
-        $assigns = AssignSubjectToTeacher::with('user','subject')->get(); 
-        // dd($assigns);
-        return view('Assign_Subject.index', compact('users', 'subjects','assigns'));
+        $assigns = AssignSubjectToTeacher::with('user', 'subject')->get();
+        return view('Assign_Subject.index', compact('users', 'subjects', 'assigns'));
     }
     public function assign_subject_add(Request $request)
     {
         if ($request->getMethod() == "POST") {
+            // Retrieve selected subjects from the form
+
             $assign_subject = new AssignSubjectToTeacher();
             $assign_subject->user_id = $request->user_id;
-            $assign_subject->subject = $request->subject;
-             $assign_subject->save();
-            return redirect()->back()->with('message', 'Subject assign successfully to techer');
+            $assign_subject->subject = $request->subject; // Assign each subject
+            $assign_subject->save();
+
+
+            return redirect()->back()->with('message', 'Subjects assigned successfully to the teacher');
         }
+    }
+    public function assign_subject_del($id)
+    {
+        $assign_subject = AssignSubjectToTeacher::where('id', $id)->find($id);
+        if ($assign_subject == null) {
+            return redirect()->back()->with('message', 'Subject assign not found');
+        }
+        $assign_subject->delete();
+        return redirect()->back()->with('message', 'Subject deleted successfully');
     }
 }

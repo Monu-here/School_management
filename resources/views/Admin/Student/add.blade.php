@@ -41,8 +41,6 @@
     </div>
 @endsection
 @section('content')
-
-
     <div class="row">
         <div class="col-sm-12">
             <div class="">
@@ -101,21 +99,10 @@
                                         <div class="form-group local-forms">
                                             <label>Roll No <span class="login-danger">*</span></label>
                                             <input type="hidden" class="form-control" id="roll" name="roll"
-                                                value="{{ old('roll') }}" >
+                                                value="{{ old('roll') }}">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Religion </label>
-                                            <select class="form-control" id="reli" name="reli"
-                                                value="{{ old('reli') }}">
-                                                <option selected disabled>Select Gender</option>
-                                                <option value="hindu">Hindu</option>
-                                                <option value="Christian">Christian</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Faculity <span class="login-danger">*</span></label>
@@ -188,9 +175,10 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Admit Year <span class="login-danger">*</span></label>
-                                            <select id="yearDropdown" name="session_year" id="session_year"
-                                                class="form-control" value="{{ old('session_year') }}"></select>
+                                            <label>Intake Year <span class="login-danger">*</span></label>
+                                            <input type="text" class="form-control" name="session_year"
+                                                id="session_year">
+
                                         </div>
                                     </div>
                                 </div>
@@ -215,13 +203,7 @@
                                                 value="{{ old('f_name') }}" required>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Father's Occupation</label>
-                                            <input type="text" class="form-control" id="f_occ" name="f_occ"
-                                                value="{{ old('f_occ') }}">
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Father Phone Number<span class="login-danger">*</span></label>
@@ -233,7 +215,7 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             {{-- //////////  --}}
-                                            <label>Father Email<span class="login-danger">*</span></label>
+                                            <label>Email<span class="login-danger">*</span></label>
                                             <input required type="text" id="formControlLg" class="form-control"
                                                 name="parent_email" Email value="{{ old('parent_email') }}" />
                                             {{-- ////////////  --}}
@@ -243,24 +225,11 @@
                                         <div class="form-group local-forms">
                                             <label>Mother Name</label>
                                             <input type="text" class="form-control" id="m_name" name="m_name"
-                                                value="{{ old('m_name') }}"    >
+                                                value="{{ old('m_name') }}">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Mother Occupation</label>
-                                            <input type="text" class="form-control" id="m_occ" name="m_occ"
-                                                value="{{ old('m_occ') }}"   >
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Mother Phone Number</label>
-                                            <input type="number" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                id="m_no" name="m_no" value="{{ old('m_no') }}"    >
-
-                                        </div>
-                                    </div>
+                                     
+                                    
                                 </div>
                             </div>
                         </div>
@@ -308,7 +277,7 @@
                                                 <div class="form-group local-forms">
                                                     <label>Password <span class="login-danger">*</span></label>
                                                     <div class="password-container">
-                                                        <input type="password" class="form-control"id="password-input" rd"
+                                                        <input type="password" class="form-control"id="password-input"
                                                             name="password" required>
                                                         <i class="fas fa-eye password-toggle" id="password-toggle"
                                                             onclick="togglePasswordVisibility()"></i>
@@ -343,20 +312,7 @@
                                             <label>Student Image <span class="login-danger">*</span></label>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group local-forms">
-                                            <input   type="file" class="form-control photo" name="f_image"
-                                                accept="image/*">
-                                            <label>Father Image<span class="login-danger"></span></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group local-forms">
-                                            <input   type="file" class="form-control photo" name="m_image"
-                                                accept="image/*">
-                                            <label>Mother Image<span class="login-danger"> </span></label>
-                                        </div>
-                                    </div>
+                                   
                                     {{-- <div class="col-md-3">
                                         <div class="form-group local-forms">
                                             <label>User Login Image <span class="login-danger">*</span></label>
@@ -381,7 +337,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -392,30 +347,30 @@
         });
     </script>
     <script>
-        function populateYearDropdown() {
-            var currentYear = new Date().getFullYear();
-            var dropdown = document.getElementById("yearDropdown");
+        // function populateYearDropdown() {
+        //     var currentYear = new Date().getFullYear();
+        //     var dropdown = document.getElementById("yearDropdown");
 
-            for (var year = 2000; year <= currentYear; year++) {
-                var option = document.createElement("option");
-                option.value = year;
-                option.text = year;
-                dropdown.add(option);
-            }
-        }
+        //     for (var year = 2000; year <= currentYear; year++) {
+        //         var option = document.createElement("option");
+        //         option.value = year;
+        //         option.text = year;
+        //         dropdown.add(option);
+        //     }
+        // }
 
-        populateYearDropdown();
+        // populateYearDropdown();
 
-        setInterval(function() {
-            var currentYear = new Date().getFullYear();
-            var dropdown = document.getElementById("yearDropdown");
+        // setInterval(function() {
+        //     var currentYear = new Date().getFullYear();
+        //     var dropdown = document.getElementById("yearDropdown");
 
-            if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
-                dropdown.options.length = 0;
+        //     if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
+        //         dropdown.options.length = 0;
 
-                populateYearDropdown();
-            }
-        }, 5000);
+        //         populateYearDropdown();
+        //     }
+        // }, 5000);
 
         const Msg = (msg = "Would you like to submit this student form  ? ") => {
             return prompt(msg) == 'yes';

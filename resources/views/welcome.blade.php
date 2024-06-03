@@ -336,33 +336,52 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Title</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($notices as $notice)
+                <div class="card-body table-responsive">
+                    <div class="table-responsive">
+                        <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped"
+                            id="clienttable">
+                            <thead class="student-thread">
                                 <tr>
-                                    <td>{{ $notice->publish_on }}</td>
-                                    <td>{{ $notice->notice_title }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.showme', ['id' => $notice->id]) }}"
-                                            class="btn btn-primary btn-sm text-white view-notice"
-                                            data-notice-id="{{ $notice->id }}"
-                                            data-notice-title="{{ $notice->notice_title }}"
-                                            data-notice-message="{{ $notice->notice_message }}"
-                                            data-publish-on="{{ $notice->publish_on }}" data-bs-toggle="modal"
-                                            data-bs-target="#opennotice">View</a>
-                                    </td>
+                                    <th>
+                                        SN
+                                    </th>
+                                    {{-- <th>Publish Date</th> --}}
+                                    <th>Notice Date</th>
+                                    <th>Notice Title</th>
+                                    <th>Action</th>
+ 
+                                    {{-- <th class="text-end ">Action</th> --}}
+
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                             @php
+                                   $i=1;
+                             @endphp
+                                    @foreach ($notices as $notice)
+                                        <tr>
+                                            <td>{{ $i++ }}</td>
+                                            {{-- <td>{{ $notice->publish_on }}</td> --}}
+                                            <td>{{ $notice->notice_date }}</td>
+                                            <td>{{ $notice->notice_title }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.showme', ['id' => $notice->id]) }}"
+                                                    class="btn btn-primary btn-sm text-white view-notice"
+                                                    data-notice-id="{{ $notice->id }}"
+                                                    data-notice-title="{{ $notice->notice_title }}"
+                                                    data-notice-message="{{ $notice->notice_message }}"
+                                                    data-publish-on="{{ $notice->publish_on }}"
+                                                    data-notice-on="{{ $notice->notice_date }}" data-bs-toggle="modal"
+                                                    data-bs-target="#opennotice">View</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+ 
+
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 @include('Admin.Notice.show')
                 @include('Admin.Calander.show')
@@ -617,10 +636,12 @@
                 var noticeTitle = $(this).data('notice-title');
                 var noticeMessage = $(this).data('notice-message');
                 var publishOn = $(this).data('publish-on');
+                var noticeDate = $(this).data('notice-on');
                 // Set modal content
                 $('#modal-notice-title').text(noticeTitle);
-                $('#modal-notice-message').text(noticeMessage);
+                $('#modal-notice-message').html(noticeMessage);
                 $('#modal-publish-on').text(publishOn);
+                $('#modal-notice-on').text(noticeDate);
                 $('#opennotice').modal('show');
             });
         });
@@ -665,10 +686,6 @@
                 checkOutButton.classList.add('btn-secondary');
             }
         });
-
-
-
- 
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -681,7 +698,7 @@
                 document.getElementById('check-out-form').style.display = 'none';
             }
         });
-    
+
         document.getElementById('check-in-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the form from submitting immediately
             // Hide the check-in form and show the check-out form
@@ -692,7 +709,7 @@
             // Submit the form after hiding the button
             this.submit();
         });
-    
+
         document.getElementById('check-out-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the form from submitting immediately
             // Hide the check-out form and show the check-in form
@@ -702,6 +719,16 @@
             localStorage.setItem('checkedIn', 'false');
             // Submit the form after hiding the button
             this.submit();
+        });
+    </script>
+    <script>
+        $(function() {
+            $('#clienttable').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
         });
     </script>
 @endsection

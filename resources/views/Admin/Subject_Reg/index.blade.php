@@ -99,7 +99,7 @@
                                     <th>Student Roll no / Symbool No / Student code</th>
                                     <th>Regester Subject</th>
 
-                                    <th class="text-end ">Action</th>
+                                    <th class=" ">Action</th>
 
                                 </tr>
                             </thead>

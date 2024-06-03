@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             $table->string('address');
-            $table->string('reli');
-            $table->unsignedBigInteger('blood_id');
+             $table->unsignedBigInteger('blood_id');
         });
     }
 
@@ -25,8 +24,7 @@ return new class extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             $table->dropColumn('blood_id');
-            $table->dropColumn('reli');
-            $table->dropColumn('address');
+             $table->dropColumn('address');
         });
     }
 };

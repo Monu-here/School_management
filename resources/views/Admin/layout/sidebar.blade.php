@@ -43,12 +43,12 @@
                             <li class=""><a href="{{ route('admin.role-permission.addRole') }}"
                                     class="{{ Route::currentRouteNamed('admin.role-permission.addRole') ? 'active' : '' }}">Role
                                     &
-                                    Permission Mange</a>
+                                    Permission  </a>
                             </li>
 
                             <li><a href="{{ route('admin.role-permission.giveRole') }}"
                                     class="{{ Route::currentRouteNamed('admin.role-permission.giveRole') ? 'active' : '' }}">User
-                                    Wise
+                                     
                                     Role and Permission Manage</a>
                             </li>
                             {{-- <li><a href="{{ route('admin.role-permission.assignPerRole') }}"
@@ -80,43 +80,44 @@
                     </li>
                 @endrole()
 
-               @role('SuperAdmin','Teacher')
-               <li class="submenu">
 
-                <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
-                        class="menu-arrow"></span></a>
+                <li class="submenu">
 
-                <ul>
+                    <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
+                            class="menu-arrow"></span></a>
 
-                    <li><a href="{{ route('admin.student.index') }}"
-                            class="{{ Route::currentRouteNamed('admin.student.index') ? 'active' : '' }}">Student
-                            List</a></li>
-                    @role('SuperAdmin')
-                        <li><a href="{{ route('admin.promotion.list') }}"
-                                class="{{ Route::currentRouteNamed('admin.promotion.list') ? 'active' : '' }}">Student
-                                Promote</a></li>
-                    @endrole()
-                    <li><a href="{{ route('admin.atten.index') }}"
-                            class="{{ Route::currentRouteNamed('admin.atten.index') ? 'active' : '' }}">Student
-                            Attendence</a></li>
+                    <ul>
+
+                        <li><a href="{{ route('admin.student.index') }}"
+                                class="{{ Route::currentRouteNamed('admin.student.index') ? 'active' : '' }}">Student
+                                List</a></li>
+                        @role('SuperAdmin')
+                            <li><a href="{{ route('admin.promotion.list') }}"
+                                    class="{{ Route::currentRouteNamed('admin.promotion.list') ? 'active' : '' }}">Student
+                                    Promote</a></li>
+                        @endrole()
+                        @role('Teacher')
+                            <li><a href="{{ route('admin.atten.index') }}"
+                                    class="{{ Route::currentRouteNamed('admin.atten.index') ? 'active' : '' }}">Student
+                                    Attendence</a></li>
+                        @endrole()
 
 
-                    <li><a href="{{ route('admin.atten.report') }}"
-                            class="{{ Route::currentRouteNamed('admin.atten.report') ? 'active' : '' }}">Student
-                            Attendence Report</a></li>
+                        <li><a href="{{ route('admin.atten.report') }}"
+                                class="{{ Route::currentRouteNamed('admin.atten.report') ? 'active' : '' }}">Student
+                                Attendence Report</a></li>
 
-                </ul>
-            </li>
-               @endrole()
+                    </ul>
+                </li>
 
                 @role('SuperAdmin')
                     <li class="submenu">
-                        <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Staff</span> <span
+                        <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teacher</span> <span
                                 class="menu-arrow"></span></a>
                         <ul>
                             <li><a href="{{ route('admin.teacher.teacherIndex') }}"
                                     class="{{ Route::currentRouteNamed('admin.teacher.teacherIndex') ? 'active' : '' }}">Teacher
-                                    List</a></li>
+                                </a></li>
 
                         </ul>
                     </li>
@@ -141,7 +142,7 @@
                     </li>
                 @endrole() --}}
 
-                @role('SuperAdmin')
+                {{-- @role('SuperAdmin')
                     <li class="submenu">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> Examination</span> <span
                                 class="menu-arrow"></span></a>
@@ -162,7 +163,7 @@
                             </li>
                         </ul>
                     </li>
-                @endrole()
+                @endrole() --}}
 
 
                 @role('Student')
@@ -207,7 +208,7 @@
                 @endrole()
 
 
-                @role('Teacher','SuperAdmin')
+                @role('Teacher', 'SuperAdmin')
                     <li class="submenu">
                         <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Daily Log</span> <span
                                 class="menu-arrow"></span></a>
@@ -215,7 +216,7 @@
                             <li>
                                 <a href="{{ route('admin.teacher.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.teacher.index') ? 'active' : '' }}"> Teacher
-                                    DailyLog</a>
+                                     </a>
                             </li>
 
                             {{-- <li>
@@ -271,36 +272,36 @@
                 </li> --}}
 
 
-                
-               @role('SuperAdmin')
-               <li class="submenu">
-                <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Managament</span> <span
-                        class="menu-arrow"></span></a>
-                <ul>
-                    <li>
-                        <a href="{{ route('admin.notice.index') }}"
-                            class="{{ Route::currentRouteNamed('admin.notice.list') ? 'active' : '' }}"> Notice
-                            List</a>
-                    </li>
 
-                    <li>
-                        <a href="{{ route('admin.teacher.assign_subject') }}"
-                            class="{{ Route::currentRouteNamed('admin.teacher.assign_subject') ? 'active' : '' }}">Assign
-                            Subject To Techer
-                        </a>
+                @role('SuperAdmin')
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Managament</span> <span
+                                class="menu-arrow"></span></a>
+                        <ul>
+                            <li>
+                                <a href="{{ route('admin.notice.index') }}"
+                                    class="{{ Route::currentRouteNamed('admin.notice.list') ? 'active' : '' }}"> Notice
+                                    List</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('admin.teacher.assign_subject') }}"
+                                    class="{{ Route::currentRouteNamed('admin.teacher.assign_subject') ? 'active' : '' }}">Assign
+                                    Subject To Techer
+                                </a>
+                            </li>
+                            {{-- <li>
+                                <a href="{{ route('admin.mark.index') }}"
+                                    class="{{ Route::currentRouteNamed('admin.mark.list') ? 'active' : '' }}">Mark</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.department.index') }}"
+                                    class="{{ Route::currentRouteNamed('admin.department.index') ? 'active' : '' }}">Department
+                                </a>
+                            </li> --}}
+                        </ul>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.mark.index') }}"
-                            class="{{ Route::currentRouteNamed('admin.mark.list') ? 'active' : '' }}">Mark</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.department.index') }}"
-                            class="{{ Route::currentRouteNamed('admin.department.index') ? 'active' : '' }}">Department
-                        </a>
-                    </li>
-                </ul>
-            </li>
-               @endrole()
+                @endrole()
 
 
 

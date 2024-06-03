@@ -20,6 +20,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="ms-4">Assign Subject</h4>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -30,14 +32,12 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="date">Subject</label>
                                         <select name="subject[]" id="new" class="form-control">
                                             @foreach ($subjects as $subject)
                                                 <option value="{{ $subject->name }}">{{ $subject->name }}</option>
                                             @endforeach
                                         </select>
-                                        <button type="button" class="btn btn-success" id="addUser">Add
-                                            SubJect
+                                        <button type="button" class="btn btn-success" id="addUser">AddSubJect
                                         </button>
                                     </div>
                                 </div>
@@ -77,10 +77,7 @@
                                 <h3 class="page-title">Subject</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                                <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                        class="feather-list"></i></a>
-                                <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                        class="feather-grid"></i></a>
+
 
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
@@ -94,22 +91,26 @@
                             id="clienttable">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something" />
-                                        </div>
-                                    </th>
-                                    <th>ID</th>
-                                    <th>Name</th>
+                                    <th>SN</th>
+
+                                    <th>Teacher Name</th>
+                                    <th>Subject Name</th>
+                                    <th>Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($assigns as $assign )
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @foreach ($assigns as $assign)
                                     <tr>
-                                         <td></td>
-                                        <td>{{$assign->user->name}}</td>
-                                        <td>{{$assign->subject}}</td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $assign->user->name }}</td>
+                                        <td>{{ $assign->subject }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.teacher.assign_subject_del', ['id'=> $assign->id]) }}"> <button class="btn btn-danger">del</button></a>
+                                        </td>
                                     </tr>
                                 @endforeach
 
@@ -137,23 +138,16 @@
         // $(document).ready(function() {
         //     $('.photo').dropify();
         // });
-
-        $(document).ready(function() {
-            $('#addUser').on('click', function() {
-                var selectedValue = $('#new option:selected').val();
-                if (selectedValue) {
-                    $('#selectedSubList').append('<li>' + selectedValue + '</li>');
-                }
-            });
-        });
         $(document).ready(function() {
             var selectedSubjects = [];
 
             $('#addUser').on('click', function() {
                 var selectedValue = $('#new option:selected').val();
-                if (selectedValue) {
+                if (selectedValue && !selectedSubjects.includes(selectedValue)) {
                     selectedSubjects.push(selectedValue);
                     updateSelectedSubjectsList();
+                } else {
+                    alert('This subject is already selected.');
                 }
             });
 

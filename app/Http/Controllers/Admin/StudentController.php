@@ -80,18 +80,13 @@ class StudentController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'address' => 'required|string|max:255',
                 'blood_id' => 'nullable|exists:bloods,id',
-                'reli' => 'nullable|string|max:50',
                 'section_id' => 'required|exists:sections,id',
-                'session_year' => 'string|max:4',
+                'session_year' => 'string|max:20',
                 'parent_email' => 'required|email',
                 'f_name' => 'required|string|max:255',
-                'f_occ' => 'nullable|max:255',
                 'f_no' => 'nullable|digits:10',
                 'm_name' => 'nullable|string|max:255',
-                'm_occ' => 'nullable|max:255',
-                'm_no' => 'nullable|digits:10',
-                'f_image' => 'required|image',
-                'm_image' => 'nullable|image',
+
                 'image' => 'required|image',
                 'idno' => 'required',
                 'password' => 'required|string|min:8|',
@@ -117,25 +112,19 @@ class StudentController extends Controller
                     'class_id' => $request->class_id,
                     'address' => $request->address,
                     'blood_id' => $request->blood_id,
-                    'reli' => $request->reli,
                     'section_id' => $request->section_id,
                     'session_year' => $request->session_year,
                     'parent_email' => $request->parent_email,
                     'f_name' => $request->f_name,
-                    'f_occ' => $request->f_occ,
                     'f_no' => $request->f_no,
                     'm_name' => $request->m_name,
-                    'm_occ' => $request->m_occ,
                     'idno' => $request->idno,
-                    'm_no' => $request->m_no,
-                    'f_image' => $request->file('f_image')->store('uploads/student/father'),
-                    'm_image' => $request->file('m_image')->store('uploads/student/mother'),
                     'image' => $request->file('image')->store('uploads/student'),
                     'faculity_id' => $request->faculity_id,
                 ]);
                 // dd($student);    
                 $student->save();
-                return redirect()->back()->with('message', 'Student & User added successfully');
+                return redirect()->route('admin.student.index')->with('message', 'Student & User added successfully');
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Error adding student & user: ' . $e->getMessage());
             }
@@ -159,29 +148,19 @@ class StudentController extends Controller
             $student->number = $request->number;
             $student->address = $request->address;
             $student->blood_id = $request->blood_id;
-            $student->reli = $request->reli;
             $student->section_id = $request->section_id;
             $student->session_year = $request->session_year;
             $student->parent_email = $request->parent_email;
             $student->f_name = $request->f_name;
-            $student->f_occ = $request->f_occ;
             $student->f_no = $request->f_no;
             $student->m_name = $request->m_name;
-            $student->m_occ = $request->m_occ;
             $student->idno = $request->idno;
-            $student->m_no = $request->m_no;
             $student->faculity_id = $request->faculity_id;
 
             if ($request->hasFile('image')) {
                 $student->image = $request->image->store('uploads/student');
             }
 
-            if ($request->hasFile('f_image')) {
-                $student->f_image = $request->f_image->store('uploads/student/father');
-            }
-            if ($request->hasFile('m_image')) {
-                $student->m_image = $request->m_image->store('uploads/student/mother');
-            }
 
             $student->save();
 
@@ -261,7 +240,7 @@ class StudentController extends Controller
                 ]);
                 //  dd($teacher);
                 $teacher->save();
-                return redirect()->back()->with('message', 'Teacher and User successfully added');
+                return redirect()->route('admin.teacher.teacherIndex')->with('message', 'Teacher and User successfully added');
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Error adding teacher & user: ' . $e->getMessage());
             }
@@ -280,8 +259,7 @@ class StudentController extends Controller
                 'gender' => 'nullable|string|',
                 'dob' => 'nullable|date',
                 'class_id' => 'nullable|exists:classses,id',
-                'email' => 'nullable|email|unique:users,email',
-                'email' => 'nullable|email|unique:teachers,email',
+                'email' => 'sometimes|nullable|email|',
                 'number' => 'nullable|digits:10',
                 'address' => 'nullable|string|max:255',
                 'section_id' => 'nullable|exists:sections,id',
@@ -316,10 +294,9 @@ class StudentController extends Controller
             $teacher->workinghrs = $request->workinghrs;
             $teacher->faculity_id = $request->faculity_id;
 
-            $teacher->sub = json_encode($request->input('sub'));
 
             $teacher->save();
-            return redirect()->back()->with('message', 'Data added successfully');
+            return redirect()->route('admin.teacher.teacherIndex')->with('message', 'Teacher update successfully');
         } else {
             $classes = Classs::all();
             $sections = Section::all();

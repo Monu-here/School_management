@@ -22,9 +22,8 @@ class CommunicationController extends Controller
             $notice->notice_message = $request->notice_message;
             $notice->notice_date = $request->notice_date;
             $notice->publish_on = $request->publish_on;
-            $notice->user_id = $request->user_id;
             $notice->save();
-            return redirect()->back();
+            return redirect()->route('admin.notice.index')->with('message', 'Notice added sucessfully');
         } else {
             $users = DB::table('users')->get();
             return view('Admin.Notice.add', compact('users'));
@@ -37,9 +36,8 @@ class CommunicationController extends Controller
             $notice->notice_message = $request->notice_message;
             $notice->notice_date = $request->notice_date;
             $notice->publish_on = $request->publish_on;
-            $notice->user_id = $request->user_id;
             $notice->save();
-            return redirect()->back();
+            return redirect()->route('admin.notice.index')->with('message', 'Notice update sucessfully');
         } else {
             $users = DB::table('users')->get();
             return view('Admin.Notice.edit', compact('users', 'notice'));
@@ -50,5 +48,4 @@ class CommunicationController extends Controller
         DB::table('notices')->where('id', $notice)->delete();
         return redirect()->back()->with('message', 'Data Delete successfully');
     }
-
 }

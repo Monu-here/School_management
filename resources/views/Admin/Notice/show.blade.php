@@ -26,6 +26,11 @@
                                             <strong>Publish On:</strong> <span id="modal-publish-on"></span>
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 col-md-4 mt-10">
+                                        <div class="publish-on">
+                                            <strong>Notice Date:</strong> <span id="modal-notice-on"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

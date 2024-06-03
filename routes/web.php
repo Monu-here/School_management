@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('', [FrontHomeController::class, 'home'])->name('home')  ;
+Route::get('', [FrontHomeController::class, 'home'])->name('home');
 Route::get('about', [FrontHomeController::class, 'about'])->name('about');
 Route::get('course', [FrontHomeController::class, 'course'])->name('course');
 Route::get('team', [FrontHomeController::class, 'team'])->name('team');
@@ -63,7 +63,7 @@ Route::prefix('admin')->name('adminLogin.')->group(function () {
 // Route::prefix('AdminDashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 Route::get('monu', [HomeController::class, 'monu']);
 Route::prefix('dashboard')->name('admin.')->group(function () {
-    Route::group(['middleware' =>[ 'auth','role:SuperAdmin,Admin,Teacher,HR,Student']], function () {;
+    Route::group(['middleware' => ['auth', 'role:SuperAdmin,Admin,Teacher,HR,Student']], function () {;
 
         Route::get('', [HomeController::class, 'index'])->name('index');
         Route::get('student-setting', [HomeController::class, 'setting'])->name('setting');
@@ -179,6 +179,7 @@ Route::prefix('dashboard')->name('admin.')->group(function () {
             Route::match(['GET', 'POST'], '', [TeacherController::class, 'index'])->name('index');
             Route::match(['GET', 'POST'], 'assign-subject', [TeacherController::class, 'assign_subject'])->name('assign_subject');
             Route::match(['GET', 'POST'], 'assign-subject-add', [TeacherController::class, 'assign_subject_add'])->name('assign_subject_add');
+            Route::match(['GET', 'POST'], 'assign-subject-del/{id}', [TeacherController::class, 'assign_subject_del'])->name('assign_subject_del');
         });
         Route::prefix('time-table')->name('time-table')->group(function () {
             Route::match(['GET', 'POST'], '', [TeacherController::class, 'addtimetable'])->name('time');

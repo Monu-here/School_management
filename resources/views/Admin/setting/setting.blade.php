@@ -92,17 +92,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <select data-placeholder="Choose..." required name="despc" id="despc"
-                                    class="select-search form-control">
-                                    <option value="">Choose Your Session</option>
-                                    @php
-                                        $currentSession = $setting->current_session ?? '';
-                                    @endphp
-                                    @for ($y = date('Y', strtotime('- 5 years')); $y <= date('Y', strtotime('+ 2 years')); $y++)
-                                        <option {{ $currentSession == ($y -= 1) . '-' . ($y += 1) ? 'selected' : '' }}>
-                                            {{ ($y -= 1) . '-' . ($y += 1) }}</option>
-                                    @endfor
-                                </select>
+                                 
                                 <br>
 
                                 <div class="form-group mb-0">

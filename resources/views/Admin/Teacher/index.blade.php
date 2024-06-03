@@ -122,8 +122,8 @@
                                     <th>Name</th>
                                     <th>Working Hours</th>
 
-                                    <th class="text-end ">Action</th>
-                                    <th class="text-end ">Created at</th>
+                                    <th class=" ">Action</th>
+                                    <th class=" ">Created at</th>
 
                                 </tr>
                             </thead>

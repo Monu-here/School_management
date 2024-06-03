@@ -186,7 +186,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                                <label for="faculity_id" > Select
+                                            <label for="faculity_id"> Select
                                                 Faculity:</label>
                                             <select name="faculity_id" id="faculity_id" class="form-control" required>
                                                 <option value="">Select Faculity</option>
@@ -273,7 +273,7 @@
             </div>
         </div>
         {{-- @if ($attendanceReport->isEmpty()) --}}
-            {{-- <div class="alert alert-danger" role="alert">
+        {{-- <div class="alert alert-danger" role="alert">
                 No attendance data found for the selected class and section.
             </div> --}}
         {{-- @else --}}
@@ -283,8 +283,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="lateday d-flex mt-4">
-                            <div class="mr-3">Present: <span class="badge badge-pill badge-success text-white">P</span></div>
-                             <div class="mr-3">Absent: <span class="badge badge-pill badge-danger text-white">A</span></div>
+                            <div class="mr-3">Present: <span class="badge badge-pill badge-success text-white">P</span>
+                            </div>
+                            <div class="mr-3">Absent: <span class="badge badge-pill badge-danger text-white">A</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -358,7 +360,7 @@
             </div>
         </div>
         {{-- @endif --}}
-       
+
 
         <h5 class="card card-body">Number of students present in the month</h5>
         <div class="section_of_present_absent">
@@ -379,27 +381,39 @@
                                 <tbody>
                                     @php
                                         $j = 1;
-                                        
                                     @endphp
                                     @foreach ($mm as $studentId => $attendance)
                                         @php
                                             $student =
                                                 $attendanceReport->where('student_id', $studentId)->first()->student ??
                                                 null;
+                                            $attendanceCounts = ['P' => 0, 'A' => 0];  
+                                            if ($attendance) {
+                                                $attendance
+                                                    ->groupBy('attendance_type')
+                                                    ->each(function ($items, $type) use (&$attendanceCounts) {
+                                                        $attendanceCounts[$type] = $items->count();
+                                                    });
+                                            }
                                         @endphp
                                         <tr>
                                             <td>{{ $j++ }}</td>
+                                            <td>{{ $student ? $student->name : 'N/A' }}</td>
                                             <td>
-                                                {{ $student ? $student->name : 'N/A' }}
-                                            </td>
-                                            <td>
-                                                @php
-                                                    $attendanceCounts = $attendance
-                                                        ->groupBy('attendance_type')
-                                                        ->map->count();
-                                                @endphp
                                                 @foreach ($attendanceCounts as $attendanceType => $count)
-                                                    {{ $attendanceType }}: {{ $count }},
+                                                    @if ($attendanceType == 'P')
+                                                        <span class="badge badge-success">{{ $attendanceType }}:
+                                                            {{ $count }}</span>
+                                                    @elseif ($attendanceType == 'A')
+                                                        <span class="badge badge-danger">{{ $attendanceType }}:
+                                                            {{ $count }}</span>
+                                                    @else
+                                                        <span class="badge badge-secondary">{{ $attendanceType }}:
+                                                            {{ $count }}</span>
+                                                    @endif
+                                                    @if (!$loop->last)
+                                                        ,
+                                                    @endif
                                                 @endforeach
                                             </td>
                                         </tr>
@@ -411,6 +425,7 @@
                 </div>
             </div>
         </div>
+
 
     </div>
 @endsection

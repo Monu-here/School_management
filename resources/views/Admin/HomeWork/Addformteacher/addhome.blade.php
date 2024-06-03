@@ -26,13 +26,9 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Students</h3>
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
-                                <a href="students.html" class="btn btn-outline-gray me-2 active"><i
-                                        class="feather-list"></i></a>
-                                <a href="students-grid.html" class="btn btn-outline-gray me-2"><i
-                                        class="feather-grid"></i></a>
+
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     <i class="fas fa-plus"></i></a>
@@ -47,8 +43,8 @@
                             <thead class="student-thread">
                                 <tr>
                                     <th>SN</th>
-                                    <th>  Title</th>
-                                    <th>  Content</th>
+                                    <th> Title</th>
+                                    <th> Content</th>
                                     <th> Given By</th>
                                     <th> Given to Semester</th>
                                     <th> Given To Semester section</th>
@@ -58,6 +54,7 @@
                             <tbody>
                                 @php
                                     $i = 1;
+                                    $user = Auth::user();
                                 @endphp
                                 @foreach ($views as $view)
                                     <tr>

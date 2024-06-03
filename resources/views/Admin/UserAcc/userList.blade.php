@@ -82,8 +82,7 @@
                                         <th>SN</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Role</th>
-                                         <th >Created at</th>
+                                          <th >Created at</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -107,9 +106,7 @@
                                                 {{ $teacher->email }}
 
                                             </td>
-                                            <td>
-                                                {{ $teacher->role_name }}
-                                            </td>
+                                            
 
 
                                             <td>

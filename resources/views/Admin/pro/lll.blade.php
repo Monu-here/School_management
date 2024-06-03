@@ -83,8 +83,7 @@
                                     </div>
                                     <div class="col-md-3 mt-4">
                                         <div class="text-right mt-1">
-                                            <button type="submit" class="btn btn-primary" id="saveBtn">Manage
-                                                Promotion</button>
+                                            <button type="submit" class="btn btn-primary" id="saveBtn">Manage Promotion</button>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +125,7 @@
                                 @endphp
                                 @foreach ($students as $student)
                                     <tr>
-                                      
+
                                         <td>{{ $i++ }}</td>
                                         <td>
                                             <h2 class="table-avatar">
@@ -138,7 +137,7 @@
 
                                         </td>
                                         <td>
-                                            {{$student->faculity->name}}
+                                            {{ $student->faculity->name }}
                                         </td>
                                         <td>
 
@@ -153,11 +152,22 @@
                                         </td>
                                         <td>
                                             <button type="button" onclick="openPromoteForm({{ $student->id }})"
-                                                class="btn btn-success" data-bs-toggle="modal"
+                                                class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">Promote</button>
+
+
                                         </td>
                                     </tr>
                                 @endforeach
+                                @if ($students ==null)
+                                    No Student Found
+                                @else
+                                <div class="card-header header-elements-inline text-end">
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="openPromoteForm({{ $student->id }})"data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Promote All</button>
+                                </div>
+                                @endif
 
                             </tbody>
                         </table>
@@ -173,7 +183,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Select Student Promotion To Class</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Select Student Promotion</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -206,15 +216,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label for="promotion_status">Promotion Status:</label>
-                                            <select name="status" id="promotion_status" class="form-control">
-                                                <option value="promote">Promote</option>
-                                                <option value="not_promote">Not Promote</option>
-                                            </select>
-
-
                                     </fieldset>
                                 </div>
                                 <div class="text-right mt-1">
@@ -228,6 +229,7 @@
             </div>
         </div>
     </div>
+
 
 
 

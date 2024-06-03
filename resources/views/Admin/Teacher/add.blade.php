@@ -41,7 +41,7 @@
     </div>
 @endsection
 @section('content')
- 
+
 
     <div class="row">
         <div class="col-sm-12">
@@ -52,15 +52,15 @@
                         @csrf
 
                         @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -177,7 +177,7 @@
                                                     <br>
                                                     <button type="button" class="btn btn-success" id="addFaculty">Add
                                                         More
-                                                        Faculty</button>
+                                                    </button>
                                                     <input type="hidden" name="faculity_id" id="hiddenFaculty"
                                                         value="">
                                                 </div>
@@ -197,7 +197,7 @@
                                                     <br>
                                                     <button type="button" class="btn btn-success" id="addclass">Add
                                                         More
-                                                        Class</button>
+                                                    </button>
                                                     <input type="hidden" name="class_id" id="hiddenclass"
                                                         value="">
                                                 </div>
@@ -216,12 +216,12 @@
                                                     </select>
                                                     <br>
                                                     <button type="button" class="btn btn-success" id="addUser">Add
-                                                        More
-                                                        Section</button>
+                                                        More</button>
                                                     <input type="hidden" name="section_id" id="hiddensection"
                                                         value="">
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     </div>
@@ -244,14 +244,7 @@
                                                         name="name" />
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-12 col-sm-3">
-                                                <div class="form-group local-forms">
-                                                    <label>Phone Number <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                        id="number" name="number" value="{{ old('number') }}"
-                                                        required>
-                                                </div>
-                                            </div> --}}
+
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
                                                     <label>Email <span class="login-danger">*</span></label>
@@ -300,13 +293,7 @@
                                         <h5 class="form-title"><span>Image Section</span></h5>
                                     </div>
                                     <hr>
-                                    {{-- <div class="col-md-3">
-                                        <div class="form-group local-forms">
-                                            <label>User Login Image <span class="login-danger">*</span></label>
-                                            <input type="file" class="form-control photo" name="images"
-                                                accept="image/*">
-                                        </div>
-                                    </div> --}}
+
                                     <div class="col-md-3">
                                         <div class="form-group local-forms">
                                             <label>Teacher Image <span class="login-danger">*</span></label>
@@ -349,34 +336,7 @@
             $('.photo').dropify();
         });
     </script>
-    {{-- <script>
-        function populateYearDropdown() {
-            var currentYear = new Date().getFullYear();
-            var dropdown = document.getElementById("yearDropdown");
 
-            for (var year = 2000; year <= currentYear; year++) {
-                var option = document.createElement("option");
-                option.value = year;
-                option.text = year;
-                dropdown.add(option);
-            }
-        }
-
-        populateYearDropdown();
-
-        setInterval(function() {
-            var currentYear = new Date().getFullYear();
-            var dropdown = document.getElementById("yearDropdown");
-
-            if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
-                dropdown.options.length = 0;
-
-                populateYearDropdown();
-            }
-        }, 5000);
-
-
-    </script> --}}
     <script>
         document.getElementById('formSubmit').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -392,22 +352,7 @@
             console.log(Msg);
         }
     </script>
-    <script>
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById('password-input');
-            var passwordToggle = document.getElementById('password-toggle');
 
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                passwordToggle.classList.remove('fa-eye');
-                passwordToggle.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                passwordToggle.classList.remove('fa-eye-slash');
-                passwordToggle.classList.add('fa-eye');
-            }
-        }
-    </script>
     <script>
         $(document).ready(function() {
             var selectedSubjects = [];
@@ -422,6 +367,7 @@
                         name: selectedText
                     });
                     updateSelectedSubjectsList();
+                    updateSemestOptions();
                 }
             });
 
@@ -435,40 +381,56 @@
                     '');
                 $('#hiddenclass').val(cleanString);
             }
+
+            function updateSemestOptions() {
+                $('#class option').each(function() {
+                    var optionValue = $(this).val();
+                    if (selectedSubjects.some(e => e.id === optionValue)) {
+                        $(this).attr('disabled', 'disabled');
+                    } else {
+                        $(this).removeAttr('disabled');
+                    }
+                });
+            }
         });
 
-
-
-
-
-
-
-
         $(document).ready(function() {
-            var selectedSubjects = [];
-
+            var selectedSections = [];
             $('#addUser').on('click', function() {
                 var selectedOption = $('#new option:selected');
                 var selectedValue = selectedOption.val();
                 var selectedText = selectedOption.text();
-                if (selectedValue && !selectedSubjects.some(e => e.id === selectedValue)) {
-                    selectedSubjects.push({
+
+                if (selectedValue && !selectedSections.some(e => e.id === selectedValue)) {
+                    selectedSections.push({
                         id: selectedValue,
                         name: selectedText
                     });
-                    updateSelectedSubjectsList();
+                    updateSelectedSectionsList();
+                    updateSectionOptions();
                 }
             });
 
-            function updateSelectedSubjectsList() {
+            function updateSelectedSectionsList() {
                 $('#selectedSubList').empty();
-                selectedSubjects.forEach(function(subject) {
-                    $('#selectedSubList').append('<li>' + subject.name + '</li>');
+                selectedSections.forEach(function(section) {
+                    $('#selectedSubList').append('<li>' + section.name + '</li>');
                 });
 
-                var cleanString = JSON.stringify(selectedSubjects.map(subject => subject.id)).replace(/["'\\[\]]/g,
+                var cleanString = JSON.stringify(selectedSections.map(section => section.id)).replace(/["'\\[\]]/g,
                     '');
                 $('#hiddensection').val(cleanString);
+            }
+
+            function updateSectionOptions() {
+                $('#new option').each(function() {
+                    var optionValue = $(this).val();
+                    if (selectedSections.some(e => e.id === optionValue)) {
+                        $(this).attr('disabled', 'disabled');
+                    } else {
+                        $(this).removeAttr('disabled');
+                    }
+                });
             }
         });
 
@@ -490,6 +452,8 @@
                         name: selectedText
                     });
                     updateSelectedSubjectsList();
+                    updateFacculityOptions();
+
                 }
             });
 
@@ -502,6 +466,17 @@
                 var cleanString = JSON.stringify(selectedSubjects.map(subject => subject.id)).replace(/["'\\[\]]/g,
                     '');
                 $('#hiddenFaculty').val(cleanString);
+            }
+
+            function updateFacculityOptions() {
+                $('#faculty option').each(function() {
+                    var optionValue = $(this).val();
+                    if (selectedSubjects.some(e => e.id === optionValue)) {
+                        $(this).attr('disabled', 'disabled');
+                    } else {
+                        $(this).removeAttr('disabled');
+                    }
+                });
             }
         });
     </script>

@@ -5,15 +5,15 @@
     {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> --}}
 @endsection
 
-@section('linkbar')
-    <div class="content container-fluid">
-        <div class="page-header">
-            <div class="row">
-                <div class="col ms-4">
-                    <h3 class="page-title">User</h3>
+@section('title')
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-sub-header">
+                    <h3 class="page-title">Notice</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="">User</a></li>
-                        <li class="breadcrumb-item active">Add User</li>
+                        <li class="breadcrumb-item"><a href="index.html">Notice</a></li>
+                        <li class="breadcrumb-item active">All Notice</li>
                     </ul>
                 </div>
             </div>
@@ -22,67 +22,62 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <form action="{{ route('admin.notice.add') }}" method="POST">
-                @csrf
-                <div class="white-box">
-                    <div class="">
-                        <div class="row">
-                            <div class="col-lg-7">
-                                <div class="input-effect mb-30">
-                                    <label>Title <span>*</span> </label>
-                                    <input class="primary-input form-control" type="text" name="notice_title"
-                                        autocomplete="off" value="">
-                                </div>
-                                <br>
-                                <textarea id="summernote" cols="30" rows="10" name="notice_message"></textarea>
-                            </div>
-
-
-                            <div class="col-lg-5">
-                                <div class="no-gutters input-right-icon mb-30">
-                                    <div class="col">
-                                        <div class="input-effect">
-                                            <label>Notice Date <span>*</span> </label>
-                                            <input class="primary-input date form-control read-only-input" id="notice_date"
-                                                type="date" autocomplete="off" name="notice_date">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="{{ route('admin.notice.add') }}" method="POST">
+                        @csrf
+                        <div class="white-box">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-lg-7">
+                                        <div class="input-effect mb-30">
+                                            <label>Title <span style="color: red">*</span> </label>
+                                            <input class="primary-input form-control" type="text" name="notice_title"
+                                                autocomplete="off" value="">
                                         </div>
+                                        <br>
+                                        <label>Notice Message <span style="color: red">*</span> </label>
+
+                                        <textarea id="summernote" rows="30" cols="20" name="notice_message"></textarea>
                                     </div>
 
-                                </div>
-                                <br>
-                                <div class="no-gutters input-right-icon">
-                                    <div class="col">
-                                        <div class="input-effect">
-                                            <label>Publish On <span>*</span> </label>
-                                            <input class="primary-input date form-control read-only-input" id="publish_on"
-                                                type="date" autocomplete="off" name="publish_on" value="">
-                                        </div>
-                                    </div>
-                                    <br>
+                                    <div class="col-lg-5">
+                                        <div class="no-gutters input-right-icon mb-30">
+                                            <div class="col">
+                                                <div class="input-effect">
+                                                    <label>Notice Date <span style="color: red">*</span> </label>
+                                                    <input class="primary-input date form-control read-only-input"
+                                                        id="notice_date" type="date" autocomplete="off"
+                                                        name="notice_date">
+                                                </div>
+                                            </div>
 
-                                </div>
-                                <div class="col-lg-12 mt-50">
-                                    <label>Created by</label><br>
-                                    <select name="user_id" id="" class="form-control">
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
+                                        </div>
+                                        <br>
+                                        <div class="col">
+                                            <div class="input-effect">
+                                                <label>Publish On <span style="color: red">*</span> </label>
+                                                <input class="primary-input date form-control read-only-input"
+                                                    id="publish_on" type="date" autocomplete="off" name="publish_on"
+                                                    value="">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class=>
+                                            <button type="submit" class="btn btn-primary">
+                                                Save </button>
+                                        </div>
+
+                                    </div>
 
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-40">
-                        <div class="col-lg-12 text-center">
-                            <button type="submit" class="primary-btn fix-gr-bg btn btn-primary">
-                                Save </button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 @endsection

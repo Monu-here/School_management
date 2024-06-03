@@ -44,12 +44,15 @@ class StudentPromotion extends Controller
                 $students = Student::whereHas('classes', function ($query) use ($fromFaculity, $fromClass, $fromSection) {
                     $query->where('faculity_id', $fromFaculity)->where('class_id', $fromClass)->where('section_id', $fromSection);
                 })->get();
+                if($students==null){
+                    return redirect()->back()->with('error', 'No students found');
+                }
             } else {
                 // If the form is not submitted, retrieve all students
                 $students = Student::all();
             }
         }
-        return view('Admin.pro.lll', compact('cc', 'ss', 'students', 'se', 'sections', 'facu'));
+        return view('Admin.pro.lll', compact('cc', 'students', 'se', 'sections' ,'facu'));
     }
 
     public function p(Request $request)
@@ -60,15 +63,13 @@ class StudentPromotion extends Controller
             'to_class' => 'required|string', // Update to match your actual table name
             'to_section' => 'required|string',
             // 'to_section' => 'required|string',
-            'status' => 'required|in:promote,not_promote',
-        ]);
+         ]);
 
         // Retrieve data from the form
         $studentId = $request->input('student_id');
         $toClass = $request->input('to_class');
         $toSection = $request->input('to_section');
-        $status = $request->input('status');
-
+ 
         // Retrieve from_class and from_section based on the student_id
         $student = Student::findOrFail($studentId);
         $fromClass = $student->class_id; // Adjust this based on your actual relationship
@@ -86,8 +87,7 @@ class StudentPromotion extends Controller
                 'to_section' => $toSection,
                 'from_session' => $fromSession,
                 'to_session' => $toSession,
-                'status' => $status,
-                'from_faculity' => $fromFaculity,
+                 'from_faculity' => $fromFaculity,
 
             ]);
         } else {
@@ -101,16 +101,12 @@ class StudentPromotion extends Controller
                 'to_section' => $toSection,
                 'from_session' => $fromSession,
                 'to_session' => $toSession,
-                'status' => $status,
-            ]);
+             ]);
         }
 
 
         // Save the promotion data to the StudentPromotion model/table
-        if ($status === 'not_promote') {
-            // If the status is "Not Promote", don't update the student's data
-            return redirect()->route('admin.promotion.index');
-        }
+
         // Update the student data from the students table
         $student->update([
             'class_id' => $toClass,
@@ -118,6 +114,6 @@ class StudentPromotion extends Controller
         ]);
 
         // Redirect back to the promotion index page
-        return redirect()->route('admin.promotion.index');
+        return redirect()->route('admin.promotion.list')->with('message', 'Student Promote Successfully');
     }
 }

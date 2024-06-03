@@ -21,8 +21,7 @@ return new class extends Migration
             $table->string('to_section');
             $table->string('from_session');
             $table->string('to_session');
-            $table->string('status');
-            $table->timestamps();
+             $table->timestamps();
         });
     }
 

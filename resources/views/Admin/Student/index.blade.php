@@ -53,10 +53,10 @@
                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
-                               @role('SuperAdmin')
-                               <a href="{{ route('admin.student.add') }}" class="btn btn-primary"><i
-                                class="fas fa-plus"></i></a>
-                               @endrole()
+                                @role('SuperAdmin')
+                                    <a href="{{ route('admin.student.add') }}" class="btn btn-primary"><i
+                                            class="fas fa-plus"></i></a>
+                                @endrole()
                             </div>
                         </div>
                     </div>
@@ -76,10 +76,10 @@
                                         <th>Parent Name</th>
                                         <th>Mobile Number</th>
                                         <th>Address</th>
-                                        <th >Action</th>
+                                        <th>Action</th>
                                     @endrole()
                                     {{-- <th class="text-end ">Action</th> --}}
-                                    <th >Created at</th>
+                                    <th>Created at</th>
 
                                 </tr>
                             </thead>
@@ -122,7 +122,7 @@
                                                 {{ $className ?? 'N/A' }}
                                             </td>
 
- 
+
                                             <td>{{ $student->f_name }}</td>
                                             <td>{{ $student->f_no }}</td>
                                             <td>{{ $student->address }}</td>
