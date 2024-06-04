@@ -32,34 +32,42 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
+                                        {{-- <label for="date">Subject</label> --}}
+
                                         <select name="subject[]" id="new" class="form-control">
                                             @foreach ($subjects as $subject)
                                                 <option value="{{ $subject->name }}">{{ $subject->name }}</option>
                                             @endforeach
                                         </select>
-                                        <button type="button" class="btn btn-success" id="addUser">AddSubJect
+                                    </div>
+                                    <div class="col-md-6 mt-2">
+                                        <button type="button" class="btn btn-success " id="addUser">Add SubJect
                                         </button>
                                     </div>
-                                </div>
-                                <div class="col-3" id="selectedSubListContainer">
-                                    <label for="">Selected Subjects</label>
-                                    <ul id="selectedSubList"></ul>
-                                </div>
-                                <input type="hidden" name="subject" id="hiddenSub" value="">
-                                <div class="col-md-6">
-                                    <label for="date">Teacher</label>
-                                    <select name="user_id" id="" class="form-control">
-                                        @foreach ($users as $teacher)
-                                            <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <br>
-                                    <button class="btn btn-primary">Submit</button>
+                                    <div class="col-md-6">
+                                        <label for="date">Teacher</label>
+                                        <select name="user_id" id="" class="form-control">
+                                            @foreach ($users as $teacher)
+                                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="subject" id="hiddenSub" value="">
+
+                                    <div class="col-md-6">
+                                        <div class="" id="selectedSubListContainer">
+                                            <label for="">Selected Subjects</label>
+                                            <ul id="selectedSubList"></ul>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-md-2">
+                                        <br>
+                                        <button class="btn btn-primary">Submit</button>
+
+                                    </div>
 
                                 </div>
-
                             </form>
                         </div>
                     </div>
@@ -109,7 +117,9 @@
                                         <td>{{ $assign->user->name }}</td>
                                         <td>{{ $assign->subject }}</td>
                                         <td>
-                                            <a href="{{ route('admin.teacher.assign_subject_del', ['id'=> $assign->id]) }}"> <button class="btn btn-danger">del</button></a>
+                                            <a
+                                                href="{{ route('admin.teacher.assign_subject_del', ['id' => $assign->id]) }}">
+                                                <button class="btn btn-danger">del</button></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -1,7 +1,7 @@
 @extends('Front.layout.app')
 @section('content')
     {{-- !-- Carousel Start --> --}}
-    <div class="container-fluid p-0 mb-5">
+    {{-- <div class="container-fluid p-0 mb-5">
         <div class="owl-carousel header-carousel position-relative">
             @foreach ($sliders as $key => $slider)
                 <div class="owl-carousel-item position-relative {{ $key == '0' ? 'active' : '' }}">
@@ -28,12 +28,12 @@
                 </div>
             @endforeach
         </div>
-    </div>
+    </div> --}}
     <!-- Carousel End -->
 
 
     <!-- Service Start -->
-    <div class="container-xxl py-5">
+    {{-- <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-4">
                 @foreach ($services as $service)
@@ -50,12 +50,12 @@
                 @endforeach
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Service End -->
 
 
     <!-- About Start -->
-    <div class="container-xxl py-5">
+    {{-- <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 @foreach ($abouts as $about)
@@ -98,12 +98,12 @@
                 @endforeach
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- About End -->
 
 
     <!-- Categories Start -->
-    <div class="container-xxl py-5 category">
+    {{-- <div class="container-xxl py-5 category">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Categories</h6>
@@ -157,12 +157,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Categories Start -->
 
 
     <!-- Courses Start -->
-    <div class="container-xxl py-5">
+    {{-- <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Courses</h6>
@@ -270,12 +270,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Courses End -->
 
 
     <!-- Team Start -->
-    <div class="container-xxl py-5">
+    {{-- <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
@@ -368,12 +368,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Team End -->
 
 
     <!-- Testimonial Start -->
-    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    {{-- <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="text-center">
                 <h6 class="section-title bg-white text-center text-primary px-3">Testimonial</h6>
@@ -422,6 +422,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Testimonial End -->
 @endsection

@@ -34,7 +34,7 @@
                      @if ($setting == null)
                          <img src="https://placehold.co/100x100" alt="UNNES Logo" class="w-24 h-24 mb-4">
                      @else
-                         <img src="{{ $setting->websiteimage }}" alt="" class="w-24 h-24 mb-4">
+                         <img src="{{ asset($setting->websiteimage) }}" alt="" class="w-24 h-24 mb-4">
                      @endif
                      <h3 class="text-xl font-bold text-zinc-800 dark:text-zinc-200">
                          @if ($setting == null)
