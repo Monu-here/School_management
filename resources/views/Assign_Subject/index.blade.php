@@ -82,8 +82,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Subject</h3>
-                            </div>
+                             </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
 
