@@ -30,7 +30,7 @@ class Student extends Model
         'f_no',
         'm_name',
         'm_occ',
-        'idno',  
+        'idno',
         'm_no',
         'f_image',
         'm_image',
@@ -51,7 +51,7 @@ class Student extends Model
     // public function section() {
     //     return $this->belongsTo()
     // }
-  
+
     public function paymentRecords()
     {
         return $this->hasMany(Payment_record::class, 'student_id');
@@ -96,7 +96,7 @@ class Student extends Model
     // {
     //     return $this->belongsTo(Classs::class);
     // }
-    
+
     // public function sections()
     // {
     //     return $this->belongsTo(Section::class);
@@ -107,10 +107,23 @@ class Student extends Model
 
 
 
-// student.php 
+    // student.php 
 
-public function class()
-{
-    return $this->belongsTo(Classs::class, 'class_id');
-}
+    public function class()
+    {
+        return $this->belongsTo(Classs::class, 'class_id');
+    }
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($student) {
+            if ($student->user) {
+                $student->user->delete();
+            }
+        });
+    }
 }

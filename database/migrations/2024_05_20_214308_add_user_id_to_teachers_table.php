@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->text('section_id')->nullable();
             $table->string('workinghrs')->nullable();
-
+            // $table->primary(['user_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -26,11 +27,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('teachers', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
             $table->dropColumn('section_id');
             $table->dropColumn('class_id');
             $table->dropColumn('workinghrs');
-
         });
     }
 };

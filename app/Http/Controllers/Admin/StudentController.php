@@ -175,11 +175,16 @@ class StudentController extends Controller
             return view('Admin.Student.edit', compact('classes', 'bloods', 'sections', 'student', 'faculitys'));
         }
     }
-    public function del($student)
+    public function del(Student $student)
     {
-        DB::table('students')->where('id', $student)->delete();
-        return redirect()->back()->with('message', 'Student Delete Successfully');
+        $student->delete();
+        return redirect()->back()->with('message', 'Teacher and associated user successfully deleted');
     }
+
+     
+
+
+
 
     public function teacherIndex(Request $request)
     {
@@ -261,6 +266,12 @@ class StudentController extends Controller
             return view('Admin.Teacher.add', compact('classes', 'sections', 'facts'));
         }
     }
+    public function teacherDel(Teacher $teacher)
+    {
+        $teacher->delete();
+        return redirect()->back()->with('message', 'Teacher and associated user successfully deleted');
+    }
+
     public function teacherEdit(Request $request, Teacher $teacher)
     {
         if ($request->getMethod() == "POST") {
@@ -319,17 +330,13 @@ class StudentController extends Controller
             return view('Admin.Teacher.edit', compact('classes', 'sections', 'teacher', 'facts'));
         }
     }
+
     public function teacherShow($teacher)
     {
         $teacherData = DB::table('teachers')->find($teacher);
         $classes = Classs::all();
         $sections = Section::all();
         return view('Admin.Teacher.show', compact('teacherData', 'classes', 'sections'));
-    }
-    public function teacherDel($teacher)
-    {
-        DB::table('teachers')->where('id', $teacher)->delete();
-        return redirect()->back()->with('message', 'Data delete sucessfully');
     }
     public function studentShow($student)
     {

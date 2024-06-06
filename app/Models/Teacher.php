@@ -45,9 +45,9 @@ class Teacher extends Model
     // {
     //     return $this->belongsTo(Classs::class, );
     // }
-   
-    
-    
+
+
+
 
     public function section()
     {
@@ -84,5 +84,15 @@ class Teacher extends Model
     public function homeworks()
     {
         return $this->hasMany(ViewHomeworkFromTeacher::class);
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($teacher) {
+            if ($teacher->user) {
+                $teacher->user->delete();
+            }
+        });
     }
 }
