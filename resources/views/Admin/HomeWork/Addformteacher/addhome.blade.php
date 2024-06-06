@@ -45,7 +45,7 @@
                                 <tr>
                                     <th>SN</th>
                                     <th> Title</th>
-                                    <th> Content</th>
+                                    {{-- <th> Content</th> --}}
                                     <th> Given By</th>
                                     <th> To Semester</th>
                                     <th> To Semester section</th>
@@ -61,7 +61,7 @@
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $view->title }}</td>
-                                        <td style="word-break: break-all;">{!! $view->content !!}</td>
+                                        {{-- <td style="word-break: break-all;">{!! $view->content !!}</td> --}}
                                         <td>{{ $view->teacher_id }}</td>
                                         <td>{{ $view->classs ? $view->classs->name : 'N/A' }}</td>
                                         <td>{{ $view->section ? $view->section->name : 'N/A' }}</td>
