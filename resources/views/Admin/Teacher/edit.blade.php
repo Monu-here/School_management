@@ -237,6 +237,30 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Faculity</th>
+                                                            <th> Semester </th>
+                                                            <th> Section </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                {{ $teacher->faculity->name }}
+
+                                                            </td>
+                                                            <td>
+                                                                {{ $teacher->class->name }}
+                                                            </td>
+                                                            <td>
+                                                                {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->section->name)) !!}
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             {{-- {{$teacher->class->name}} --}}
                                         </div>
@@ -248,18 +272,7 @@
                                         </div>
 
                                     </div>
-                                    <label for="">Selected Class</label>
-
-                                    <li id=" ">
-                                        {{ $teacher->class->name }}
-                                    </li>
-                                    <label for="">Selected Subject</label>
-
-                                    <li id=" ">
-
-                                        {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->section->name)) !!}
-
-                                    </li>
+                                    
                                 </div>
 
                             </div>
