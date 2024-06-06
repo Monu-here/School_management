@@ -95,10 +95,10 @@
                                                         <option selected disabled>Select Working Hours</option>
                                                         <option value="Part-time"
                                                             {{ $teacher->workinghrs == 'Part-time' ? 'selected' : '' }}>
-                                                            Male</option>
+                                                            Part Time</option>
                                                         <option value="Full-time"
                                                             {{ $teacher->workinghrs == 'Full-time' ? 'selected' : '' }}>
-                                                            Female</option>
+                                                            Full Time</option>
 
                                                     </select>
                                                 </div>
