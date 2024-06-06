@@ -289,6 +289,15 @@ class StudentController extends Controller
             if ($request->hasFile('cv')) {
                 $teacher->cv = $request->cv->store('uploads/teacher');
             }
+            if ($request->filled('faculity_id')) {
+                $teacher->faculity_id = $request->faculity_id;
+            };
+            if ($request->filled('class_id')) {
+                $teacher->class_id = $request->class_id;
+            };
+            if ($request->filled('section_id')) {
+                $teacher->section_id = $request->section_id;
+            };
             $teacher->name = $request->name;
             $teacher->gender = $request->gender;
             $teacher->dob = $request->dob;
@@ -297,10 +306,7 @@ class StudentController extends Controller
             $teacher->jd = $request->jd;
             $teacher->exp = $request->exp;
             $teacher->qual = $request->qual;
-            $teacher->class_id = $request->class_id;
-            $teacher->section_id = $request->section_id;
             $teacher->workinghrs = $request->workinghrs;
-            $teacher->faculity_id = $request->faculity_id;
 
 
             $teacher->save();
@@ -309,7 +315,7 @@ class StudentController extends Controller
             $classes = Classs::all();
             $sections = Section::all();
             $facts = Faculity::all();
- 
+
             return view('Admin.Teacher.edit', compact('classes', 'sections', 'teacher', 'facts'));
         }
     }
