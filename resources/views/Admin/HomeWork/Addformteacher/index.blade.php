@@ -30,7 +30,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                             </div>
+                            </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
 
                             </div>
@@ -46,8 +46,8 @@
                                     <th>Assigement Title</th>
                                     <th>Assigement Content</th>
                                     <th>Assigement Given By</th>
-                                    <th>    to Semester</th>
-                                    <th>  Given To Semester section</th>
+                                    <th> To Semester</th>
+                                    <th> To Semester section</th>
                                     <th>Action</th>
                                     <th>Status</th>
 

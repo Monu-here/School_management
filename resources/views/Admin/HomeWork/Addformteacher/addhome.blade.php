@@ -20,6 +20,7 @@
 
 @section('content')
     <div class="row">
+
         <div class="col-sm-12">
             <div class="card card-table comman-shadow">
                 <div class="card-body">
@@ -46,8 +47,8 @@
                                     <th> Title</th>
                                     <th> Content</th>
                                     <th> Given By</th>
-                                    <th> Given to Semester</th>
-                                    <th> Given To Semester section</th>
+                                    <th> To Semester</th>
+                                    <th> To Semester section</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -64,10 +65,15 @@
                                         <td>{{ $view->teacher_id }}</td>
                                         <td>{{ $view->classs ? $view->classs->name : 'N/A' }}</td>
                                         <td>{{ $view->section ? $view->section->name : 'N/A' }}</td>
-                                        <td><span
+                                        <td>
+                                            <a href="{{ route('admin.homework.nn', ['id' => $view->id]) }}"
+                                                class="btn btn-primary me-3 text-white">View</a>
+                                            <span
                                                 class="{{ $view->status == 'submitted' ? 'text-primary' : 'text-danger' }}">
                                                 {{ ucfirst($view->status) }}
-                                            </span></td>
+                                            </span>
+
+                                        </td>
 
                                     </tr>
                                 @endforeach
@@ -89,6 +95,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h3>Add Assignment</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

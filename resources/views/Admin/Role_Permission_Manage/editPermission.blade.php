@@ -48,7 +48,7 @@
                         <label for="name">Role Name</label>
                         <input type="text" name="name" id="name" class="form-control"
                             value="{{ $permission->name }}" required>
-                        <button class="btn btn-primary mt-3 " id="saveBtn" onclick="Msg()">Update</button>
+                        <button class="btn btn-primary mt-3 " id="saveBtn" ">Update</button>
 
                     </form>
                 </div>

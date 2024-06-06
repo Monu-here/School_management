@@ -349,34 +349,34 @@
                                     <th>Notice Date</th>
                                     <th>Notice Title</th>
                                     <th>Action</th>
- 
+
                                     {{-- <th class="text-end ">Action</th> --}}
 
                                 </tr>
                             </thead>
                             <tbody>
-                             @php
-                                   $i=1;
-                             @endphp
-                                    @foreach ($notices as $notice)
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            {{-- <td>{{ $notice->publish_on }}</td> --}}
-                                            <td>{{ $notice->notice_date }}</td>
-                                            <td>{{ $notice->notice_title }}</td>
-                                            <td>
-                                                <a href="{{ route('admin.showme', ['id' => $notice->id]) }}"
-                                                    class="btn btn-primary btn-sm text-white view-notice"
-                                                    data-notice-id="{{ $notice->id }}"
-                                                    data-notice-title="{{ $notice->notice_title }}"
-                                                    data-notice-message="{{ $notice->notice_message }}"
-                                                    data-publish-on="{{ $notice->publish_on }}"
-                                                    data-notice-on="{{ $notice->notice_date }}" data-bs-toggle="modal"
-                                                    data-bs-target="#opennotice">View</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
- 
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @foreach ($notices as $notice)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        {{-- <td>{{ $notice->publish_on }}</td> --}}
+                                        <td>{{ $notice->notice_date }}</td>
+                                        <td>{{ $notice->notice_title }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.showme', ['id' => $notice->id]) }}"
+                                                class="btn btn-primary btn-sm text-white view-notice"
+                                                data-notice-id="{{ $notice->id }}"
+                                                data-notice-title="{{ $notice->notice_title }}"
+                                                data-notice-message="{{ $notice->notice_message }}"
+                                                data-publish-on="{{ $notice->publish_on }}"
+                                                data-notice-on="{{ $notice->notice_date }}" data-bs-toggle="modal"
+                                                data-bs-target="#opennotice">View</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
 
 
                             </tbody>
@@ -663,66 +663,68 @@
         @if (Session::has('status'))
             toastr.success("{{ session('status') }}");
         @endif
-        document.addEventListener('DOMContentLoaded', function() {
-            let lastAction = "{{ session('last_action', 'default') }}";
 
-            let checkInButton = document.getElementById('check-in-btn');
-            let checkOutButton = document.getElementById('check-out-btn');
-
-            if (lastAction === 'check-in') {
-                checkInButton.classList.remove('btn-primary');
-                checkInButton.classList.add('btn-secondary');
-
-                checkOutButton.classList.remove('btn-secondary');
-                checkOutButton.classList.add('btn-primary');
-            } else if (lastAction === 'check-out') {
-                checkInButton.classList.remove('btn-secondary');
-                checkInButton.classList.add('btn-primary');
-
-                checkOutButton.classList.remove('btn-primary');
-                checkOutButton.classList.add('btn-secondary');
-            } else {
-                checkInButton.classList.add('btn-primary');
-                checkOutButton.classList.add('btn-secondary');
-            }
-        });
+        //   document.addEventListener('DOMContentLoaded', function() {
+        //     let lastAction = "{{ session('last_action', 'default') }}";
+        //
+        //          let checkInButton = document.getElementById('check-in-btn');
+        //        let checkOutButton = document.getElementById('check-out-btn');
+        //
+        //          if (lastAction === 'check-in') {
+        //            checkInButton.classList.remove('btn-primary');
+        //          checkInButton.classList.add('btn-secondary');
+        //
+        //              checkOutButton.classList.remove('btn-secondary');
+        //            checkOutButton.classList.add('btn-primary');
+        //      } else if (lastAction === 'check-out') {
+        //        checkInButton.classList.remove('btn-secondary');
+        //      checkInButton.classList.add('btn-primary');
+        //
+        //              checkOutButton.classList.remove('btn-primary');
+        //            checkOutButton.classList.add('btn-secondary');
+        //      } else {
+        //        checkInButton.classList.add('btn-primary');
+        //      checkOutButton.classList.add('btn-secondary');
+        //}
+        //});
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check local storage to see which form to show
-            if (localStorage.getItem('checkedIn') === 'true') {
+    @role('Teacher')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (localStorage.getItem('checkedIn') === 'true') {
+                    document.getElementById('check-in-form').style.display = 'none';
+                    document.getElementById('check-out-form').style.display = 'block';
+                } else {
+                    document.getElementById('check-in-form').style.display = 'block';
+                    document.getElementById('check-out-form').style.display = 'none';
+                }
+            });
+
+            document.getElementById('check-in-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting immediately
+                // Hide the check-in form and show the check-out form
                 document.getElementById('check-in-form').style.display = 'none';
                 document.getElementById('check-out-form').style.display = 'block';
-            } else {
-                document.getElementById('check-in-form').style.display = 'block';
+                // Store state in local storage
+                localStorage.setItem('checkedIn', 'true');
+                // Submit the form after hiding the button
+                this.submit();
+            });
+
+            document.getElementById('check-out-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting immediately
+                // Hide the check-out form and show the check-in form
                 document.getElementById('check-out-form').style.display = 'none';
-            }
-        });
-
-        document.getElementById('check-in-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting immediately
-            // Hide the check-in form and show the check-out form
-            document.getElementById('check-in-form').style.display = 'none';
-            document.getElementById('check-out-form').style.display = 'block';
-            // Store state in local storage
-            localStorage.setItem('checkedIn', 'true');
-            // Submit the form after hiding the button
-            this.submit();
-        });
-
-        document.getElementById('check-out-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting immediately
-            // Hide the check-out form and show the check-in form
-            document.getElementById('check-out-form').style.display = 'none';
-            document.getElementById('check-in-form').style.display = 'block';
-            // Store state in local storage
-            localStorage.setItem('checkedIn', 'false');
-            // Submit the form after hiding the button
-            this.submit();
-        });
-    </script>
+                document.getElementById('check-in-form').style.display = 'block';
+                // Store state in local storage
+                localStorage.setItem('checkedIn', 'false');
+                // Submit the form after hiding the button
+                this.submit();
+            });
+        </script>
+    @endrole()
     <script>
-        $(function() {
+        document.addEventListener('DOMContentLoaded', function() {
             $('#clienttable').DataTable({
                 "responsive": true,
                 "lengthChange": false,

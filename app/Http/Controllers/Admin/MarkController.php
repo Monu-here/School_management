@@ -183,13 +183,14 @@ class MarkController extends Controller
         $student->grade = $grade ? $grade->name : 'N/A';
         $student->remark = $grade ? $grade->remark : 'N/A';
 
-        $parentEmail = $student->parent_email;
-        // dd($parentEmail);
+        // $parentEmail = $student->email;
+        $userEmail = $student->user->email;
+        // dd($userEmail);
         $date = Carbon::now()
             ->format('l, jS \of F Y');
-        Mail::to($parentEmail)->send(new MyEmail($student, $marks, $percentage, $totalMarks, $date));
+        Mail::to($userEmail)->send(new MyEmail($student, $marks, $percentage, $totalMarks, $date));
 
-        return redirect()->back()->with('message', 'Marksheet sent to parent successfully!');
+        return redirect()->back()->with('message', 'Marksheet sent to student successfully!');
     }
     // here it will send then marksheet to there parent END
 

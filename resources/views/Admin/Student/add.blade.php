@@ -61,7 +61,7 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label for="symbool">Symbol No <span class="login-danger">*</span></label>
-                                            <input required type="number" class="form-control" name="idno"
+                                            <input   type="number" class="form-control" name="idno"
                                                 outline="hidden" required />
                                         </div>
 
@@ -77,7 +77,7 @@
                                         <div class="form-group local-forms">
                                             <label>Gender <span class="login-danger">*</span></label>
                                             <select class="form-control" id="gender" name="gender"
-                                                value="{{ old('gender') }}" required>
+                                                value="{{ request('gender') }}" required>
                                                 <option selected disabled>Select Gender</option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female
@@ -95,14 +95,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-sm-4 d-none">
-                                        <div class="form-group local-forms">
-                                            <label>Roll No <span class="login-danger">*</span></label>
-                                            <input type="hidden" class="form-control" id="roll" name="roll"
-                                                value="{{ old('roll') }}">
-                                        </div>
-                                    </div>
-
+                                  
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Faculity <span class="login-danger">*</span></label>
@@ -177,7 +170,7 @@
                                         <div class="form-group local-forms">
                                             <label>Intake Year <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" name="session_year"
-                                                id="session_year">
+                                                id="session_year" required>
 
                                         </div>
                                     </div>
@@ -203,7 +196,7 @@
                                                 value="{{ old('f_name') }}" required>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Father Phone Number<span class="login-danger">*</span></label>
@@ -215,10 +208,10 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             {{-- //////////  --}}
-                                            <label>Email<span class="login-danger">*</span></label>
-                                            <input required type="text" id="formControlLg" class="form-control"
-                                                name="parent_email" Email value="{{ old('parent_email') }}" />
-                                            {{-- ////////////  --}}
+                                            <label>Parent Email<span class="login-danger"></span></label>
+                                            <input   type="text" id="formControlLg" class="form-control"
+                                                name="parent_email"   value="{{ old('parent_email') }}" />
+
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
@@ -228,8 +221,8 @@
                                                 value="{{ old('m_name') }}">
                                         </div>
                                     </div>
-                                     
-                                    
+
+
                                 </div>
                             </div>
                         </div>
@@ -258,13 +251,6 @@
                                                         name="name" />
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Phone Number <span class="login-danger">*</span></label> --}}
-                                            <input type="hidden" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                id="number" name="number" value="{{ old('number') }}">
-                                            {{-- </div>
-                                            </div> --}}
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
                                                     <label>Email <span class="login-danger">*</span></label>
@@ -312,23 +298,11 @@
                                             <label>Student Image <span class="login-danger">*</span></label>
                                         </div>
                                     </div>
-                                   
-                                    {{-- <div class="col-md-3">
-                                        <div class="form-group local-forms">
-                                            <label>User Login Image <span class="login-danger">*</span></label>
-                                            <input type="file" class="form-control photo" name="images"
-                                                accept="image/*">
-                                        </div>
-
-                                    </div> --}}
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-
-                                        <button type="submit" class="btn btn-primary" onclick="Msg()"
-                                            id="saveBtn">Submit</button>
-                                        <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
-                                    </div>
+                                <div class=" d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-primary"
+                                        id="saveBtn">Submit</button>
+                                    <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
                                 </div>
                             </div>
                         </div>
@@ -346,37 +320,7 @@
             $('.photo').dropify();
         });
     </script>
-    <script>
-        // function populateYearDropdown() {
-        //     var currentYear = new Date().getFullYear();
-        //     var dropdown = document.getElementById("yearDropdown");
 
-        //     for (var year = 2000; year <= currentYear; year++) {
-        //         var option = document.createElement("option");
-        //         option.value = year;
-        //         option.text = year;
-        //         dropdown.add(option);
-        //     }
-        // }
-
-        // populateYearDropdown();
-
-        // setInterval(function() {
-        //     var currentYear = new Date().getFullYear();
-        //     var dropdown = document.getElementById("yearDropdown");
-
-        //     if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
-        //         dropdown.options.length = 0;
-
-        //         populateYearDropdown();
-        //     }
-        // }, 5000);
-
-        const Msg = (msg = "Would you like to submit this student form  ? ") => {
-            return prompt(msg) == 'yes';
-            console.log(Msg);
-        }
-    </script>
     <script>
         document.getElementById('formSubmit').addEventListener('submit', function(event) {
             event.preventDefault();

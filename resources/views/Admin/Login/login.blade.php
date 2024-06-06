@@ -31,13 +31,13 @@
                  <div class="flex justify-end">
                  </div>
                  <div class="flex flex-col items-center mb-6">
-                     @if ($setting == null)
-                         <img src="https://placehold.co/100x100" alt="UNNES Logo" class="w-24 h-24 mb-4">
+                     @if (!empty($setting))
+                         <img src="https://image.similarpng.com/very-thumbnail/2020/08/Large-school-building-scene-on-transparent-background-PNG.png" alt="UNNES Logo" class="w-24 h-24 mb-4">
                      @else
                          <img src="{{ asset($setting->websiteimage) }}" alt="" class="w-24 h-24 mb-4">
                      @endif
                      <h3 class="text-xl font-bold text-zinc-800 dark:text-zinc-200">
-                         @if ($setting == null)
+                         @if (!empty($setting))
                              School Management
                          @else
                              {{ $setting->webistename }}

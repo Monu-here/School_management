@@ -47,7 +47,7 @@
             <div class="content container-fluid">
                 @yield('title')
                 @yield('content')
-                @include('Admin.layout.footer')
+                {{-- @include('Admin.layout.footer') --}}
             </div>
         </div>
     </div>
@@ -78,13 +78,13 @@
         });
     </script>
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
+        <script>
+            $(document).ready(function() {
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    toastr.error("{{ $error }}");
                 @endforeach
-            </ul>
-        </div>
+            });
+        </script>
     @endif
 </body>
 

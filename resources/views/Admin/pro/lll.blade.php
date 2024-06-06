@@ -14,6 +14,7 @@
         </div>
     </div>
 @endsection
+
 @section('css')
     <style>
         .content {
@@ -22,12 +23,12 @@
         }
     </style>
 @endsection
+
 @section('content')
-    <div class=" ">
+    <div class="">
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h5 class="card-title font-weight-bold">Select Student Promotion From Class
-                </h5>
+                <h5 class="card-title font-weight-bold">Select Student Promotion From Class</h5>
             </div>
             <div class="card-body">
                 <form method="post" action="{{ route('admin.promotion.index') }}" id="formSubmit">
@@ -38,45 +39,33 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-
-                                            <label for="from_class" style="font-weight: 700; font-size: 12px">Choose
-                                                Faculity:</label>
+                                            <label for="from_faculity" style="font-weight: 700; font-size: 12px">Choose Faculty:</label>
                                             <select name="from_faculity" id="from_faculity" class="form-control">
-                                                <option value="" selected disabled>Select Faculity</option>
+                                                <option value="" selected disabled>Select Faculty</option>
                                                 @foreach ($facu as $f)
-                                                    <option value="{{ $f->id }}"
-                                                        {{ isset($from_faculity) ? ($from_faculity == $f->id ? 'selected' : '') : (request('from_faculity') == $f->id ? 'selected' : '') }}>
-                                                        {{ $f->name }}</option>
+                                                    <option value="{{ $f->id }}" {{ request('from_faculity') == $f->id ? 'selected' : '' }}>{{ $f->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="from_class" style="font-weight: 700; font-size: 12px">Choose
-                                                Semester:</label>
+                                            <label for="from_class" style="font-weight: 700; font-size: 12px">Choose Semester:</label>
                                             <select name="from_class" id="from_class" class="form-control">
                                                 <option value="" selected disabled>Select Semester</option>
-
                                                 @foreach ($cc as $class)
-                                                    <option value="{{ $class->id }}"
-                                                        {{ isset($from_class) ? ($from_class == $class->id ? 'selected' : '') : (request('from_class') == $class->id ? 'selected' : '') }}>
-                                                        {{ $class->name }}</option>
+                                                    <option value="{{ $class->id }}" {{ request('from_class') == $class->id ? 'selected' : '' }}>{{ $class->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="from_section" style="font-weight: 700; font-size: 12px">Choose
-                                                Section:</label>
+                                            <label for="from_section" style="font-weight: 700; font-size: 12px">Choose Section:</label>
                                             <select name="from_section" id="from_section" class="form-control">
                                                 <option value="" selected disabled>Select Section</option>
-
                                                 @foreach ($se as $sec)
-                                                    <option
-                                                        value="{{ $sec->id }}"{{ isset($from_section) ? ($from_section == $sec->id ? 'selected' : '') : (request('from_section') == $sec->id ? 'selected' : '') }}>
-                                                        {{ $sec->name }}</option>
+                                                    <option value="{{ $sec->id }}" {{ request('from_section') == $sec->id ? 'selected' : '' }}>{{ $sec->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -89,96 +78,71 @@
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="col-md-2 col-sm-6 mt-4">
-                            {{-- <div class="text-right mt-1">
-                                <button type="submit" class="btn btn-primary">Manage Promotion</button>
-                            </div> --}}
-                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class=" ">
+
+    <div class="">
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h5 class="card-title font-weight-bold">Student Promotion List
-                </h5>
+                <h5 class="card-title font-weight-bold">Student Promotion List</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    @if ($students)
-                        <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped"
-                            id="clienttable">
+                    @if (!Empty($students))
+                        <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped" id="clienttable">
                             <thead class="student-thread">
                                 <tr>
                                     <th>SN</th>
+                                    <th class="d-flex justify-content-center "><input type="checkbox" class="d-block me-3" id="selectAll" /> Select All</th>
                                     <th>Student Name</th>
-                                    <th>Current Faculity</th>
+                                    <th>Current Faculty</th>
                                     <th>Current Semester</th>
                                     <th>Manage</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
+                                @php $i = 1; @endphp
                                 @foreach ($students as $student)
                                     <tr>
-
                                         <td>{{ $i++ }}</td>
+                                        <td><input type="checkbox" class="student-checkbox d-flex justify-content-between"  value="{{ $student->id }}"></td>
                                         <td>
                                             <h2 class="table-avatar">
-                                                <a href="" class="avatar avatar-sm me-2"><img
-                                                        class="avatar-img rounded-circle"
-                                                        src="{{ asset($student->image) }}" alt="User Image" /></a>
+                                                <a href="" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="{{ asset($student->image) }}" alt="User Image" /></a>
                                                 <a href="">{{ $student->name }}</a>
                                             </h2>
-
                                         </td>
+                                        <td>{{ $student->faculity->name }}</td>
                                         <td>
-                                            {{ $student->faculity->name }}
-                                        </td>
-                                        <td>
-
-                                            @php
-                                                $sectionName = $sections
-                                                    ->where('id', $student->section_id)
-                                                    ->pluck('name')
-                                                    ->first();
-                                            @endphp
                                             {{ $student->classes->name }} /
-                                            ({{ $sectionName }})
+                                            ({{ $sections->where('id', $student->section_id)->pluck('name')->first() }})
                                         </td>
                                         <td>
-                                            <button type="button" onclick="openPromoteForm({{ $student->id }})"
-                                                class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">Promote</button>
-
-
+                                            <button type="button" onclick="openPromoteForm([{{ $student->id }}])" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Promote</button>
                                         </td>
                                     </tr>
                                 @endforeach
-                                @if ($students ==null)
-                                    No Student Found
-                                @else
-                                <div class="card-header header-elements-inline text-end">
-                                    <button type="button" class="btn btn-primary"
-                                        onclick="openPromoteForm({{ $student->id }})"data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">Promote All</button>
-                                </div>
-                                @endif
-
+                                <tr>
+                                    <td colspan="6">
+                                        <button type="button" class="btn btn-primary" onclick="promoteSelectedStudents()" data-bs-toggle="modal" data-bs-target="#exampleModal">Promote All</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
+                    @else
+                        <tr>
+                            <td colspan="6">No Student Found</td>
+                        </tr>
                     @endif
                 </div>
-
-
             </div>
         </div>
     </div>
 
+    <!-- Promotion Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -190,55 +154,53 @@
                     <div id="promoteForm" style="display: none;">
                         <form method="post" action="{{ route('admin.promotion.p') }}">
                             @csrf
-                            <div class="row">
-                                <div class="col-12 ">
-                                    <fieldset>
-
-                                        <div class="form-group">
-                                            <input type="hidden" name="student_id" id="student_id">
-                                            <label for="to_class">Choose Semester:</label>
-                                            <select name="to_class" id="to_class" class="form-control">
-                                                @foreach ($cc as $class)
-                                                    <option value="{{ $class->id }}">
-                                                        {{ $class->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="to_section">Choose Section:</label>
-                                            <select name="to_section" id="to_section" class="form-control">
-                                                @foreach ($se as $sec)
-                                                    <option value="{{ $sec->id }}">
-                                                        {{ $sec->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </fieldset>
-                                </div>
-                                <div class="text-right mt-1">
-                                    <button type="submit" class="btn btn-primary  " onclick="prmt()">Submit</button>
-                                </div>
+                            <input type="hidden" name="student_ids" id="student_ids">
+                            <div class="form-group">
+                                <label for="to_class">Choose Semester:</label>
+                                <select name="to_class" id="to_class" class="form-control">
+                                    @foreach ($cc as $class)
+                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="to_section">Choose Section:</label>
+                                <select name="to_section" id="to_section" class="form-control">
+                                    @foreach ($se as $sec)
+                                        <option value="{{ $sec->id }}">{{ $sec->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="text-right mt-1">
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-
-
-
 @endsection
+
 @section('js')
     <script>
-        function openPromoteForm(studentId) {
-            document.getElementById('student_id').value = studentId;
+        document.getElementById('selectAll').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.student-checkbox');
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
+
+        function openPromoteForm(studentIds) {
+            document.getElementById('student_ids').value = studentIds.join(',');
             document.getElementById('promoteForm').style.display = 'block';
+        }
+
+        function promoteSelectedStudents() {
+            const selectedIds = Array.from(document.querySelectorAll('.student-checkbox:checked')).map(cb => cb.value);
+            if (selectedIds.length > 0) {
+                openPromoteForm(selectedIds);
+            } else {
+                alert('Please select at least one student.');
+            }
         }
     </script>
     <script>
@@ -250,6 +212,7 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
         });
+
         document.getElementById('formSubmit').addEventListener('submit', function(event) {
             event.preventDefault();
             var saveBtn = document.getElementById('saveBtn');
@@ -259,8 +222,5 @@
                 event.target.submit();
             }, 2000);
         });
-        const prmt = (msg = "would you like to promot") => {
-            return prompt(msg) == 'yes';
-        }
     </script>
 @endsection

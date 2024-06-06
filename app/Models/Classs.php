@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 class Classs extends Model
 {
     use HasFactory;
+    // public function teacher()
+    // {
+    //     return $this->hasMany(Teacher::class);
+    // }
+    public function teachers()
+    {
+        return $this->belongsTo(Teacher::class, 'class_id');
+    }
     public function viewHomeworkFromTeacher()
     {
         return $this->hasMany(ViewHomeworkFromTeacher::class, 'class_id');
@@ -40,10 +48,5 @@ class Classs extends Model
     public function students()
     {
         return $this->hasMany(Student::class, 'class_id');
-    }
-
-    public function teacher()
-    {
-        return $this->hasOne(Teacher::class, 'class_id');
     }
 }

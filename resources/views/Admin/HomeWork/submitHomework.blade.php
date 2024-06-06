@@ -52,6 +52,7 @@
             </div>
         </div>
     </div>
+    @role('Student')
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -94,6 +95,7 @@
         </div>
 
     </div>
+    @endrole()
 @endsection
 @section('js')
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

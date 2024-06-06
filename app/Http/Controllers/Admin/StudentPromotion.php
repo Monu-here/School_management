@@ -52,31 +52,91 @@ class StudentPromotion extends Controller
                 $students = Student::all();
             }
         }
-        return view('Admin.pro.lll', compact('cc', 'students', 'se', 'sections' ,'facu'));
+         return view('Admin.pro.lll', compact('cc', 'students', 'se', 'sections' ,'facu'));
     }
 
-    public function p(Request $request)
-    {
-        // Validate the form data
-        $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'to_class' => 'required|string', // Update to match your actual table name
-            'to_section' => 'required|string',
-            // 'to_section' => 'required|string',
-         ]);
+    // public function p(Request $request)
+    // {
+    //     // Validate the form data
+    //     $request->validate([
+    //         'student_id' => 'required|exists:students,id',
+    //         'to_class' => 'required|string', // Update to match your actual table name
+    //         'to_section' => 'required|string',
+    //         // 'to_section' => 'required|string',
+    //      ]);
 
-        // Retrieve data from the form
-        $studentId = $request->input('student_id');
-        $toClass = $request->input('to_class');
-        $toSection = $request->input('to_section');
+    //     // Retrieve data from the form
+    //     $studentId = $request->input('student_id');
+    //     $toClass = $request->input('to_class');
+    //     $toSection = $request->input('to_section');
  
-        // Retrieve from_class and from_section based on the student_id
+    //     // Retrieve from_class and from_section based on the student_id
+    //     $student = Student::findOrFail($studentId);
+    //     $fromClass = $student->class_id; // Adjust this based on your actual relationship
+    //     $fromFaculity = $student->faculity_id;
+    //     $fromSession = '1'; // Set a default value
+    //     $toSession = '2';
+    //     //checking if data is already lsave
+    //     $existingStudentPro = ModelsStudentPromotion::where('student_id', $studentId)->first();
+    //     if ($existingStudentPro) {
+    //         $existingStudentPro->update([
+    //             'student_id' => $studentId,
+    //             'from_class' => $fromClass,
+    //             'from_section' => $student->section_id,
+    //             'to_class' => $toClass,
+    //             'to_section' => $toSection,
+    //             'from_session' => $fromSession,
+    //             'to_session' => $toSession,
+    //              'from_faculity' => $fromFaculity,
+
+    //         ]);
+    //     } else {
+
+    //         ModelsStudentPromotion::create([
+    //             'student_id' => $studentId,
+    //             'from_faculity' => $fromFaculity,
+    //             'from_class' => $fromClass,
+    //             'from_section' => $student->section_id,
+    //             'to_class' => $toClass,
+    //             'to_section' => $toSection,
+    //             'from_session' => $fromSession,
+    //             'to_session' => $toSession,
+    //          ]);
+    //     }
+
+
+    //     // Save the promotion data to the StudentPromotion model/table
+
+    //     // Update the student data from the students table
+    //     $student->update([
+    //         'class_id' => $toClass,
+    //         'section_id' => $toSection,
+    //     ]);
+
+    //     // Redirect back to the promotion index page
+    //     return redirect()->route('admin.promotion.list')->with('message', 'Student Promote Successfully');
+    // }
+    public function p(Request $request)
+{
+    // Validate the form data
+    $request->validate([
+        'student_ids' => 'required|string', // Comma-separated list of student IDs
+        'to_class' => 'required|string',
+        'to_section' => 'required|string',
+    ]);
+
+    // Retrieve data from the form
+    $studentIds = explode(',', $request->input('student_ids'));
+    $toClass = $request->input('to_class');
+    $toSection = $request->input('to_section');
+    $fromSession = '1'; // Set a default value
+    $toSession = '2';
+
+    foreach ($studentIds as $studentId) {
         $student = Student::findOrFail($studentId);
-        $fromClass = $student->class_id; // Adjust this based on your actual relationship
+        $fromClass = $student->class_id;
         $fromFaculity = $student->faculity_id;
-        $fromSession = '1'; // Set a default value
-        $toSession = '2';
-        //checking if data is already lsave
+
         $existingStudentPro = ModelsStudentPromotion::where('student_id', $studentId)->first();
         if ($existingStudentPro) {
             $existingStudentPro->update([
@@ -87,11 +147,9 @@ class StudentPromotion extends Controller
                 'to_section' => $toSection,
                 'from_session' => $fromSession,
                 'to_session' => $toSession,
-                 'from_faculity' => $fromFaculity,
-
+                'from_faculity' => $fromFaculity,
             ]);
         } else {
-
             ModelsStudentPromotion::create([
                 'student_id' => $studentId,
                 'from_faculity' => $fromFaculity,
@@ -101,19 +159,18 @@ class StudentPromotion extends Controller
                 'to_section' => $toSection,
                 'from_session' => $fromSession,
                 'to_session' => $toSession,
-             ]);
+            ]);
         }
-
-
-        // Save the promotion data to the StudentPromotion model/table
 
         // Update the student data from the students table
         $student->update([
             'class_id' => $toClass,
             'section_id' => $toSection,
         ]);
-
-        // Redirect back to the promotion index page
-        return redirect()->route('admin.promotion.list')->with('message', 'Student Promote Successfully');
     }
+
+    // Redirect back to the promotion index page
+    return redirect()->route('admin.promotion.list')->with('message', 'Students Promoted Successfully');
+}
+
 }

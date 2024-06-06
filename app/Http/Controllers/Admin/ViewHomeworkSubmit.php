@@ -87,33 +87,42 @@ class ViewHomeworkSubmit extends Controller
             $addHomework = new ViewHomeworkFromTeacher();
             $addHomework->title = $request->title;
             $addHomework->content = $request->content;
-            $addHomework->teacher_id = $request->teacher_id;
+            $addHomework->teacher_id = $request->teacher_id;  
             $addHomework->class_id = $request->class_id;
             $addHomework->section_id = $request->section_id;
             $addHomework->faculity_id = $request->faculity_id;
-            // $addHomework->student = $request->student;
             $addHomework->save();
-            // dd($addHomework);
-            return redirect()->back()->with('message', 'Add Homework Submit Successfully');
+    
+            return redirect()->back()->with('message', 'Homework submitted successfully');
         } else {
-            $students = DB::table('students')->get();
-            $classes = Classs::get();
-            // dd($classes);
-            $sections = DB::table('sections')->get();
-            $views = ViewHomeworkFromTeacher::with('classs', 'section')->get();
-            // dd($views);
-
             $user = Auth::user();
             $teacher = $user->teacher;
+    
+            if (!$teacher) {
+                return redirect()->back()->with('error', 'Unauthorized access');
+            }
+    
+            $students = DB::table('students')->get();
+            $classes = Classs::all();
+            $sections = DB::table('sections')->get();
+    
+             $views = ViewHomeworkFromTeacher::with('classs', 'section')
+                ->where('teacher_id', $teacher->name)
+                ->get();
+    
             $assignedFaculityIds = explode(',', $teacher->faculity_id);
             $assignedClassIds = explode(',', $teacher->class_id);
             $assignedSectionIds = explode(',', $teacher->section_id);
             $assignedClassIds = array_map('intval', $assignedClassIds);
             $assignedSectionIds = array_map('intval', $assignedSectionIds);
             $assignedFaculityIds = array_map('intval', $assignedFaculityIds);
-            return view('Admin.HomeWork.Addformteacher.addhome', compact('students', 'classes', 'sections', 'views', 'assignedSectionIds', 'assignedClassIds', 'assignedFaculityIds'));
+    
+            return view('Admin.HomeWork.Addformteacher.addhome', compact(
+                'students', 'classes', 'sections', 'views', 'assignedSectionIds', 'assignedClassIds', 'assignedFaculityIds'
+            ));
         }
     }
+    
     public function show($viewId)
     {
         $homework = Homework::with('teacher', 'user')->find($viewId);

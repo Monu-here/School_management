@@ -45,8 +45,7 @@
                                     <th>Message</th>
                                     <th>Publish On</th>
                                     <th>Notice Date</th>
-                                    <th>Given By</th>
-                                    <th>Action</th>
+                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,7 +59,7 @@
                                         </td>
                                         <td> {{ $notice->notice_title }}</td>
                                         <td>
-                                            {{ $notice->notice_message }} </td>
+                                            {!! $notice->notice_message !!} </td>
                                         <td>
                                             {{ $notice->publish_on }}
 
@@ -72,7 +71,7 @@
                                         </td>
 
 
-                                        <td> {{ $notice->user->name }}</td>
+                                        {{-- <td> {{ $notice->user->name }}</td> --}}
 
                                         <td>
                                             <a href="{{ route('admin.notice.edit', ['notice' => $notice->id]) }}"

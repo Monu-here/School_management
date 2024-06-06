@@ -111,7 +111,7 @@
 
                                     <div class="col-12">
                                         <div class="student-submit">
-                                            <button type="submit" class="btn btn-primary" id="saveBtn" onclick="Msg()">Submit</button>
+                                            <button type="submit" class="btn btn-primary" id="saveBtn" >Submit</button>
                                         </div>
                                     </div>
                                 </div>

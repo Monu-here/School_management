@@ -28,7 +28,7 @@ class Teacher extends Model
         'faculity_id'
     ];
     protected $casts = [
-        'sub' => 'array',
+        'info' => 'array',
     ];
     public function teacherdailylog()
     {
@@ -36,20 +36,30 @@ class Teacher extends Model
     }
 
 
-
-
-
     public function class()
     {
         return $this->belongsTo(Classs::class, 'class_id');
     }
+
+    // public function class()
+    // {
+    //     return $this->belongsTo(Classs::class, );
+    // }
+   
+    
+    
+
     public function section()
     {
         return $this->belongsTo(Section::class);
     }
-    public function classes()
+    // public function classes()
+    // {
+    //     return $this->belongsTo(Classs::class);
+    // }
+    public function clasasasass()
     {
-        return $this->belongsTo(Classs::class);
+        return $this->hasmany(Classs::class);
     }
 
     // Define the relationship with the Student model through the Class model
@@ -59,11 +69,20 @@ class Teacher extends Model
     // }
     public function student()
     {
-        return $this->hasMany(Student::class, 'class_id', 'class_id')->where('section_id', $this->section_id)->where('faculity_id',$this->faculity_id);
+        return $this->hasMany(Student::class, 'class_id', 'class_id')->where('section_id', $this->section_id)->where('faculity_id', $this->faculity_id);
     }
 
     public function faculity()
     {
         return $this->belongsTo(Faculity::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function homeworks()
+    {
+        return $this->hasMany(ViewHomeworkFromTeacher::class);
     }
 }

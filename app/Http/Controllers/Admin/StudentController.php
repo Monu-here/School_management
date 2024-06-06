@@ -82,7 +82,7 @@ class StudentController extends Controller
                 'blood_id' => 'nullable|exists:bloods,id',
                 'section_id' => 'required|exists:sections,id',
                 'session_year' => 'string|max:20',
-                'parent_email' => 'required|email',
+                'parent_email' => 'nullable|email',
                 'f_name' => 'required|string|max:255',
                 'f_no' => 'nullable|digits:10',
                 'm_name' => 'nullable|string|max:255',
@@ -164,13 +164,14 @@ class StudentController extends Controller
 
             $student->save();
 
-            return redirect()->back()->with('message', 'Student  update successfully');
+            return redirect()->route('admin.student.index')->with('message', 'Student  update successfully');
         } else {
             $classes = Classs::all();
             $bloods = DB::table('bloods')->get();
             $sections = Section::all();
             $faculitys = Faculity::all();
-
+            $xy = Student::with('user')->get('user_id');
+            // dd($xy);
             return view('Admin.Student.edit', compact('classes', 'bloods', 'sections', 'student', 'faculitys'));
         }
     }
@@ -196,15 +197,14 @@ class StudentController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'gender' => 'required|string|',
-                'dob' => 'required|date',
+                'dob' => 'nullable|date',
                 'class_id' => 'required|exists:classses,id',
                 'email' => 'required|email|unique:users,email',
-                'email' => 'required|email|unique:teachers,email',
                 'number' => 'required|digits:10',
                 'address' => 'required|string|max:255',
                 'section_id' => 'required|exists:sections,id',
                 'image' => 'required|image',
-                'cv' => 'required|image',
+                'cv' => 'nullable|image',
                 'password' => 'required|string|min:8|',
                 'workinghrs' => 'string',
                 'faculity_id' => 'required|exists:faculities,id',
@@ -223,11 +223,9 @@ class StudentController extends Controller
                 $teacher = new Teacher([
                     'user_id' => $user->id,
                     'image' => $request->image->store('uploads/teacher'),
-                    'cv' => $request->cv->store('uploads/teacher'),
+
                     'name' => $request->name,
                     'gender' => $request->gender,
-                    'dob' => $request->dob,
-                    'email' => $request->email,
                     'number' => $request->number,
                     'address' => $request->address,
                     'jd' => $request->jd,
@@ -237,7 +235,19 @@ class StudentController extends Controller
                     'workinghrs' => $request->workinghrs,
                     'section_id' => $request->section_id,
                     'faculity_id' => $request->faculity_id,
+
+
                 ]);
+                if ($request->dob == null) {
+                    $dob = "N/A";
+                } else {
+                    $teacher->dob = $request->dob;
+                }
+                if ($request->file('cv') == null) {
+                    $teacher->cv = "N/A";
+                } else {
+                    $teacher->cv = $request->cv->store('uploads/teacher');
+                }
                 //  dd($teacher);
                 $teacher->save();
                 return redirect()->route('admin.teacher.teacherIndex')->with('message', 'Teacher and User successfully added');
@@ -259,7 +269,6 @@ class StudentController extends Controller
                 'gender' => 'nullable|string|',
                 'dob' => 'nullable|date',
                 'class_id' => 'nullable|exists:classses,id',
-                'email' => 'sometimes|nullable|email|',
                 'number' => 'nullable|digits:10',
                 'address' => 'nullable|string|max:255',
                 'section_id' => 'nullable|exists:sections,id',
@@ -283,7 +292,6 @@ class StudentController extends Controller
             $teacher->name = $request->name;
             $teacher->gender = $request->gender;
             $teacher->dob = $request->dob;
-            $teacher->email = $request->email;
             $teacher->number = $request->number;
             $teacher->address = $request->address;
             $teacher->jd = $request->jd;
@@ -301,7 +309,7 @@ class StudentController extends Controller
             $classes = Classs::all();
             $sections = Section::all();
             $facts = Faculity::all();
-
+ 
             return view('Admin.Teacher.edit', compact('classes', 'sections', 'teacher', 'facts'));
         }
     }

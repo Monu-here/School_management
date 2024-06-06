@@ -76,7 +76,7 @@
                 <div class="col-md-3 mt-3">
                     {{-- <div class="card"> --}}
                         {{-- <div class="card-body"> --}}
-                            <button class="btn  btn-primary" onclick="return roleMsg()" id="saveBtn">Submit</button>
+                            <button class="btn  btn-primary"  id="saveBtn">Submit</button>
                         {{-- </div> --}}
                     {{-- </div> --}}
                 </div>

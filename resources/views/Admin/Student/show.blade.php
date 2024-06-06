@@ -10,16 +10,16 @@
         }
 
         /* .password-container {
-                                position: relative;
-                            }
+                                    position: relative;
+                                }
 
-                            .password-toggle {
-                                position: absolute;
-                                right: 10px;
-                                top: 50%;
-                                transform: translateY(-50%);
-                                cursor: pointer;
-                            } */
+                                .password-toggle {
+                                    position: absolute;
+                                    right: 10px;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    cursor: pointer;
+                                } */
     </style>
 @endsection
 @section('linkbar')
@@ -46,8 +46,6 @@
                                 <input type="file" name="image" id="image" class="form-control photo"
                                     accept="image/*" data-default-file={{ asset($student->image) }}>
 
-                                {{-- <input type="file" class="form-control photo" name="image"
-                                                placeholder="Enter Image" accept="image/*"> --}}
                             </div>
 
                         </div>
@@ -55,16 +53,16 @@
                             <div class="row">
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
-                                        <label>ID No<span class="login-danger">*</span></label>
+                                        <label>Symbol No<span class="login-danger">*</span></label>
                                         <input type="number" id="formControlLg" class="form-control" name="idno"
-                                            placeholder="Enter ID No" value="{{ $student->idno }}" disabled />
+                                            value="{{ $student->idno }}" />
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                         <label>Name <span class="login-danger">*</span></label>
                                         <input type="text" id="formControlLg" class="form-control" name="name"
-                                            placeholder="Enter Name" value="{{ $student->name }}" disabled />
+                                            value="{{ $student->name }}" />
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
@@ -72,7 +70,7 @@
                                         <label>Gender <span class="login-danger">*</span></label>
                                         <input type="hidden" name="gender_hidden"
                                             value="{{ old('gender', $student->gender) }}">
-                                        <select class="form-control" name="gender" disabled>
+                                        <select class="form-control" name="gender">
                                             <option value="male" {{ old('gender_hidden') == 'Male' ? 'selected' : '' }}>
                                                 Male
                                             </option>
@@ -92,34 +90,22 @@
                                     <div class="form-group local-forms">
                                         <label>Date Of Birth <span class="login-danger">*</span></label>
                                         <input type="date" class="form-control" name="dob"
-                                            placeholder="Enter Date of Birth" value="{{ $student->dob }}" disabled>
+                                            value="{{ $student->dob }}">
                                     </div>
                                 </div>
 
+
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
-                                        <label>Roll No <span class="login-danger">*</span></label>
-                                        <input type="number" class="form-control" name="roll"
-                                            placeholder="Enter Roll No" value="{{ $student->roll }}" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-4">
-                                    <div class="form-group local-forms">
-                                        <label>Class <span class="login-danger">*</span></label>
+                                        <label>Semester <span class="login-danger">*</span></label>
 
                                         <input type="text" name="class_id" id=""
-                                            value="{{ $student->classes->name }}" class="form-control" disabled>
+                                            value="{{ $student->classes->name }}" class="form-control">
 
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-4">
-                                    <div class="form-group local-forms">
-                                        <label>Religion <span class="login-danger">*</span></label>
-                                        <input type="text" class="form-control" name="reli"
-                                            value="{{ $student->reli }}" disabled>
-                                    </div>
-                                </div>
+
 
 
                                 <div class="col-12 col-sm-4">
@@ -132,36 +118,30 @@
                                                 ->first();
                                         @endphp
                                         <input type="text" class="form-control" name="section"
-                                            value=" {{ $sectionName ?? 'N/A' }}" disabled>
+                                            value=" {{ $sectionName ?? 'N/A' }}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                         <label>Blood Group <span class="login-danger">*</span></label>
                                         <input type="text" class="form-control" name="blood_id"
-                                            value="{{ $student->blood->name }}" disabled>
+                                            value="{{ $student->blood->name }}">
 
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-4">
-                                    <div class="form-group local-forms">
-                                        <label>Email <span class="login-danger"></span></label>
-                                        <input type="email" class="form-control" name="email"
-                                            placeholder="Enter Email" value="{{ $student->email }}" disabled>
-                                    </div>
-                                </div>
+
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                         <label>Phone Number <span class="login-danger"></span></label>
                                         <input type="number" class="form-control" name="number"
-                                            placeholder="Enter Number" value="{{ $student->number }}" disabled>
+                                            value="{{ $student->user->number }}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                         <label>Address <span class="login-danger"></span></label>
                                         <input type="text" class="form-control" name="address"
-                                            placeholder="Enter Address"value="{{ $student->address }}" disabled>
+                                            value="{{ $student->address }}">
                                     </div>
                                 </div>
 
@@ -176,105 +156,62 @@
                                     <h5 class="form-title"><span>Parent Information</span></h5>
                                 </div>
                                 <hr>
-                                <div class="col-md-3">
-                                    <div class="form-group local-forms">
-                                        <label>Father Image <span class="login-danger">*</span></label>
-                                        <input type="file" name="f_image" id="image" class="form-control photo"
-                                            accept="image/*" data-default-file={{ asset($student->f_image) }}>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-12 col-sm-4">
                                             <div class="form-group local-forms">
                                                 <label>Father Name<span class="login-danger">*</span></label>
                                                 <input type="text" id="formControlLg" class="form-control"
-                                                    name="f_name" placeholder="Enter Father Name"
-                                                    value="{{ $student->f_name }}" disabled />
+                                                    name="f_name" value="{{ $student->f_name }}" />
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Father Occuptaion<span class="login-danger">*</span></label>
-                                                <input type="text" id="formControlLg" class="form-control"
-                                                    name="f_occ" placeholder="Enter Father Occuption"
-                                                    value="{{ $student->f_occ }}" disabled />
-                                            </div>
-                                        </div>
+
                                         <div class="col-12 col-sm-4">
                                             <div class="form-group local-forms">
                                                 <label>Father Phone Number<span class="login-danger">*</span></label>
                                                 <input type="number" id="formControlLg" class="form-control"
-                                                    name="f_no" placeholder="Enter Father Phone Number"
-                                                    value="{{ $student->f_no }}" disabled />
+                                                    name="f_no" value="{{ $student->f_no }}" />
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-4">
                                             <div class="form-group local-forms">
-                                                <label>Father Email<span class="login-danger">*</span></label>
+                                                <label>Parent Email<span class="login-danger"></span></label>
                                                 <input type="text" id="formControlLg" class="form-control"
-                                                    name="parent_email" placeholder="Enter Father Email"
-                                                    value="{{ $student->parent_email }}" disabled />
+                                                    name="parent_email" value="{{ $student->parent_email }}" />
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-4">
                                             <div class="form-group local-forms">
                                                 <label>Mother Name<span class="login-danger">*</span></label>
                                                 <input type="text" id="formControlLg" class="form-control"
-                                                    name="m_name" placeholder="Enter Father Name"
-                                                    value="{{ $student->m_name }}"disabled>
+                                                    name="m_name" value="{{ $student->m_name }}">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Mother Occuptaion<span class="login-danger">*</span></label>
-                                                <input type="text" id="formControlLg" class="form-control"
-                                                    name="m_occ" placeholder="Enter Father Occuption"
-                                                    value="{{ $student->m_occ }}" disabled />
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>Mother Phone Number<span class="login-danger">*</span></label>
-                                                <input type="number" id="formControlLg" class="form-control"
-                                                    name="m_no" placeholder="Enter Father Phone Number"
-                                                    value="{{ $student->m_no }}" disabled>
-                                            </div>
-                                        </div>
+
+
                                     </div>
                                 </div>
 
 
-                                <div class="col-md-3">
-                                    <div class="form-group local-forms">
-                                        <label>Mother Image <span class="login-danger">*</span></label>
-                                        <input type="file" name="m_image" id="image" class="form-control photo"
-                                            accept="image/*" data-default-file={{ asset($student->m_image) }}>
-                                    </div>
-                                </div>
-                                 
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <div class="student-submit">
-                                            <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <form
-                                            action="{{ route('admin.mark.admin.mark.email', ['sendMail' => $student->id]) }}"
-                                            method="POST" id="formSubmit">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary" id="saveBtn">Send Marksheet
-                                                to
-                                                Parent</button>
-                                        </form>
 
+
+                                <div class="d-flex justify-content-between">
+                                    <div class="student-submit">
+                                        <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
                                     </div>
-                                    <div class="col-md-3">
-                                        <a href="{{ route('admin.mark.admin.marksheet', $student->id) }}"
-                                            class="btn btn-primary text-white">Show
-                                            Marksheet</a>
-                                    </div>
+                                    <form
+                                        action="{{ route('admin.mark.admin.mark.email', ['sendMail' => $student->id]) }}"
+                                        method="POST" id="formSubmit">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary" id="saveBtn">Send Marksheet
+                                            to
+                                            Student</button>
+                                    </form>
+
+                                    <a href="{{ route('admin.mark.admin.marksheet', $student->id) }}"
+                                        class="btn btn-primary text-white">Show
+                                        Marksheet</a>
                                 </div>
                             </div>
                         </div>
@@ -331,7 +268,7 @@
         document.getElementById('formSubmit').addEventListener('submit', function(event) {
             event.preventDefault();
             var saveBtn = document.getElementById('saveBtn');
-            saveBtn.disabled = true;
+            saveBtn. = true;
             saveBtn.innerHTML = 'Please wait...';
             setTimeout(function() {
                 alert('Marksheet has send to parent');

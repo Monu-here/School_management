@@ -9,6 +9,7 @@ use App\Models\Teacher;
 use App\Models\TeacherDailyLog;
 use App\Models\TimeTable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
@@ -24,7 +25,10 @@ class TeacherController extends Controller
             $daily->save();
             return redirect()->back();
         } else {
-            $dailys = TeacherDailyLog::all();
+            // $user = Auth::user()->name;
+            //  $dailys = TeacherDailyLog::where('name' , $user)->get();
+             $dailys = TeacherDailyLog::all();
+            // dd($dailys);
             return view('Admin.TeacherDailyLog.index', compact('dailys'));
         }
     }

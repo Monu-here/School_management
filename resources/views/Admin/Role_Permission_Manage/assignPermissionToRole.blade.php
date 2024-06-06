@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-primary " id="saveBtn" onclick="Msg()">Assign Permission to Role</button>
+                            <button type="submit" class="btn btn-primary " id="saveBtn" >Assign Permission to Role</button>
                         </div>
                     </div>
                 </div>

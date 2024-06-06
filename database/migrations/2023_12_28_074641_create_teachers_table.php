@@ -22,8 +22,7 @@ return new class extends Migration
             $table->text('address');
             $table->text('jd');
             $table->text('exp');
-            $table->text('email');
-            $table->text('qual');
+             $table->text('qual');
             $table->timestamps();
         });
     }

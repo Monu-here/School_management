@@ -41,8 +41,6 @@
     </div>
 @endsection
 @section('content')
-
-
     <div class="row">
         <div class="col-sm-12">
             <div class=" ">
@@ -50,7 +48,7 @@
                     <form action="{{ route('admin.teacher.teacheradd') }}" id="formSubmit" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-
+                        {{-- 
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -59,7 +57,7 @@
                                     @endforeach
                                 </ul>
                             </div>
-                        @endif
+                        @endif --}}
 
                         <div class="card">
                             <div class="card-body">
@@ -111,18 +109,12 @@
 
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
-                                                    <label>Date Of Birth <span class="login-danger">*</span></label>
+                                                    <label>Date Of Birth <span class="login-danger"></span></label>
                                                     <input type="date" class="form-control" id="dob" name="dob"
-                                                        value="{{ old('dob') }}" required>
+                                                        value="{{ old('dob') }}"  >
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-3">
-                                                <div class="form-group local-forms">
-                                                    <label>Email <span class="login-danger">*</span></label>
-                                                    <input type="email" class="form-control" id="email" name="email"
-                                                        value="{{ old('email') }}" required>
-                                                </div>
-                                            </div>
+
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
                                                     <label>Phone Number <span class="login-danger">*</span></label>
@@ -148,8 +140,8 @@
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
                                                     <label>Experience <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="exp"
-                                                        name="exp" value="{{ old('exp') }}" required>
+                                                    <input type="text" class="form-control" id="exp" name="exp"
+                                                        value="{{ old('exp') }}"  >
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
@@ -169,14 +161,14 @@
                                                         <option value="" disabled selected>Select Faculty</option>
                                                         @foreach ($facts as $fact)
                                                             <option value="{{ $fact->id }}"
-                                                                {{ old('faculity_id') == $fact->id ? 'selected' : '' }}>
+                                                                {{ request('faculity_id') == $fact->id ? 'selected' : '' }}>
                                                                 {{ $fact->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                     <br>
-                                                    <button type="button" class="btn btn-success" id="addFaculty">Add
-                                                        More
+                                                    <button type="button" class="btn btn-primary text-center "
+                                                        id="addFaculty">Add More
                                                     </button>
                                                     <input type="hidden" name="faculity_id" id="hiddenFaculty"
                                                         value="">
@@ -189,13 +181,14 @@
                                                         <option value="" selected disabled>Select Semester</option>
                                                         @foreach ($classes as $class)
                                                             <option value="{{ $class->id }}"
-                                                                {{ old('class_id') == $class->id ? 'selected' : '' }}>
+                                                                {{ request('class_id') == $class->id ? 'selected' : '' }}>
                                                                 {{ $class->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                     <br>
-                                                    <button type="button" class="btn btn-success" id="addclass">Add
+                                                    <button type="button" class="btn btn-primary text-center "
+                                                        id="addclass">Add
                                                         More
                                                     </button>
                                                     <input type="hidden" name="class_id" id="hiddenclass"
@@ -209,17 +202,44 @@
                                                         <option value="" selected disabled>Select Section</option>
                                                         @foreach ($sections as $section)
                                                             <option value="{{ $section->id }}"
-                                                                {{ old('section_id') == $section->id ? 'selected' : '' }}>
+                                                                {{ request('section_id') == $section->id ? 'selected' : '' }}>
                                                                 {{ $section->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                     <br>
-                                                    <button type="button" class="btn btn-success" id="addUser">Add
+                                                    <button type="button" class="btn btn-primary text-center "
+                                                        id="addUser">Add
                                                         More</button>
                                                     <input type="hidden" name="section_id" id="hiddensection"
                                                         value="">
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Faculity</th>
+                                                            <th> Semester </th>
+                                                            <th> Section </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <ul id="selectedFacultyList"></ul>
+
+                                                            </td>
+                                                            <td>
+                                                                <ul id="selectedClassList"></ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul id="selectedSubList"></ul>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
 
                                         </div>
@@ -264,21 +284,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1" id="">
-                                                <span>Assign Faculity</span>
-                                                <ul id="selectedFacultyList"></ul>
-                                            </div>
-                                            <div class="col-md-1" id="">
-                                                <span>Assign Semester</span>
-                                                <ul id="selectedClassList"></ul>
-                                            </div>
-                                            <div class="col-md-1" id="">
-                                                <span>Assign Section</span>
-                                                <ul id="selectedSubList"></ul>
-
-                                            </div>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -307,17 +312,19 @@
                                     <div class="col-md-3">
                                         <div class="form-group local-forms">
 
-                                            <label>Teacher Cv <span class="login-danger">*</span></label>
+                                            <label>Teacher Cv <span class="login-danger"></span></label>
 
-                                            <input required type="file" class="form-control photo" name="cv"
+                                            <input   type="file" class="form-control photo" name="cv"
                                                 accept="image/*">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <button type="submit" class="btn btn-primary" onclick="Msg()"
-                                            id="saveBtn">Submit</button>
-                                        <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
+
                                     </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-primary" id="saveBtn">Submit</button>
+                                    <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
                                 </div>
                             </div>
                         </div>
@@ -479,5 +486,21 @@
                 });
             }
         });
+    </script>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById('password-input');
+            var passwordToggle = document.getElementById('password-toggle');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.classList.remove('fa-eye');
+                passwordToggle.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.classList.remove('fa-eye-slash');
+                passwordToggle.classList.add('fa-eye');
+            }
+        }
     </script>
 @endsection

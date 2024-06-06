@@ -106,7 +106,6 @@
                                         </div>
                                     </div>
 
-                                   
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Faculity <span class="login-danger">*</span></label>
@@ -177,7 +176,7 @@
                                         <div class="form-group local-forms">
                                             <label>Phone Number <span class="login-danger">*</span></label>
                                             <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                id="number" name="number" value="{{ $student->number }}">
+                                                id="number" name="number" value="{{ $student->user->number }}">
 
                                         </div>
                                     </div>
@@ -230,7 +229,7 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             {{-- //////////  --}}
-                                            <label> Email<span class="login-danger">*</span></label>
+                                            <label> Email<span class="login-danger"></span></label>
                                             <input type="text" id="formControlLg" class="form-control"
                                                 name="parent_email" Email value="{{ $student->parent_email }}" />
                                             {{-- ////////////  --}}
@@ -250,68 +249,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h5 class="form-title"><span>User Information</span></h5>
-                                    </div>
-                                    <hr>
-                                    <div class="col-md-12">
 
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>UesrName <span class="login-danger">*</span></label>
-                                                    <input type="text" id="formControlLg" class="form-control"
-                                                        name="name" />
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Phone Number <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                                        id="number" name="number" value="{{ old('number') }}"
-                                                        >
-
-
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Email <span class="login-danger">*</span></label>
-                                                    <input type="email" class="form-control" id="email"
-                                                        name="email" value="{{ old('email') }}" >
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Password <span class="login-danger">*</span></label>
-                                                    <div class="password-container">
-                                                        <input type="password" class="form-control"id="password-input" rd"
-                                                            name="password" >
-                                                        <i class="fas fa-eye password-toggle" id="password-toggle"
-                                                            onclick="togglePasswordVisibility()"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div> --}}
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -333,23 +271,10 @@
                                         </div>
                                     </div>
 
-
-                                    {{-- <div class="col-md-3">
-                                        <div class="form-group local-forms">
-                                            <label>User Login Image <span class="login-danger">*</span></label>
-                                            <input type="file" class="form-control photo" name="images"
-                                                accept="image/*" data-default-file={{asset($student->image)}}>
-                                        </div>
-
-                                    </div> --}}
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-
-                                        <button type="submit" class="btn btn-primary" onclick="Msg()"
-                                            id="saveBtn">Update</button>
-                                        <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
-                                    </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-primary" id="saveBtn">Update</button>
+                                    <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
                                 </div>
                             </div>
                         </div>
@@ -368,37 +293,7 @@
             $('.photo').dropify();
         });
     </script>
-    <script>
-        function populateYearDropdown() {
-            var currentYear = new Date().getFullYear();
-            var dropdown = document.getElementById("yearDropdown");
 
-            for (var year = 2000; year <= currentYear; year++) {
-                var option = document.createElement("option");
-                option.value = year;
-                option.text = year;
-                dropdown.add(option);
-            }
-        }
-
-        populateYearDropdown();
-
-        setInterval(function() {
-            var currentYear = new Date().getFullYear();
-            var dropdown = document.getElementById("yearDropdown");
-
-            if (parseInt(dropdown.options[dropdown.options.length - 1].value) < currentYear) {
-                dropdown.options.length = 0;
-
-                populateYearDropdown();
-            }
-        }, 5000);
-
-        const Msg = (msg = "Would you like to submit this student form  ? ") => {
-            return prompt(msg) == 'yes';
-            console.log(Msg);
-        }
-    </script>
     <script>
         document.getElementById('formSubmit').addEventListener('submit', function(event) {
             event.preventDefault();

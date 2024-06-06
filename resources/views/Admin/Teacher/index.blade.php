@@ -1,4 +1,11 @@
 @extends('Admin.layout.app')
+@section('css')
+    <style>
+        .dataTables_filter {
+            display: none;
+        }
+    </style>
+@endsection
 @section('title')
     <div class="page-header">
         <div class="row">
@@ -104,7 +111,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                             </div>
+                            </div>
                             <div class="col-auto text-end float-end ms-auto download-grp">
                                 <a href="{{ route('admin.teacher.teacheradd') }}" class="btn btn-primary"><i
                                         class="fas fa-plus"></i></a>
@@ -142,7 +149,7 @@
                                                 <a href="">{{ $teacher->name }}</a>
                                             </h2>
                                         </td>
-                                        <td>{{$teacher->workinghrs}}</td>
+                                        <td>{{ $teacher->workinghrs }}</td>
 
                                         <td>
                                             {{-- <a href="{{ route('admin.teacher.teacherShow', ['teacher' => $teacher->id]) }}"
@@ -150,7 +157,8 @@
                                             <a href="{{ route('admin.teacher.teacheredit', ['teacher' => $teacher->id]) }}"
                                                 class="btn btn-sm btn-primary"><i class="fa fa-pen text-white "></i></a>
                                             <a href="{{ route('admin.teacher.teacherdel', ['teacher' => $teacher->id]) }}"
-                                                class="btn btn-sm btn-danger "  onclick="return yes()"><i class="fa fa-trash text-white "></i></a>
+                                                class="btn btn-sm btn-danger " onclick=""><i
+                                                    class="fa fa-trash text-white "></i></a>
                                         </td>
                                         <td>
                                             {{ getAgo($teacher->created_at) }}

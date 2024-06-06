@@ -1,5 +1,11 @@
 @extends('Admin.layout.app')
-
+@section('css')
+    <style>
+        .dataTables_filter {
+            display: none;
+        }
+    </style>
+@endsection
 @section('title')
     <div class="page-header">
         <div class="row">
@@ -70,8 +76,9 @@
                                     </th>
                                     <th>Symbol No</th>
                                     <th>Name</th>
+                                    <th>Faculity</th>
                                     <th>Section</th>
-                                    <th>Class</th>
+                                    <th>Semester</th>
                                     @role('SuperAdmin')
                                         <th>Parent Name</th>
                                         <th>Mobile Number</th>
@@ -103,6 +110,9 @@
                                                 </h2>
                                             </td>
                                             <td>
+                                                {{$student->faculity->name}}
+                                            </td>
+                                            <td>
                                                 @php
                                                     $sectionName = $sections
                                                         ->where('id', $student->section_id)
@@ -132,7 +142,7 @@
                                                 <a href="{{ route('admin.student.studentShow', ['student' => $student->id]) }}"
                                                     class="btn btn-sm btn-success"><i class="fa fa-eye text-white"></i></a>
                                                 <a href="{{ route('admin.student.del', ['student' => $student->id]) }}"
-                                                    class="btn btn-sm btn-danger" onclick="return yes()"><i
+                                                    class="btn btn-sm btn-danger"><i
                                                         class="fa fa-trash text-white"></i></a>
 
 
@@ -180,6 +190,13 @@
                                                                 alt="User Image" /></a>
                                                         <a href="">{{ $ss->name }}</a>
                                                     </h2>
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        
+                                                        $faculityName  = $facts->where('id', $ss->faculity_id)->pluck('name')->first();
+                                                    @endphp
+                                                    {{$faculityName ?? 'N/A'}}
                                                 </td>
                                                 <td>
                                                     @php
@@ -237,6 +254,8 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#clienttable_wrapper .col-md-6:eq(0)');
+
+
         });
     </script>
 @endsection

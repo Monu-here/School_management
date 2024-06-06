@@ -25,6 +25,8 @@ class classSeeder extends Seeder
             ['name' => 'Sem 6'],
             ['name' => 'Sem 7'],
             ['name' => 'Sem 8'],
+            ['name' => 'Sem 9'],
+            ['name' => 'Sem 10'],
         ];
 
         foreach ($classes as $class) {

@@ -41,16 +41,6 @@
     </div>
 @endsection
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div class="row">
         <div class="col-sm-12">
             <div class=" ">
@@ -121,13 +111,7 @@
                                                         value="{{ $teacher->dob }}" required>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-3">
-                                                <div class="form-group local-forms">
-                                                    <label>Email <span class="login-danger">*</span></label>
-                                                    <input type="email" class="form-control" id="email" name="email"
-                                                        value="{{ $teacher->email }}" required>
-                                                </div>
-                                            </div>
+
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
                                                     <label>Phone Number <span class="login-danger">*</span></label>
@@ -153,8 +137,8 @@
                                             <div class="col-12 col-sm-3">
                                                 <div class="form-group local-forms">
                                                     <label>Experience <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="exp"
-                                                        name="exp" value="{{ $teacher->exp }}" required>
+                                                    <input type="text" class="form-control" id="exp" name="exp"
+                                                        value="{{ $teacher->exp }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-3">
@@ -167,9 +151,9 @@
 
                                             <div class="col-12 col-sm-2">
                                                 <div class="form-group local-forms">
-                                                    <label>Assign faculty <span class="login-danger">*</span></label>
+                                                    <label>Assign Faculity <span class="login-danger">*</span></label>
                                                     <select class="form-control" name="faculity_id[]" id="faculty">
-                                                        <option value="" disabled selected>Select Faculty</option>
+                                                        <option value="" disabled selected>Select Faculity</option>
                                                         @foreach ($facts as $fact)
                                                             <option value="{{ $fact->id }}"
                                                                 {{ old('faculity_id') == $fact->id ? 'selected' : '' }}>
@@ -179,9 +163,9 @@
                                                         @endforeach
                                                     </select>
                                                     <br>
-                                                    <button type="button" class="btn btn-success" id="addFaculty">Add
-                                                        More
-                                                        Faculty</button>
+                                                    <button type="button" class="btn btn-primary" id="addFaculty">Add
+
+                                                        Faculity</button>
                                                     <input type="hidden" name="faculity_id" id="hiddenFaculty"
                                                         value="">
 
@@ -192,7 +176,7 @@
                                                 <div class="form-group local-forms">
                                                     <label>Assign Semester <span class="login-danger">*</span></label>
                                                     <select class="form-control" name="class_id[]" id="class">
-                                                        <option value="" selected disabled>Select Class</option>
+                                                        <option value="" selected disabled>Select Semester</option>
                                                         @foreach ($classes as $class)
                                                             <option value="{{ $class->id }}"
                                                                 {{ old('class_id') == $class->id ? 'selected' : '' }}>
@@ -201,9 +185,9 @@
                                                         @endforeach
                                                     </select>
                                                     <br>
-                                                    <button type="button" class="btn btn-success" id="addclass">Add
-                                                        More
-                                                        Class</button>
+                                                    <button type="button" class="btn btn-primary" id="addclass">Add
+
+                                                        Semester</button>
                                                     <input type="hidden" name="class_id" id="hiddenclass"
                                                         value="">
                                                 </div>
@@ -221,63 +205,81 @@
                                                         @endforeach
                                                     </select>
                                                     <br>
-                                                    <button type="button" class="btn btn-success" id="addUser">Add
-                                                        More
+                                                    <button type="button" class="btn btn-primary" id="addUser">Add
+
                                                         Section</button>
                                                     <input type="hidden" name="section_id" id="hiddensection"
                                                         value="">
                                                 </div>
                                             </div>
+                                            <div class="col-sm-2">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Faculity</th>
+                                                            <th> Semester </th>
+                                                            <th> Section </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <ul id="selectedFacultyList"></ul>
 
+                                                            </td>
+                                                            <td>
+                                                                <ul id="selectedClassList"></ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul id="selectedSubList"></ul>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            {{-- {{$teacher->class->name}} --}}
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <button type="submit" class="btn btn-primary" 
+                                                id="saveBtn">Update</button>
+                                            <a href="{{ route('admin.student.index') }}"
+                                                class="btn btn-danger">Cancle</a>
                                         </div>
 
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-1" id="">
-                                        <span>Assign Faculity</span>
-                                        <ul id="selectedFacultyList"></ul>
-                                    </div>
-                                    <div class="col-md-2" id="">
-                                        <span>Assign Semester</span>
-                                        <ul id="selectedClassList"></ul>
-                                    </div>
-                                    <div class="col-md-1" id="">
-                                        <span>Assign Section</span>
-                                        <ul id="selectedSubList"></ul>
+                                    <label for="">Selected Class</label>
 
-                                    </div>
+                                    <li id=" ">
+                                        {{ $teacher->class->name }}
+                                    </li>
+                                    <label for="">Selected Subject</label>
+
+                                    <li id=" ">
+
+                                        {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->section->name)) !!}
+
+                                    </li>
                                 </div>
+
                             </div>
                         </div>
 
 
-                        {{-- <div class="col-3" id="selectedClassListContainer">
-                            <label for="">Selected Class</label>
-                            <li id=" ">
-                                {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->class_id)) !!}
-                            </li>
+
+                        <div class="col-3" id="selectedClassListContainer">
+
                         </div>
                         <div class="col-3" id="selectedSubListContainer">
-                            <label for="">Selected Subject</label>
-                            <li id=" ">
 
-                                {!! htmlspecialchars(str_replace(['"', "'", '\\', '[', ']'], '', $teacher->section->name)) !!}
+                        </div>
 
-                            </li>
-                        </div> --}}
-                        <button type="submit" class="btn btn-primary" onclick="edit()" id="saveBtn">Update</button>
-                        <a href="{{ route('admin.student.index') }}" class="btn btn-danger">Cancle</a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <p id="new"></p>
+    <p id="teacher"></p>
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -290,26 +292,7 @@
 
         });
     </script>
-    <script>
-        var data = {!! json_encode($teacher) !!};
-        console.log(data); // Debugging: Log the data to the console to check its type and content
 
-        // if (Array.isArray(data)) {
-        var html = '';
-        data.forEach(e => {
-            html += `${e.id}`;
-            // });
-            $('#new').append(html); // Append the generated HTML to the element with ID 'new'
-            console.error('Data is not an array:', data);
-        });
-
-
-
-        const Msg = (msg = "Would you like to submit this student form  ? ") => {
-            return prompt(msg) == 'yes';
-            console.log(Msg);
-        }
-    </script>
     <script>
         document.getElementById('formSubmit').addEventListener('submit', function(event) {
             event.preventDefault();
