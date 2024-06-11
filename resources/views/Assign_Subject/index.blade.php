@@ -74,7 +74,7 @@
                                             @endif
                                             <button type="button" class="btn btn-primary mt-2  " id="addUser">Add Subject
                                             </button>
-                                        <input type="text" name="subject" id="hiddenSub" value="">
+                                        <input type="hidden" name="subject" id="hiddenSub" value="">
                                     </div>
 
                                     <div class="col-md-6">
