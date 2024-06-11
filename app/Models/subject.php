@@ -8,9 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class subject extends Model
 {
     use HasFactory;
-    public function user()
+    protected $casts = [
+        'sub_code' => 'array',
+        'credit' => 'array',
+        'level' => 'array',
+        'pre_requsisites' => 'array',
+    ];
+    public function faculity()
     {
-       return $this->belongsTo(User::class);
+        return $this->belongsTo(Faculity::class);
     }
-    
+    public function classes()
+    {
+        return $this->belongsTo(Classs::class);
+    }
 }

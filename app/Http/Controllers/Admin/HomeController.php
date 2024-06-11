@@ -40,7 +40,6 @@ class HomeController extends Controller
 
 
 
-
         return view('welcome', compact('students', 'users', 'deps', 'cls', 'events', 'event', 'notices', 'student', 'teacher', 'students'));
     }
 

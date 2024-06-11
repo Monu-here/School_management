@@ -283,18 +283,28 @@
                                     class="{{ Route::currentRouteNamed('admin.notice.list') ? 'active' : '' }}"> Notice
                                     List</a>
                             </li>
-
+                            <li>
+                                <a href="{{ route('admin.subject-add.index') }}"
+                                    class="{{ Route::currentRouteNamed('admin.subject-add.index') ? 'active' : '' }}">Add Subject
+                                </a>
+                            </li>
                             <li>
                                 <a href="{{ route('admin.teacher.assign_subject') }}"
                                     class="{{ Route::currentRouteNamed('admin.teacher.assign_subject') ? 'active' : '' }}">Assign
                                     Subject To Techer
                                 </a>
                             </li>
-                            {{-- <li>
+                            <li>
+                                <a href="{{ route('admin.exam.index') }}"
+                                    class="{{ Route::currentRouteNamed('admin.exam.index') ? 'active' : '' }}"> Exam
+                                    List</a>
+                            </li>
+                           
+                            <li>
                                 <a href="{{ route('admin.mark.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.mark.list') ? 'active' : '' }}">Mark</a>
                             </li>
-                            <li>
+                           {{--  <li>
                                 <a href="{{ route('admin.department.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.department.index') ? 'active' : '' }}">Department
                                 </a>

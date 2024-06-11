@@ -14,24 +14,24 @@ class SubjectSeeder extends Seeder
      */
     public function run(): void
     {
-         DB::table('subjects')->delete();
+        //  DB::table('subjects')->delete();
 
-        $subjects = [
-            ['name' => 'Math'],
-            ['name' => 'Science'],
-            ['name' => 'Nepali'],
-            ['name' => 'English'],
-            ['name' => 'Computer'],
-            ['name' => 'Physic'],
-            ['name' => 'Chemistry'],
-            ['name' => 'Biology'],
-            ['name' => 'Social'],
-            ['name' => 'POA'],
+        // $subjects = [
+        //     ['name' => 'Math'],
+        //     ['name' => 'Science'],
+        //     ['name' => 'Nepali'],
+        //     ['name' => 'English'],
+        //     ['name' => 'Computer'],
+        //     ['name' => 'Physic'],
+        //     ['name' => 'Chemistry'],
+        //     ['name' => 'Biology'],
+        //     ['name' => 'Social'],
+        //     ['name' => 'POA'],
             
-        ];
+        // ];
 
-        foreach ($subjects as $subject) {
-            subject::create($subject);
-        }
+        // foreach ($subjects as $subject) {
+        //     subject::create($subject);
+        // }
     }
 }

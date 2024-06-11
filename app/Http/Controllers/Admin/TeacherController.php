@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssignSubjectToTeacher;
+use App\Models\Classs;
+use App\Models\Faculity;
 use App\Models\subject;
 use App\Models\Teacher;
 use App\Models\TeacherDailyLog;
@@ -27,7 +29,7 @@ class TeacherController extends Controller
         } else {
             // $user = Auth::user()->name;
             //  $dailys = TeacherDailyLog::where('name' , $user)->get();
-             $dailys = TeacherDailyLog::all();
+            $dailys = TeacherDailyLog::all();
             // dd($dailys);
             return view('Admin.TeacherDailyLog.index', compact('dailys'));
         }
@@ -49,11 +51,27 @@ class TeacherController extends Controller
     }
     public function assign_subject(Request $request)
     {
-        $users = DB::table('users')->where('role_name', 'Teacher')->get(['id', 'name']);
-        $subjects = DB::table('subjects')->get();
-        $assigns = AssignSubjectToTeacher::with('user', 'subject')->get();
-        return view('Assign_Subject.index', compact('users', 'subjects', 'assigns'));
+        $faculitys = Faculity::all();
+        $semesters = Classs::all();
+        $subjects = subject::all();
+        $teachers  = Teacher::all();
+// 
+        if ($request->ajax()) {
+            $faculity_id = $request->faculity_id;
+            $semester_id = $request->semester_id;
+
+            $subjects = subject::where('faculity_id', $faculity_id)
+                ->where('semester_id', $semester_id)
+                ->get();
+
+            return response()->json(['subjects' => $subjects]);
+        }
+
+        $assigns = AssignSubjectToTeacher::with('faculity','teacher')->get();
+        // dd($assigns);
+        return view('Assign_Subject.index', compact('subjects', 'assigns', 'semesters', 'faculitys','teachers'));
     }
+
     public function assign_subject_add(Request $request)
     {
         if ($request->getMethod() == "POST") {
@@ -62,6 +80,8 @@ class TeacherController extends Controller
             $assign_subject = new AssignSubjectToTeacher();
             $assign_subject->user_id = $request->user_id;
             $assign_subject->subject = $request->subject; // Assign each subject
+            $assign_subject->faculity_id = $request->faculity_id; // Assign each subject
+            $assign_subject->semester_id = $request->semester_id; // Assign each subject
             $assign_subject->save();
 
 

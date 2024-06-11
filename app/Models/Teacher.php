@@ -62,6 +62,12 @@ class Teacher extends Model
         return $this->hasmany(Classs::class);
     }
 
+
+
+public function assignedSubjects()
+{
+    return $this->hasOne(AssignSubjectToTeacher::class);
+}
     // Define the relationship with the Student model through the Class model
     // public function students()
     // {

@@ -219,9 +219,37 @@
                     <div class="card-body">
                         <div class="db-widgets d-flex justify-content-between align-items-center">
                             @php
-                                $user = Auth::user();
-                                $assignedSubjects = $user->assignedSubjects;
+
+                                $teacherId = DB::table('teachers')->select('id')->value('id');
+                                $faculityId = DB::table('faculities')->select('id')->value('id');
+                                $SemesterId = DB::table('classses')->select('id')->value('id');
+
+                                $assignedSubjects = App\Models\AssignSubjectToTeacher::where('user_id', $teacherId)
+                                ->where('faculity_id', $faculityId)
+                                ->where('semester_id', $SemesterId)
+                                ->get();
                             @endphp
+
+                            @if ($assignedSubjects->isNotEmpty())
+                                <h3>Assigned Subjects</h3>
+                                <ul>
+                                    @foreach ($assignedSubjects as $subject)
+                                        <li>{{ $subject->subject }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p>No subjects assigned.</p>
+                            @endif
+
+
+
+
+
+
+
+
+                            {{-- 
+
                             <div class="db-info">
                                 <h6>Assign Subject</h6>
                                 @if ($assignedSubjects->isEmpty())
@@ -233,7 +261,7 @@
                                     <li>{{ $subject->subject }}</li>
                                 @endforeach
                             </ul>
-                            @endif
+                            @endif --}}
 
                         </div>
                     </div>

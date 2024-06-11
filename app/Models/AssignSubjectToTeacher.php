@@ -8,13 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class AssignSubjectToTeacher extends Model
 {
     use HasFactory;
-    public function user()
+    public function teacher()
     {
-        return  $this->belongsTo(User::class);
+        return  $this->belongsTo(Teacher::class , 'id');
     }
     public function subject()
     {
         return   $this->belongsTo(subject::class);
     }
-   
+    public function faculity()
+    {
+        return   $this->belongsTo(Faculity::class);
+    }
+    public function class()
+    {
+        return   $this->belongsTo(Classs::class);
+    }
 }
