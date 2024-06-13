@@ -40,8 +40,9 @@ class MarkController extends Controller
         $classes = DB::table('classses')->get();
         $sections = DB::table('sections')->get();
         $subjects = DB::table('subjects')->get();
+        $faculitys = DB::table('faculities')->get();
 
-        return view('Admin.mark.create', compact('classes', 'sections', 'subjects', 'exams'));
+        return view('Admin.mark.create', compact('classes', 'sections', 'subjects', 'exams', 'faculitys'));
     }
     // i have use this function to show then fomr to enter mark of that student in that subject END
 
@@ -49,13 +50,20 @@ class MarkController extends Controller
     // it will list the student from class and from section end enter marks START
     public function getStudents(Request $request)
     {
+        $selectedfaculity = $request->input('faculity_id');
         $selectedClass = $request->input('class_id');
         $selectedSection = $request->input('section_id');
         $sec = Section::find($request->input('section_id'));
         $selectedExam = Exam::find($request->input('exam_id'));
         $selectedSubject = Subject::find($request->input('subject_id'));
 
-        $students = Student::with(['classes', 'section'])
+
+
+
+        $students = Student::with(['classes', 'section', 'faculity'])
+            ->when($selectedfaculity, function ($query) use ($selectedfaculity) {
+                return $query->where('faculity_id', $selectedfaculity);
+            })
             ->when($selectedClass, function ($query) use ($selectedClass) {
                 return $query->where('class_id', $selectedClass);
             })
@@ -63,17 +71,18 @@ class MarkController extends Controller
                 return $query->where('section_id', $selectedSection);
             })
             ->get();
-
+        // dd($students);
         $exams = DB::table('exams')->get();
         $marks = Mark::with(['student', 'exam', 'section'])
             ->whereIn('student_id', $students->pluck('id'))
             ->get();
 
         $classes = DB::table('classses')->get();
+        $faculitys = DB::table('faculities')->get();
         $sections = DB::table('sections')->get();
         $subjects = DB::table('subjects')->get();
         $grades = Grade::all();
-        return view('Admin.mark.create', compact('students', 'selectedClass', 'selectedSection', 'classes', 'sections', 'subjects', 'exams', 'selectedExam', 'selectedSubject', 'sec', 'grades'));
+        return view('Admin.mark.create', compact('students', 'selectedClass', 'selectedSection', 'classes', 'sections', 'subjects', 'exams', 'selectedExam', 'selectedSubject', 'sec', 'grades', 'faculitys'));
     }
     // it will list the student from class and from section end enter marks END
 
@@ -99,8 +108,7 @@ class MarkController extends Controller
 
             $student = Student::find($studentId);
 
-            // Update the grade in the marks table
-            $mark = new Mark();
+             $mark = new Mark();
             $mark->exam_id = $selectedExam->id;
             $mark->student_id = $studentId;
             $mark->subject_id = $selectedSubject->id;
@@ -109,6 +117,10 @@ class MarkController extends Controller
             $mark->total_marks = $totalMarks;
             $mark->grade = $grade ? $grade->name : 'N/A';
             $mark->remark = $grade ? $grade->remark : 'N/A';
+            $mark->exam_type =  $request->exam_type;
+            $mark->resit =  $request->resit;
+            $mark->repeat =  $request->repeat;
+            // dd($mark);
             $mark->save();
         }
         return redirect()->route('admin.mark.index')->with('success', 'Marks saved successfully!');
@@ -128,15 +140,16 @@ class MarkController extends Controller
             ->with('Exam', 'Subject', 'grade')
             ->get();
         $grade = $marks->first()->grade ?? null;
-
         $totalMarks = $marks->sum('total_marks');
-        $percentage = round($totalMarks / 500 * 100, 2);
+        // dd($totalMarks);
+        $percentage = round($totalMarks / 200 * 100, 2);
         $grade = Grade::where("mark_from", "<=", $percentage)->where("mark_to", ">=", $percentage)->first();
 
 
         $student->finalMrak = $totalMarks;
         $student->grade = $grade ? $grade->name : 'N/A';
-        $student->remark = $grade ? $grade->remark : 'N/A'; // Corrected line
+        // dd($student);
+        $student->remark = $grade ? $grade->remark : 'N/A';
         $parentEmail = optional($student)->parent_email;
         // dd($parentEmail);
         // dd($student);
@@ -153,8 +166,8 @@ class MarkController extends Controller
         $grades = DB::table('grades')->get();
         $date = Carbon::now()
             ->format('l, jS \of F Y');
-
-        return view('Admin.mark.mark_sheet', compact('grades', 'date', 'student', 'marks', 'percentage', 'totalMarks'));
+$ci = DB::table('marks')->first();
+        return view('Admin.mark.mark_sheet', compact('grades', 'date', 'student', 'marks', 'percentage', 'totalMarks','ci'));
     }
     ///        It will show the marksheet of student END
 
@@ -223,7 +236,7 @@ class MarkController extends Controller
         $student->remark = $grade ? $grade->remark : 'N/A';
         $date = Carbon::now()->format('l, jS \of F Y');
 
-        $content = view('Admin.mark.download', compact( 'date', 'student', 'marks', 'totalMarks', 'percentage','grade'))->render();
+        $content = view('Admin.mark.download', compact('date', 'student', 'marks', 'totalMarks', 'percentage', 'grade'))->render();
         // changing name of markshet with student name othen marksheet.pdf
         $filename = Str::slug($student->name) . '_marksheet.pdf';
 

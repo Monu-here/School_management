@@ -40,8 +40,7 @@ class StudentPromotion extends Controller
                 $fromClass = $request->input('from_class');
                 $fromSection = $request->input('from_section');
 
-                // Query students based on the selected class and section
-                $students = Student::whereHas('classes', function ($query) use ($fromFaculity, $fromClass, $fromSection) {
+                 $students = Student::whereHas('classes', function ($query) use ($fromFaculity, $fromClass, $fromSection) {
                     $query->where('faculity_id', $fromFaculity)->where('class_id', $fromClass)->where('section_id', $fromSection);
                 })->get();
                 if($students==null){

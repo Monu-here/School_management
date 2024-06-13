@@ -10,9 +10,13 @@ class Mark extends Model
     use HasFactory;
     // Mark.php
     protected $fillable = [
-        'exam_id', 'student_id', 'subject_id', 'obtained_marks', 'practical_marks', 'total_marks', 'grade',
+        'exam_id', 'student_id', 'subject_id', 'obtained_marks', 'practical_marks', 'total_marks', 'grade' , ' exam_type','resit','repeat',
     ];
-
+    protected $casts = [
+        'exam_type' => 'array',
+        'resit' => 'array',
+        'repeat' => 'array',
+     ];
 
     public function student()
     {

@@ -96,7 +96,7 @@
                                     class="{{ Route::currentRouteNamed('admin.promotion.list') ? 'active' : '' }}">Student
                                     Promote</a></li>
                         @endrole()
-                        @role('Teacher')
+                        @role('Teacher','SuperAdmin')
                             <li><a href="{{ route('admin.atten.index') }}"
                                     class="{{ Route::currentRouteNamed('admin.atten.index') ? 'active' : '' }}">Student
                                     Attendence</a></li>

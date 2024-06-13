@@ -8,12 +8,19 @@
                 <div class="col ms-4">
                     <h3 class="page-title">Mark</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('admin.mark.index')}}">Mark</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.mark.index') }}">Mark</a></li>
                         <li class="breadcrumb-item active">Create Mark</li>
                     </ul>
                 </div>
             </div>
         </div>
+    @endsection
+    @section('css')
+        <style>
+            .drop {
+                display: none;
+            }
+        </style>
     @endsection
     @section('content')
         <div class=" ">
@@ -33,6 +40,17 @@
                                             @foreach ($exams as $exam)
                                                 <option value="{{ $exam->id }}"
                                                     {{ old('exam_id') == $exam->id ? 'selected' : '' }}>{{ $exam->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Class:</strong>
+                                        <select name="faculity_id" class="form-control">
+                                            @foreach ($faculitys as $faculity)
+                                                <option value="{{ $faculity->id }}"
+                                                    {{ old('faculity_id') == $faculity->id ? 'selected' : '' }}>
+                                                    {{ $faculity->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -105,6 +123,8 @@
                                 <th>Section</th>
                                 <th>Obtained Mark</th>
                                 <th>Practical Marks</th>
+                                <th>Exam Type</th>
+                                <th></th>
                                 <th>Total Marks</th>
                                 <th>Action</th>
 
@@ -130,20 +150,42 @@
 
                                         </td>
                                         <td>
-                                            <!-- Display the total marks -->
+                                            <select id="dropdown_{{ $student->id }}" onchange="showoption(this, {{ $student->id }})" name="exam_type" class="form-control">
+                                            {{-- <select id="dropdown_{{ $student->id }}" onchange="showoption(this, {{ $student->id }})" name="exam_type[{{ $student->id }}]" class="form-control"> --}}
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="1">Resit</option>
+                                                <option value="2">Repeat</option>
+                                            </select>
+                                        </td>
+                                        <td id="dropdown_one_{{ $student->id }}" class="drop">
+                                            <div>
+                                                <input type="text" name="resit" class="form-control">
+                                            </div>
+                                        </td>
+                                        <td>
                                             <span id="total_marks_{{ $student->id }}"></span>
                                         </td>
-
-
                                         <td>
                                             <input type="hidden" name="student_id" value="{{ $student->id }}">
                                             <input type="hidden" name="exam_id" value="{{ $selectedExam->id }}">
                                             <input type="hidden" name="subject_id" value="{{ $selectedSubject->id }}">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </td>
-
                                     </tr>
                                 @endforeach
+
+
+
+
+
+
+
+
+
+
+
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
                             </form>
                         </tbody>
                     </table>
@@ -164,6 +206,14 @@
 
                 // Display total marks
                 document.getElementById("total_marks_" + studentId).textContent = totalMarks;
+            }
+
+            function showoption(answer, studentId) {
+                if (answer.value == 1) {
+                    document.getElementById('dropdown_one_' + studentId).classList.remove('drop');
+                } else {
+                    document.getElementById('dropdown_one_' + studentId).classList.add('drop');
+                }
             }
         </script>
     @endsection

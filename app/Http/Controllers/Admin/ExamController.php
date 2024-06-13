@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classs;
 use App\Models\Exam;
+use App\Models\Faculity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,12 +21,17 @@ class ExamController extends Controller
         if ($request->getMethod() == 'POST') {
             $exam = new Exam();
             $exam->name = $request->name;
+            $exam->semester_id = $request->semester_id;
+            $exam->faculity_id = $request->faculity_id;
             $exam->term = $request->term;
             $exam->year = $request->year;
             $exam->save();
-            return redirect()->back();
+            return redirect()->back()->with('message', 'Exam added successfully');
         } else {
-            return view('Admin.Exam.add');
+            $faculitys = Faculity::all();
+            $classes = Classs::all();
+
+            return view('Admin.Exam.add', compact('faculitys', 'classes'));
         }
     }
 }
