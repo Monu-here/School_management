@@ -139,6 +139,7 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="month">Select Month:</label>
@@ -300,7 +301,7 @@
                             <tr>
                                 <th>Sn</th>
                                 <th>Student Name</th>
-                                <th>Student Roll</th>
+                                <th>Student Symbool</th>
                                 @for ($day = 1; $day <= Carbon\Carbon::createFromDate($selectedYear, $selectedMonth)->daysInMonth; $day++)
                                     <th>
                                         {{ Carbon\Carbon::createFromDate($selectedYear, $selectedMonth, $day)->format('l') }}
@@ -316,7 +317,7 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $attendanceReport->where('student_id', $studentId)->first()->student->name }}
                                     </td>
-                                    <td>{{ $attendanceReport->where('student_id', $studentId)->first()->student->roll }}
+                                    <td>{{ $attendanceReport->where('student_id', $studentId)->first()->student->idno }}
                                     </td>
                                     @for ($day = 1; $day <= Carbon\Carbon::createFromDate($selectedYear, $selectedMonth)->daysInMonth; $day++)
                                         <td>
@@ -324,10 +325,12 @@
                                                 $dayAttendance = isset($attendance[$day]) ? $attendance[$day] : [];
 
                                                 $statusString = '';
+                                                $subjectAttendance = '';
 
                                                 if (is_array($dayAttendance)) {
                                                     foreach ($dayAttendance as $periodStatus) {
                                                         $class = '';
+
                                                         if ($periodStatus == 'P') {
                                                             $class = 'badge badge-pill badge-success';
                                                         } elseif ($periodStatus == 'L') {
@@ -336,6 +339,13 @@
                                                             $class = 'badge badge-pill badge-danger';
                                                         }
                                                         $statusString .= "<strong class='badge $class'>$periodStatus</strong> ";
+                                                    }
+                                                }
+                                                if (is_array($dayAttendance)) {
+                                                    foreach ($dayAttendance as $periodStatus) {
+                                                        $class = '';
+
+                                                        $subjectAttendance .= '';
                                                     }
                                                 } else {
                                                     $class = '';
@@ -360,8 +370,7 @@
             </div>
         </div>
         {{-- @endif --}}
-
-
+       
         <h5 class="card card-body">Number of students present in the month</h5>
         <div class="section_of_present_absent">
             <div class="present">
@@ -374,7 +383,7 @@
                                 <thead>
                                     <tr>
                                         <th>SN</th>
-                                        <th>Student Name</th>
+                                        <th>Student Name / Subject</th>
                                         <th>Total Present in Month</th>
                                     </tr>
                                 </thead>
@@ -384,10 +393,10 @@
                                     @endphp
                                     @foreach ($mm as $studentId => $attendance)
                                         @php
-                                            $student =
-                                                $attendanceReport->where('student_id', $studentId)->first()->student ??
-                                                null;
-                                            $attendanceCounts = ['P' => 0, 'A' => 0];  
+                                            $student = $attendance->first()->student ?? null;
+                                            // $subject = $attendance->get()->subject ?? null;
+                                            // $subject = $attendance->pulk('id')->subject ?? null;
+                                            $attendanceCounts = ['P' => 0, 'A' => 0];
                                             if ($attendance) {
                                                 $attendance
                                                     ->groupBy('attendance_type')
@@ -398,7 +407,8 @@
                                         @endphp
                                         <tr>
                                             <td>{{ $j++ }}</td>
-                                            <td>{{ $student ? $student->name : 'N/A' }}</td>
+                                            <td>{{ $student ? $student->name : 'N/A' }} /
+                                                {{-- {{ $subject ? $subject->name : 'N/A' }}</td> --}}
                                             <td>
                                                 @foreach ($attendanceCounts as $attendanceType => $count)
                                                     @if ($attendanceType == 'P')
@@ -425,6 +435,7 @@
                 </div>
             </div>
         </div>
+
 
 
     </div>

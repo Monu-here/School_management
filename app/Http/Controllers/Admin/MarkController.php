@@ -88,43 +88,78 @@ class MarkController extends Controller
 
 
     // here will be store marks of student START
+    // public function storeMarks(Request $request)
+    // {
+    //     $selectedExam = Exam::find($request->input('exam_id'));
+    //     $selectedSubject = Subject::find($request->input('subject_id'));
+
+    //     $grades = Grade::all();
+
+    //     foreach ($request->input('obtained_marks') as $studentId => $obtainedMarks) {
+    //         $totalMarks = $obtainedMarks;
+
+
+
+    //         $totalObtained = $obtainedMarks;
+
+    //         $grade = Grade::where("mark_from", "<=", $totalObtained)->where("mark_to", ">=", $totalObtained)->first();
+
+
+    //         $student = Student::find($studentId);
+
+    //         $mark = new Mark();
+    //         $mark->exam_id = $selectedExam->id;
+    //         $mark->student_id = $studentId;
+    //         $mark->subject_id = $selectedSubject->id;
+    //         $mark->obtained_marks = $obtainedMarks;
+    //         // $mark->practical_marks  = "0";
+    //         $mark->total_marks = $totalMarks;
+    //         $mark->grade = $grade ? $grade->name : 'N/A';
+    //         $mark->remark = $grade ? $grade->remark : 'N/A';
+    //         $mark->exam_type =  $request->input('exam_type')[$studentId];
+    //         $mark->resit =  $request->input('resit')[$studentId] ?? null;
+    //         $mark->repeat =  $request->input('repeat')[$student] ?? null;
+    //         // dd($mark);
+    //         $mark->save();
+    //     }
+    //     return redirect()->route('admin.mark.index')->with('success', 'Marks saved successfully!');
+    // }
+
+
+
     public function storeMarks(Request $request)
     {
         $selectedExam = Exam::find($request->input('exam_id'));
         $selectedSubject = Subject::find($request->input('subject_id'));
 
-        $grades = Grade::all();
-
-        foreach ($request->input('obtained_marks') as $studentId => $obtainedMarks) {
-            $practicalMarks = $request->input("practical_marks.{$studentId}") ?? 0;
-            $totalMarks = $obtainedMarks + $practicalMarks;
+        $obtainedMarksArray = $request->input('obtained_marks');
 
 
+       
+        foreach ($obtainedMarksArray as $studentId => $obtainedMarks) {
+            $totalMarks = $obtainedMarks;
 
-            $totalObtained = $obtainedMarks + $practicalMarks;
-
-            $grade = Grade::where("mark_from", "<=", $totalObtained)->where("mark_to", ">=", $totalObtained)->first();
-
-
-            $student = Student::find($studentId);
-
-             $mark = new Mark();
+            $mark = new Mark();
             $mark->exam_id = $selectedExam->id;
             $mark->student_id = $studentId;
             $mark->subject_id = $selectedSubject->id;
             $mark->obtained_marks = $obtainedMarks;
-            $mark->practical_marks = $practicalMarks;
             $mark->total_marks = $totalMarks;
-            $mark->grade = $grade ? $grade->name : 'N/A';
-            $mark->remark = $grade ? $grade->remark : 'N/A';
-            $mark->exam_type =  $request->exam_type;
-            $mark->resit =  $request->resit;
-            $mark->repeat =  $request->repeat;
-            // dd($mark);
+            $mark->grade = $request->input('grade')[$studentId] ?? null;
+            $mark->exam_type = $request->input('exam_type')[$studentId] ?? null;
+            
+           
+
+
             $mark->save();
         }
-        return redirect()->route('admin.mark.index')->with('success', 'Marks saved successfully!');
+
+        return redirect()->route('admin.mark.index')->with('success', 'Marks saved successfully.');
     }
+
+
+
+
     // here will be store marks of student END
 
     ///        It will show the marksheet of student START
@@ -166,8 +201,8 @@ class MarkController extends Controller
         $grades = DB::table('grades')->get();
         $date = Carbon::now()
             ->format('l, jS \of F Y');
-$ci = DB::table('marks')->first();
-        return view('Admin.mark.mark_sheet', compact('grades', 'date', 'student', 'marks', 'percentage', 'totalMarks','ci'));
+        $ci = DB::table('marks')->first();
+        return view('Admin.mark.mark_sheet', compact('grades', 'date', 'student', 'marks', 'percentage', 'totalMarks', 'ci'));
     }
     ///        It will show the marksheet of student END
 

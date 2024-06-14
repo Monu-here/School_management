@@ -96,6 +96,7 @@
                                                     </select>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="Date" style="font-weight: 700; font-size: 12px">Date</label>
@@ -117,7 +118,7 @@
                                             $assignedClassIds = array_map('intval', $assignedClassIds);
                                             $assignedSectionIds = array_map('intval', $assignedSectionIds);
                                             $assignedFaculityIds = array_map('intval', $assignedFaculityIds);
-                                            @endphp
+                                        @endphp
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -126,11 +127,11 @@
                                                     <select name="faculity_id" id="faculity_id" class="form-control" required>
                                                         <option value="">Select Faculity</option>
                                                         @foreach ($assignedFaculityIds as $factId)
-                                                        @php
-                                                        $fact = App\Models\Faculity::find($factId);
-                                                    @endphp
-                                                            <option value="{{ $factId}}"
-                                                                {{ isset($faculity_id) ? ($faculity_id == $factId ? 'selected' : '') : (request('faculity_id') == $factId? 'selected' : '') }}>
+                                                            @php
+                                                                $fact = App\Models\Faculity::find($factId);
+                                                            @endphp
+                                                            <option value="{{ $factId }}"
+                                                                {{ isset($faculity_id) ? ($faculity_id == $factId ? 'selected' : '') : (request('faculity_id') == $factId ? 'selected' : '') }}>
                                                                 {{ $fact ? $fact->name : 'Faculity Not Found' }}
                                                             </option>
                                                         @endforeach
@@ -174,6 +175,7 @@
                                                     </select>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="Date" style="font-weight: 700; font-size: 12px">Date</label>
@@ -206,7 +208,6 @@
     </div>
     @if ($students !== null)
         @if ($students->isEmpty())
-             
         @else
             <div class="row">
                 <div class="col-sm-12">
@@ -238,6 +239,7 @@
                                         <th>SYMBOOL NO</th>
                                         <th>NAME</th>
                                         <th>ATTENDENCE</th>
+                                        <th>Subject</th>
 
                                     </thead>
                                 </tr>
@@ -250,9 +252,14 @@
                                             @endphp
                                             @foreach ($students as $student)
                                                 <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
-                                                <input type="hidden" name="class_id[]" value="{{ $student->class_id }}">
-                                                <input type="hidden" name="faculity_id[]" value="{{ $student->faculity_id }}">
-                                                <input type="hidden" name="section_id[]" value="{{ $student->section_id }}">
+                                                <input type="hidden" name="class_id[]"
+                                                    value="{{ $student->class_id }}">
+                                                <input type="hidden" name="faculity_id[]"
+                                                    value="{{ $student->faculity_id }}">
+                                                <input type="hidden" name="section_id[]"
+                                                    value="{{ $student->section_id }}">
+                                                <input type="hidden" name="subject_id[]"
+                                                    value="{{ $student->subject_id }}">
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
                                                     <td>
@@ -276,10 +283,7 @@
                                                                 <div class="radio-style">
 
                                                                     <abbr title="Present">
-                                                                        <input type="radio" class="p"
-                                                                            id="present_{{ $student->id }}"
-                                                                            name="attendance_types[{{ $student->id }}]"
-                                                                            value="P">
+                                                                        <input type="radio" class="p" id="present_{{ $student->id }}" name="attendance_types[{{ $student->id }}]" value="P">
                                                                         <label for="present_{{ $student->id }}"
                                                                             class="label-class">
 
@@ -304,12 +308,25 @@
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label for="subject_id{{ $student->id }}"
+                                                                style="font-weight: 700; font-size: 12px">
+                                                                Section:</label>
+                                                                 <select id="subject_{{ $student->id }}" name="subject_id[{{ $student->id }}]" class="form-control" required>
+                                                                    <option value="">Select Subject</option>
+                                                                    @foreach ($subjects as $subject)
+                                                                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @endif
                                         <div class="form-group" style="display: flex; justify-content: end">
-                                            <button type="submit" class="btn btn-primary"
-                                                onclick="atten()">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </form>
                                 </tbody>

@@ -223,11 +223,9 @@
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-
-        </div>
-    </div>
+   
+   
+    
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

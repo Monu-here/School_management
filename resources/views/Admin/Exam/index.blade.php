@@ -15,38 +15,7 @@
     </div>
 @endsection
 @section('content')
-    {{-- <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="clienttable" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Term</th>
-                            <th>Year</th>
-                            <th>Action</th>
-                         </tr>
-                    </thead>
-                    <tbody>
-                        @php $i = 1; @endphp
-                        @foreach ($exams as $exam)
-                            <tr>
-                                <td>{{ $i++ }}</td>
-                                <td>{{ $exam->name }}</td>
-                                 <td>{{ $exam->term }}</td>
-                                <td>{{ $exam->year }}</td>
-                                <td>
-                                    xxx
-                                 </td>
-
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-       </div> --}}
+ 
     <div class="row">
         <div class="col-sm-12">
             <div class="card card-table comman-shadow">

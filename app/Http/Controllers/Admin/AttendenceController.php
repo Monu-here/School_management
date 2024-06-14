@@ -10,6 +10,7 @@ use App\Models\Section;
 use Carbon\Carbon;
 
 use App\Models\Student;
+use App\Models\subject;
 use App\Models\Teacher;
 use DateTime;
 use Illuminate\Http\Request;
@@ -29,6 +30,7 @@ class AttendenceController extends Controller
         $se = Section::all();
         $facts = Faculity::all();
         $sections = DB::table('sections')->get();
+        $subjects = DB::table('subjects')->get();
         $attendanceDate = now();
         $students = null;
         if ($request->getMethod() == "POST") {
@@ -49,7 +51,7 @@ class AttendenceController extends Controller
                 $students = Student::all();
             }
         }
-        return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate', 'facts'));
+        return view('Admin.Attendence.index', compact('cc', 'ss', 'students', 'se', 'sections', 'attendanceDate', 'facts', 'subjects'));
     }
     //this si currentlu working
     // public function mark(Request $request)
@@ -112,6 +114,8 @@ class AttendenceController extends Controller
             $attendanceDate = now()->toDateString();
             foreach ($request->input('student_ids') as $studentId) {
                 $attendanceType = $request->input('attendance_types')[$studentId];
+                $subjectId = $request->input('subject_id')[$studentId];
+                // dd($attendanceType , $subjectId);
                 $notes = $note;
 
                 $classIds = is_array($request->class_id) ? $request->class_id : [$request->class_id];
@@ -125,20 +129,27 @@ class AttendenceController extends Controller
 
                 if ($existingAttendance) {
                     $attendanceTypes = $existingAttendance->attendance_type ?? [];
+                    $subjectIds = $existingAttendance->subject_id ?? [];
 
                     if (is_string($attendanceTypes)) {
                         $attendanceTypes = json_decode($attendanceTypes, true) ?? [];
                     }
+                    if (is_string($subjectIds)) {
+                        $subjectIds = json_decode($subjectIds, true) ?? [];
+                    }
                     $attendanceTypes[] = $attendanceType;
+                    $subjectIds[] = $subjectId; // Make sure $subjectId is defined earlier in your code
 
                     $existingAttendance->update([
                         'attendance_type' => $attendanceTypes,
+                        'subject_id' => $subjectIds,
                         'notes' => $notes,
                     ]);
                 } else {
                     $attendance = new Attendence();
                     $attendance->student_id = $studentId;
                     $attendance->attendance_type = [$attendanceType];
+                    $attendance->subject_id = [$subjectId];
                     $attendance->notes = $notes;
                     $attendance->attendance_date = $attendanceDate;
                     foreach ($classIds as $classId) {
@@ -230,8 +241,8 @@ class AttendenceController extends Controller
             ->whereYear('attendance_date', $selectedYear)
             ->whereMonth('attendance_date', $selectedMonth)
             ->get();
-             
-            // dd($attendanceReport);
+
+        // dd($attendanceReport);
 
         $attendanceData = [];
 
@@ -252,9 +263,9 @@ class AttendenceController extends Controller
         $classes = Classs::all();
         $sections = Section::all();
         $facts = Faculity::all();
-
-        $mm = Attendence::with('student')
-            ->select('student_id', 'class_id', 'faculity_id', 'attendance_type')
+        $subjects = subject::all();
+        $mm = Attendence::with(['student']) // Ensure 'subject' relation is loaded
+            ->select('student_id', 'class_id', 'faculity_id', 'attendance_type', 'subject_id')
             ->whereHas('student', function ($query) use ($classId, $sectionId, $faculityId) {
                 $query->where('class_id', $classId)
                     ->where('faculity_id', $faculityId)
@@ -263,20 +274,17 @@ class AttendenceController extends Controller
             ->get()
             ->groupBy('student_id');
 
-        // foreach ($mm as $key => $value) {
-        //     echo "Student ID: $key\n";
-        //     foreach ($value as $attendance) {
-        //         echo "Attendance Type: $attendance->attendance_type\n";
-        //     }
-        // }
-        // 
+        // dd($subjectAttendance);
+
+
+
+        // echo "Attendance Type: $subjectAttendance
+
+
+
         // dd($mm);
 
 
- 
-
-        // dd('assignedClassIds:', $assignedClassIds, 'assignedSectionIds', $assignedSectionIds, 'students', $studentss);
-
-        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'facts', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear'));
+        return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'facts', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear', 'subjects'));
     }
 }

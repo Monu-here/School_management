@@ -80,13 +80,13 @@
         }
 
         /* .info course {
-                    margin: 20px 0;
-                    font-size: 14px;
-                } */
+                                margin: 20px 0;
+                                font-size: 14px;
+                            } */
 
         /* table {
-                    border: none;
-                } */
+                                border: none;
+                            } */
         table,
         th,
         td {
@@ -181,10 +181,7 @@
 
 
 
-
-
-
-    <div class="body-section">
+     <div class="body-section">
         <div class="container-section">
             <div class="tabs">
                 <div class="main-header-section">
@@ -238,15 +235,15 @@
                             <td>{{ $i++ }}</td>
                             <td>{{ $mark->subject->sub_code }}</td>
                             <td>{{ $mark->Subject->name }}</td>
-                            <td>2</td>
+                            <td>{{ $mark->obtained_marks }}</td>
                             <td>{{ $mark->grade }}</td>
-                            <td>6.2</td>
+                            <td>{{ $mark->point }}</td>
                         </tr>
                     @endforeach
                 </table>
                 <div class="notes">
                     {{-- <p>Subjects to Resit: {{ is_array($mark->resit) ? implode(', ', $mark->resit) : $mark->resit }}</p> --}}
-                    <p>Subjects to Resit: {{ $ci->resit }}</p>
+                    <p>Subjects to Resit: {{ $ci->resit ?? '' }}</p>
                     <p>Subjects to Repeat:</p>
                     <div class="details">
                         <table class="details-table">
