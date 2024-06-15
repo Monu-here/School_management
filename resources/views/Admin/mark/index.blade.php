@@ -69,6 +69,26 @@
             </div>
         </div>
     </div> --}}
+    <form action="{{ route('admin.mark.index') }}" method="GET">
+
+        <div class="student-group-form">
+
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="exam_type" class="form-control" placeholder="Serach with  &quot; exam_type  &quot;"
+                            value="">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="search-student-btn">
+                        <button type="btn" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <div class="row">
         <div class="col-sm-12">
             <div class="card card-table comman-shadow">
@@ -95,27 +115,27 @@
                                     <th>Subject</th>
                                     <th>CR</th>
                                     <th>Exam Type</th>
-                                     {{-- <th>Total Mark</th> --}}
-                                    <th>Grade</th>
-                                </tr>
+                                    {{-- <th>Total Mark</th> --}}
+                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                     $i = 1;
                                 @endphp
-                                 @foreach ($marks as $mark)
-                                 <tr>
-                                    <td>{{$i++}}</td>
-                                     <td>{{ $mark->exam->name }}</td>
-                                     <td>{{ $mark->student->name ?? '' }} / {{$mark->student->faculity->name?? ''}} / {{$mark->student->classes->name?? ''}}  </td>
-                                     <td>{{ $mark->subject->name }}</td>
-                                     <td>{{ $mark->obtained_marks }}</td>
-                                     <td>{{ $mark->exam_type ?? '' }} / {{$mark->resit}}</td>
-                                     {{-- <td>{{ $mark->total_marks }}</td> --}}
-                                     <td>{{ $mark->grade }}   </td>
+                                  @foreach ($examTypes as $mark)
+                                  <tr>
+                                      <td>{{ $i++ }}</td>
+                                      <td>{{ $mark->exam->name }}</td>
+                                      <td>{{ $mark->student->name ?? '' }} /
+                                          {{ $mark->student->faculity->name ?? '' }} /
+                                          {{ $mark->student->classes->name ?? '' }} </td>
+                                      <td>{{ $mark->subject->name }}</td>
+                                      <td>{{ $mark->obtained_marks }}</td>
+                                      <td>{{ $mark->exam_type ?? '' }}  {{ $mark->resit }}</td>
+                                      {{-- <td>{{ $mark->total_marks }}</td> --}}
 
-                                 </tr>
-                             @endforeach
+                                  </tr>
+                              @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -123,6 +143,12 @@
             </div>
         </div>
     </div>
+
+    @if (!$examTypes)
+    @else
+       
+    @endif
+
 @endsection
 @section('js')
     <script>

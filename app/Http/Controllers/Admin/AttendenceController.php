@@ -167,8 +167,9 @@ class AttendenceController extends Controller
             }
             return redirect()->back()->with('success', 'Attendance marked successfully');
         } else {
-            $students = Student::all();
-            return view('Admin.Attendence.add', compact('students'));
+            return redirect()->back();
+            // $students = Student::all();
+            // return view('Admin.Attendence.add', compact('students'));
         }
     }
 
@@ -274,16 +275,11 @@ class AttendenceController extends Controller
             ->get()
             ->groupBy('student_id');
 
-        // dd($subjectAttendance);
+        // dd($mm); 
 
 
 
         // echo "Attendance Type: $subjectAttendance
-
-
-
-        // dd($mm);
-
 
         return view('Admin.Attendence.report', compact('attendanceData', 'mm', 'classes', 'facts', 'sections', 'attendanceReport', 'selectedMonth', 'selectedYear', 'subjects'));
     }

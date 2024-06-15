@@ -283,7 +283,10 @@
                                                                 <div class="radio-style">
 
                                                                     <abbr title="Present">
-                                                                        <input type="radio" class="p" id="present_{{ $student->id }}" name="attendance_types[{{ $student->id }}]" value="P">
+                                                                        <input type="radio" class="p"
+                                                                            id="present_{{ $student->id }}"
+                                                                            name="attendance_types[{{ $student->id }}]"
+                                                                            value="P">
                                                                         <label for="present_{{ $student->id }}"
                                                                             class="label-class">
 
@@ -312,14 +315,17 @@
                                                         <div class="form-group">
                                                             <label for="subject_id{{ $student->id }}"
                                                                 style="font-weight: 700; font-size: 12px">
-                                                                Section:</label>
-                                                                 <select id="subject_{{ $student->id }}" name="subject_id[{{ $student->id }}]" class="form-control" required>
-                                                                    <option value="">Select Subject</option>
-                                                                    @foreach ($subjects as $subject)
-                                                                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                
+                                                                Subject:</label>
+                                                            <select id="subject_{{ $student->id }}"
+                                                                name="subject_id[{{ $student->id }}]"
+                                                                class="form-control" required>
+                                                                <option value="">Select Subject</option>
+                                                                @foreach ($subjects as $subject)
+                                                                    <option value="{{ $subject->name }}">
+                                                                        {{ $subject->name }}</option>
+                                                                @endforeach
+                                                            </select>
+
                                                         </div>
                                                     </td>
                                                 </tr>

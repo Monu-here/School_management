@@ -370,7 +370,7 @@
             </div>
         </div>
         {{-- @endif --}}
-       
+
         <h5 class="card card-body">Number of students present in the month</h5>
         <div class="section_of_present_absent">
             <div class="present">
@@ -385,17 +385,31 @@
                                         <th>SN</th>
                                         <th>Student Name / Subject</th>
                                         <th>Total Present in Month</th>
-                                    </tr>
+                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
                                         $j = 1;
                                     @endphp
+
                                     @foreach ($mm as $studentId => $attendance)
                                         @php
                                             $student = $attendance->first()->student ?? null;
                                             // $subject = $attendance->get()->subject ?? null;
-                                            // $subject = $attendance->pulk('id')->subject ?? null;
+                                            $subject = $attendance->pluck('subject_id');
+
+                                            $subject; // Example data, replace with your actual data source
+
+                                            // Flatten the array
+                                            $flattenedSubject = [];
+                                            foreach ($subject as $subArray) {
+                                                foreach ($subArray as $item) {
+                                                    $flattenedSubject[] = $item;
+                                                }
+                                            }
+
+                                            $subjectString = implode(', ', $flattenedSubject);
+
                                             $attendanceCounts = ['P' => 0, 'A' => 0];
                                             if ($attendance) {
                                                 $attendance
@@ -407,7 +421,8 @@
                                         @endphp
                                         <tr>
                                             <td>{{ $j++ }}</td>
-                                            <td>{{ $student ? $student->name : 'N/A' }} /
+                                            <td>{{ $student ? $student->name : 'N/A' }} /{{ $subjectString }}
+
                                                 {{-- {{ $subject ? $subject->name : 'N/A' }}</td> --}}
                                             <td>
                                                 @foreach ($attendanceCounts as $attendanceType => $count)
@@ -425,6 +440,12 @@
                                                         ,
                                                     @endif
                                                 @endforeach
+                                            </td>
+                                            <td>
+
+
+
+                                                {{-- {!!$subject!!} --}}
                                             </td>
                                         </tr>
                                     @endforeach

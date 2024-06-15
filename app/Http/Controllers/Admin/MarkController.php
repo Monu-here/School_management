@@ -25,11 +25,13 @@ class MarkController extends Controller
 {
 
     // this function list all that marksheet of student that are here START
-    public function index()
+    public function index(Request $request)
     {
-        $marks = Mark::with('Student', 'subject', 'Exam', 'Grade')->get();
-
-        return view('Admin.mark.index', compact('marks'));
+        // $marks = Mark::with('Student', 'subject', 'Exam', 'Grade')->get();
+        $examTypes = $request->input('exam_type');
+        $examTypes = Mark::where('exam_type', $examTypes)->get();
+        // dd($examTypes);
+        return view('Admin.mark.index', compact('examTypes'));
     }
     // this function list all that marksheet of student that are here END
 
@@ -135,7 +137,7 @@ class MarkController extends Controller
         $obtainedMarksArray = $request->input('obtained_marks');
 
 
-       
+
         foreach ($obtainedMarksArray as $studentId => $obtainedMarks) {
             $totalMarks = $obtainedMarks;
 
@@ -147,8 +149,8 @@ class MarkController extends Controller
             $mark->total_marks = $totalMarks;
             $mark->grade = $request->input('grade')[$studentId] ?? null;
             $mark->exam_type = $request->input('exam_type')[$studentId] ?? null;
-            
-           
+
+
 
 
             $mark->save();
